@@ -65,3 +65,15 @@ Close a plan only when its authorized scope is complete; disclose unresolved wor
   and completed successfully. Official schema reference:
   https://learn.chatgpt.com/docs/agent-configuration/subagents (checked 2026-10-08).
   Developer Docs MCP unavailable in this session; official web documentation used.
+
+## Clarification status
+
+Before execution begins, every substantive plan must record:
+
+- Known facts
+- Open questions
+- Assumptions
+- User decisions required
+- Clarification status: BLOCKED / READY
+
+Execution must not begin while clarification status is BLOCKED.

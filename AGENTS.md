@@ -105,3 +105,134 @@ When first introducing an important entity, prefer a Russian term followed by
 its English identifier in parentheses: <Russian term> (`EnglishIdentifier`).
 Use a consistent Russian translation for each identifier across all documents.
 Do not translate code, commands, file names, or technical identifiers.
+
+## Clarification gate
+
+For any substantive task, do not immediately start editing files, designing,
+implementing, or making project decisions.
+
+Before acting, first determine whether the task is sufficiently specified.
+
+A task is substantive if it may affect:
+- requirements;
+- domain model;
+- architecture;
+- data model;
+- API contracts;
+- product-agent responsibilities;
+- user flows;
+- testing strategy;
+- AI behavior;
+- security;
+- persistence;
+- technology choices;
+- multiple project files.
+
+If important information is missing, ambiguous, contradictory, or can reasonably
+be interpreted in more than one way:
+
+1. do not make assumptions;
+2. do not choose an option silently;
+3. do not modify controlled files yet;
+4. ask the user clarifying questions;
+5. explain briefly why each important question matters;
+6. when useful, provide possible answer options without selecting one;
+7. wait for the user's answers;
+8. reassess whether further clarification is required;
+9. ask another round of questions if material uncertainty remains;
+10. only begin the task when the information is sufficient or the user explicitly
+authorizes proceeding with stated assumptions.
+
+Prefer multiple rounds of clarification over filling gaps with assumptions.
+
+Do not treat silence, previous guesses, common practice, or implementation
+convenience as user approval.
+
+For trivial and unambiguous actions, additional clarification is not required.
+
+## Clarify → Propose → Execute
+
+For substantive work, follow three separate phases.
+
+### Phase 1 — CLARIFY
+
+Allowed:
+- inspect existing files;
+- analyze approved documentation;
+- identify contradictions and missing information;
+- ask questions;
+- list alternatives.
+
+Not allowed:
+- modify controlled project artifacts;
+- select architecture or technologies;
+- implement code;
+- convert assumptions into requirements.
+
+Stay in CLARIFY until enough information is available.
+
+### Phase 2 — PROPOSE
+
+Present:
+- proposed decisions;
+- alternatives where relevant;
+- consequences;
+- affected files;
+- assumptions;
+- unresolved questions.
+
+For controlled artifacts, wait for explicit user approval before execution.
+
+### Phase 3 — EXECUTE
+
+Only after the required clarification and approval:
+- update documentation;
+- update tests where applicable;
+- implement approved changes;
+- validate the result.
+
+Never collapse CLARIFY, PROPOSE, and EXECUTE into one step for substantive
+requirements, architecture, or design work.
+
+## Clarification depth
+
+For requirements, domain analysis, architecture, data modeling, AI workflow design,
+security, and user-flow design, perform deep clarification.
+
+Actively look for:
+- undefined actors;
+- unclear terminology;
+- missing boundaries;
+- hidden assumptions;
+- alternative interpretations;
+- exceptional cases;
+- lifecycle questions;
+- permissions and responsibility;
+- failure cases;
+- human approval points;
+- data provenance;
+- privacy and security implications;
+- non-functional requirements;
+- measurable acceptance criteria.
+
+Ask questions in manageable batches.
+
+For a new major area, the first clarification round should usually contain
+approximately 10–20 high-value questions grouped by topic.
+
+After receiving answers, perform another gap analysis and ask a second round if
+material gaps remain.
+
+Do not ask questions whose answers are already explicitly present in approved
+documentation.
+
+## User-review priority
+
+Optimize for user reviewability rather than autonomous speed.
+
+When there is a trade-off between:
+- proceeding quickly using an assumption, and
+- asking the user for clarification,
+
+prefer clarification whenever the assumption could materially affect the product,
+architecture, tests, or future implementation.
