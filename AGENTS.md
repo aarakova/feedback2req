@@ -86,3 +86,22 @@ propose/report changes without editing files. No agent can approve design change
   OpenAI Developer Docs MCP when available; otherwise consult official OpenAI
   documentation and disclose that fallback. If research suggests changing an
   approved decision, propose the change and wait for user approval.
+
+## Language of project documentation
+
+The main text of `docs/*.md` must be written in Russian so that the user can
+fully review the documentation.
+
+English is allowed and preferred for:
+
+- identifiers;
+- future class, function, and variable names;
+- entity names intended for implementation;
+- API field names;
+- enum values;
+- names of libraries, technologies, protocols, and standards.
+
+When first introducing an important entity, prefer a Russian term followed by
+its English identifier in parentheses: <Russian term> (`EnglishIdentifier`).
+Use a consistent Russian translation for each identifier across all documents.
+Do not translate code, commands, file names, or technical identifiers.
