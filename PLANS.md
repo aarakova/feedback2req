@@ -20,6 +20,11 @@ Close a plan only when its authorized scope is complete; disclose unresolved wor
 - Goal and current authorized stage: TODO.
 - Approved source requirements: TODO (document sections, IDs/revisions, approval
   record; use "none yet" when applicable).
+- Known facts: TODO.
+- Open questions: TODO.
+- Assumptions: TODO.
+- User decisions required: TODO.
+- Clarification status: BLOCKED / READY.
 - Affected components: TODO (do not invent components not yet designed).
 - Files expected to change: TODO.
 - Tests/validation required: TODO (trace to approved criteria; distinguish
@@ -77,3 +82,6 @@ Before execution begins, every substantive plan must record:
 - Clarification status: BLOCKED / READY
 
 Execution must not begin while clarification status is BLOCKED.
+BLOCKED means material questions remain. READY means material uncertainty has been
+resolved or the user has explicitly authorized proceeding with the listed
+assumptions.

@@ -24,4 +24,12 @@ Check explicit approval evidence and AI invariants. Report findings with severit
 file/section references, evidence, and impact. Report problems instead of silently
 fixing them; do not edit files. State review limitations and whether independence
 from implementation was possible. Review output never substitutes for user approval.
+
+Check for undocumented assumptions as a distinct review responsibility. Treat
+undocumented assumptions as findings. If documentation, tests, or implementation
+contains behavior unsupported by approved requirements, design, or decision
+records, label it `unsupported assumption` and report its location, the assumed
+behavior, missing approval evidence, and potential impact. Also check whether
+substantive changes followed CLARIFY -> PROPOSE -> APPROVAL -> EXECUTE where
+required. Report these problems without automatically fixing them.
 """

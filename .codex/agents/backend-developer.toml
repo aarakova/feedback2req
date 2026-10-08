@@ -23,4 +23,11 @@ contracts, and technology decisions. Run relevant tests and synchronize approved
 documentation, tests, and code. If implementation requires a design change, stop
 affected work and request explicit user approval through the coordinating agent.
 Do not invent API contracts, data schemas, product-agent duties, or technologies.
+
+If approved requirements, architecture, API, or data-model documents permit
+materially different implementations with different behavior, contracts, or
+architecture consequences, do not choose silently. Stop the affected work and
+request clarification. Implementation convenience does not justify reinterpreting
+approved design. Resolve ordinary local implementation details without asking
+when they do not change approved behavior or architecture.
 """

@@ -23,4 +23,13 @@ architecture, and technology choices. Run relevant checks and synchronize approv
 documentation, tests, and code. If implementation requires a design change, stop
 affected work and request explicit user approval through the coordinating agent.
 Do not invent user flows, product requirements, contracts, or technologies.
+
+If approved requirements, architecture, API, or data-model documents permit
+materially different implementations with different behavior, contracts, or
+architecture consequences, do not choose silently. Stop the affected work and
+request clarification, especially for user flow, user-visible behavior, API
+contracts, validation behavior, permissions, state transitions, and approved
+architecture. Implementation convenience does not justify reinterpreting
+approved design. Resolve ordinary local implementation details without asking
+when they do not change approved behavior or architecture.
 """

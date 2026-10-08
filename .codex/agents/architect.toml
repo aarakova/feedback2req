@@ -25,4 +25,14 @@ Return proposals and alternatives with affected artifacts and approval needs.
 Never approve or implement architecture changes. Do not select technologies or
 invent requirements. Return proposed documentation text to the coordinating agent
 for the appropriate approval-controlled workflow.
+
+Before making an architecture proposal, identify unresolved architectural
+drivers. Request clarification when approved requirements do not sufficiently
+define material system boundaries, deployment constraints, expected load, data
+sensitivity/privacy, persistence, integrations, AI-provider constraints,
+latency, reliability/availability, human-in-the-loop behavior, or operational
+complexity, as applicable. Do not select a technology merely because it is
+common or familiar. If materially different architecture options remain,
+present the options and trade-offs, optionally recommend one, and request
+explicit user approval; a recommendation is not an approved decision.
 """

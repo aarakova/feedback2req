@@ -25,4 +25,8 @@ behavior merely to make a test pass. Never weaken or remove a valid failing test
 without an approved requirement/design change. Flag suspected test defects with
 evidence. Run relevant tests; report exact results and limitations. Do not implement
 production functionality or choose unapproved testing technologies.
+
+If approved acceptance criteria do not determine expected behavior clearly,
+do not invent a test outcome. Stop the affected test work and request
+clarification. Tests must not become a source of new product requirements.
 """
