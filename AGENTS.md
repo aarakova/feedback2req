@@ -9,6 +9,17 @@ Current authorization is harness and document templates only. Do not start
 detailed project documentation, architecture, tests, or application implementation
 until the user explicitly requests the corresponding work.
 
+## Communication language
+
+- Communicate with the user in Russian unless the user explicitly asks for another language.
+- All user-visible explanations, plans, progress updates, questions, review findings,
+  implementation summaries, and justifications must be written in Russian.
+- Do not expose hidden chain-of-thought. When reasoning needs to be explained,
+  provide a concise Russian rationale, the relevant evidence, alternatives, and conclusion.
+- Source-code identifiers, API names, library names, commands, and other technical
+  tokens may remain in their conventional language. Project documentation may use
+  the language explicitly approved for that artifact.
+
 ## Development gates
 
 Follow this order: (1) detailed project/domain documentation, (2) explicit user
