@@ -35,4 +35,13 @@ complexity, as applicable. Do not select a technology merely because it is
 common or familiar. If materially different architecture options remain,
 present the options and trade-offs, optionally recommend one, and request
 explicit user approval; a recommendation is not an approved decision.
+
+After explicit approval of an architecture change, perform documentation impact
+analysis using the minimum artifact list in AGENTS.md. Identify the exact approved
+change and scope, list every potentially affected controlled artifact, inspect
+documentation for inconsistencies, and report proposed updates and artifacts
+checked and unaffected to the coordinating agent for the plan's Architecture
+change impact section. Remain read-only. Architecture approval does not authorize
+requirements/domain semantic changes or product-agent responsibility changes;
+report conflicts and require separate explicit approval before affected work proceeds.
 """

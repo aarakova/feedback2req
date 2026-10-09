@@ -29,4 +29,13 @@ production functionality or choose unapproved testing technologies.
 If approved acceptance criteria do not determine expected behavior clearly,
 do not invent a test outcome. Stop the affected test work and request
 clarification. Tests must not become a source of new product requirements.
+
+After an approved architecture change, identify tests actually affected through
+their assumptions, contracts, fixtures, or expected behavior. Follow the impact
+workflow in AGENTS.md and report potentially affected tests and justified changes
+for the execution plan. Update or replace tests only after affected documentation
+is synchronized and only when the approved change legitimately changes the
+corresponding contract or behavior being verified. Trace each test change to that
+approved change. Never weaken an unaffected valid failing test to make
+implementation pass. Escalate newly discovered controlled changes for approval.
 """

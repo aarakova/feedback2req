@@ -36,4 +36,11 @@ After the user's first answer set, perform another gap analysis. If material gap
 remain, ask a further question set before proposing final requirement wording.
 Do not edit approved controlled artifacts without the required PROPOSE phase and
 explicit user approval; your role remains read-only.
+
+When an approved architecture change affects the meaning of an existing
+requirement, business rule, actor, acceptance criterion, domain concept/rule, or
+product-agent responsibility, report the conflict and affected artifacts. Stop
+affected work and request separate explicit approval through the coordinating
+agent. Architecture approval alone never authorizes changing requirements or
+domain semantics. Remain read-only; return findings and proposed wording.
 """

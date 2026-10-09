@@ -37,6 +37,84 @@ Close a plan only when its authorized scope is complete; disclose unresolved wor
 - Validation results: TODO (commands/checks, outcomes, failures, not-run checks,
   independent review, and limitations).
 
+## Architecture change impact
+
+Every execution plan involving an approved architecture change must contain the
+following section, maintained throughout the work. Follow Architecture change
+propagation in `AGENTS.md`, including its minimum impact-check list. Checking a
+document does not require changing it; modify only actually affected artifacts
+within the approved scope.
+
+```text
+Architecture change impact:
+
+- Approved architecture change:
+- Potentially affected documentation:
+- Documentation checked:
+- Documentation changed:
+- Documentation checked and unaffected:
+- Tests potentially affected:
+- Tests changed:
+- Implementation affected:
+- Additional approvals required:
+- Synchronization status: BLOCKED / READY / COMPLETE
+```
+
+Identify the exact approved change, scope, and approval record. Record the reasons
+for test changes, and track active plans and other controlled artifacts alongside
+documentation. In the plan's validation results, record validation, independent
+review, remaining inconsistencies, and open questions. Distinguish pending checks
+from artifacts checked and found unaffected; do not mark uninspected artifacts
+unaffected.
+
+- BLOCKED: an additional controlled-artifact change requires new approval. Stop
+  affected work, record the conflict and impact, and request explicit approval.
+- READY: impact is identified and all necessary approvals have been obtained.
+  This status alone does not permit implementation: affected documentation must
+  first be synchronized and test implications resolved, including necessary test
+  updates, under `AGENTS.md`.
+- COMPLETE: documentation, tests, and implementation are synchronized and
+  validated, with independent review completed. Unresolved inconsistencies or
+  unavailable required review prevent COMPLETE; disclose these limitations.
+
+These statuses do not replace the separate clarification status or authorize
+changes. While initial impact analysis is pending, record that fact without
+claiming READY or COMPLETE. Architecture approval never substitutes for separate
+approval of newly discovered changes to requirements or domain semantics.
+
+## Harness propagation execution record
+
+- Цель и разрешённый этап: дополнить только harness правилом распространения
+  утверждённых архитектурных изменений; запрос пользователя является разрешением
+  на перечисленные изменения harness, а не утверждением архитектуры приложения.
+- Известные факты: существующие clarification, approval и change control остаются
+  обязательными; проверка документа не означает необходимость его изменения.
+- Открытые вопросы и допущения: отсутствуют. Дополнительные решения пользователя
+  не требуются. Clarification status: READY.
+- Затронутые файлы: `AGENTS.md`, `PLANS.md`, шесть `.codex/agents/*.toml`.
+- План: дополнить общий workflow и шаблон impact analysis, уточнить обязанности
+  шести ролей, перечитать изменения, проверить TOML и согласованность правил,
+  получить независимое ревью harness.
+- Проверки: синтаксический разбор шести TOML, diff и границы изменений,
+  сохранность существующих gates, независимое ревью. Тесты приложения вне объёма.
+- Риски: изменение защищённого каталога `.codex/agents/` может требовать разрешения
+  среды; изменение конфигурации не проверяет её исполнение клиентом Codex.
+- Прогресс: изменения восьми harness-файлов завершены; следующий этап проекта
+  не начат. Запись этой harness-задачи ведётся здесь рядом с исходной записью
+  настройки; продуктовые документы и планы в `docs/` не изменялись.
+- Результаты проверок: все изменённые файлы перечитаны; шесть TOML успешно
+  разобраны Python 3.12 `tomllib`; `git diff --check` прошёл. Независимый reviewer
+  не выявил противоречий с clarification, approval и change control, пропусков
+  запрошенных правил или изменений вне разрешённого объёма. Незавершённых вопросов
+  по этой задаче нет. Тесты приложения не создавались и не запускались; исполнение
+  инструкций клиентом Codex не проверялось.
+  Первоначальный `git status` был отклонён из-за владельца каталога; повторная
+  проверка с командным `safe.directory` прошла без изменения глобальных настроек.
+  Первый запуск Python через `-c` завершился SyntaxError из-за кавычек PowerShell;
+  передача скрипта через stdin исправила запуск, все TOML прошли проверку.
+  Git предупредил о будущей нормализации LF в CRLF; ошибок diff не обнаружено.
+  Запись в защищённый `.codex/agents/` выполнена с разрешением среды.
+
 ## Harness setup execution record
 
 - Goal/stage: create only the repository harness and structured document templates.

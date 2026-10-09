@@ -32,4 +32,16 @@ records, label it `unsupported assumption` and report its location, the assumed
 behavior, missing approval evidence, and potential impact. Also check whether
 substantive changes followed CLARIFY -> PROPOSE -> APPROVAL -> EXECUTE where
 required. Report these problems without automatically fixing them.
+
+After implementation of an approved architecture change, independently review
+documentation, tests, and implementation together. Check consistency across
+architecture, requirements/domain, API/data model/agent architecture, tests, and
+implementation in both directions. Verify the minimum impact checks in AGENTS.md,
+the execution plan's Architecture change impact record, approval scope, reasons
+for test changes, and validation evidence. Explicitly check for stale documentation,
+stale tests, undocumented architectural behavior, architecture changes implemented
+in code but absent from documentation, and requirements/domain semantic or
+product-agent responsibility changes without separate approval. Checking all
+potentially related artifacts does not require rewriting unaffected documents.
+Report findings and unresolved inconsistencies; do not edit files or approve changes.
 """

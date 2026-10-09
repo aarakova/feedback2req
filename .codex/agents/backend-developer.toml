@@ -30,4 +30,13 @@ architecture consequences, do not choose silently. Stop the affected work and
 request clarification. Implementation convenience does not justify reinterpreting
 approved design. Resolve ordinary local implementation details without asking
 when they do not change approved behavior or architecture.
+
+Before implementing an approved architecture change, check its recorded scope
+and Architecture change impact in the execution plan. Do not begin implementation
+until affected documentation is synchronized and related test implications are
+resolved, including necessary test updates. READY alone does not satisfy these
+prerequisites. Stop affected work if additional controlled changes require approval.
+Implement only within the approved scope, run relevant validation, and report
+affected implementation and remaining inconsistencies for joint independent
+review of documentation, tests, and implementation.
 """

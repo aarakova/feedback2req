@@ -47,6 +47,60 @@ A later stage must never silently redefine an earlier approved stage.
   architecture first and document it afterward. Do not make destructive or
   irreversible changes without explicit approval.
 
+## Architecture change propagation
+
+An architecture change requires explicit user approval under the existing
+clarification, approval, and change-control workflow. Approval is limited to the
+exact change and scope authorized; it does not authorize unrelated controlled changes.
+
+After approval, before implementation:
+
+1. Identify the exact approved architecture change, scope, and approval evidence.
+2. Identify every controlled artifact potentially affected by the change.
+3. Inspect affected documentation for inconsistencies with the approved architecture.
+4. Update all documentation actually affected, within the approved scope. Do not
+   modify unaffected documents merely for consistency of wording.
+5. Identify existing tests whose assumptions, contracts, fixtures, or expected
+   behavior are affected. Update or replace tests only when the approved change
+   legitimately changes what they must verify; record why each change is needed.
+   Never weaken an unaffected valid test merely to make implementation pass.
+6. Only after documentation is synchronized and test implications are resolved,
+   including necessary test updates, update implementation.
+7. Run relevant validation and obtain independent review of documentation, tests,
+   and implementation together. Report when independent review is unavailable.
+
+At minimum, every approved architecture change must trigger an impact check of:
+
+- `docs/REQUIREMENTS.md`;
+- `docs/DOMAIN.md`;
+- `docs/ARCHITECTURE.md`;
+- `docs/AGENT_ARCHITECTURE.md`;
+- `docs/DATA_MODEL.md`;
+- `docs/API.md`;
+- `docs/TESTING.md`;
+- `docs/AI_VALIDATION.md`;
+- `docs/DECISIONS.md`;
+- active execution plans;
+- affected automated tests;
+- affected backend/frontend/AI implementation.
+
+Checking an artifact does not imply it must be modified. This list is a minimum,
+not a substitute for identifying other potentially affected controlled artifacts.
+
+If the change reveals that an already approved requirement, domain rule, business
+rule, actor meaning, acceptance criterion, or product-agent responsibility must
+also change, STOP affected work. Architecture approval does not automatically
+authorize changes to requirements or domain semantics. Report the newly discovered
+conflict, propose the additional controlled change and its impact, and obtain
+separate explicit user approval before proceeding. Apply the existing change-control
+workflow to any other controlled change outside the approved scope as well.
+
+Use the Architecture change impact section specified in `PLANS.md` to track
+synchronization. After synchronization, record which artifacts were checked,
+changed, or checked and found unaffected; which tests changed and why; validation
+and independent review performed; and remaining inconsistencies or open questions.
+Keep approval evidence, scope, and approved artifact revision in `docs/DECISIONS.md`.
+
 ## Documents and plans
 
 Use `docs/REQUIREMENTS.md` and `docs/DOMAIN.md` for scope and domain;
