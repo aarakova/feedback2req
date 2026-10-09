@@ -22,7 +22,7 @@ TODO: Define lifecycle states and transitions; none are assumed here.
 ## Provenance/traceability
 
 Preserve supporting source references and distinguish original source material
-from derived analysis per [AI_VALIDATION.md](AI_VALIDATION.md#project-invariants).
+from derived analysis per [AI_VALIDATION.md](AI_VALIDATION.md#инварианты-проекта).
 TODO: Design representation, lineage, and integrity rules.
 
 ## Unresolved decisions
