@@ -5,9 +5,9 @@
 Prepare a web system for software development teams to analyze audio, video,
 and text feedback alongside product documentation and generate evidence-linked
 product improvement requirements and analytical dashboards.
-Current authorization is harness and document templates only. Do not start
-detailed project documentation, architecture, tests, or application implementation
-until the user explicitly requests the corresponding work.
+Текущий разрешённый этап определяется явными поручениями пользователя и
+утверждениями в `docs/DECISIONS.md`; переход к следующему этапу требует
+предусмотренного явного утверждения.
 
 ## Communication language
 
