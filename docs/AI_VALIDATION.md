@@ -1,58 +1,96 @@
-# AI validation
+# Проверка поведения AI
 
-Status: TEMPLATE with user-stated invariants. Detailed evaluation design, datasets,
-metrics, and thresholds remain TODO; no implementation is authorized by this file.
-Approval record/revision: TODO; see [DECISIONS.md](DECISIONS.md).
+Статус: правила поведения синхронизированы с утверждёнными [предметной областью](DOMAIN.md)
+и [требованиями](REQUIREMENTS.md) от 2026-10-09. Методика оценки, наборы данных,
+метрики и пороги остаются открытыми. Этот документ не разрешает реализацию.
 
 ## Project invariants
 
-1. **Traceability:** analytical conclusions and generated requirements retain
-   references to supporting source feedback or approved product documentation.
-2. **Explicit uncertainty:** unsupported or uncertain conclusions are marked as
-   such instead of presented as facts.
-3. **Role separation:** feedback analysis, requirement generation, and requirement
-   verification are separate product responsibilities.
-4. **Human control:** unsupported or disputed conclusions must not silently become
-   approved product requirements.
-5. **Source preservation:** original source material and derived analysis remain
-   distinguishable.
-6. **Validation:** eventually test AI behavior against explicit evaluation criteria;
-   do not rely on exact natural-language matching unless wording is required.
+1. **Трассируемость.** Новое требование к доработке (`Requirement`) должно иметь
+   основание в пользовательской обратной связи, проверяемое через фрагмент
+   обратной связи (`FeedbackFragment`). Документация продукта (`ProductDocument`)
+   используется как контекст для понимания текущего продукта, интерпретации
+   отзывов и выявления расхождений. Сама по себе она не является достаточным
+   основанием новой пользовательской потребности или `Requirement`.
+2. **Явная неопределённость.** Недостаточно подтверждённые и ненадёжные выводы
+   обозначаются как неопределённые; AI не восполняет отсутствующие основания
+   вымыслом и не представляет интерпретацию как установленный факт.
+3. **Разделение обязанностей.** Анализ обратной связи, формирование требований и
+   проверка требований остаются разными обязанностями продуктовых агентов.
+4. **Контроль человека.** Результат AI и отсутствие замечаний проверки не
+   утверждают `Requirement`. Критичные замечания видны человеку, не исчезают и
+   не считаются разрешёнными автоматически; окончательное решение принимает
+   человек с соответствующим правом. Условия утверждения при неразрешённом
+   критичном замечании остаются открытым вопросом.
+5. **Различимость источника и производного результата.** Исходный материал,
+   результат AI, исправление человека и текущий результат различимы. Удаление
+   источника прекращает доступ к нему, но само по себе не стирает сведения о
+   происхождении производных результатов и участии AI и человека. Состав
+   сохраняемых сведений остаётся открытым вопросом.
+6. **Проверка поведения.** Поведение AI подлежит оценке по явным критериям;
+   точное совпадение естественно-языковых формулировок требуется только тогда,
+   когда это прямо предусмотрено требованием.
 
-## Evaluation goals
+## Цели оценки
 
-TODO: Translate approved requirements and these invariants into evaluation criteria,
-including role separation and source preservation.
+Оценка должна проверять соответствие выводов исходным отзывам, сохранение
+проверяемого основания, обозначение неопределённости, разделение прямых слов
+участника и интерпретации AI, сохранение конфликтующих позиций и повторную
+проверку зависимых выводов после существенного изменения основания.
+TODO: определить конкретные критерии оценки на следующем разрешённом этапе.
 
-## Datasets/scenarios
+## Наборы данных и сценарии
 
-TODO: Define representative scenarios, dataset provenance, and expected judgments.
+TODO: определить представительные русскоязычные сценарии, происхождение наборов
+и ожидаемые экспертные суждения без выбора технологий или численных порогов.
 
-## Traceability checks
+## Проверки трассируемости
 
-TODO: Define checks that references exist and actually support the conclusion.
+Проверять не только наличие ссылки на `FeedbackFragment`, но и то, что фрагмент
+действительно поддерживает вывод. `ProductDocument` проверяется отдельно как
+контекст, а не как единственное основание нового требования. После удаления
+`FeedbackSource` следует различать сведения о происхождении результата
+(provenance/lineage) и доступность самого источника (source accessibility):
+удалённый материал не должен показываться как доступный.
+TODO: определить, какие сведения о происхождении сохранять после удаления.
 
-## Unsupported-claim checks
+## Проверки неподтверждённых выводов
 
-TODO: Define support and uncertainty judgments and how they are evaluated.
+Проверять, не превращает ли AI недостаточную или ненадёжную обратную связь в
+уверенное требование; не приписывает ли участнику выведенную системой потребность;
+не считает ли документацию продукта самостоятельным доказательством потребности.
+TODO: определить сценарии и метод оценки.
 
-## Contradiction checks
+## Проверки противоречий
 
-TODO: Define contradiction scenarios and approved expected behavior.
+Проверять, что несовместимые пользовательские ожидания сохраняются как разные
+позиции и явно обозначаются, а расхождение отзыва с документацией показывается
+без самостоятельного выбора «правильной» версии документа.
+TODO: определить сценарии и метод оценки.
 
-## Ambiguity checks
+## Проверки неоднозначности
 
-TODO: Define ambiguity criteria and when clarification is required.
+Проверять, что существенно неоднозначный вывод или проект требования получает
+объяснение неопределённости либо вопрос человеку.
+TODO: определить сценарии и метод оценки.
 
-## Duplicate detection
+## Обнаружение дублей
 
-TODO: Define duplication criteria and evaluation scenarios.
+Проверять возможные дубли находок и требований, не смешивая их с разными
+проблемами или противоположными ожиданиями. Технический способ обнаружения
+повторно загруженного материала остаётся открытым.
+TODO: определить сценарии и метод оценки.
 
-## Human review criteria
+## Критерии человеческой проверки
 
-TODO: Define when and how human review resolves unsupported or disputed conclusions;
-do not assume an approval workflow or interface.
+Человек должен иметь возможность отличить прямое высказывание участника от
+интерпретации AI, проверить доступное основание, увидеть критичные замечания и
+принять окончательное решение. После существенной правки основания зависимые
+выводы повторно проверяются либо явно требуют актуализации.
+TODO: определить подробные критерии оценки без предрешения порядка утверждения
+при неразрешённом критичном замечании.
 
-## Metrics to be defined later
+## Метрики, определяемые позднее
 
-TODO: Propose metrics, thresholds, and assessment methods for explicit approval.
+TODO: предложить наборы оценки, метрики, допустимые пороги и способы измерения
+для отдельного утверждения. Численные значения сейчас не установлены.
