@@ -1,15 +1,19 @@
 # Testing
 
 Status: application testing strategy remains a TEMPLATE with user-requested policy.
-Contract-artifact validation is authorized by DEC-005; application tests and their
-tooling are not yet designed or approved. Application testing revision: TODO;
+Contract-artifact validation is authorized by DEC-005. DEC-006 selects the stack
+and permits this policy alignment with AGENTS.md; it does not authorize application
+implementation. Proposed slice checks are in [FIRST_TEXT_SLICE.md](FIRST_TEXT_SLICE.md).
+Application test tooling remains unselected. Application testing revision: TODO;
 see [DECISIONS.md](DECISIONS.md).
 
 ## Testing strategy
 
-Write tests covering approved designed functionality after requirements and
-architecture approval, before implementation. Separate defects from design-change
-proposals; follow [AGENTS.md](../AGENTS.md) when an approved artifact is insufficient.
+Cover approved functionality and applicable acceptance criteria with meaningful
+checks. Choose the order of test writing, implementation, and debugging within
+the authorized scope; tests need not invariably precede implementation.
+Separate defects from design-change proposals; follow
+[AGENTS.md](../AGENTS.md) when an approved artifact is insufficient.
 TODO: Define the project-specific strategy from approved requirements.
 
 ## Test levels
@@ -33,13 +37,15 @@ No application test commands exist yet.
 Never weaken or remove a valid failing test without an approved requirement/design
 change. Never change production behavior merely to make a test pass. Report
 suspected incorrect tests with evidence rather than silently rewriting expectations.
-After explicit approval of a controlled change, update documentation/design first,
-then tests, then implementation. Report failures and checks not run.
+Obtain approval before changing controlled requirements or design. Within an
+approved change, keep documentation, tests, and implementation consistent without
+a mandatory docs → tests → implementation sequence. Report failures and checks not run.
 
 ## Definition of done
 
 Applicable approvals are recorded; documentation, tests, and code agree; relevant
-checks are run and results reported; independent review is completed. Failures,
+checks are run and results reported. Use independent review for substantial changes
+when available and disclose review limitations. Failures,
 unresolved errors, uncertainty, and unavailable checks/review must be disclosed,
 not represented as passing or complete validation.
 TODO: Define functionality-specific completion criteria and validation commands.
