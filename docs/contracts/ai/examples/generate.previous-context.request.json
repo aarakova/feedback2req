@@ -1,0 +1,103 @@
+{
+  "contract_version": "1.0",
+  "operation": "generate_requirements",
+  "project_id": "PROJECT-DEMO",
+  "request_id": "REQUEST-generate_requirements",
+  "input": {
+    "findings": [
+      {
+        "key": "f1",
+        "ref": {
+          "kind": "finding",
+          "id": "FINDING-1",
+          "state_id": "FINDING-1-v1"
+        },
+        "text": "Пользователь просит сохранять фильтры.",
+        "types": [
+          "request"
+        ],
+        "mode": "direct",
+        "evidence": [
+          {
+            "kind": "available",
+            "fragment_key": "e1"
+          }
+        ],
+        "uncertainty_notes": [],
+        "open_questions": [],
+        "authorship": "ai"
+      }
+    ],
+    "fragments": [
+      {
+        "key": "e1",
+        "ref": {
+          "kind": "fragment",
+          "id": "FRAGMENT-1",
+          "state_id": "FRAGMENT-1-v1"
+        },
+        "source_ref": {
+          "kind": "feedback_source",
+          "id": "SRC-1",
+          "state_id": "SRC-1-v1"
+        },
+        "text_ref": {
+          "kind": "feedback_source",
+          "id": "SRC-1",
+          "state_id": "SRC-1-v1"
+        },
+        "quote": "Хочу сохранять фильтры.",
+        "locator": {
+          "start": 0,
+          "end": 23
+        },
+        "reliability": "usable"
+      }
+    ],
+    "groups": [
+      {
+        "key": "g1",
+        "ref": {
+          "kind": "finding_group",
+          "id": "GROUP-1",
+          "state_id": "GROUP-1-v1"
+        },
+        "title": "Работа с фильтрами",
+        "summary": "Сохранение выбранных фильтров.",
+        "finding_keys": [
+          "f1"
+        ],
+        "conflicts": [],
+        "open_questions": []
+      }
+    ],
+    "documents": [],
+    "previous_candidates": [
+      {
+        "key": "previous-revision",
+        "ref": {
+          "kind": "requirement_revision",
+          "id": "REV-17-2",
+          "state_id": "REV-17-2-v1"
+        },
+        "requirement_id": "REQ-17",
+        "title": "Сохранять фильтры",
+        "text": "Пользователь может сохранить выбранный набор фильтров.",
+        "rationale": "Доработка поддержана пользовательской обратной связью.",
+        "evidence": [
+          {
+            "finding_key": "f1",
+            "links": [
+              {
+                "kind": "available",
+                "fragment_key": "e1"
+              }
+            ]
+          }
+        ],
+        "open_questions": []
+      }
+    ],
+    "change_reason": "Явно запущено повторное формирование кандидата."
+  }
+}

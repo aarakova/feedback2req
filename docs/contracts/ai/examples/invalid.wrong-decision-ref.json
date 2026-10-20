@@ -1,0 +1,133 @@
+{
+  "contract_version": "1.0",
+  "operation": "verify_requirement",
+  "project_id": "PROJECT-DEMO",
+  "request_id": "REQUEST-verify_requirement",
+  "input": {
+    "target": {
+      "key": "target",
+      "ref": {
+        "kind": "requirement_revision",
+        "id": "REV-17-2",
+        "state_id": "REV-17-2-v1"
+      },
+      "requirement_id": "REQ-17",
+      "title": "Сохранять фильтры",
+      "text": "Пользователь может сохранить выбранный набор фильтров.",
+      "rationale": "Доработка поддержана пользовательской обратной связью.",
+      "evidence": [
+        {
+          "finding_key": "f1",
+          "links": [
+            {
+              "kind": "available",
+              "fragment_key": "e1"
+            }
+          ]
+        },
+        {
+          "finding_key": "f2",
+          "links": [
+            {
+              "kind": "deleted_source",
+              "source_id": "SRC-2"
+            }
+          ]
+        }
+      ],
+      "open_questions": []
+    },
+    "findings": [
+      {
+        "key": "f1",
+        "ref": {
+          "kind": "finding",
+          "id": "FINDING-1",
+          "state_id": "FINDING-1-v1"
+        },
+        "text": "Пользователь просит сохранять фильтры.",
+        "types": [
+          "request"
+        ],
+        "mode": "direct",
+        "evidence": [
+          {
+            "kind": "available",
+            "fragment_key": "e1"
+          }
+        ],
+        "uncertainty_notes": [],
+        "open_questions": [],
+        "authorship": "ai"
+      },
+      {
+        "key": "f2",
+        "ref": {
+          "kind": "finding",
+          "id": "FINDING-2",
+          "state_id": "FINDING-2-v1"
+        },
+        "text": "Ранее отмечена повторная настройка фильтров.",
+        "types": [
+          "problem"
+        ],
+        "mode": "direct",
+        "evidence": [
+          {
+            "kind": "deleted_source",
+            "source_id": "SRC-2"
+          }
+        ],
+        "uncertainty_notes": [],
+        "open_questions": [],
+        "authorship": "ai"
+      }
+    ],
+    "fragments": [
+      {
+        "key": "e1",
+        "ref": {
+          "kind": "fragment",
+          "id": "FRAGMENT-1",
+          "state_id": "FRAGMENT-1-v1"
+        },
+        "source_ref": {
+          "kind": "feedback_source",
+          "id": "SRC-1",
+          "state_id": "SRC-1-v1"
+        },
+        "text_ref": {
+          "kind": "feedback_source",
+          "id": "SRC-1",
+          "state_id": "SRC-1-v1"
+        },
+        "quote": "Хочу сохранять фильтры.",
+        "locator": {
+          "start": 0,
+          "end": 23
+        },
+        "reliability": "usable"
+      }
+    ],
+    "documents": [],
+    "comparisons": [],
+    "comparison_scope": {
+      "extent": "project_snapshot",
+      "required_keys": []
+    },
+    "previous_checks": [],
+    "prior_decision": {
+      "ref": {
+        "kind": "verification_result",
+        "id": "DECISION-17",
+        "state_id": "DECISION-17-v1"
+      },
+      "revision_ref": {
+        "kind": "requirement_revision",
+        "id": "REV-17-2",
+        "state_id": "REV-17-2-v1"
+      },
+      "summary": "Эта редакция ранее утверждена человеком."
+    }
+  }
+}

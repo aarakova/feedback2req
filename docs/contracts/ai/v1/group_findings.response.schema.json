@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://feedback2req.invalid/contracts/ai/v1/group_findings.response.schema.json",
+  "title": "group_findings.response",
+  "type": "object",
+  "properties": {
+    "coverage": {
+      "type": "array",
+      "items": {
+        "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/CoverageItem"
+      },
+      "minItems": 1
+    },
+    "uncertainties": {
+      "type": "array",
+      "items": {
+        "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/Uncertainty"
+      },
+      "minItems": 0
+    },
+    "questions": {
+      "type": "array",
+      "items": {
+        "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/Question"
+      },
+      "minItems": 0
+    },
+    "result": {
+      "type": "object",
+      "properties": {
+        "groups": {
+          "type": "array",
+          "items": {
+            "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/GroupCandidate"
+          },
+          "minItems": 0
+        },
+        "ungrouped_finding_keys": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "groups",
+        "ungrouped_finding_keys"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "coverage",
+    "uncertainties",
+    "questions",
+    "result"
+  ],
+  "additionalProperties": false
+}

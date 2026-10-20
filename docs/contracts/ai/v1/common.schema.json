@@ -1,0 +1,1599 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json",
+  "title": "Shared AI contract structures 1.0",
+  "$defs": {
+    "StateRef": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "enum": [
+            "feedback_source",
+            "transcript",
+            "fragment",
+            "finding",
+            "finding_group",
+            "requirement_revision",
+            "requirement_change_proposal",
+            "product_document",
+            "verification_result",
+            "verification_issue",
+            "issue_resolution",
+            "human_decision"
+          ]
+        },
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "state_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "kind",
+        "id",
+        "state_id"
+      ],
+      "additionalProperties": false
+    },
+    "Locator": {
+      "type": "object",
+      "properties": {
+        "start": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "end": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "start",
+        "end"
+      ],
+      "additionalProperties": false
+    },
+    "TimeRange": {
+      "type": "object",
+      "properties": {
+        "start_ms": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "end_ms": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "start_ms",
+        "end_ms"
+      ],
+      "additionalProperties": false
+    },
+    "Link": {
+      "type": "object",
+      "properties": {
+        "origin": {
+          "enum": [
+            "input",
+            "output"
+          ]
+        },
+        "key": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "origin",
+        "key"
+      ],
+      "additionalProperties": false
+    },
+    "Question": {
+      "type": "object",
+      "properties": {
+        "local_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "related": {
+          "type": "array",
+          "items": {
+            "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/Link"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "blocking": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "local_id",
+        "text",
+        "reason",
+        "related",
+        "blocking"
+      ],
+      "additionalProperties": false
+    },
+    "QuestionView": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "blocking": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "key",
+        "text",
+        "reason",
+        "blocking"
+      ],
+      "additionalProperties": false
+    },
+    "Uncertainty": {
+      "type": "object",
+      "properties": {
+        "local_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "related": {
+          "type": "array",
+          "items": {
+            "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/Link"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "local_id",
+        "related",
+        "reason"
+      ],
+      "additionalProperties": false
+    },
+    "CoverageItem": {
+      "type": "object",
+      "properties": {
+        "input_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reviewed": {
+          "type": "boolean"
+        },
+        "disposition": {
+          "enum": [
+            "completed",
+            "insufficient_information",
+            "not_processed",
+            "partially_processed"
+          ]
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "input_key",
+        "reviewed",
+        "disposition"
+      ],
+      "additionalProperties": false,
+      "oneOf": [
+        {
+          "properties": {
+            "reviewed": {
+              "const": true
+            },
+            "disposition": {
+              "const": "completed"
+            }
+          }
+        },
+        {
+          "properties": {
+            "reviewed": {
+              "const": true
+            },
+            "disposition": {
+              "const": "insufficient_information"
+            }
+          },
+          "required": [
+            "reason"
+          ]
+        },
+        {
+          "properties": {
+            "reviewed": {
+              "const": false
+            },
+            "disposition": {
+              "const": "not_processed"
+            }
+          },
+          "required": [
+            "reason"
+          ]
+        },
+        {
+          "properties": {
+            "reviewed": {
+              "const": true
+            },
+            "disposition": {
+              "const": "partially_processed"
+            }
+          },
+          "required": [
+            "reason"
+          ]
+        }
+      ]
+    },
+    "AtomicSegmentCoverage": {
+      "allOf": [
+        {
+          "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/CoverageItem"
+        },
+        {
+          "properties": {
+            "disposition": {
+              "enum": [
+                "completed",
+                "insufficient_information",
+                "not_processed"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "EvidenceLink": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "available"
+            },
+            "fragment_key": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "kind",
+            "fragment_key"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "deleted_source"
+            },
+            "source_id": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "kind",
+            "source_id"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "EvidenceSelection": {
+      "type": "object",
+      "properties": {
+        "finding_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "fragment_keys": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "finding_key",
+        "fragment_keys"
+      ],
+      "additionalProperties": false
+    },
+    "RevisionEvidence": {
+      "type": "object",
+      "properties": {
+        "finding_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "links": {
+          "type": "array",
+          "items": {
+            "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/EvidenceLink"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "finding_key",
+        "links"
+      ],
+      "additionalProperties": false
+    },
+    "TextSegment": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_ref": {
+          "allOf": [
+            {
+              "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/StateRef"
+            },
+            {
+              "properties": {
+                "kind": {
+                  "const": "feedback_source"
+                }
+              }
+            }
+          ]
+        },
+        "text_ref": {
+          "allOf": [
+            {
+              "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/StateRef"
+            },
+            {
+              "properties": {
+                "kind": {
+                  "enum": [
+                    "feedback_source",
+                    "transcript"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "locator": {
+          "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/Locator"
+        },
+        "reliability": {
+          "enum": [
+            "usable",
+            "uncertain"
+          ]
+        },
+        "time_range": {
+          "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/TimeRange"
+        }
+      },
+      "required": [
+        "key",
+        "source_ref",
+        "text_ref",
+        "text",
+        "locator",
+        "reliability"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "text_ref": {
+                "properties": {
+                  "kind": {
+                    "const": "transcript"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "time_range"
+            ]
+          },
+          "else": {
+            "not": {
+              "required": [
+                "time_range"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "FragmentView": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "ref": {
+          "allOf": [
+            {
+              "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/StateRef"
+            },
+            {
+              "properties": {
+                "kind": {
+                  "const": "fragment"
+                }
+              }
+            }
+          ]
+        },
+        "source_ref": {
+          "allOf": [
+            {
+              "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/StateRef"
+            },
+            {
+              "properties": {
+                "kind": {
+                  "const": "feedback_source"
+                }
+              }
+            }
+          ]
+        },
+        "text_ref": {
+          "allOf": [
+            {
+              "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/StateRef"
+            },
+            {
+              "properties": {
+                "kind": {
+                  "enum": [
+                    "feedback_source",
+                    "transcript"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "quote": {
+          "type": "string",
+          "minLength": 1
+        },
+        "locator": {
+          "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/Locator"
+        },
+        "reliability": {
+          "enum": [
+            "usable",
+            "uncertain"
+          ]
+        },
+        "time_range": {
+          "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/TimeRange"
+        }
+      },
+      "required": [
+        "key",
+        "ref",
+        "source_ref",
+        "text_ref",
+        "quote",
+        "locator",
+        "reliability"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "text_ref": {
+                "properties": {
+                  "kind": {
+                    "const": "transcript"
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "time_range"
+            ]
+          },
+          "else": {
+            "not": {
+              "required": [
+                "time_range"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "FindingTypes": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "problem",
+          "request",
+          "observation",
+          "need"
+        ]
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "FindingView": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "ref": {
+          "allOf": [
+            {
+              "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/StateRef"
+            },
+            {
+              "properties": {
+                "kind": {
+                  "const": "finding"
+                }
+              }
+            }
+          ]
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "types": {
+          "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/FindingTypes"
+        },
+        "mode": {
+          "enum": [
+            "direct",
+            "inferred"
+          ]
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/EvidenceLink"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "uncertainty_notes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0
+        },
+        "open_questions": {
+          "type": "array",
+          "items": {
+            "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/QuestionView"
+          },
+          "minItems": 0
+        },
+        "authorship": {
+          "enum": [
+            "ai",
+            "human",
+            "ai_and_human"
+          ]
+        }
+      },
+      "required": [
+        "key",
+        "ref",
+        "text",
+        "types",
+        "mode",
+        "evidence",
+        "uncertainty_notes",
+        "open_questions",
+        "authorship"
+      ],
+      "additionalProperties": false
+    },
+    "Position": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "finding_keys": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "description",
+        "finding_keys"
+      ],
+      "additionalProperties": false
+    },
+    "ConflictView": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "positions": {
+          "type": "array",
+          "items": {
+            "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/Position"
+          },
+          "minItems": 2
+        }
+      },
+      "required": [
+        "key",
+        "description",
+        "positions"
+      ],
+      "additionalProperties": false
+    },
+    "ConflictCandidate": {
+      "type": "object",
+      "properties": {
+        "local_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "positions": {
+          "type": "array",
+          "items": {
+            "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/Position"
+          },
+          "minItems": 2
+        }
+      },
+      "required": [
+        "local_id",
+        "description",
+        "positions"
+      ],
+      "additionalProperties": false
+    },
+    "GroupView": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "ref": {
+          "allOf": [
+            {
+              "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/StateRef"
+            },
+            {
+              "properties": {
+                "kind": {
+                  "const": "finding_group"
+                }
+              }
+            }
+          ]
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "finding_keys": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "conflicts": {
+          "type": "array",
+          "items": {
+            "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/ConflictView"
+          },
+          "minItems": 0
+        },
+        "open_questions": {
+          "type": "array",
+          "items": {
+            "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/QuestionView"
+          },
+          "minItems": 0
+        }
+      },
+      "required": [
+        "key",
+        "ref",
+        "title",
+        "summary",
+        "finding_keys",
+        "conflicts",
+        "open_questions"
+      ],
+      "additionalProperties": false
+    },
+    "DocumentExcerpt": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "ref": {
+          "allOf": [
+            {
+              "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/StateRef"
+            },
+            {
+              "properties": {
+                "kind": {
+                  "const": "product_document"
+                }
+              }
+            }
+          ]
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "locator": {
+          "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/Locator"
+        }
+      },
+      "required": [
+        "key",
+        "ref",
+        "text",
+        "locator"
+      ],
+      "additionalProperties": false
+    },
+    "RevisionView": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "ref": {
+          "allOf": [
+            {
+              "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/StateRef"
+            },
+            {
+              "properties": {
+                "kind": {
+                  "const": "requirement_revision"
+                }
+              }
+            }
+          ]
+        },
+        "requirement_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 1
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/RevisionEvidence"
+          },
+          "minItems": 1
+        },
+        "open_questions": {
+          "type": "array",
+          "items": {
+            "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/QuestionView"
+          },
+          "minItems": 0
+        }
+      },
+      "required": [
+        "key",
+        "ref",
+        "requirement_id",
+        "title",
+        "text",
+        "rationale",
+        "evidence",
+        "open_questions"
+      ],
+      "additionalProperties": false
+    },
+    "ComparisonRevision": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "ref": {
+          "allOf": [
+            {
+              "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/StateRef"
+            },
+            {
+              "properties": {
+                "kind": {
+                  "const": "requirement_revision"
+                }
+              }
+            }
+          ]
+        },
+        "requirement_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "roles": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "current",
+              "pending_change",
+              "new_candidate",
+              "history"
+            ]
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "proposal_ref": {
+          "allOf": [
+            {
+              "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/StateRef"
+            },
+            {
+              "properties": {
+                "kind": {
+                  "const": "requirement_change_proposal"
+                }
+              }
+            }
+          ]
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "key",
+        "ref",
+        "requirement_id",
+        "roles",
+        "title",
+        "text"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "roles": {
+                "contains": {
+                  "const": "pending_change"
+                }
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "proposal_ref"
+            ]
+          },
+          "else": {
+            "not": {
+              "required": [
+                "proposal_ref"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "ComparisonScope": {
+      "type": "object",
+      "properties": {
+        "extent": {
+          "enum": [
+            "project_snapshot",
+            "selected"
+          ]
+        },
+        "required_keys": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "selection_reason": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "extent",
+        "required_keys"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "extent": {
+                "const": "selected"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "selection_reason"
+            ]
+          },
+          "else": {
+            "not": {
+              "required": [
+                "selection_reason"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "IssueCategory": {
+      "enum": [
+        "unsupported_claim",
+        "contradiction",
+        "ambiguity",
+        "possible_duplicate",
+        "insufficient_evidence"
+      ]
+    },
+    "Severity": {
+      "enum": [
+        "low",
+        "medium",
+        "high"
+      ]
+    },
+    "PreviousIssueView": {
+      "type": "object",
+      "properties": {
+        "ref": {
+          "allOf": [
+            {
+              "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/StateRef"
+            },
+            {
+              "properties": {
+                "kind": {
+                  "const": "verification_issue"
+                }
+              }
+            }
+          ]
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "category": {
+          "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/IssueCategory"
+        },
+        "severity": {
+          "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/Severity"
+        },
+        "blocking": {
+          "type": "boolean"
+        },
+        "is_open": {
+          "type": "boolean"
+        },
+        "resolution_summary": {
+          "type": "object",
+          "properties": {
+            "ref": {
+              "allOf": [
+                {
+                  "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/StateRef"
+                },
+                {
+                  "properties": {
+                    "kind": {
+                      "const": "issue_resolution"
+                    }
+                  }
+                }
+              ]
+            },
+            "text": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "required": [
+            "ref",
+            "text"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "ref",
+        "text",
+        "category",
+        "severity",
+        "blocking",
+        "is_open"
+      ],
+      "additionalProperties": false
+    },
+    "PreviousCheckView": {
+      "type": "object",
+      "properties": {
+        "ref": {
+          "allOf": [
+            {
+              "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/StateRef"
+            },
+            {
+              "properties": {
+                "kind": {
+                  "const": "verification_result"
+                }
+              }
+            }
+          ]
+        },
+        "revision_ref": {
+          "allOf": [
+            {
+              "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/StateRef"
+            },
+            {
+              "properties": {
+                "kind": {
+                  "const": "requirement_revision"
+                }
+              }
+            }
+          ]
+        },
+        "issues": {
+          "type": "array",
+          "items": {
+            "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/PreviousIssueView"
+          },
+          "minItems": 0
+        }
+      },
+      "required": [
+        "ref",
+        "revision_ref",
+        "issues"
+      ],
+      "additionalProperties": false
+    },
+    "PriorDecision": {
+      "type": "object",
+      "properties": {
+        "ref": {
+          "allOf": [
+            {
+              "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/StateRef"
+            },
+            {
+              "properties": {
+                "kind": {
+                  "const": "human_decision"
+                }
+              }
+            }
+          ]
+        },
+        "revision_ref": {
+          "allOf": [
+            {
+              "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/StateRef"
+            },
+            {
+              "properties": {
+                "kind": {
+                  "const": "requirement_revision"
+                }
+              }
+            }
+          ]
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "ref",
+        "revision_ref",
+        "summary"
+      ],
+      "additionalProperties": false
+    },
+    "Followup": {
+      "type": "object",
+      "properties": {
+        "previous_result_ref": {
+          "allOf": [
+            {
+              "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/StateRef"
+            },
+            {
+              "properties": {
+                "kind": {
+                  "const": "verification_result"
+                }
+              }
+            }
+          ]
+        },
+        "issue_refs": {
+          "type": "array",
+          "items": {
+            "allOf": [
+              {
+                "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/StateRef"
+              },
+              {
+                "properties": {
+                  "kind": {
+                    "const": "verification_issue"
+                  }
+                }
+              }
+            ]
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "previous_result_ref",
+        "issue_refs"
+      ],
+      "additionalProperties": false
+    },
+    "ChangeContext": {
+      "type": "object",
+      "properties": {
+        "base_revision_ref": {
+          "allOf": [
+            {
+              "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/StateRef"
+            },
+            {
+              "properties": {
+                "kind": {
+                  "const": "requirement_revision"
+                }
+              }
+            }
+          ]
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "base_revision_ref",
+        "reason"
+      ],
+      "additionalProperties": false
+    },
+    "FragmentCandidate": {
+      "type": "object",
+      "properties": {
+        "local_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "segment_key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "quote": {
+          "type": "string",
+          "minLength": 1
+        },
+        "occurrence": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "local_id",
+        "segment_key",
+        "quote",
+        "occurrence"
+      ],
+      "additionalProperties": false
+    },
+    "FindingCandidate": {
+      "type": "object",
+      "properties": {
+        "local_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "types": {
+          "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/FindingTypes"
+        },
+        "mode": {
+          "enum": [
+            "direct",
+            "inferred"
+          ]
+        },
+        "fragment_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "considered_keys": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "context_keys": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "local_id",
+        "text",
+        "types",
+        "mode",
+        "fragment_ids",
+        "considered_keys",
+        "context_keys"
+      ],
+      "additionalProperties": false
+    },
+    "GroupCandidate": {
+      "type": "object",
+      "properties": {
+        "local_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "finding_keys": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "considered_keys": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "context_keys": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        },
+        "conflicts": {
+          "type": "array",
+          "items": {
+            "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/ConflictCandidate"
+          },
+          "minItems": 0
+        }
+      },
+      "required": [
+        "local_id",
+        "title",
+        "summary",
+        "finding_keys",
+        "considered_keys",
+        "context_keys",
+        "conflicts"
+      ],
+      "additionalProperties": false
+    },
+    "RequirementCandidate": {
+      "type": "object",
+      "properties": {
+        "local_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 1
+        },
+        "evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/EvidenceSelection"
+          },
+          "minItems": 1
+        },
+        "considered_keys": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "context_keys": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "local_id",
+        "title",
+        "text",
+        "rationale",
+        "evidence",
+        "considered_keys",
+        "context_keys"
+      ],
+      "additionalProperties": false
+    },
+    "CheckAssessment": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "enum": [
+            "support",
+            "contradictions",
+            "ambiguity",
+            "duplicates"
+          ]
+        },
+        "conclusion": {
+          "enum": [
+            "no_issue_found",
+            "issues_found",
+            "inconclusive"
+          ]
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 1
+        },
+        "considered_keys": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "kind",
+        "conclusion",
+        "rationale",
+        "considered_keys"
+      ],
+      "additionalProperties": false
+    },
+    "IssueCandidate": {
+      "type": "object",
+      "properties": {
+        "local_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "category": {
+          "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/IssueCategory"
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "severity": {
+          "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/Severity"
+        },
+        "blocking": {
+          "type": "boolean"
+        },
+        "blocking_reason": {
+          "type": "string",
+          "minLength": 1
+        },
+        "related": {
+          "type": "array",
+          "items": {
+            "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/Link"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "question_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 0,
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "local_id",
+        "category",
+        "text",
+        "reason",
+        "severity",
+        "blocking",
+        "blocking_reason",
+        "related",
+        "question_ids"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

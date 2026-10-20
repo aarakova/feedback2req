@@ -1,0 +1,120 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://feedback2req.invalid/contracts/ai/v1/verify_requirement.response.schema.json",
+  "title": "verify_requirement.response",
+  "type": "object",
+  "properties": {
+    "coverage": {
+      "type": "array",
+      "items": {
+        "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/CoverageItem"
+      },
+      "minItems": 1,
+      "maxItems": 1
+    },
+    "uncertainties": {
+      "type": "array",
+      "items": {
+        "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/Uncertainty"
+      },
+      "minItems": 0
+    },
+    "questions": {
+      "type": "array",
+      "items": {
+        "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/Question"
+      },
+      "minItems": 0
+    },
+    "result": {
+      "type": "object",
+      "properties": {
+        "checks": {
+          "type": "array",
+          "items": {
+            "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/CheckAssessment"
+          },
+          "minItems": 4,
+          "maxItems": 4,
+          "allOf": [
+            {
+              "contains": {
+                "properties": {
+                  "kind": {
+                    "const": "support"
+                  }
+                },
+                "required": [
+                  "kind"
+                ]
+              },
+              "minContains": 1,
+              "maxContains": 1
+            },
+            {
+              "contains": {
+                "properties": {
+                  "kind": {
+                    "const": "contradictions"
+                  }
+                },
+                "required": [
+                  "kind"
+                ]
+              },
+              "minContains": 1,
+              "maxContains": 1
+            },
+            {
+              "contains": {
+                "properties": {
+                  "kind": {
+                    "const": "ambiguity"
+                  }
+                },
+                "required": [
+                  "kind"
+                ]
+              },
+              "minContains": 1,
+              "maxContains": 1
+            },
+            {
+              "contains": {
+                "properties": {
+                  "kind": {
+                    "const": "duplicates"
+                  }
+                },
+                "required": [
+                  "kind"
+                ]
+              },
+              "minContains": 1,
+              "maxContains": 1
+            }
+          ]
+        },
+        "issues": {
+          "type": "array",
+          "items": {
+            "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/IssueCandidate"
+          },
+          "minItems": 0
+        }
+      },
+      "required": [
+        "checks",
+        "issues"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "coverage",
+    "uncertainties",
+    "questions",
+    "result"
+  ],
+  "additionalProperties": false
+}

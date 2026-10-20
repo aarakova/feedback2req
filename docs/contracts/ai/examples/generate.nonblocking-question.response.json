@@ -1,0 +1,48 @@
+{
+  "coverage": [
+    {
+      "input_key": "f1",
+      "reviewed": true,
+      "disposition": "completed"
+    }
+  ],
+  "uncertainties": [],
+  "questions": [
+    {
+      "local_id": "q1",
+      "text": "Нужен ли поясняющий пример?",
+      "reason": "Формулировка уже однозначна; вопрос уточняет оформление.",
+      "related": [
+        {
+          "origin": "output",
+          "key": "requirement-1"
+        }
+      ],
+      "blocking": false
+    }
+  ],
+  "result": {
+    "requirements": [
+      {
+        "local_id": "requirement-1",
+        "title": "Сохранять фильтры",
+        "text": "Пользователь может сохранить выбранный набор фильтров.",
+        "rationale": "Доработка поддержана пользовательской обратной связью.",
+        "evidence": [
+          {
+            "finding_key": "f1",
+            "fragment_keys": [
+              "e1"
+            ]
+          }
+        ],
+        "considered_keys": [
+          "f1"
+        ],
+        "context_keys": [
+          "g1"
+        ]
+      }
+    ]
+  }
+}

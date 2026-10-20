@@ -1,0 +1,81 @@
+{
+  "contract_version": "1.0",
+  "operation": "extract_feedback",
+  "project_id": "PROJECT-DEMO",
+  "request_id": "REQUEST-extract_feedback",
+  "input": {
+    "segments": [
+      {
+        "key": "s1",
+        "source_ref": {
+          "kind": "feedback_source",
+          "id": "SRC-1",
+          "state_id": "SRC-1-v1"
+        },
+        "text_ref": {
+          "kind": "feedback_source",
+          "id": "SRC-1",
+          "state_id": "SRC-1-v1"
+        },
+        "text": "Хочу сохранять фильтры.",
+        "locator": {
+          "start": 0,
+          "end": 23
+        },
+        "reliability": "usable"
+      }
+    ],
+    "documents": [],
+    "previous_findings": [
+      {
+        "key": "f1",
+        "ref": {
+          "kind": "finding",
+          "id": "FINDING-1",
+          "state_id": "FINDING-1-v1"
+        },
+        "text": "Пользователь просит сохранять фильтры.",
+        "types": [
+          "request"
+        ],
+        "mode": "direct",
+        "evidence": [
+          {
+            "kind": "available",
+            "fragment_key": "e1"
+          }
+        ],
+        "uncertainty_notes": [],
+        "open_questions": [],
+        "authorship": "ai"
+      }
+    ],
+    "previous_fragments": [
+      {
+        "key": "e1",
+        "ref": {
+          "kind": "fragment",
+          "id": "FRAGMENT-1",
+          "state_id": "FRAGMENT-1-v1"
+        },
+        "source_ref": {
+          "kind": "feedback_source",
+          "id": "SRC-1",
+          "state_id": "SRC-1-v1"
+        },
+        "text_ref": {
+          "kind": "feedback_source",
+          "id": "SRC-1",
+          "state_id": "SRC-1-v1"
+        },
+        "quote": "Хочу сохранять фильтры.",
+        "locator": {
+          "start": 0,
+          "end": 23
+        },
+        "reliability": "usable"
+      }
+    ],
+    "change_reason": "Явно запущен повтор извлечения; прежние находки служат только контекстом."
+  }
+}

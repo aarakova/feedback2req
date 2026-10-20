@@ -1,0 +1,53 @@
+{
+  "coverage": [
+    {
+      "input_key": "target",
+      "reviewed": true,
+      "disposition": "completed"
+    }
+  ],
+  "uncertainties": [],
+  "questions": [],
+  "result": {
+    "checks": [
+      {
+        "kind": "support",
+        "conclusion": "no_issue_found",
+        "rationale": "В переданном контексте замечаний этого вида не обнаружено.",
+        "considered_keys": [
+          "target",
+          "f1",
+          "e1"
+        ]
+      },
+      {
+        "kind": "contradictions",
+        "conclusion": "no_issue_found",
+        "rationale": "В переданном контексте замечаний этого вида не обнаружено.",
+        "considered_keys": [
+          "target",
+          "f1",
+          "e1"
+        ]
+      },
+      {
+        "kind": "ambiguity",
+        "conclusion": "no_issue_found",
+        "rationale": "В переданном контексте замечаний этого вида не обнаружено.",
+        "considered_keys": [
+          "target",
+          "f1",
+          "e1"
+        ]
+      },
+      {
+        "kind": "duplicates",
+        "conclusion": "no_issue_found",
+        "rationale": "В переданном контексте замечаний этого вида не обнаружено.",
+        "considered_keys": []
+      }
+    ],
+    "issues": [],
+    "approved": true
+  }
+}

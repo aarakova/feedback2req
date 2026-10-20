@@ -1,0 +1,30 @@
+{
+  "contract_version": "1.0",
+  "operation": "extract_feedback",
+  "project_id": "PROJECT-DEMO",
+  "request_id": "REQUEST-extract_feedback",
+  "input": {
+    "segments": [
+      {
+        "key": "s1",
+        "source_ref": {
+          "kind": "feedback_source",
+          "id": "SRC-1",
+          "state_id": "SRC-1-v1"
+        },
+        "text_ref": {
+          "kind": "feedback_source",
+          "id": "SRC-1",
+          "state_id": "SRC-1-v1"
+        },
+        "text": "Хочу сохранять фильтры.",
+        "locator": {
+          "start": true,
+          "end": 23
+        },
+        "reliability": "usable"
+      }
+    ],
+    "documents": []
+  }
+}

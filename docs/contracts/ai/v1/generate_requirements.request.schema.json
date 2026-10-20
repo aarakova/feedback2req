@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://feedback2req.invalid/contracts/ai/v1/generate_requirements.request.schema.json",
+  "title": "generate_requirements.request",
+  "type": "object",
+  "properties": {
+    "contract_version": {
+      "const": "1.0"
+    },
+    "operation": {
+      "const": "generate_requirements"
+    },
+    "project_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "request_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "input": {
+      "type": "object",
+      "properties": {
+        "findings": {
+          "type": "array",
+          "items": {
+            "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/FindingView"
+          },
+          "minItems": 1
+        },
+        "fragments": {
+          "type": "array",
+          "items": {
+            "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/FragmentView"
+          },
+          "minItems": 1
+        },
+        "groups": {
+          "type": "array",
+          "items": {
+            "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/GroupView"
+          },
+          "minItems": 0
+        },
+        "documents": {
+          "type": "array",
+          "items": {
+            "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/DocumentExcerpt"
+          },
+          "minItems": 0
+        },
+        "previous_candidates": {
+          "type": "array",
+          "items": {
+            "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/RevisionView"
+          },
+          "minItems": 0
+        },
+        "change_reason": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "findings",
+        "fragments",
+        "groups",
+        "documents"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "contract_version",
+    "operation",
+    "project_id",
+    "request_id",
+    "input"
+  ],
+  "additionalProperties": false
+}

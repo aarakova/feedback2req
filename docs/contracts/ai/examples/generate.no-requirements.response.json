@@ -1,0 +1,15 @@
+{
+  "coverage": [
+    {
+      "input_key": "f1",
+      "reviewed": true,
+      "disposition": "completed",
+      "reason": "Новая доработка из рассмотренной находки не требуется."
+    }
+  ],
+  "uncertainties": [],
+  "questions": [],
+  "result": {
+    "requirements": []
+  }
+}

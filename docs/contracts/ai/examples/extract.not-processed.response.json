@@ -1,0 +1,16 @@
+{
+  "coverage": [
+    {
+      "input_key": "s1",
+      "reviewed": false,
+      "disposition": "not_processed",
+      "reason": "Единица не была рассмотрена; технический исход учитывает приложение."
+    }
+  ],
+  "uncertainties": [],
+  "questions": [],
+  "result": {
+    "fragments": [],
+    "findings": []
+  }
+}

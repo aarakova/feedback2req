@@ -1,0 +1,38 @@
+{
+  "coverage": [
+    {
+      "input_key": "s1",
+      "reviewed": true,
+      "disposition": "completed"
+    }
+  ],
+  "uncertainties": [],
+  "questions": [],
+  "result": {
+    "fragments": [
+      {
+        "local_id": "fragment-1",
+        "segment_key": "s1",
+        "quote": "В источнике этого нет.",
+        "occurrence": 0
+      }
+    ],
+    "findings": [
+      {
+        "local_id": "finding-1",
+        "text": "Пользователь просит сохранять фильтры.",
+        "types": [
+          "request"
+        ],
+        "mode": "direct",
+        "fragment_ids": [
+          "fragment-1"
+        ],
+        "considered_keys": [
+          "s1"
+        ],
+        "context_keys": []
+      }
+    ]
+  }
+}

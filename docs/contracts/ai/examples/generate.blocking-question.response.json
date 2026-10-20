@@ -1,0 +1,28 @@
+{
+  "coverage": [
+    {
+      "input_key": "f1",
+      "reviewed": true,
+      "disposition": "insufficient_information",
+      "reason": "Не определено, какое из конфликтующих ожиданий требуется поддержать."
+    }
+  ],
+  "uncertainties": [],
+  "questions": [
+    {
+      "local_id": "q1",
+      "text": "Какое ожидание должно определять доработку?",
+      "reason": "Неоднозначность существенна для формулировки.",
+      "related": [
+        {
+          "origin": "input",
+          "key": "f1"
+        }
+      ],
+      "blocking": true
+    }
+  ],
+  "result": {
+    "requirements": []
+  }
+}

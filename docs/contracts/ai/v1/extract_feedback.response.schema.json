@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://feedback2req.invalid/contracts/ai/v1/extract_feedback.response.schema.json",
+  "title": "extract_feedback.response",
+  "type": "object",
+  "properties": {
+    "coverage": {
+      "type": "array",
+      "items": {
+        "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/AtomicSegmentCoverage"
+      },
+      "minItems": 1,
+      "maxItems": 1
+    },
+    "uncertainties": {
+      "type": "array",
+      "items": {
+        "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/Uncertainty"
+      },
+      "minItems": 0
+    },
+    "questions": {
+      "type": "array",
+      "items": {
+        "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/Question"
+      },
+      "minItems": 0
+    },
+    "result": {
+      "type": "object",
+      "properties": {
+        "fragments": {
+          "type": "array",
+          "items": {
+            "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/FragmentCandidate"
+          },
+          "minItems": 0
+        },
+        "findings": {
+          "type": "array",
+          "items": {
+            "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/FindingCandidate"
+          },
+          "minItems": 0
+        }
+      },
+      "required": [
+        "fragments",
+        "findings"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "coverage",
+    "uncertainties",
+    "questions",
+    "result"
+  ],
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "result": {
+            "properties": {
+              "findings": {
+                "maxItems": 0
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "coverage": {
+            "items": {
+              "if": {
+                "properties": {
+                  "disposition": {
+                    "const": "completed"
+                  }
+                }
+              },
+              "then": {
+                "required": [
+                  "reason"
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "coverage": [
+    {
+      "input_key": "target",
+      "reviewed": true,
+      "disposition": "insufficient_information",
+      "reason": "Вся переданная область рассмотрена, но доступного исходного подтверждения нет."
+    }
+  ],
+  "uncertainties": [],
+  "questions": [],
+  "result": {
+    "checks": [
+      {
+        "kind": "support",
+        "conclusion": "inconclusive",
+        "rationale": "Сохранившийся пересказ не является доступным первичным свидетельством.",
+        "considered_keys": [
+          "target",
+          "f1",
+          "f2"
+        ]
+      },
+      {
+        "kind": "contradictions",
+        "conclusion": "no_issue_found",
+        "rationale": "В переданном контексте замечаний этого вида не обнаружено.",
+        "considered_keys": [
+          "target",
+          "f1",
+          "f2"
+        ]
+      },
+      {
+        "kind": "ambiguity",
+        "conclusion": "no_issue_found",
+        "rationale": "В переданном контексте замечаний этого вида не обнаружено.",
+        "considered_keys": [
+          "target",
+          "f1",
+          "f2"
+        ]
+      },
+      {
+        "kind": "duplicates",
+        "conclusion": "no_issue_found",
+        "rationale": "В переданном контексте замечаний этого вида не обнаружено.",
+        "considered_keys": []
+      }
+    ],
+    "issues": [
+      {
+        "local_id": "issue-1",
+        "category": "insufficient_evidence",
+        "text": "Нет пригодного доступного основания для нового утверждения.",
+        "reason": "Все поддерживающие источники удалены.",
+        "severity": "high",
+        "blocking": true,
+        "blocking_reason": "Новое утверждение требует пригодного доступного основания.",
+        "related": [
+          {
+            "origin": "input",
+            "key": "target"
+          }
+        ],
+        "question_ids": []
+      }
+    ]
+  }
+}

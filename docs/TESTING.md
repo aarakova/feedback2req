@@ -1,7 +1,8 @@
 # Testing
 
-Status: TEMPLATE with user-requested testing policy. Application tests and tooling
-are not yet designed or approved. Approval record/revision: TODO;
+Status: application testing strategy remains a TEMPLATE with user-requested policy.
+Contract-artifact validation is authorized by DEC-005; application tests and their
+tooling are not yet designed or approved. Application testing revision: TODO;
 see [DECISIONS.md](DECISIONS.md).
 
 ## Testing strategy
@@ -42,3 +43,13 @@ checks are run and results reported; independent review is completed. Failures,
 unresolved errors, uncertainty, and unavailable checks/review must be disclosed,
 not represented as passing or complete validation.
 TODO: Define functionality-specific completion criteria and validation commands.
+
+## Разрешённая проверка контрактных артефактов
+
+DEC-005 разрешает JSON Schema, демонстрационные запросы/ответы и автономные
+проверки их корректности. Основная спецификация, команды и границы проверок —
+[AI_CONTRACTS.md](AI_CONTRACTS.md). Python/jsonschema — инструменты этой
+проверки, а не выбранный стек приложения. Тесты backend/frontend, провайдеров
+и оркестрации этим этапом не создаются. Действующий набор проверяет диалект,
+ссылки, позитивные/негативные примеры, закрытость объектов и выбранные свойства
+локальных пар; не заявляет проверку БД, прав, живых состояний или качества AI.

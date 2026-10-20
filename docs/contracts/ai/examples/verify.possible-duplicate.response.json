@@ -1,0 +1,90 @@
+{
+  "coverage": [
+    {
+      "input_key": "target",
+      "reviewed": true,
+      "disposition": "completed"
+    }
+  ],
+  "uncertainties": [],
+  "questions": [
+    {
+      "local_id": "q1",
+      "text": "Это отдельная доработка или повтор?",
+      "reason": "Нужно установить различие двух требований.",
+      "related": [
+        {
+          "origin": "input",
+          "key": "target"
+        }
+      ],
+      "blocking": true
+    }
+  ],
+  "result": {
+    "checks": [
+      {
+        "kind": "support",
+        "conclusion": "no_issue_found",
+        "rationale": "В переданном контексте замечаний этого вида не обнаружено.",
+        "considered_keys": [
+          "target",
+          "f1",
+          "e1"
+        ]
+      },
+      {
+        "kind": "contradictions",
+        "conclusion": "no_issue_found",
+        "rationale": "В переданном контексте замечаний этого вида не обнаружено.",
+        "considered_keys": [
+          "target",
+          "f1",
+          "e1"
+        ]
+      },
+      {
+        "kind": "ambiguity",
+        "conclusion": "no_issue_found",
+        "rationale": "В переданном контексте замечаний этого вида не обнаружено.",
+        "considered_keys": [
+          "target",
+          "f1",
+          "e1"
+        ]
+      },
+      {
+        "kind": "duplicates",
+        "conclusion": "issues_found",
+        "rationale": "Обнаружено сходство с редакцией незавершённого предложения другого требования.",
+        "considered_keys": [
+          "other1"
+        ]
+      }
+    ],
+    "issues": [
+      {
+        "local_id": "issue-1",
+        "category": "possible_duplicate",
+        "text": "Возможный дубль другого требования.",
+        "reason": "Формулировки совпадают.",
+        "severity": "medium",
+        "blocking": true,
+        "blocking_reason": "Не установлено различие доработок.",
+        "related": [
+          {
+            "origin": "input",
+            "key": "target"
+          },
+          {
+            "origin": "input",
+            "key": "other1"
+          }
+        ],
+        "question_ids": [
+          "q1"
+        ]
+      }
+    ]
+  }
+}

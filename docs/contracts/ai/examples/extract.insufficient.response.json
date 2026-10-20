@@ -1,0 +1,27 @@
+{
+  "coverage": [
+    {
+      "input_key": "s1",
+      "reviewed": true,
+      "disposition": "insufficient_information",
+      "reason": "Сегмент рассмотрен целиком, но смысл ненадёжен."
+    }
+  ],
+  "uncertainties": [
+    {
+      "local_id": "u1",
+      "related": [
+        {
+          "origin": "input",
+          "key": "s1"
+        }
+      ],
+      "reason": "Исходный участок помечен ненадёжным."
+    }
+  ],
+  "questions": [],
+  "result": {
+    "fragments": [],
+    "findings": []
+  }
+}

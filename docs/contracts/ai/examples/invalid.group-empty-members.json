@@ -1,0 +1,27 @@
+{
+  "coverage": [
+    {
+      "input_key": "f1",
+      "reviewed": true,
+      "disposition": "completed"
+    }
+  ],
+  "uncertainties": [],
+  "questions": [],
+  "result": {
+    "groups": [
+      {
+        "local_id": "group-1",
+        "title": "Работа с фильтрами",
+        "summary": "Сохранение выбранных фильтров.",
+        "finding_keys": [],
+        "considered_keys": [
+          "f1"
+        ],
+        "context_keys": [],
+        "conflicts": []
+      }
+    ],
+    "ungrouped_finding_keys": []
+  }
+}

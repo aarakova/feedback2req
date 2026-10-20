@@ -1,0 +1,16 @@
+{
+  "coverage": [
+    {
+      "input_key": "s1",
+      "reviewed": true,
+      "disposition": "completed",
+      "reason": "Сегмент рассмотрен целиком; содержательной обратной связи нет."
+    }
+  ],
+  "uncertainties": [],
+  "questions": [],
+  "result": {
+    "fragments": [],
+    "findings": []
+  }
+}

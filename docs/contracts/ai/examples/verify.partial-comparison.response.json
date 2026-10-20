@@ -1,0 +1,53 @@
+{
+  "coverage": [
+    {
+      "input_key": "target",
+      "reviewed": true,
+      "disposition": "partially_processed",
+      "reason": "Содержательные проверки выполнены; запланированное сравнение other1 не завершено."
+    }
+  ],
+  "uncertainties": [],
+  "questions": [],
+  "result": {
+    "checks": [
+      {
+        "kind": "support",
+        "conclusion": "no_issue_found",
+        "rationale": "В переданном контексте замечаний этого вида не обнаружено.",
+        "considered_keys": [
+          "target",
+          "f1",
+          "e1"
+        ]
+      },
+      {
+        "kind": "contradictions",
+        "conclusion": "no_issue_found",
+        "rationale": "В переданном контексте замечаний этого вида не обнаружено.",
+        "considered_keys": [
+          "target",
+          "f1",
+          "e1"
+        ]
+      },
+      {
+        "kind": "ambiguity",
+        "conclusion": "no_issue_found",
+        "rationale": "В переданном контексте замечаний этого вида не обнаружено.",
+        "considered_keys": [
+          "target",
+          "f1",
+          "e1"
+        ]
+      },
+      {
+        "kind": "duplicates",
+        "conclusion": "inconclusive",
+        "rationale": "Обязательное сравнение other1 не завершено.",
+        "considered_keys": []
+      }
+    ],
+    "issues": []
+  }
+}

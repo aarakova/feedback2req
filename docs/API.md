@@ -1,6 +1,7 @@
 # API
 
-Status: TEMPLATE; no API structures, protocols, or contracts are approved.
+Status: TEMPLATE for the external application API; no external API structures,
+protocols, or contracts are approved.
 Approval record/revision: TODO; see [DECISIONS.md](DECISIONS.md).
 
 ## API principles
@@ -22,3 +23,9 @@ TODO: Clarify compatibility and versioning needs; no strategy is selected.
 ## Unresolved endpoints/contracts
 
 TODO: List open contract questions without inventing endpoints or payloads.
+
+## Граница внутренних AI-контрактов
+
+Внутренние AI-контракты утверждены DEC-005 и специфицированы только в
+[AI_CONTRACTS.md](AI_CONTRACTS.md). Они не являются HTTP API и не заполняют
+этот шаблон внешними endpoints или транспортными решениями.

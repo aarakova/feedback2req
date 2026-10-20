@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://feedback2req.invalid/contracts/ai/v1/verify_requirement.request.schema.json",
+  "title": "verify_requirement.request",
+  "type": "object",
+  "properties": {
+    "contract_version": {
+      "const": "1.0"
+    },
+    "operation": {
+      "const": "verify_requirement"
+    },
+    "project_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "request_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "input": {
+      "type": "object",
+      "properties": {
+        "target": {
+          "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/RevisionView"
+        },
+        "findings": {
+          "type": "array",
+          "items": {
+            "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/FindingView"
+          },
+          "minItems": 0
+        },
+        "fragments": {
+          "type": "array",
+          "items": {
+            "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/FragmentView"
+          },
+          "minItems": 0
+        },
+        "documents": {
+          "type": "array",
+          "items": {
+            "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/DocumentExcerpt"
+          },
+          "minItems": 0
+        },
+        "comparisons": {
+          "type": "array",
+          "items": {
+            "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/ComparisonRevision"
+          },
+          "minItems": 0
+        },
+        "comparison_scope": {
+          "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/ComparisonScope"
+        },
+        "previous_checks": {
+          "type": "array",
+          "items": {
+            "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/PreviousCheckView"
+          },
+          "minItems": 0
+        },
+        "followup": {
+          "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/Followup"
+        },
+        "change_context": {
+          "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/ChangeContext"
+        },
+        "prior_decision": {
+          "$ref": "https://feedback2req.invalid/contracts/ai/v1/common.schema.json#/$defs/PriorDecision"
+        }
+      },
+      "required": [
+        "target",
+        "findings",
+        "fragments",
+        "documents",
+        "comparisons",
+        "comparison_scope",
+        "previous_checks"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "contract_version",
+    "operation",
+    "project_id",
+    "request_id",
+    "input"
+  ],
+  "additionalProperties": false
+}

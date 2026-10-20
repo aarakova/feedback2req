@@ -1,0 +1,15 @@
+{
+  "coverage": [
+    {
+      "input_key": "s1",
+      "reviewed": true,
+      "disposition": "completed"
+    }
+  ],
+  "uncertainties": [],
+  "questions": [],
+  "result": {
+    "fragments": [],
+    "findings": []
+  }
+}

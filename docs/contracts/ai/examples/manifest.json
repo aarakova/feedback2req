@@ -1,0 +1,507 @@
+{
+  "description": "Демонстрационные данные; valid относится только к JSON Schema, application_valid — только к перечисленным офлайн-проверкам пар.",
+  "cases": [
+    {
+      "file": "extract_feedback.valid.request.json",
+      "schema": "extract_feedback.request.schema.json",
+      "valid": true
+    },
+    {
+      "file": "extract_feedback.valid.response.json",
+      "schema": "extract_feedback.response.schema.json",
+      "valid": true
+    },
+    {
+      "file": "group_findings.valid.request.json",
+      "schema": "group_findings.request.schema.json",
+      "valid": true
+    },
+    {
+      "file": "group_findings.valid.response.json",
+      "schema": "group_findings.response.schema.json",
+      "valid": true
+    },
+    {
+      "file": "generate_requirements.valid.request.json",
+      "schema": "generate_requirements.request.schema.json",
+      "valid": true
+    },
+    {
+      "file": "generate_requirements.valid.response.json",
+      "schema": "generate_requirements.response.schema.json",
+      "valid": true
+    },
+    {
+      "file": "verify_requirement.valid.request.json",
+      "schema": "verify_requirement.request.schema.json",
+      "valid": true
+    },
+    {
+      "file": "verify_requirement.valid.response.json",
+      "schema": "verify_requirement.response.schema.json",
+      "valid": true
+    },
+    {
+      "file": "extract.no-findings.response.json",
+      "schema": "extract_feedback.response.schema.json",
+      "valid": true
+    },
+    {
+      "file": "extract.uncertain.request.json",
+      "schema": "extract_feedback.request.schema.json",
+      "valid": true
+    },
+    {
+      "file": "extract.insufficient.response.json",
+      "schema": "extract_feedback.response.schema.json",
+      "valid": true
+    },
+    {
+      "file": "extract.not-processed.response.json",
+      "schema": "extract_feedback.response.schema.json",
+      "valid": true
+    },
+    {
+      "file": "extract.speech.request.json",
+      "schema": "extract_feedback.request.schema.json",
+      "valid": true
+    },
+    {
+      "file": "generate.nonblocking-question.response.json",
+      "schema": "generate_requirements.response.schema.json",
+      "valid": true
+    },
+    {
+      "file": "generate.no-requirements.response.json",
+      "schema": "generate_requirements.response.schema.json",
+      "valid": true
+    },
+    {
+      "file": "verify.partial-deletion.request.json",
+      "schema": "verify_requirement.request.schema.json",
+      "valid": true
+    },
+    {
+      "file": "verify.all-deleted.request.json",
+      "schema": "verify_requirement.request.schema.json",
+      "valid": true
+    },
+    {
+      "file": "verify.all-deleted.response.json",
+      "schema": "verify_requirement.response.schema.json",
+      "valid": true
+    },
+    {
+      "file": "verify.pending-proposal.request.json",
+      "schema": "verify_requirement.request.schema.json",
+      "valid": true
+    },
+    {
+      "file": "verify.possible-duplicate.response.json",
+      "schema": "verify_requirement.response.schema.json",
+      "valid": true
+    },
+    {
+      "file": "verify.selected.request.json",
+      "schema": "verify_requirement.request.schema.json",
+      "valid": true
+    },
+    {
+      "file": "verify.partial-comparison.response.json",
+      "schema": "verify_requirement.response.schema.json",
+      "valid": true
+    },
+    {
+      "file": "verify.own-previous.request.json",
+      "schema": "verify_requirement.request.schema.json",
+      "valid": true
+    },
+    {
+      "file": "verify.own-previous.response.json",
+      "schema": "verify_requirement.response.schema.json",
+      "valid": true
+    },
+    {
+      "file": "invalid.missing-project.json",
+      "schema": "extract_feedback.request.schema.json",
+      "valid": false,
+      "keyword": "required"
+    },
+    {
+      "file": "invalid.unknown-envelope.json",
+      "schema": "extract_feedback.request.schema.json",
+      "valid": false,
+      "keyword": "additionalProperties"
+    },
+    {
+      "file": "invalid.operation.json",
+      "schema": "extract_feedback.request.schema.json",
+      "valid": false,
+      "keyword": "const"
+    },
+    {
+      "file": "invalid.version.json",
+      "schema": "extract_feedback.request.schema.json",
+      "valid": false,
+      "keyword": "const"
+    },
+    {
+      "file": "invalid.two-segments.json",
+      "schema": "extract_feedback.request.schema.json",
+      "valid": false,
+      "keyword": "maxItems"
+    },
+    {
+      "file": "invalid.reliability.json",
+      "schema": "extract_feedback.request.schema.json",
+      "valid": false,
+      "keyword": "enum"
+    },
+    {
+      "file": "invalid.segment-extra-field.json",
+      "schema": "extract_feedback.request.schema.json",
+      "valid": false,
+      "keyword": "additionalProperties"
+    },
+    {
+      "file": "invalid.missing-speech-time.json",
+      "schema": "extract_feedback.request.schema.json",
+      "valid": false,
+      "keyword": "required"
+    },
+    {
+      "file": "invalid.partial-segment.json",
+      "schema": "extract_feedback.response.schema.json",
+      "valid": false,
+      "keyword": "enum"
+    },
+    {
+      "file": "invalid.coverage-combination.json",
+      "schema": "extract_feedback.response.schema.json",
+      "valid": false,
+      "keyword": "const"
+    },
+    {
+      "file": "invalid.coverage-missing-reason.json",
+      "schema": "extract_feedback.response.schema.json",
+      "valid": false,
+      "keyword": "required"
+    },
+    {
+      "file": "invalid.no-findings-missing-reason.json",
+      "schema": "extract_feedback.response.schema.json",
+      "valid": false,
+      "keyword": "required"
+    },
+    {
+      "file": "invalid.negative-occurrence.json",
+      "schema": "extract_feedback.response.schema.json",
+      "valid": false,
+      "keyword": "minimum"
+    },
+    {
+      "file": "invalid.output-permanent-id.json",
+      "schema": "extract_feedback.response.schema.json",
+      "valid": false,
+      "keyword": "additionalProperties"
+    },
+    {
+      "file": "invalid.finding-type.json",
+      "schema": "extract_feedback.response.schema.json",
+      "valid": false,
+      "keyword": "enum"
+    },
+    {
+      "file": "invalid.repeated-types.json",
+      "schema": "extract_feedback.response.schema.json",
+      "valid": false,
+      "keyword": "uniqueItems"
+    },
+    {
+      "file": "invalid.criteria.json",
+      "schema": "generate_requirements.response.schema.json",
+      "valid": false,
+      "keyword": "additionalProperties"
+    },
+    {
+      "file": "invalid.empty-evidence.json",
+      "schema": "generate_requirements.response.schema.json",
+      "valid": false,
+      "keyword": "minItems"
+    },
+    {
+      "file": "invalid.deleted-source-text.json",
+      "schema": "verify_requirement.request.schema.json",
+      "valid": false,
+      "keyword": "additionalProperties"
+    },
+    {
+      "file": "invalid.deleted-source-position.json",
+      "schema": "verify_requirement.request.schema.json",
+      "valid": false,
+      "keyword": "additionalProperties"
+    },
+    {
+      "file": "invalid.deleted-source-state.json",
+      "schema": "verify_requirement.request.schema.json",
+      "valid": false,
+      "keyword": "additionalProperties"
+    },
+    {
+      "file": "invalid.pending-without-proposal.json",
+      "schema": "verify_requirement.request.schema.json",
+      "valid": false,
+      "keyword": "required"
+    },
+    {
+      "file": "invalid.selected-without-reason.json",
+      "schema": "verify_requirement.request.schema.json",
+      "valid": false,
+      "keyword": "required"
+    },
+    {
+      "file": "invalid.wrong-decision-ref.json",
+      "schema": "verify_requirement.request.schema.json",
+      "valid": false,
+      "keyword": "const"
+    },
+    {
+      "file": "invalid.check-kinds.json",
+      "schema": "verify_requirement.response.schema.json",
+      "valid": false,
+      "keyword": "contains"
+    },
+    {
+      "file": "invalid.approved-output.json",
+      "schema": "verify_requirement.response.schema.json",
+      "valid": false,
+      "keyword": "additionalProperties"
+    },
+    {
+      "file": "invalid.question-blocking-type.json",
+      "schema": "generate_requirements.response.schema.json",
+      "valid": false,
+      "keyword": "type"
+    },
+    {
+      "file": "invalid.group-empty-members.json",
+      "schema": "group_findings.response.schema.json",
+      "valid": false,
+      "keyword": "minItems"
+    },
+    {
+      "file": "application-invalid.quote.json",
+      "schema": "extract_feedback.response.schema.json",
+      "valid": true
+    },
+    {
+      "file": "application-invalid.evidence.json",
+      "schema": "generate_requirements.response.schema.json",
+      "valid": true
+    },
+    {
+      "file": "application-invalid.coverage.json",
+      "schema": "extract_feedback.response.schema.json",
+      "valid": true
+    },
+    {
+      "file": "application-invalid.incomplete-clean.json",
+      "schema": "verify_requirement.response.schema.json",
+      "valid": true
+    },
+    {
+      "file": "application-invalid.self-duplicate.json",
+      "schema": "verify_requirement.response.schema.json",
+      "valid": true
+    },
+    {
+      "file": "verify.all-comparison-roles.request.json",
+      "schema": "verify_requirement.request.schema.json",
+      "valid": true
+    },
+    {
+      "file": "group.conflict.request.json",
+      "schema": "group_findings.request.schema.json",
+      "valid": true
+    },
+    {
+      "file": "group.conflict.response.json",
+      "schema": "group_findings.response.schema.json",
+      "valid": true
+    },
+    {
+      "file": "generate.blocking-question.response.json",
+      "schema": "generate_requirements.response.schema.json",
+      "valid": true
+    },
+    {
+      "file": "invalid.deleted-source-time.json",
+      "schema": "verify_requirement.request.schema.json",
+      "valid": false,
+      "keyword": "additionalProperties"
+    },
+    {
+      "file": "invalid.null-documents.json",
+      "schema": "extract_feedback.request.schema.json",
+      "valid": false,
+      "keyword": "type"
+    },
+    {
+      "file": "invalid.boolean-position.json",
+      "schema": "extract_feedback.request.schema.json",
+      "valid": false,
+      "keyword": "type"
+    },
+    {
+      "file": "invalid.repeated-role.json",
+      "schema": "verify_requirement.request.schema.json",
+      "valid": false,
+      "keyword": "uniqueItems"
+    },
+    {
+      "file": "invalid.pending-ref-kind.json",
+      "schema": "verify_requirement.request.schema.json",
+      "valid": false,
+      "keyword": "const"
+    },
+    {
+      "file": "invalid.not-processed-reviewed.json",
+      "schema": "extract_feedback.response.schema.json",
+      "valid": false,
+      "keyword": "const"
+    },
+    {
+      "file": "extract.previous-context.request.json",
+      "schema": "extract_feedback.request.schema.json",
+      "valid": true
+    },
+    {
+      "file": "application-invalid.previous-context.request.json",
+      "schema": "extract_feedback.request.schema.json",
+      "valid": true
+    },
+    {
+      "file": "group.previous-context.request.json",
+      "schema": "group_findings.request.schema.json",
+      "valid": true
+    },
+    {
+      "file": "generate.previous-context.request.json",
+      "schema": "generate_requirements.request.schema.json",
+      "valid": true
+    },
+    {
+      "file": "verify.previous-check-followup.request.json",
+      "schema": "verify_requirement.request.schema.json",
+      "valid": true
+    }
+  ],
+  "pairs": [
+    {
+      "request": "extract_feedback.valid.request.json",
+      "response": "extract_feedback.valid.response.json",
+      "application_valid": true
+    },
+    {
+      "request": "group_findings.valid.request.json",
+      "response": "group_findings.valid.response.json",
+      "application_valid": true
+    },
+    {
+      "request": "generate_requirements.valid.request.json",
+      "response": "generate_requirements.valid.response.json",
+      "application_valid": true
+    },
+    {
+      "request": "verify_requirement.valid.request.json",
+      "response": "verify_requirement.valid.response.json",
+      "application_valid": true
+    },
+    {
+      "request": "extract.uncertain.request.json",
+      "response": "extract.insufficient.response.json",
+      "application_valid": true
+    },
+    {
+      "request": "verify.all-deleted.request.json",
+      "response": "verify.all-deleted.response.json",
+      "application_valid": true
+    },
+    {
+      "request": "verify.pending-proposal.request.json",
+      "response": "verify.possible-duplicate.response.json",
+      "application_valid": true
+    },
+    {
+      "request": "verify.pending-proposal.request.json",
+      "response": "verify.partial-comparison.response.json",
+      "application_valid": true
+    },
+    {
+      "request": "verify.own-previous.request.json",
+      "response": "verify.own-previous.response.json",
+      "application_valid": true
+    },
+    {
+      "request": "extract_feedback.valid.request.json",
+      "response": "application-invalid.quote.json",
+      "application_valid": false,
+      "rule": "APP-QUOTE"
+    },
+    {
+      "request": "generate_requirements.valid.request.json",
+      "response": "application-invalid.evidence.json",
+      "application_valid": false,
+      "rule": "APP-EVIDENCE"
+    },
+    {
+      "request": "extract_feedback.valid.request.json",
+      "response": "application-invalid.coverage.json",
+      "application_valid": false,
+      "rule": "APP-COVERAGE"
+    },
+    {
+      "request": "verify.pending-proposal.request.json",
+      "response": "application-invalid.incomplete-clean.json",
+      "application_valid": false,
+      "rule": "APP-COMPARISON"
+    },
+    {
+      "request": "verify.own-previous.request.json",
+      "response": "application-invalid.self-duplicate.json",
+      "application_valid": false,
+      "rule": "APP-DUPLICATE"
+    },
+    {
+      "request": "group.conflict.request.json",
+      "response": "group.conflict.response.json",
+      "application_valid": true
+    },
+    {
+      "request": "extract.previous-context.request.json",
+      "response": "extract_feedback.valid.response.json",
+      "application_valid": true
+    },
+    {
+      "request": "application-invalid.previous-context.request.json",
+      "response": "extract_feedback.valid.response.json",
+      "application_valid": false,
+      "rule": "APP-EVIDENCE"
+    },
+    {
+      "request": "group.previous-context.request.json",
+      "response": "group_findings.valid.response.json",
+      "application_valid": true
+    },
+    {
+      "request": "generate.previous-context.request.json",
+      "response": "generate_requirements.valid.response.json",
+      "application_valid": true
+    },
+    {
+      "request": "verify.previous-check-followup.request.json",
+      "response": "verify_requirement.valid.response.json",
+      "application_valid": true
+    }
+  ]
+}
