@@ -9,10 +9,12 @@ export function App() {
   const [session, setSession] = useState<Session | null | undefined>(undefined);
   const [sessionError, setSessionError] = useState('');
   const [revision, setRevision] = useState(0);
+  const [rechecking, setRechecking] = useState(false);
+  const [accessRevision, setAccessRevision] = useState(0);
   const [logoutState, setLogoutState] = useState<'idle' | 'busy' | 'failed'>('idle');
   const [logoutError, setLogoutError] = useState('');
   const [hash, setHash] = useState(window.location.hash);
-  const [api] = useState(() => new ApiClient(() => setSession(null)));
+  const [api] = useState(() => new ApiClient(() => { setSession(null); setRechecking(false); }));
 
   useEffect(() => {
     const controller = new AbortController();
@@ -34,25 +36,43 @@ export function App() {
 
   // Recheck cookie ownership and current permissions after returning from another tab.
   useEffect(() => {
-    function recheck() {
+    let pending: AbortController | undefined;
+    async function recheck() {
       if (document.visibilityState !== 'visible' || logoutState !== 'idle') return;
-      api.clearSession(); setSession(undefined); setSessionError('');
-      setRevision(n => n + 1);
+      if (!session) {
+        setSession(undefined); setSessionError(''); setRevision(n => n + 1);
+        return;
+      }
+      pending?.abort();
+      const controller = new AbortController();
+      pending = controller;
+      setRechecking(true);
+      try {
+        const current = await api.getSession(controller.signal);
+        if (controller.signal.aborted) return;
+        setSession(current); setAccessRevision(n => n + 1);
+      } catch (error) {
+        if (controller.signal.aborted) return;
+        if (!(error instanceof ApiError && error.status === 401)) setSessionError(errorMessage(error));
+      } finally {
+        if (!controller.signal.aborted) setRechecking(false);
+      }
     }
     function restored(event: PageTransitionEvent) { if (event.persisted) recheck(); }
     window.addEventListener('focus', recheck);
     window.addEventListener('pageshow', restored);
     document.addEventListener('visibilitychange', recheck);
     return () => {
+      pending?.abort();
       window.removeEventListener('focus', recheck);
       window.removeEventListener('pageshow', restored);
       document.removeEventListener('visibilitychange', recheck);
     };
-  }, [api, logoutState]);
+  }, [api, logoutState, session?.user.id]);
 
   async function logout() {
     if (logoutState === 'busy') return;
-    setLogoutState('busy'); setLogoutError('');
+    setLogoutState('busy'); setLogoutError(''); setRechecking(false);
     try {
       await api.logout();
       setSession(null);
@@ -82,9 +102,11 @@ export function App() {
 
   if (session === null) return <AuthForm api={api} onLogin={setSession} />;
 
-  const projectMatch = /^#\/projects\/([0-9a-f-]{36})$/i.exec(hash);
+  const projectMatch = /^#\/projects\/([0-9a-f-]{36})(\/materials(?:\/(sources|documents)\/([0-9a-f-]{36}))?)?$/i.exec(hash);
   const listRoute = ['', '#', '#/', '#/projects'].includes(hash);
-  return <div className="workspace">
+  return <>
+    {rechecking && <main className="centered"><Loading>Проверяем сессию…</Loading></main>}
+    <div className="workspace" style={{ display: rechecking ? 'none' : undefined }}>
     <a className="skip-link" href="#main-content" onClick={event => {
       event.preventDefault(); document.getElementById('main-content')?.focus();
     }}>К содержимому</a>
@@ -98,10 +120,13 @@ export function App() {
     <div className="main-area"><header className="app-header"><span className="muted">Рабочее пространство</span>
       <button className="secondary" onClick={logout}>Выйти</button></header>
       <main id="main-content" className="content" tabIndex={-1}>
-        {projectMatch ? <ProjectDetail key={projectMatch[1]} api={api} id={projectMatch[1]} />
-          : listRoute ? <ProjectList api={api} /> : <section className="panel empty"><h1>Страница не найдена</h1>
+        {projectMatch ? <ProjectDetail key={`${session.user.id}/${projectMatch[1]}`} api={api} id={projectMatch[1]}
+          accessRevision={accessRevision}
+          materials={!!projectMatch[2]} selected={projectMatch[3] && projectMatch[4]
+            ? { kind: projectMatch[3].toLowerCase() as 'sources' | 'documents', id: projectMatch[4] } : undefined} />
+          : listRoute ? <ProjectList key={`${session.user.id}/${accessRevision}`} api={api} /> : <section className="panel empty"><h1>Страница не найдена</h1>
             <a href="#/projects">Вернуться к проектам</a></section>}
       </main>
     </div>
-  </div>;
+  </div></>;
 }

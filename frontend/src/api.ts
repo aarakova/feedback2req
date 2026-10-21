@@ -8,6 +8,10 @@ export interface Project {
   permissions: { is_owner: boolean; is_member: boolean; can_approve: boolean };
 }
 export interface Page<T> { items: T[]; next_cursor: string | null }
+export interface TextSource { id: string; state_id: string; kind: 'text'; text: string }
+export interface ProductDocument { id: string; state_id: string; title: string; text: string }
+export type Material = TextSource | ProductDocument;
+export type MaterialKind = 'sources' | 'documents';
 
 export class ApiError extends Error {
   constructor(public status: number, public code: string, public requestId?: string) {
@@ -87,10 +91,17 @@ export function errorMessage(error: unknown): string {
     origin_rejected: 'Адрес приложения не разрешён сервером. Проверьте настройку F2R_ALLOWED_ORIGIN.',
     rate_limited: 'Слишком много попыток. Подождите немного и попробуйте снова.',
     body_too_large: 'Объём запроса превышает допустимый предел.',
+    text_too_large: 'Текст превышает допустимый на сервере объём. Содержимое формы сохранено; сократите его перед отправкой.',
+    invalid_text: 'Введите непустой текст без недопустимых символов. Проверьте также название документа.',
   };
   return messages[error.code] ?? (error.status === 401
     ? 'Сессия завершена. Войдите снова.'
     : error.status === 404 ? 'Проект не найден или доступ к нему отозван.'
     : error.status === 403 ? 'Недостаточно прав для этого действия.'
     : 'Сервер не смог выполнить запрос. Попробуйте ещё раз.');
+}
+
+export function projectUnavailable(error: unknown): boolean {
+  return error instanceof ApiError && (error.status === 404 ||
+    (error.status === 403 && error.code === 'forbidden'));
 }

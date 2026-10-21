@@ -1,22 +1,5 @@
 import { test, expect } from '@playwright/test';
-import type { Page } from '@playwright/test';
-
-const password = 'frontend-test-only-2026';
-const unique = () => `f1a_${crypto.randomUUID()}`;
-
-async function registerAndLogin(page: Page, login = unique()) {
-  await page.goto('/');
-  await page.getByRole('button', { name: 'Зарегистрироваться', exact: false }).click();
-  await page.getByLabel('Логин', { exact: true }).fill(login);
-  await page.getByLabel('Пароль', { exact: true }).fill(password);
-  await page.getByRole('button', { name: 'Создать аккаунт' }).click();
-  await expect(page.getByRole('status')).toContainText('Учётная запись создана');
-  await expect(page.getByRole('heading', { name: 'Вход в аккаунт' })).toBeVisible();
-  await page.getByLabel('Пароль', { exact: true }).fill(password);
-  await page.getByRole('button', { name: 'Войти', exact: true }).click();
-  await expect(page.getByRole('heading', { name: 'Ваши проекты' })).toBeVisible();
-  return login;
-}
+import { password, unique, registerAndLogin } from './helpers';
 
 test('registration, project persistence, session restore and real logout', async ({ page, context }, testInfo) => {
   const login = await registerAndLogin(page);

@@ -29,7 +29,8 @@ export default defineConfig({
     ...built ? [] : [{
       command: 'npm run dev',
       url: origin,
-      env: { F2R_API_PROXY_TARGET: 'http://127.0.0.1:18000' },
+      // Test servers have no interactive stdin; Vite must not exit when that pipe closes.
+      env: { F2R_API_PROXY_TARGET: 'http://127.0.0.1:18000', CI: 'true' },
       reuseExistingServer: false,
     }],
   ],

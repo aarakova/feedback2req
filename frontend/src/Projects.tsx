@@ -1,8 +1,10 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import type { FormEvent } from 'react';
 import { ApiClient, errorMessage } from './api';
 import type { Page, Project } from './api';
 import { ErrorNotice, Loading, Permissions } from './ui';
+import { Materials } from './Materials';
+import type { MaterialSelection } from './Materials';
 
 export function ProjectList({ api }: { api: ApiClient }) {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -96,36 +98,53 @@ function CreateProject({ api, onCancel }: { api: ApiClient; onCancel: () => void
   </section>;
 }
 
-export function ProjectDetail({ api, id }: { api: ApiClient; id: string }) {
+export function ProjectDetail({ api, id, materials = false, selected, accessRevision = 0 }: {
+  api: ApiClient; id: string; materials?: boolean; selected?: MaterialSelection; accessRevision?: number;
+}) {
   const [project, setProject] = useState<Project | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [revision, setRevision] = useState(0);
+  const [checkedAccess, setCheckedAccess] = useState(-1);
+  const unavailable = useCallback(() => {
+    setProject(null); setError('Проект или материал недоступен. Доступ мог быть отозван. Повторите проверку проекта.');
+  }, []);
 
   useEffect(() => {
     const controller = new AbortController();
-    setProject(null); setLoading(true); setError('');
+    setLoading(true); setError('');
     api.request<Project>(`/projects/${encodeURIComponent(id)}`, { signal: controller.signal })
-      .then(project => { if (!controller.signal.aborted) setProject(project); })
-      .catch(error => { if (!controller.signal.aborted) setError(errorMessage(error)); })
+      .then(project => {
+        if (!controller.signal.aborted) { setProject(project); setCheckedAccess(accessRevision); }
+      })
+      .catch(error => {
+        if (!controller.signal.aborted) { setProject(null); setError(errorMessage(error)); }
+      })
       .finally(() => { if (!controller.signal.aborted) setLoading(false); });
     return () => controller.abort();
-  }, [api, id, revision]);
+  }, [api, id, revision, accessRevision]);
+
+  const checking = loading || checkedAccess !== accessRevision;
 
   return <>
     <a className="back-link" href="#/projects">← Все проекты</a>
-    {loading && <Loading>Открываем проект…</Loading>}
+    {(loading || (project && checking)) && <Loading>Открываем проект…</Loading>}
     {error && <div className="stack"><ErrorNotice message={error} />
       <button className="secondary retry" onClick={() => setRevision(n => n + 1)}>Повторить запрос</button></div>}
-    {project && <>
+    {project && <div style={{ display: checking ? 'none' : undefined }}>
       <div className="page-heading"><div><p className="eyebrow">Проект</p><h1>{project.name}</h1></div>
         <button className="secondary" onClick={() => setRevision(n => n + 1)}>Обновить проект</button></div>
-      <section className="panel detail-panel"><h2>Ваши полномочия</h2><Permissions project={project} />
+      <nav className="project-tabs" aria-label="Разделы проекта">
+        <a href={`#/projects/${id}`} aria-current={!materials ? 'page' : undefined}>Обзор проекта</a>
+        <a href={`#/projects/${id}/materials`} aria-current={materials ? 'page' : undefined}>Материалы</a>
+      </nav>
+      {materials ? <Materials api={api} projectId={id} selected={selected} onUnavailable={unavailable} />
+        : <section className="panel detail-panel"><h2>Ваши полномочия</h2><Permissions project={project} />
         <p className="muted">{project.permissions.is_owner
           ? 'Вы — владелец этого проекта с правами участника и утверждения.'
           : project.permissions.can_approve ? 'Вы — участник с дополнительным правом утверждения.' : 'Вы — участник этого проекта.'}</p>
         <dl><dt>Идентификатор проекта</dt><dd className="mono">{project.id}</dd></dl>
-      </section>
-    </>}
+      </section>}
+    </div>}
   </>;
 }
