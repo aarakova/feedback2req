@@ -1,0 +1,19 @@
+name: feedback2req-i1-test
+services:
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: feedback2req_i1_test
+      POSTGRES_USER: f2r_test
+      POSTGRES_HOST_AUTH_METHOD: trust
+    ports:
+      - "127.0.0.1:55433:5432"
+    volumes:
+      - i1_test_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U f2r_test -d feedback2req_i1_test"]
+      interval: 2s
+      timeout: 3s
+      retries: 20
+volumes:
+  i1_test_data:

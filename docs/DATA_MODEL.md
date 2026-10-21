@@ -118,7 +118,12 @@ DEC-006 выбирает PostgreSQL, SQLAlchemy/Psycopg, Alembic, сохраня
 и один worker; базовая физическая организация описана в
 [ARCHITECTURE.md](ARCHITECTURE.md#11-стек-и-физическая-организация-mvp--dec-006).
 Технические формы идентичности, истории, состояний, физическая схема и внешний
-API предложены в [FIRST_TEXT_SLICE.md](FIRST_TEXT_SLICE.md), но пока не утверждены.
+API предложены в [FIRST_TEXT_SLICE.md](FIRST_TEXT_SLICE.md). DEC-007 утверждает
+только M01 (users/sessions/projects/project_access) и относящиеся к И1 контракты;
+остальная физическая модель сохраняет PROPOSED. M01 реализуется отдельной
+Alembic-миграцией: UUID приложения, UTC timestamptz, FK/UNIQUE/CHECK;
+owner_id задаёт неотзывные Member/Approver владельца, строка access — членство
+остальных и дополнительное can_approve. Логическая модель не меняется.
 Представления внутренних контрактов трёх AI-компонентов, ссылки на состояния,
 охват и утрата оснований определены в [AI_CONTRACTS.md](AI_CONTRACTS.md), DEC-005.
 Это DTO и правила приёма, а не изменение логической модели или схема таблиц.
