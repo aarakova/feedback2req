@@ -17,6 +17,7 @@ class Settings(BaseSettings):
     argon_memory_cost: int = Field(default=65536, ge=8192)
     argon_parallelism: int = Field(default=4, ge=1)
     max_body_bytes: int = Field(default=16384, ge=256)
+    max_material_text_chars: int = Field(default=8192, ge=1)
     login_limit: int = Field(default=10, ge=1)
     login_window_seconds: int = Field(default=60, ge=1)
     page_size: int = Field(default=50, ge=1, le=200)

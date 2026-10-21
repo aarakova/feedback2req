@@ -6,9 +6,11 @@ from sqlalchemy import (
     CheckConstraint,
     DateTime,
     ForeignKey,
+    ForeignKeyConstraint,
     Index,
     String,
     Text,
+    UniqueConstraint,
     func,
 )
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
@@ -64,3 +66,93 @@ class ProjectAccess(Base):
     project_id: Mapped[UUID] = mapped_column(ForeignKey("projects.id"), primary_key=True)
     user_id: Mapped[UUID] = mapped_column(ForeignKey("users.id"), primary_key=True)
     can_approve: Mapped[bool] = mapped_column(Boolean, default=False)
+
+
+class FeedbackSource(Base):
+    __tablename__ = "feedback_sources"
+    __table_args__ = (
+        UniqueConstraint("project_id", "id", name="uq_source_project_id"),
+        ForeignKeyConstraint(
+            ["project_id", "id", "current_state_id"],
+            [
+                "source_text_states.project_id",
+                "source_text_states.source_id",
+                "source_text_states.id",
+            ],
+            name="fk_source_current_state",
+            deferrable=True,
+            initially="DEFERRED",
+            use_alter=True,
+        ),
+        CheckConstraint("kind = 'text'", name="source_kind"),
+        CheckConstraint("availability = 'available'", name="source_availability"),
+    )
+    id: Mapped[UUID] = mapped_column(primary_key=True, default=uuid4)
+    project_id: Mapped[UUID] = mapped_column(ForeignKey("projects.id"))
+    kind: Mapped[str] = mapped_column(String(8))
+    current_state_id: Mapped[UUID] = mapped_column()
+    availability: Mapped[str] = mapped_column(String(16), default="available")
+
+
+class SourceTextState(Base):
+    __tablename__ = "source_text_states"
+    __table_args__ = (
+        UniqueConstraint("project_id", "id", name="uq_source_state_project_id"),
+        UniqueConstraint("project_id", "source_id", "id", name="uq_source_state_owner"),
+        ForeignKeyConstraint(
+            ["project_id", "source_id"],
+            ["feedback_sources.project_id", "feedback_sources.id"],
+            name="fk_source_state_source",
+        ),
+        CheckConstraint("length(text) > 0", name="source_text_nonempty"),
+        CheckConstraint("origin = 'human'", name="source_state_origin"),
+    )
+    id: Mapped[UUID] = mapped_column(primary_key=True, default=uuid4)
+    project_id: Mapped[UUID] = mapped_column(ForeignKey("projects.id"))
+    source_id: Mapped[UUID] = mapped_column()
+    text: Mapped[str] = mapped_column(Text)
+    author_id: Mapped[UUID] = mapped_column(ForeignKey("users.id"))
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    origin: Mapped[str] = mapped_column(String(16), default="human")
+
+
+class ProductDocument(Base):
+    __tablename__ = "product_documents"
+    __table_args__ = (
+        UniqueConstraint("project_id", "id", name="uq_document_project_id"),
+        ForeignKeyConstraint(
+            ["project_id", "id", "current_state_id"],
+            ["document_states.project_id", "document_states.document_id", "document_states.id"],
+            name="fk_document_current_state",
+            deferrable=True,
+            initially="DEFERRED",
+            use_alter=True,
+        ),
+    )
+    id: Mapped[UUID] = mapped_column(primary_key=True, default=uuid4)
+    project_id: Mapped[UUID] = mapped_column(ForeignKey("projects.id"))
+    current_state_id: Mapped[UUID] = mapped_column()
+
+
+class DocumentState(Base):
+    __tablename__ = "document_states"
+    __table_args__ = (
+        UniqueConstraint("project_id", "id", name="uq_document_state_project_id"),
+        UniqueConstraint("project_id", "document_id", "id", name="uq_document_state_owner"),
+        ForeignKeyConstraint(
+            ["project_id", "document_id"],
+            ["product_documents.project_id", "product_documents.id"],
+            name="fk_document_state_document",
+        ),
+        CheckConstraint("length(text) > 0", name="document_text_nonempty"),
+        CheckConstraint("length(trim(title)) BETWEEN 1 AND 200", name="document_title_length"),
+        CheckConstraint("origin = 'human'", name="document_state_origin"),
+    )
+    id: Mapped[UUID] = mapped_column(primary_key=True, default=uuid4)
+    project_id: Mapped[UUID] = mapped_column(ForeignKey("projects.id"))
+    document_id: Mapped[UUID] = mapped_column()
+    title: Mapped[str] = mapped_column(String(200))
+    text: Mapped[str] = mapped_column(Text)
+    author_id: Mapped[UUID] = mapped_column(ForeignKey("users.id"))
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    origin: Mapped[str] = mapped_column(String(16), default="human")

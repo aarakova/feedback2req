@@ -1,4 +1,4 @@
-"""Restart only the disposable I1 API and PostgreSQL; never a user database.
+"""Restart the disposable I1/I2a API and PostgreSQL; never a user database.
 
 Requires F2R_TEST_DATABASE_URL. Compose mode uses compose.test.yaml exclusively.
 Native mode accepts only this repository's .local/i1-postgres cluster.
@@ -32,6 +32,10 @@ def main():
     parser.add_argument(
         "--pg-ctl", type=Path, help="Native pg_ctl; otherwise use test Compose"
     )
+    parser.add_argument(
+        "--compose-project",
+        default=os.environ.get("F2R_TEST_COMPOSE_PROJECT", "feedback2req-i1-test"),
+    )
     args = parser.parse_args()
     url = make_url(os.environ["F2R_TEST_DATABASE_URL"])
     if (
@@ -50,6 +54,20 @@ def main():
     else:
         if url.port != 55433:
             raise RuntimeError("Test Compose requires port 55433")
+        if not re.fullmatch(
+            r"feedback2req-(i1-test|ci-[0-9]+-[0-9]+)", args.compose_project
+        ):
+            raise RuntimeError("Only a dedicated test/CI Compose project is allowed")
+        if url.username != "f2r_test":
+            raise RuntimeError("Test Compose requires its dedicated f2r_test role")
+    compose = [
+        "docker",
+        "compose",
+        "-f",
+        "compose.test.yaml",
+        "-p",
+        args.compose_project,
+    ]
     schema = "f2r_test_" + uuid4().hex
     engine = create_engine(url, hide_parameters=True)
     with engine.begin() as connection:
@@ -129,17 +147,8 @@ def main():
                 "start",
             )
         else:
-            run("docker", "compose", "-f", "compose.test.yaml", "stop", "db")
-            run(
-                "docker",
-                "compose",
-                "-f",
-                "compose.test.yaml",
-                "up",
-                "-d",
-                "--wait",
-                "db",
-            )
+            run(*compose, "stop", "db")
+            run(*compose, "up", "-d", "--wait", "db")
 
     password = "restart-test-" + uuid4().hex
 
@@ -179,6 +188,29 @@ def main():
                 ).status_code
                 == 200
             )
+            entered_text = " \tФиктивный отзыв ё Е\u0308 👩🏽‍💻\nLF\r\nCRLF\t \r\n "
+            saved_materials = []
+            for kind, body in [
+                ("sources", {"kind": "text", "text": entered_text}),
+                ("documents", {"title": "Фиктивный контекст", "text": entered_text}),
+            ]:
+                response = member.post(path + "/" + kind, json=body)
+                assert response.status_code == 201
+                saved_materials.append((kind, response.json()))
+
+            def assert_materials():
+                for kind, saved in saved_materials:
+                    material_path = path + "/" + kind
+                    actual = owner.get(material_path + "/" + saved["id"])
+                    assert actual.status_code == 200
+                    assert (
+                        actual.json() == saved
+                    )  # Includes unchanged material id and state_id.
+                    assert actual.json()["text"].encode("utf-8") == entered_text.encode(
+                        "utf-8"
+                    )
+                    assert owner.get(material_path).json()["items"] == [saved]
+
             # Actual API OS process is stopped; PostgreSQL is stopped and started using the same data.
             stop_api()
             restart_postgres()
@@ -188,6 +220,7 @@ def main():
             assert owner.get(path).json()["permissions"]["is_owner"]
             assert member.get(path).json()["permissions"]["can_approve"]
             assert len(owner.get(path + "/access").json()["items"]) == 2
+            assert_materials()
             with httpx.Client(base_url=origin) as revoked:
                 revoked.cookies.set("f2r_session", revoked_cookie)
                 assert revoked.get("/api/v1/auth/session").status_code == 401
@@ -202,9 +235,14 @@ def main():
             start_api()
             assert owner.get(path).json()["name"] == "После второго restart"
             assert member.get(path).status_code == 404
+            assert_materials()
+            for kind, saved in saved_materials:
+                assert (
+                    member.get(path + "/" + kind + "/" + saved["id"]).status_code == 404
+                )
         print(
             "PASS: two API process + PostgreSQL stop/start cycles; accounts, session/revocation, "
-            "project name, owner rights, access grant/revocation persisted"
+            "project name, owner rights, access grant/revocation and exact material text/id/state persisted"
         )
     finally:
         stop_api()

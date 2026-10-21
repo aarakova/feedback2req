@@ -1,8 +1,9 @@
 # feedback2req
 
-И1: backend с PostgreSQL, локальными учётными записями, серверными сессиями,
-проектами и управлением доступом. Основание: [DEC-007](docs/DECISIONS.md).
-Frontend, worker, материалы и AI-обработка ещё отсутствуют; HTML-прототип
+И1/И2а: backend с PostgreSQL, локальными учётными записями, серверными сессиями,
+проектами, управлением доступом и сохранением текстовых отзывов/документов.
+Основание: [DEC-007/DEC-008](docs/DECISIONS.md).
+Frontend, worker и AI-обработка ещё отсутствуют; HTML-прототип
 в `prototype/` остаётся референсом. Остальной [проект среза](docs/FIRST_TEXT_SLICE.md)
 не утверждён этим решением.
 
@@ -29,7 +30,8 @@ docker compose up -d api
 
 API: `http://localhost:8000/api/v1`. Автомиграции при импорте/старте нет;
 при развёртывании миграция выполняется отдельной командой до запуска API.
-Проверка версии: `docker compose run --rm api alembic current` (ожидается `m01`).
+Проверка версии: `docker compose run --rm api alembic current` (ожидается `m02a`).
+Та же `alembic upgrade head` обновляет существующую m01 без сброса данных И1.
 Перезапуск с тем же volume: `docker compose restart db api`.
 Остановка: `docker compose stop`. Постоянный `postgres_data` сохраняет БД.
 Команд удаления volume для пользовательских данных инструкция не предусматривает.
@@ -61,7 +63,8 @@ Compose. Для Python её нужно передать самостоятель
 Конфигурация `F2R_*`: обязательный `DATABASE_URL`; `ALLOWED_ORIGIN`,
 `LOCAL_HTTP`; `SESSION_SECONDS=86400`, `IDLE_SECONDS=1800`,
 `ARGON_TIME_COST=3`, `ARGON_MEMORY_COST=65536` (KiB), `ARGON_PARALLELISM=4`,
-`MAX_BODY_BYTES=16384`, `LOGIN_LIMIT=10`, `LOGIN_WINDOW_SECONDS=60`,
+`MAX_BODY_BYTES=16384`, `MAX_MATERIAL_TEXT_CHARS=8192`,
+`LOGIN_LIMIT=10`, `LOGIN_WINDOW_SECONDS=60`,
 `PAGE_SIZE=50`. Лимитер register/login общий по IP в одном процессе;
 он сбрасывается при restart. И1 запускается с одним процессом API.
 
@@ -88,7 +91,27 @@ PUT `/projects/{project_id}/access/{user_id}` с `{"can_approve":false}`;
 тот же PUT с true назначает Approver, с false отзывает только Approver.
 DELETE того же URL удаляет членство. Owner не может изменить свои права
 этими командами. Logout: DELETE `/auth/session` с текущими Origin/CSRF/cookie.
-Полный [контракт И1 и ошибки](docs/API.md).
+Полный [контракт И1/И2а и ошибки](docs/API.md).
+
+И2а: с теми же `$headers` и `$web` создайте фиктивные материалы:
+
+```powershell
+$text = "  Фиктивный отзыв ё Е$([char]0x0308) 🙂`tстрока`r`nCRLF`nLF  "
+$sourceBody = [Text.Encoding]::UTF8.GetBytes((@{kind='text'; text=$text} | ConvertTo-Json -Compress))
+$source = Invoke-RestMethod "$base/projects/$($project.id)/sources" -Method Post -Headers $headers -WebSession $web -ContentType 'application/json; charset=utf-8' -Body $sourceBody
+$documentBody = [Text.Encoding]::UTF8.GetBytes((@{title='Фиктивный контекст'; text=$text} | ConvertTo-Json -Compress))
+$document = Invoke-RestMethod "$base/projects/$($project.id)/documents" -Method Post -Headers $headers -WebSession $web -ContentType 'application/json; charset=utf-8' -Body $documentBody
+Invoke-RestMethod "$base/projects/$($project.id)/sources/$($source.id)" -WebSession $web
+Invoke-RestMethod "$base/projects/$($project.id)/documents/$($document.id)" -WebSession $web
+Invoke-RestMethod "$base/projects/$($project.id)/sources" -WebSession $web
+Invoke-RestMethod "$base/projects/$($project.id)/documents" -WebSession $web
+```
+
+Member также может выполнять эти операции. Списки имеют `{items,next_cursor}`,
+продолжение — `?cursor=<next_cursor>`. Создание возвращает устойчивые id/state_id
+и точный text; обработка не запускается. Слишком большой текст/body → 413,
+пустой/пробельный/неподдержанный PostgreSQL ввод → 422; текст не обрезается
+и не нормализуется. Сохранение файла, редактирование и удаление не реализованы.
 
 ## Тесты с изолированной PostgreSQL
 
@@ -99,7 +122,7 @@ DELETE того же URL удаляет членство. Owner не может 
 ```powershell
 docker compose -f compose.test.yaml up -d --wait db
 $env:F2R_TEST_DATABASE_URL = 'postgresql+psycopg://f2r_test@127.0.0.1:55433/feedback2req_i1_test'
-.\.venv\Scripts\python.exe -m pytest backend/tests -q
+.\.venv\Scripts\python.exe -m pytest backend/tests -q -W error
 .\.venv\Scripts\python.exe scripts/check_i1_restart.py
 .\.venv\Scripts\python.exe -m ruff check backend scripts/check_i1_restart.py
 .\.venv\Scripts\python.exe scripts/validate_ai_contracts.py
@@ -109,11 +132,13 @@ docker compose -f compose.test.yaml stop db
 pytest требует явную F2R_TEST_DATABASE_URL с `test` в имени БД, создаёт
 уникальную схему на каждый тест, применяет Alembic к пустой схеме, удаляет
 только собственную схему. Отдельный тест также создаёт новую пустую БД с
-уникальным префиксом f2r_test_, применяет M01 и удаляет только эту БД;
+уникальным префиксом f2r_test_, применяет m01 → m02a и удаляет только эту БД;
 тестовой роли нужны CREATE SCHEMA и CREATEDB (Compose/CI это предоставляют).
 SQLite не используется. Скрипт restart разрешает
 только loopback-БД `feedback2req_i1_test` и перезапускает только тестовый db
 из compose.test.yaml; API запускает отдельным временным процессом.
+Два stop/start цикла проверяют сохранение сессий/прав И1 и обоих материалов
+И2а с тем же текстом, id/state_id, включая Unicode/LF/CRLF.
 Не запускайте restart параллельно другим тестам.
 
 Для установленной PostgreSQL вместо Docker: initdb в `.local/i1-postgres`,
@@ -124,6 +149,11 @@ Native-режим управляет только `.local/i1-postgres`, не с�
 Каталог и конфигурация тестового кластера игнорируются Git.
 
 GitHub Actions: [.github/workflows/i1.yml](.github/workflows/i1.yml) запускает
-pytest на PostgreSQL 17, Ruff и исходный валидатор AI-контрактов. Настоящий
-restart тестового контейнера воспроизводится отдельной локальной командой
-выше. Границы покрытия и фактические результаты: [TESTING.md](docs/TESTING.md).
+pytest на PostgreSQL 17, Ruff, исходный валидатор AI-контрактов и полный restart.
+Для restart используется отдельный Compose-проект
+`feedback2req-ci-<run_id>-<run_attempt>`, БД на 55433 и свой volume; pytest-БД
+сервиса GitHub на 5432 не останавливается. `F2R_TEST_COMPOSE_PROJECT` позволяет
+скрипту выбрать только это безопасное имя или feedback2req-i1-test.
+TestClient использует совместимый httpx2 вместо deprecated-интеграции с httpx;
+версии включены в requirements-test.lock, предупреждения не подавляются.
+Границы покрытия и фактические результаты: [TESTING.md](docs/TESTING.md).

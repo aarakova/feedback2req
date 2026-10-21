@@ -1,5 +1,6 @@
 import os
 import re
+from contextlib import contextmanager
 from pathlib import Path
 from uuid import uuid4
 
@@ -17,8 +18,8 @@ ORIGIN = "http://localhost:8000"
 PASSWORD = "test-only-password-И1"
 
 
-@pytest.fixture
-def database_url():
+@contextmanager
+def isolated_database(target="head"):
     raw = os.environ.get("F2R_TEST_DATABASE_URL")
     if not raw:
         pytest.fail(
@@ -34,14 +35,26 @@ def database_url():
     scoped = url.update_query_dict({"options": f"-csearch_path={schema}"})
     config = Config(str(Path(__file__).parents[1] / "alembic.ini"))
     config.attributes["database_url"] = scoped.render_as_string(hide_password=False)
-    command.upgrade(config, "head")
     try:
+        command.upgrade(config, target)
         yield scoped.render_as_string(hide_password=False)
     finally:
         assert re.fullmatch(r"f2r_test_[0-9a-f]{32}", schema)
         with engine.begin() as connection:
             connection.execute(text(f'DROP SCHEMA "{schema}" CASCADE'))
         engine.dispose()
+
+
+@pytest.fixture
+def database_url():
+    with isolated_database() as url:
+        yield url
+
+
+@pytest.fixture
+def m01_database_url():
+    with isolated_database("m01") as url:
+        yield url
 
 
 @pytest.fixture

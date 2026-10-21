@@ -124,6 +124,20 @@ API предложены в [FIRST_TEXT_SLICE.md](FIRST_TEXT_SLICE.md). DEC-007 
 Alembic-миграцией: UUID приложения, UTC timestamptz, FK/UNIQUE/CHECK;
 owner_id задаёт неотзывные Member/Approver владельца, строка access — членство
 остальных и дополнительное can_approve. Логическая модель не меняется.
+DEC-008 добавляет только четыре таблицы m02a: feedback_sources/source_text_states
+и product_documents/document_states. Материал: UUID, project_id, current_state_id;
+источник также kind=text и availability=available. State: собственный UUID,
+project_id, source_id/document_id, TEXT, автор User.id, timestamptz, origin=human;
+у документа title хранится в состоянии. Человеческий ввод — единственное
+поддержанное происхождение в И2а; будущий AI-путь и attempt-ссылки не создаются.
+UNIQUE(project_id,id) и UNIQUE(project_id,material_id,state_id) поддерживают
+составные FK в обе стороны. Обязательный current_state_id использует
+DEFERRABLE INITIALLY DEFERRED FK на state своего материала/проекта; обратный
+FK состояния немедленный. Цикл замыкается при commit одной транзакции.
+UNIQUE-индексы с ведущим project_id покрывают списки и выборку состояний.
+NOT NULL и CHECK ограничивают непустой текст, title, kind/availability/origin;
+пробельный ввод дополнительно отклоняется сервисом без изменения текста.
+m01 не меняется; остальные таблицы M02 не входят в согласование И2а.
 Представления внутренних контрактов трёх AI-компонентов, ссылки на состояния,
 охват и утрата оснований определены в [AI_CONTRACTS.md](AI_CONTRACTS.md), DEC-005.
 Это DTO и правила приёма, а не изменение логической модели или схема таблиц.

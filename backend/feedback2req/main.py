@@ -4,6 +4,7 @@ from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from starlette.exceptions import HTTPException
 
+from feedback2req.api.materials import router as material_router
 from feedback2req.api.routes import router
 from feedback2req.api.security import RequestSecurity, error_response
 from feedback2req.config import Settings
@@ -26,6 +27,7 @@ def create_app(settings: Settings | None = None):
     app.state.identity = Identity(settings)
     app.add_middleware(RequestSecurity, settings=settings)
     app.include_router(router)
+    app.include_router(material_router)
 
     @app.exception_handler(AppError)
     async def application_error(request: Request, exc: AppError):
