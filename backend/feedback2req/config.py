@@ -1,3 +1,4 @@
+from pathlib import Path
 from urllib.parse import urlsplit
 
 from pydantic import Field, model_validator
@@ -10,6 +11,7 @@ class Settings(BaseSettings):
     database_url: str
     allowed_origin: str = "http://localhost:8000"
     local_http: bool = False
+    frontend_dist: Path = Path(__file__).resolve().parents[2] / "frontend" / "dist"
     session_cookie: str = "f2r_session"
     session_seconds: int = Field(default=86400, ge=60)
     idle_seconds: int = Field(default=1800, ge=60)

@@ -2,10 +2,12 @@
 
 И1/И2а: backend с PostgreSQL, локальными учётными записями, серверными сессиями,
 проектами, управлением доступом и сохранением текстовых отзывов/документов.
-Основание: [DEC-007/DEC-008](docs/DECISIONS.md).
-Frontend, worker и AI-обработка ещё отсутствуют; HTML-прототип
-в `prototype/` остаётся референсом. Остальной [проект среза](docs/FIRST_TEXT_SLICE.md)
-не утверждён этим решением.
+Ф1а добавляет React frontend: регистрация, вход/выход, восстановление сессии,
+список, создание и открытие проектов, полномочия текущего пользователя.
+Основание: [DEC-007/DEC-008/DEC-009](docs/DECISIONS.md).
+Worker и AI-обработка отсутствуют; HTML-прототип в `prototype/` остаётся
+визуальным референсом. Остальной [проект среза](docs/FIRST_TEXT_SLICE.md)
+не утверждён этими решениями.
 
 ## Локальный запуск Docker Compose
 
@@ -28,7 +30,9 @@ docker compose run --rm api alembic upgrade head
 docker compose up -d api
 ```
 
-API: `http://localhost:8000/api/v1`. Автомиграции при импорте/старте нет;
+Интерфейс: `http://localhost:8000/`, API: `http://localhost:8000/api/v1`.
+Dockerfile собирает frontend на Node 24 и включает только сборку в образ API.
+Автомиграции при импорте/старте нет;
 при развёртывании миграция выполняется отдельной командой до запуска API.
 Проверка версии: `docker compose run --rm api alembic current` (ожидается `m02a`).
 Та же `alembic upgrade head` обновляет существующую m01 без сброса данных И1.
@@ -67,6 +71,64 @@ Compose. Для Python её нужно передать самостоятель
 `LOGIN_LIMIT=10`, `LOGIN_WINDOW_SECONDS=60`,
 `PAGE_SIZE=50`. Лимитер register/login общий по IP в одном процессе;
 он сбрасывается при restart. И1 запускается с одним процессом API.
+
+## Frontend Ф1а
+
+Нужен Node.js 20.19+ либо 22.12+ (локально проверен Node 24).
+Для разработки из каталога `frontend`:
+
+```powershell
+npm.cmd ci
+npm.cmd run dev
+```
+
+Откройте **`http://localhost:5173`**. Vite использует фиксированный порт,
+проксирует `/api` на `http://127.0.0.1:8000` и сохраняет Origin браузера.
+Backend должен быть запущен с `F2R_ALLOWED_ORIGIN=http://localhost:5173`
+и `F2R_LOCAL_HTTP=true`. Для Python передайте эти переменные перед Uvicorn;
+для Compose укажите их в `.env` и выполните `docker compose up -d api`.
+Не заменяйте localhost на 127.0.0.1 в адресе браузера: Origin должен совпадать
+точно. При другом порте API задайте `F2R_API_PROXY_TARGET` перед Vite;
+эта переменная нужна только серверу разработки, не попадает в клиентскую сборку.
+Проверки Origin/CSRF и cookie backend сохраняются.
+
+Для раздачи сборки приложением выполните из `frontend`:
+
+```powershell
+npm.cmd run build
+```
+
+Перезапустите Python API с `F2R_ALLOWED_ORIGIN=http://localhost:8000`,
+откройте `http://localhost:8000/`. По умолчанию API ищет `frontend/dist`;
+другой локальный путь задаётся `F2R_FRONTEND_DIST`. Без сборки работает API.
+При Compose сборка включается командой `docker compose build api` выше,
+а Origin также должен соответствовать адресу браузера.
+
+Проверка вручную: зарегистрируйтесь (регистрация не выполняет автоматический
+вход), войдите, создайте и откройте проект, перезагрузите страницу. Должны
+сохраниться сессия и проект; полномочия берутся из API. После выхода открытие
+адреса проекта снова показывает форму входа. Пароль/CSRF/session token не
+сохраняются в localStorage/sessionStorage; cookie сессии остаётся HttpOnly.
+Материалы и управление участниками пока доступны только через API.
+
+Браузерные тесты используют отдельную PostgreSQL и уникальную тестовую схему,
+не меняют рабочую БД. После установки Python backend и тестовых зависимостей,
+запуска `compose.test.yaml` и сборки frontend выполните из `frontend`:
+
+```powershell
+$env:F2R_TEST_DATABASE_URL = 'postgresql+psycopg://f2r_test@127.0.0.1:55433/feedback2req_i1_test'
+$env:F2R_BROWSER_CHANNEL = 'msedge' # установленный Edge; либо установите Chromium: npx playwright install chromium
+npm.cmd run test:e2e # браузер → Vite proxy → настоящий API
+$env:F2R_E2E_MODE = 'built'
+npm.cmd run test:e2e # браузер → сборка, раздаваемая API
+Remove-Item Env:F2R_E2E_MODE
+```
+
+Тестовый API автоматически запускается на 18000, Vite — на 5173; порты
+должны быть свободны. Если используется Chromium, уберите F2R_BROWSER_CHANNEL.
+Тесты не запускают Docker сами. При принудительном завершении процесса
+тестовая схема может сохраниться в отдельной тестовой БД. Трассы с паролями
+и заголовками cookie не записываются; скриншоты содержат только тестовые данные.
 
 ## Проверка HTTP
 
