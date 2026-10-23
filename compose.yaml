@@ -13,7 +13,8 @@ services:
       interval: 3s
       timeout: 3s
       retries: 20
-  api:
+    networks: [data]
+  backend:
     build:
       context: .
       dockerfile: backend/Dockerfile
@@ -21,10 +22,55 @@ services:
       F2R_DATABASE_URL: postgresql+psycopg://feedback2req:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}@db/feedback2req
       F2R_ALLOWED_ORIGIN: ${F2R_ALLOWED_ORIGIN:-http://localhost:8000}
       F2R_LOCAL_HTTP: ${F2R_LOCAL_HTTP:-false}
-    ports:
-      - "127.0.0.1:8000:8000"
+      F2R_TRUSTED_PROXY_IP: ${F2R_PROXY_IP:-172.28.243.2}
+    networks:
+      proxy:
+        ipv4_address: ${F2R_BACKEND_PROXY_IP:-172.28.243.3}
+      data: {}
+    healthcheck:
+      test: ["CMD", "python", "-m", "feedback2req.runtime", "check", "--http"]
+      interval: 5s
+      timeout: 10s
+      retries: 20
+      start_period: 10s
+    stop_grace_period: 30s
     depends_on:
       db:
         condition: service_healthy
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    ports:
+      - "127.0.0.1:${F2R_HTTP_PORT:-8000}:80"
+    networks:
+      proxy:
+        ipv4_address: ${F2R_PROXY_IP:-172.28.243.2}
+    depends_on:
+      backend:
+        condition: service_healthy
+    stop_grace_period: 15s
+  worker:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    command: ["python", "-m", "feedback2req.runtime", "worker-check"]
+    restart: "no"
+    environment:
+      F2R_DATABASE_URL: postgresql+psycopg://feedback2req:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}@db/feedback2req
+      F2R_ALLOWED_ORIGIN: ${F2R_ALLOWED_ORIGIN:-http://localhost:8000}
+      F2R_LOCAL_HTTP: ${F2R_LOCAL_HTTP:-false}
+    networks: [data]
+    depends_on:
+      backend:
+        condition: service_healthy
+    stop_grace_period: 30s
+networks:
+  proxy:
+    ipam:
+      config:
+        - subnet: ${F2R_PROXY_SUBNET:-172.28.243.0/28}
+  data:
+    internal: true
 volumes:
   postgres_data:

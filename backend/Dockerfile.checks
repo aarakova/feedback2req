@@ -1,0 +1,7 @@
+# Development/CI tools are separate from the runtime image.
+FROM feedback2req-backend
+USER root
+COPY backend/requirements-test.lock /tmp/requirements-test.lock
+RUN pip install --no-cache-dir -r /tmp/requirements-test.lock
+WORKDIR /workspace
+CMD ["python", "-m", "pytest", "backend/tests", "-q", "-W", "error"]

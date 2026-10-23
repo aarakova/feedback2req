@@ -1,0 +1,20 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Build deployment images",
+			"type": "shell",
+			"command": "docker",
+			"args": [
+				"compose",
+				"build",
+				"backend",
+				"frontend",
+				"worker"
+			],
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		}
+	]
+}

@@ -1,0 +1,41 @@
+# Overlay ONLY for an isolated test project; never apply to the working project.
+name: feedback2req-infra-test
+services:
+  db:
+    environment:
+      POSTGRES_DB: feedback2req_infra_test
+      POSTGRES_PASSWORD: infrastructure-test-only
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U feedback2req -d feedback2req_infra_test"]
+  backend:
+    image: feedback2req-backend
+    networks:
+      proxy:
+        ipv4_address: ${F2R_TEST_BACKEND_PROXY_IP:-172.28.244.3}
+    environment:
+      F2R_DATABASE_URL: postgresql+psycopg://feedback2req:infrastructure-test-only@db/feedback2req_infra_test
+      F2R_ALLOWED_ORIGIN: ${F2R_TEST_ALLOWED_ORIGIN:-http://localhost:18080}
+      F2R_LOCAL_HTTP: "true"
+      F2R_TRUSTED_PROXY_IP: 172.28.244.2
+      F2R_LOGIN_LIMIT: ${F2R_TEST_LOGIN_LIMIT:-1000}
+      F2R_PAGE_SIZE: "2"
+      F2R_ARGON_MEMORY_COST: "8192"
+      F2R_ARGON_TIME_COST: "1"
+  frontend:
+    image: feedback2req-frontend
+    ports: !override
+      - "127.0.0.1:18080:80"
+    networks:
+      proxy:
+        ipv4_address: 172.28.244.2
+  worker:
+    image: feedback2req-worker
+    environment:
+      F2R_DATABASE_URL: postgresql+psycopg://feedback2req:infrastructure-test-only@db/feedback2req_infra_test
+      F2R_ALLOWED_ORIGIN: ${F2R_TEST_ALLOWED_ORIGIN:-http://localhost:18080}
+      F2R_LOCAL_HTTP: "true"
+networks:
+  proxy:
+    ipam:
+      config: !override
+        - subnet: 172.28.244.0/28

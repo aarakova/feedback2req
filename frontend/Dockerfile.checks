@@ -1,0 +1,7 @@
+FROM mcr.microsoft.com/playwright:v1.64.1-noble
+WORKDIR /tests/frontend
+COPY frontend/package.json frontend/package-lock.json ./
+RUN npm ci
+COPY frontend/ ./
+COPY scripts/forward_test_port.mjs /tests/scripts/forward_test_port.mjs
+CMD ["npm", "run", "test:e2e"]

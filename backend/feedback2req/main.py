@@ -3,8 +3,6 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from starlette.exceptions import HTTPException
-from starlette.responses import FileResponse
-from starlette.staticfiles import StaticFiles
 
 from feedback2req.api.materials import router as material_router
 from feedback2req.api.routes import router
@@ -46,16 +44,5 @@ def create_app(settings: Settings | None = None):
         return error_response(
             exc.status_code, "http_error", "Request cannot be served", request.state.request_id
         )
-
-    # A frontend build is optional for API-only development; routing uses URL hashes.
-    if (settings.frontend_dist / "index.html").is_file():
-
-        @app.get("/", include_in_schema=False)
-        def frontend_index():
-            return FileResponse(settings.frontend_dist / "index.html")
-
-        assets = settings.frontend_dist / "assets"
-        if assets.is_dir():
-            app.mount("/assets", StaticFiles(directory=assets), name="frontend-assets")
 
     return app
