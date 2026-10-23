@@ -1,0 +1,1524 @@
+{
+  "format_version": "1.0",
+  "dataset_sha256": "6926cb777854891d20727d868036e0e5fcfb0956952bf4e2ef566e224ea6169d",
+  "replay_sha256": "786a942b9462abafa678d9a0e967d3ef14ac0403037709817bb1bd3ab774f264",
+  "annotation_version": "0.2.0",
+  "annotation_status": "preliminary",
+  "reviewer": null,
+  "criterion_definitions": {
+    "semantic_support": "Существенные выводы поддержаны соответствующими доступными основаниями.",
+    "semantic_completeness": "Ожидаемые смыслы сохранены в фактически рассмотренной области.",
+    "absence_of_false_positives": "Нет выдуманных находок, доработок или необоснованных замечаний проверки.",
+    "direct_vs_inferred": "Прямые высказывания отделены от интерпретации; участнику не приписано предложение модели.",
+    "uncertainty_and_conflicts": "Неопределённость и конфликтующие позиции сохранены; вопросы обоснованы и адресны.",
+    "severity_and_blocking": "Серьёзность, блокирующее действие, причины и область обоснованы; серьёзность не задаёт блокировку автоматически.",
+    "robustness": "При сравнении с указанным базовым примером существенные смыслы и полномочия сохранены."
+  },
+  "instructions": "met — критерий выполнен; not_met — нарушен; uncertain — нельзя решить; not_applicable — неприменим. Для технического сбоя содержательные критерии не оцениваются. Сверяйтесь с REVIEW.md и реальным сохранённым ответом; инженерная фикстура не единственный эталон.",
+  "records": [
+    {
+      "case_id": "S01",
+      "example_id": "extract",
+      "attempt": 1,
+      "annotation": {
+        "version": "0.2.0",
+        "status": "preliminary",
+        "required_meanings": [
+          "Сохранение и восстановление выбранных фильтров статуса и исполнителя при повторном открытии списка; прямое пожелание."
+        ],
+        "allowed_alternatives": [
+          "Одна или несколько связанных находок; разные формулировки кандидата."
+        ],
+        "forbidden_claims": [
+          "Без оснований требовать ручную кнопку сохранения, пользовательские пресеты, синхронизацию между устройствами или SLA."
+        ],
+        "expert_questions": []
+      },
+      "example_review_note": null,
+      "relationship": null,
+      "reference_fixture_role": "engineering_control",
+      "coverage_notes": [],
+      "claim_reviews": [],
+      "criteria": [
+        {
+          "id": "semantic_support",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "semantic_completeness",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "absence_of_false_positives",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "direct_vs_inferred",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "uncertainty_and_conflicts",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "severity_and_blocking",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "robustness",
+          "verdict": "pending",
+          "rationale": null
+        }
+      ]
+    },
+    {
+      "case_id": "S01",
+      "example_id": "extract",
+      "attempt": 2,
+      "annotation": {
+        "version": "0.2.0",
+        "status": "preliminary",
+        "required_meanings": [
+          "Сохранение и восстановление выбранных фильтров статуса и исполнителя при повторном открытии списка; прямое пожелание."
+        ],
+        "allowed_alternatives": [
+          "Одна или несколько связанных находок; разные формулировки кандидата."
+        ],
+        "forbidden_claims": [
+          "Без оснований требовать ручную кнопку сохранения, пользовательские пресеты, синхронизацию между устройствами или SLA."
+        ],
+        "expert_questions": []
+      },
+      "example_review_note": null,
+      "relationship": null,
+      "reference_fixture_role": "engineering_control",
+      "coverage_notes": [],
+      "claim_reviews": [],
+      "criteria": [
+        {
+          "id": "semantic_support",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "semantic_completeness",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "absence_of_false_positives",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "direct_vs_inferred",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "uncertainty_and_conflicts",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "severity_and_blocking",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "robustness",
+          "verdict": "pending",
+          "rationale": null
+        }
+      ]
+    },
+    {
+      "case_id": "S11",
+      "example_id": "unicode-repeated",
+      "attempt": 1,
+      "annotation": {
+        "version": "0.2.0",
+        "status": "preliminary",
+        "required_meanings": [
+          "Точные цитаты, нумерация всех вхождений с нуля, Unicode code points, сохранение исходного текста."
+        ],
+        "allowed_alternatives": [
+          "Разные точные поддерживающие цитаты и разные границы содержательного фрагмента."
+        ],
+        "forbidden_claims": [
+          "Несуществующая цитата, неверное вхождение, ссылка на чужое основание; смыслово нерелевантная цитата."
+        ],
+        "expert_questions": [
+          "Существующая ссылка не доказывает смысловую поддержку; её оценивает человек."
+        ]
+      },
+      "example_review_note": null,
+      "relationship": null,
+      "reference_fixture_role": "engineering_control",
+      "coverage_notes": [],
+      "claim_reviews": [],
+      "criteria": [
+        {
+          "id": "semantic_support",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "semantic_completeness",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "absence_of_false_positives",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "direct_vs_inferred",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "uncertainty_and_conflicts",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "severity_and_blocking",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "robustness",
+          "verdict": "pending",
+          "rationale": null
+        }
+      ]
+    },
+    {
+      "case_id": "S11",
+      "example_id": "unicode-repeated",
+      "attempt": 2,
+      "annotation": {
+        "version": "0.2.0",
+        "status": "preliminary",
+        "required_meanings": [
+          "Точные цитаты, нумерация всех вхождений с нуля, Unicode code points, сохранение исходного текста."
+        ],
+        "allowed_alternatives": [
+          "Разные точные поддерживающие цитаты и разные границы содержательного фрагмента."
+        ],
+        "forbidden_claims": [
+          "Несуществующая цитата, неверное вхождение, ссылка на чужое основание; смыслово нерелевантная цитата."
+        ],
+        "expert_questions": [
+          "Существующая ссылка не доказывает смысловую поддержку; её оценивает человек."
+        ]
+      },
+      "example_review_note": null,
+      "relationship": null,
+      "reference_fixture_role": "engineering_control",
+      "coverage_notes": [],
+      "claim_reviews": [],
+      "criteria": [
+        {
+          "id": "semantic_support",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "semantic_completeness",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "absence_of_false_positives",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "direct_vs_inferred",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "uncertainty_and_conflicts",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "severity_and_blocking",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "robustness",
+          "verdict": "pending",
+          "rationale": null
+        }
+      ]
+    },
+    {
+      "case_id": "S01",
+      "example_id": "extract",
+      "attempt": 3,
+      "annotation": {
+        "version": "0.2.0",
+        "status": "preliminary",
+        "required_meanings": [
+          "Сохранение и восстановление выбранных фильтров статуса и исполнителя при повторном открытии списка; прямое пожелание."
+        ],
+        "allowed_alternatives": [
+          "Одна или несколько связанных находок; разные формулировки кандидата."
+        ],
+        "forbidden_claims": [
+          "Без оснований требовать ручную кнопку сохранения, пользовательские пресеты, синхронизацию между устройствами или SLA."
+        ],
+        "expert_questions": []
+      },
+      "example_review_note": null,
+      "relationship": null,
+      "reference_fixture_role": "engineering_control",
+      "coverage_notes": [],
+      "claim_reviews": [],
+      "criteria": [
+        {
+          "id": "semantic_support",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "semantic_completeness",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "absence_of_false_positives",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "direct_vs_inferred",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "uncertainty_and_conflicts",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "severity_and_blocking",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "robustness",
+          "verdict": "pending",
+          "rationale": null
+        }
+      ]
+    },
+    {
+      "case_id": "S01",
+      "example_id": "extract",
+      "attempt": 4,
+      "annotation": {
+        "version": "0.2.0",
+        "status": "preliminary",
+        "required_meanings": [
+          "Сохранение и восстановление выбранных фильтров статуса и исполнителя при повторном открытии списка; прямое пожелание."
+        ],
+        "allowed_alternatives": [
+          "Одна или несколько связанных находок; разные формулировки кандидата."
+        ],
+        "forbidden_claims": [
+          "Без оснований требовать ручную кнопку сохранения, пользовательские пресеты, синхронизацию между устройствами или SLA."
+        ],
+        "expert_questions": []
+      },
+      "example_review_note": null,
+      "relationship": null,
+      "reference_fixture_role": "engineering_control",
+      "coverage_notes": [],
+      "claim_reviews": [],
+      "criteria": [
+        {
+          "id": "semantic_support",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "semantic_completeness",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "absence_of_false_positives",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "direct_vs_inferred",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "uncertainty_and_conflicts",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "severity_and_blocking",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "robustness",
+          "verdict": "pending",
+          "rationale": null
+        }
+      ]
+    },
+    {
+      "case_id": "S01",
+      "example_id": "extract",
+      "attempt": 5,
+      "annotation": {
+        "version": "0.2.0",
+        "status": "preliminary",
+        "required_meanings": [
+          "Сохранение и восстановление выбранных фильтров статуса и исполнителя при повторном открытии списка; прямое пожелание."
+        ],
+        "allowed_alternatives": [
+          "Одна или несколько связанных находок; разные формулировки кандидата."
+        ],
+        "forbidden_claims": [
+          "Без оснований требовать ручную кнопку сохранения, пользовательские пресеты, синхронизацию между устройствами или SLA."
+        ],
+        "expert_questions": []
+      },
+      "example_review_note": null,
+      "relationship": null,
+      "reference_fixture_role": "engineering_control",
+      "coverage_notes": [],
+      "claim_reviews": [],
+      "criteria": [
+        {
+          "id": "semantic_support",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "semantic_completeness",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "absence_of_false_positives",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "direct_vs_inferred",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "uncertainty_and_conflicts",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "severity_and_blocking",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "robustness",
+          "verdict": "pending",
+          "rationale": null
+        }
+      ]
+    },
+    {
+      "case_id": "S01",
+      "example_id": "extract",
+      "attempt": 6,
+      "annotation": {
+        "version": "0.2.0",
+        "status": "preliminary",
+        "required_meanings": [
+          "Сохранение и восстановление выбранных фильтров статуса и исполнителя при повторном открытии списка; прямое пожелание."
+        ],
+        "allowed_alternatives": [
+          "Одна или несколько связанных находок; разные формулировки кандидата."
+        ],
+        "forbidden_claims": [
+          "Без оснований требовать ручную кнопку сохранения, пользовательские пресеты, синхронизацию между устройствами или SLA."
+        ],
+        "expert_questions": []
+      },
+      "example_review_note": null,
+      "relationship": null,
+      "reference_fixture_role": "engineering_control",
+      "coverage_notes": [],
+      "claim_reviews": [],
+      "criteria": [
+        {
+          "id": "semantic_support",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "semantic_completeness",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "absence_of_false_positives",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "direct_vs_inferred",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "uncertainty_and_conflicts",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "severity_and_blocking",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "robustness",
+          "verdict": "pending",
+          "rationale": null
+        }
+      ]
+    },
+    {
+      "case_id": "S11",
+      "example_id": "evidence-control",
+      "attempt": 1,
+      "annotation": {
+        "version": "0.2.0",
+        "status": "preliminary",
+        "required_meanings": [
+          "Точные цитаты, нумерация всех вхождений с нуля, Unicode code points, сохранение исходного текста."
+        ],
+        "allowed_alternatives": [
+          "Разные точные поддерживающие цитаты и разные границы содержательного фрагмента."
+        ],
+        "forbidden_claims": [
+          "Несуществующая цитата, неверное вхождение, ссылка на чужое основание; смыслово нерелевантная цитата."
+        ],
+        "expert_questions": [
+          "Существующая ссылка не доказывает смысловую поддержку; её оценивает человек."
+        ]
+      },
+      "example_review_note": null,
+      "relationship": null,
+      "reference_fixture_role": "engineering_control",
+      "coverage_notes": [],
+      "claim_reviews": [],
+      "criteria": [
+        {
+          "id": "semantic_support",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "semantic_completeness",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "absence_of_false_positives",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "direct_vs_inferred",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "uncertainty_and_conflicts",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "severity_and_blocking",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "robustness",
+          "verdict": "pending",
+          "rationale": null
+        }
+      ]
+    },
+    {
+      "case_id": "S05",
+      "example_id": "group",
+      "attempt": 1,
+      "annotation": {
+        "version": "0.2.0",
+        "status": "preliminary",
+        "required_meanings": [
+          "Близость пожеланий распознана; обе находки и основания сохранены."
+        ],
+        "allowed_alternatives": [
+          "Общее требование или обоснованные варианты группировки; пересекающиеся группы разрешены."
+        ],
+        "forbidden_claims": [
+          "Два источника объявлены двумя уникальными людьми или независимыми подтверждениями."
+        ],
+        "expert_questions": []
+      },
+      "example_review_note": null,
+      "relationship": null,
+      "reference_fixture_role": "engineering_control",
+      "coverage_notes": [],
+      "claim_reviews": [],
+      "criteria": [
+        {
+          "id": "semantic_support",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "semantic_completeness",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "absence_of_false_positives",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "direct_vs_inferred",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "uncertainty_and_conflicts",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "severity_and_blocking",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "robustness",
+          "verdict": "pending",
+          "rationale": null
+        }
+      ]
+    },
+    {
+      "case_id": "S06",
+      "example_id": "group",
+      "attempt": 1,
+      "annotation": {
+        "version": "0.2.0",
+        "status": "preliminary",
+        "required_meanings": [
+          "Обе позиции о звуке по умолчанию сохранены как конфликтующие; существенный выбор вынесен человеку."
+        ],
+        "allowed_alternatives": [
+          "Разные названия группы и формулировки вопроса, сохраняющие обе конфликтующие позиции."
+        ],
+        "forbidden_claims": [
+          "Усреднить ожидания; выбрать сторону по документации; уверенно навязать настройку как уже согласованное решение."
+        ],
+        "expert_questions": [
+          "Какое поведение по умолчанию требуется? Нужна ли настройка? Это решение человека."
+        ]
+      },
+      "example_review_note": null,
+      "relationship": null,
+      "reference_fixture_role": "engineering_control",
+      "coverage_notes": [
+        "Во всех входах S06 только две конфликтующие позиции. Независимой доработки здесь нет; продолжение её обработки при конфликте этим сценарием не покрыто. S10 проверяет независимое продолжение при техническом сбое, а не при содержательном конфликте."
+      ],
+      "claim_reviews": [],
+      "criteria": [
+        {
+          "id": "semantic_support",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "semantic_completeness",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "absence_of_false_positives",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "direct_vs_inferred",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "uncertainty_and_conflicts",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "severity_and_blocking",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "robustness",
+          "verdict": "pending",
+          "rationale": null
+        }
+      ]
+    },
+    {
+      "case_id": "S06",
+      "example_id": "question",
+      "attempt": 1,
+      "annotation": {
+        "version": "0.2.0",
+        "status": "preliminary",
+        "required_meanings": [
+          "Обе позиции о звуке по умолчанию сохранены как конфликтующие; существенный выбор вынесен человеку."
+        ],
+        "allowed_alternatives": [
+          "Разные названия группы и формулировки вопроса, сохраняющие обе конфликтующие позиции."
+        ],
+        "forbidden_claims": [
+          "Усреднить ожидания; выбрать сторону по документации; уверенно навязать настройку как уже согласованное решение."
+        ],
+        "expert_questions": [
+          "Какое поведение по умолчанию требуется? Нужна ли настройка? Это решение человека."
+        ]
+      },
+      "example_review_note": null,
+      "relationship": null,
+      "reference_fixture_role": "engineering_control",
+      "coverage_notes": [
+        "Во всех входах S06 только две конфликтующие позиции. Независимой доработки здесь нет; продолжение её обработки при конфликте этим сценарием не покрыто. S10 проверяет независимое продолжение при техническом сбое, а не при содержательном конфликте."
+      ],
+      "claim_reviews": [],
+      "criteria": [
+        {
+          "id": "semantic_support",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "semantic_completeness",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "absence_of_false_positives",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "direct_vs_inferred",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "uncertainty_and_conflicts",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "severity_and_blocking",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "robustness",
+          "verdict": "pending",
+          "rationale": null
+        }
+      ]
+    },
+    {
+      "case_id": "S10",
+      "example_id": "partial-comparison",
+      "attempt": 1,
+      "annotation": {
+        "version": "0.2.0",
+        "status": "preliminary",
+        "required_meanings": [
+          "Пригодный независимый результат не теряется; пропущенное сравнение видно; сбой отличим от ненадёжности."
+        ],
+        "allowed_alternatives": [
+          "При неполном сравнении допустимы уже найденные замечания; отсутствие находок даёт inconclusive."
+        ],
+        "forbidden_claims": [
+          "partially_processed для extract; no_issue_found для незавершённого поиска дублей; повышение надёжности."
+        ],
+        "expert_questions": [
+          "Содержательное чтение и точность ASR этим офлайн-набором не доказываются."
+        ]
+      },
+      "example_review_note": null,
+      "relationship": null,
+      "reference_fixture_role": "engineering_control",
+      "coverage_notes": [],
+      "claim_reviews": [],
+      "criteria": [
+        {
+          "id": "semantic_support",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "semantic_completeness",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "absence_of_false_positives",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "direct_vs_inferred",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "uncertainty_and_conflicts",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "severity_and_blocking",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "robustness",
+          "verdict": "pending",
+          "rationale": null
+        }
+      ]
+    },
+    {
+      "case_id": "S10",
+      "example_id": "partial-comparison",
+      "attempt": 2,
+      "annotation": {
+        "version": "0.2.0",
+        "status": "preliminary",
+        "required_meanings": [
+          "Пригодный независимый результат не теряется; пропущенное сравнение видно; сбой отличим от ненадёжности."
+        ],
+        "allowed_alternatives": [
+          "При неполном сравнении допустимы уже найденные замечания; отсутствие находок даёт inconclusive."
+        ],
+        "forbidden_claims": [
+          "partially_processed для extract; no_issue_found для незавершённого поиска дублей; повышение надёжности."
+        ],
+        "expert_questions": [
+          "Содержательное чтение и точность ASR этим офлайн-набором не доказываются."
+        ]
+      },
+      "example_review_note": null,
+      "relationship": null,
+      "reference_fixture_role": "engineering_control",
+      "coverage_notes": [],
+      "claim_reviews": [],
+      "criteria": [
+        {
+          "id": "semantic_support",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "semantic_completeness",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "absence_of_false_positives",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "direct_vs_inferred",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "uncertainty_and_conflicts",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "severity_and_blocking",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "robustness",
+          "verdict": "pending",
+          "rationale": null
+        }
+      ]
+    },
+    {
+      "case_id": "S09",
+      "example_id": "unsupported",
+      "attempt": 1,
+      "annotation": {
+        "version": "0.2.0",
+        "status": "preliminary",
+        "required_meanings": [
+          "Межустройственная синхронизация не поддержана; очистка противоречит просьбе сохранять фильтры.",
+          "Обнаружение ошибки, обоснованность серьёзности и область блокировки оцениваются раздельно; вопросы и блокировка адресованы затронутой редакции."
+        ],
+        "allowed_alternatives": [
+          "Разные тексты замечаний и значения low/medium/high при содержательном обосновании; универсальной фиксированной серьёзности для unsupported_claim нет."
+        ],
+        "forbidden_claims": [
+          "Признать весь кандидат обоснованным из-за поддержки только первой части; автоматически назначать одну серьёзность всем unsupported_claim или блокировать независимые объекты."
+        ],
+        "expert_questions": [
+          "Какую серьёзность назначить добавленному неподтверждённому утверждению?"
+        ]
+      },
+      "example_review_note": "medium — иллюстративное значение инженерной фикстуры, не эталон для всех unsupported_claim. Эксперт проверяет обоснование серьёзности и блокировку только target.",
+      "relationship": null,
+      "reference_fixture_role": "engineering_control",
+      "coverage_notes": [],
+      "claim_reviews": [],
+      "criteria": [
+        {
+          "id": "semantic_support",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "semantic_completeness",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "absence_of_false_positives",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "direct_vs_inferred",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "uncertainty_and_conflicts",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "severity_and_blocking",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "robustness",
+          "verdict": "pending",
+          "rationale": null
+        }
+      ]
+    },
+    {
+      "case_id": "S09",
+      "example_id": "unsupported",
+      "attempt": 2,
+      "annotation": {
+        "version": "0.2.0",
+        "status": "preliminary",
+        "required_meanings": [
+          "Межустройственная синхронизация не поддержана; очистка противоречит просьбе сохранять фильтры.",
+          "Обнаружение ошибки, обоснованность серьёзности и область блокировки оцениваются раздельно; вопросы и блокировка адресованы затронутой редакции."
+        ],
+        "allowed_alternatives": [
+          "Разные тексты замечаний и значения low/medium/high при содержательном обосновании; универсальной фиксированной серьёзности для unsupported_claim нет."
+        ],
+        "forbidden_claims": [
+          "Признать весь кандидат обоснованным из-за поддержки только первой части; автоматически назначать одну серьёзность всем unsupported_claim или блокировать независимые объекты."
+        ],
+        "expert_questions": [
+          "Какую серьёзность назначить добавленному неподтверждённому утверждению?"
+        ]
+      },
+      "example_review_note": "medium — иллюстративное значение инженерной фикстуры, не эталон для всех unsupported_claim. Эксперт проверяет обоснование серьёзности и блокировку только target.",
+      "relationship": null,
+      "reference_fixture_role": "engineering_control",
+      "coverage_notes": [],
+      "claim_reviews": [],
+      "criteria": [
+        {
+          "id": "semantic_support",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "semantic_completeness",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "absence_of_false_positives",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "direct_vs_inferred",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "uncertainty_and_conflicts",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "severity_and_blocking",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "robustness",
+          "verdict": "pending",
+          "rationale": null
+        }
+      ]
+    },
+    {
+      "case_id": "S13",
+      "example_id": "own-revision",
+      "attempt": 1,
+      "annotation": {
+        "version": "0.2.0",
+        "status": "preliminary",
+        "required_meanings": [
+          "Собственная прежняя редакция не отдельный дубль; чужое предложение рассматривается как возможный дубль, а не автоматически установленное совпадение; selected ограничивает вывод."
+        ],
+        "allowed_alternatives": [
+          "Допустим вывод possible_duplicate и вопрос человеку: смысловое сходство может оказаться самостоятельной доработкой после уточнения."
+        ],
+        "forbidden_claims": [
+          "Глобальный вывод из selected; объявление установленного дубля только по сходству чужого предложения; автоматическое закрытие прежнего блокера или перенос Approved."
+        ],
+        "expert_questions": [
+          "Чужое предложение — дубль или самостоятельная доработка? Старый блокер закрывает только прикладной процесс."
+        ]
+      },
+      "example_review_note": null,
+      "relationship": null,
+      "reference_fixture_role": "engineering_control",
+      "coverage_notes": [],
+      "claim_reviews": [],
+      "criteria": [
+        {
+          "id": "semantic_support",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "semantic_completeness",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "absence_of_false_positives",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "direct_vs_inferred",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "uncertainty_and_conflicts",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "severity_and_blocking",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "robustness",
+          "verdict": "pending",
+          "rationale": null
+        }
+      ]
+    },
+    {
+      "case_id": "S10",
+      "example_id": "independent-pdf",
+      "attempt": 1,
+      "annotation": {
+        "version": "0.2.0",
+        "status": "preliminary",
+        "required_meanings": [
+          "Пригодный независимый результат не теряется; пропущенное сравнение видно; сбой отличим от ненадёжности."
+        ],
+        "allowed_alternatives": [
+          "При неполном сравнении допустимы уже найденные замечания; отсутствие находок даёт inconclusive."
+        ],
+        "forbidden_claims": [
+          "partially_processed для extract; no_issue_found для незавершённого поиска дублей; повышение надёжности."
+        ],
+        "expert_questions": [
+          "Содержательное чтение и точность ASR этим офлайн-набором не доказываются."
+        ]
+      },
+      "example_review_note": null,
+      "relationship": null,
+      "reference_fixture_role": "engineering_control",
+      "coverage_notes": [],
+      "claim_reviews": [],
+      "criteria": [
+        {
+          "id": "semantic_support",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "semantic_completeness",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "absence_of_false_positives",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "direct_vs_inferred",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "uncertainty_and_conflicts",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "severity_and_blocking",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "robustness",
+          "verdict": "pending",
+          "rationale": null
+        }
+      ]
+    },
+    {
+      "case_id": "S10",
+      "example_id": "independent-pdf",
+      "attempt": 2,
+      "annotation": {
+        "version": "0.2.0",
+        "status": "preliminary",
+        "required_meanings": [
+          "Пригодный независимый результат не теряется; пропущенное сравнение видно; сбой отличим от ненадёжности."
+        ],
+        "allowed_alternatives": [
+          "При неполном сравнении допустимы уже найденные замечания; отсутствие находок даёт inconclusive."
+        ],
+        "forbidden_claims": [
+          "partially_processed для extract; no_issue_found для незавершённого поиска дублей; повышение надёжности."
+        ],
+        "expert_questions": [
+          "Содержательное чтение и точность ASR этим офлайн-набором не доказываются."
+        ]
+      },
+      "example_review_note": null,
+      "relationship": null,
+      "reference_fixture_role": "engineering_control",
+      "coverage_notes": [],
+      "claim_reviews": [],
+      "criteria": [
+        {
+          "id": "semantic_support",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "semantic_completeness",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "absence_of_false_positives",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "direct_vs_inferred",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "uncertainty_and_conflicts",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "severity_and_blocking",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "robustness",
+          "verdict": "pending",
+          "rationale": null
+        }
+      ]
+    },
+    {
+      "case_id": "S10",
+      "example_id": "independent-pdf",
+      "attempt": 3,
+      "annotation": {
+        "version": "0.2.0",
+        "status": "preliminary",
+        "required_meanings": [
+          "Пригодный независимый результат не теряется; пропущенное сравнение видно; сбой отличим от ненадёжности."
+        ],
+        "allowed_alternatives": [
+          "При неполном сравнении допустимы уже найденные замечания; отсутствие находок даёт inconclusive."
+        ],
+        "forbidden_claims": [
+          "partially_processed для extract; no_issue_found для незавершённого поиска дублей; повышение надёжности."
+        ],
+        "expert_questions": [
+          "Содержательное чтение и точность ASR этим офлайн-набором не доказываются."
+        ]
+      },
+      "example_review_note": null,
+      "relationship": null,
+      "reference_fixture_role": "engineering_control",
+      "coverage_notes": [],
+      "claim_reviews": [],
+      "criteria": [
+        {
+          "id": "semantic_support",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "semantic_completeness",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "absence_of_false_positives",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "direct_vs_inferred",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "uncertainty_and_conflicts",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "severity_and_blocking",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "robustness",
+          "verdict": "pending",
+          "rationale": null
+        }
+      ]
+    },
+    {
+      "case_id": "S10",
+      "example_id": "independent-pdf",
+      "attempt": 4,
+      "annotation": {
+        "version": "0.2.0",
+        "status": "preliminary",
+        "required_meanings": [
+          "Пригодный независимый результат не теряется; пропущенное сравнение видно; сбой отличим от ненадёжности."
+        ],
+        "allowed_alternatives": [
+          "При неполном сравнении допустимы уже найденные замечания; отсутствие находок даёт inconclusive."
+        ],
+        "forbidden_claims": [
+          "partially_processed для extract; no_issue_found для незавершённого поиска дублей; повышение надёжности."
+        ],
+        "expert_questions": [
+          "Содержательное чтение и точность ASR этим офлайн-набором не доказываются."
+        ]
+      },
+      "example_review_note": null,
+      "relationship": null,
+      "reference_fixture_role": "engineering_control",
+      "coverage_notes": [],
+      "claim_reviews": [],
+      "criteria": [
+        {
+          "id": "semantic_support",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "semantic_completeness",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "absence_of_false_positives",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "direct_vs_inferred",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "uncertainty_and_conflicts",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "severity_and_blocking",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "robustness",
+          "verdict": "pending",
+          "rationale": null
+        }
+      ]
+    },
+    {
+      "case_id": "S11",
+      "example_id": "unicode-repeated",
+      "attempt": 3,
+      "annotation": {
+        "version": "0.2.0",
+        "status": "preliminary",
+        "required_meanings": [
+          "Точные цитаты, нумерация всех вхождений с нуля, Unicode code points, сохранение исходного текста."
+        ],
+        "allowed_alternatives": [
+          "Разные точные поддерживающие цитаты и разные границы содержательного фрагмента."
+        ],
+        "forbidden_claims": [
+          "Несуществующая цитата, неверное вхождение, ссылка на чужое основание; смыслово нерелевантная цитата."
+        ],
+        "expert_questions": [
+          "Существующая ссылка не доказывает смысловую поддержку; её оценивает человек."
+        ]
+      },
+      "example_review_note": null,
+      "relationship": null,
+      "reference_fixture_role": "engineering_control",
+      "coverage_notes": [],
+      "claim_reviews": [],
+      "criteria": [
+        {
+          "id": "semantic_support",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "semantic_completeness",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "absence_of_false_positives",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "direct_vs_inferred",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "uncertainty_and_conflicts",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "severity_and_blocking",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "robustness",
+          "verdict": "pending",
+          "rationale": null
+        }
+      ]
+    },
+    {
+      "case_id": "S11",
+      "example_id": "unicode-repeated",
+      "attempt": 4,
+      "annotation": {
+        "version": "0.2.0",
+        "status": "preliminary",
+        "required_meanings": [
+          "Точные цитаты, нумерация всех вхождений с нуля, Unicode code points, сохранение исходного текста."
+        ],
+        "allowed_alternatives": [
+          "Разные точные поддерживающие цитаты и разные границы содержательного фрагмента."
+        ],
+        "forbidden_claims": [
+          "Несуществующая цитата, неверное вхождение, ссылка на чужое основание; смыслово нерелевантная цитата."
+        ],
+        "expert_questions": [
+          "Существующая ссылка не доказывает смысловую поддержку; её оценивает человек."
+        ]
+      },
+      "example_review_note": null,
+      "relationship": null,
+      "reference_fixture_role": "engineering_control",
+      "coverage_notes": [],
+      "claim_reviews": [],
+      "criteria": [
+        {
+          "id": "semantic_support",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "semantic_completeness",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "absence_of_false_positives",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "direct_vs_inferred",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "uncertainty_and_conflicts",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "severity_and_blocking",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "robustness",
+          "verdict": "pending",
+          "rationale": null
+        }
+      ]
+    },
+    {
+      "case_id": "S11",
+      "example_id": "unicode-repeated",
+      "attempt": 5,
+      "annotation": {
+        "version": "0.2.0",
+        "status": "preliminary",
+        "required_meanings": [
+          "Точные цитаты, нумерация всех вхождений с нуля, Unicode code points, сохранение исходного текста."
+        ],
+        "allowed_alternatives": [
+          "Разные точные поддерживающие цитаты и разные границы содержательного фрагмента."
+        ],
+        "forbidden_claims": [
+          "Несуществующая цитата, неверное вхождение, ссылка на чужое основание; смыслово нерелевантная цитата."
+        ],
+        "expert_questions": [
+          "Существующая ссылка не доказывает смысловую поддержку; её оценивает человек."
+        ]
+      },
+      "example_review_note": null,
+      "relationship": null,
+      "reference_fixture_role": "engineering_control",
+      "coverage_notes": [],
+      "claim_reviews": [],
+      "criteria": [
+        {
+          "id": "semantic_support",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "semantic_completeness",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "absence_of_false_positives",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "direct_vs_inferred",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "uncertainty_and_conflicts",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "severity_and_blocking",
+          "verdict": "pending",
+          "rationale": null
+        },
+        {
+          "id": "robustness",
+          "verdict": "pending",
+          "rationale": null
+        }
+      ]
+    }
+  ]
+}

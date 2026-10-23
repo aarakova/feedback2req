@@ -1,0 +1,1007 @@
+{
+  "format_version": "1.0",
+  "diagnostic_only": true,
+  "final_model_quality_assessment": false,
+  "created_at": "2026-10-23T18:56:33.378944+00:00",
+  "dataset": {
+    "version": "1.1.0",
+    "sha256": "6926cb777854891d20727d868036e0e5fcfb0956952bf4e2ef566e224ea6169d",
+    "annotation_version": "0.2.0",
+    "annotation_status": "preliminary"
+  },
+  "execution": {
+    "mode": "synthetic_fixture_replay",
+    "model": {
+      "name": "none",
+      "revision": "not_applicable"
+    },
+    "configuration": {
+      "prompt_version": "not_applicable",
+      "adapter_version": "not_applicable",
+      "generation_settings": {},
+      "seed": null
+    },
+    "replay_sha256": "786a942b9462abafa678d9a0e967d3ef14ac0403037709817bb1bd3ab774f264",
+    "python": "3.12.15",
+    "jsonschema": "4.26.0",
+    "referencing": "0.37.0",
+    "schemas_sha256": "b0b81f2276ae352ca2735698b0a14cfcb7150359904ece41ecca05ca05ae11bd",
+    "tool_sha256": "2705c9b2c2dafbe4298c479e1d4a90e5a09643790c30fcda6f7c3524f2b1cfd5"
+  },
+  "summary": {
+    "records": 24,
+    "returned": 20,
+    "failed": 4,
+    "automatic_categories": {
+      "technical": {
+        "records_with_diagnostics": 4,
+        "records_total": 24
+      },
+      "structure": {
+        "records_with_diagnostics": 5,
+        "records_total": 24
+      },
+      "provenance": {
+        "records_with_diagnostics": 10,
+        "records_total": 24
+      },
+      "coverage": {
+        "records_with_diagnostics": 4,
+        "records_total": 24
+      },
+      "consistency": {
+        "records_with_diagnostics": 2,
+        "records_total": 24
+      }
+    },
+    "expert_categories_preliminary": {
+      "semantic_support": {
+        "pending": 24
+      },
+      "semantic_completeness": {
+        "pending": 24
+      },
+      "absence_of_false_positives": {
+        "pending": 24
+      },
+      "direct_vs_inferred": {
+        "pending": 24
+      },
+      "uncertainty_and_conflicts": {
+        "pending": 24
+      },
+      "severity_and_blocking": {
+        "pending": 24
+      },
+      "robustness": {
+        "pending": 24
+      }
+    },
+    "expert_pending": 24,
+    "examples_scheduled": 10,
+    "examples_available": 46,
+    "examples_not_scheduled": 36
+  },
+  "records": [
+    {
+      "case_id": "S01",
+      "example_id": "extract",
+      "attempt": 1,
+      "operation": "extract_feedback",
+      "technical_outcome": "returned",
+      "duration_ms": null,
+      "request_sha256": "a7c4e736bcd564e0776b05554f9b0bfc4f8b066c996d500966afef6a92bcbae5",
+      "automatic": {
+        "status": "violations_found",
+        "diagnostics": [
+          {
+            "category": "structure",
+            "code": "SCHEMA-ADDITIONALPROPERTIES",
+            "side": "response",
+            "path": "/"
+          }
+        ],
+        "facts": {}
+      },
+      "expert": {
+        "status": "pending",
+        "annotation_status": "preliminary"
+      },
+      "relationship": null,
+      "reference_fixture_role": "engineering_control"
+    },
+    {
+      "case_id": "S01",
+      "example_id": "extract",
+      "attempt": 2,
+      "operation": "extract_feedback",
+      "technical_outcome": "returned",
+      "duration_ms": null,
+      "request_sha256": "a7c4e736bcd564e0776b05554f9b0bfc4f8b066c996d500966afef6a92bcbae5",
+      "automatic": {
+        "status": "violations_found",
+        "diagnostics": [
+          {
+            "category": "structure",
+            "code": "SCHEMA-ONEOF",
+            "side": "response",
+            "path": "/coverage/0"
+          },
+          {
+            "category": "structure",
+            "code": "SCHEMA-ENUM",
+            "side": "response",
+            "path": "/coverage/0/disposition"
+          }
+        ],
+        "facts": {}
+      },
+      "expert": {
+        "status": "pending",
+        "annotation_status": "preliminary"
+      },
+      "relationship": null,
+      "reference_fixture_role": "engineering_control"
+    },
+    {
+      "case_id": "S11",
+      "example_id": "unicode-repeated",
+      "attempt": 1,
+      "operation": "extract_feedback",
+      "technical_outcome": "returned",
+      "duration_ms": null,
+      "request_sha256": "ab1d96d865579e22e1dd1a2a739229a1f60d4bf059af36f0f55236712ec39436",
+      "automatic": {
+        "status": "violations_found",
+        "diagnostics": [
+          {
+            "category": "provenance",
+            "code": "QUOTE-OCCURRENCE",
+            "side": "response",
+            "path": "/"
+          }
+        ],
+        "facts": {
+          "coverage": {
+            "completed": 1,
+            "insufficient_information": 0,
+            "not_processed": 0,
+            "partially_processed": 0
+          },
+          "declared_reviewed": 1,
+          "primary_units": 1,
+          "derived_fragments": [],
+          "open_prior_blockers": 0,
+          "scope": null,
+          "semantic_reading_proven": false
+        }
+      },
+      "expert": {
+        "status": "pending",
+        "annotation_status": "preliminary"
+      },
+      "relationship": null,
+      "reference_fixture_role": "engineering_control"
+    },
+    {
+      "case_id": "S11",
+      "example_id": "unicode-repeated",
+      "attempt": 2,
+      "operation": "extract_feedback",
+      "technical_outcome": "returned",
+      "duration_ms": null,
+      "request_sha256": "ab1d96d865579e22e1dd1a2a739229a1f60d4bf059af36f0f55236712ec39436",
+      "automatic": {
+        "status": "violations_found",
+        "diagnostics": [
+          {
+            "category": "provenance",
+            "code": "QUOTE-OCCURRENCE",
+            "side": "response",
+            "path": "/"
+          }
+        ],
+        "facts": {
+          "coverage": {
+            "completed": 1,
+            "insufficient_information": 0,
+            "not_processed": 0,
+            "partially_processed": 0
+          },
+          "declared_reviewed": 1,
+          "primary_units": 1,
+          "derived_fragments": [],
+          "open_prior_blockers": 0,
+          "scope": null,
+          "semantic_reading_proven": false
+        }
+      },
+      "expert": {
+        "status": "pending",
+        "annotation_status": "preliminary"
+      },
+      "relationship": null,
+      "reference_fixture_role": "engineering_control"
+    },
+    {
+      "case_id": "S01",
+      "example_id": "extract",
+      "attempt": 3,
+      "operation": "extract_feedback",
+      "technical_outcome": "returned",
+      "duration_ms": null,
+      "request_sha256": "a7c4e736bcd564e0776b05554f9b0bfc4f8b066c996d500966afef6a92bcbae5",
+      "automatic": {
+        "status": "violations_found",
+        "diagnostics": [
+          {
+            "category": "provenance",
+            "code": "FINDING-FRAGMENT-MISSING",
+            "side": "response",
+            "path": "/"
+          }
+        ],
+        "facts": {
+          "coverage": {
+            "completed": 1,
+            "insufficient_information": 0,
+            "not_processed": 0,
+            "partially_processed": 0
+          },
+          "declared_reviewed": 1,
+          "primary_units": 1,
+          "derived_fragments": [
+            {
+              "locator": {
+                "start": 0,
+                "end": 88
+              },
+              "reliability": "usable"
+            }
+          ],
+          "open_prior_blockers": 0,
+          "scope": null,
+          "semantic_reading_proven": false
+        }
+      },
+      "expert": {
+        "status": "pending",
+        "annotation_status": "preliminary"
+      },
+      "relationship": null,
+      "reference_fixture_role": "engineering_control"
+    },
+    {
+      "case_id": "S01",
+      "example_id": "extract",
+      "attempt": 4,
+      "operation": "extract_feedback",
+      "technical_outcome": "returned",
+      "duration_ms": null,
+      "request_sha256": "a7c4e736bcd564e0776b05554f9b0bfc4f8b066c996d500966afef6a92bcbae5",
+      "automatic": {
+        "status": "violations_found",
+        "diagnostics": [
+          {
+            "category": "provenance",
+            "code": "LOCAL-IDS-NOT-UNIQUE",
+            "side": "response",
+            "path": "/"
+          }
+        ],
+        "facts": {
+          "coverage": {
+            "completed": 1,
+            "insufficient_information": 0,
+            "not_processed": 0,
+            "partially_processed": 0
+          },
+          "declared_reviewed": 1,
+          "primary_units": 1,
+          "derived_fragments": [
+            {
+              "locator": {
+                "start": 0,
+                "end": 88
+              },
+              "reliability": "usable"
+            }
+          ],
+          "open_prior_blockers": 0,
+          "scope": null,
+          "semantic_reading_proven": false
+        }
+      },
+      "expert": {
+        "status": "pending",
+        "annotation_status": "preliminary"
+      },
+      "relationship": null,
+      "reference_fixture_role": "engineering_control"
+    },
+    {
+      "case_id": "S01",
+      "example_id": "extract",
+      "attempt": 5,
+      "operation": "extract_feedback",
+      "technical_outcome": "returned",
+      "duration_ms": null,
+      "request_sha256": "a7c4e736bcd564e0776b05554f9b0bfc4f8b066c996d500966afef6a92bcbae5",
+      "automatic": {
+        "status": "violations_found",
+        "diagnostics": [
+          {
+            "category": "provenance",
+            "code": "LINK-WRONG-ROLE",
+            "side": "response",
+            "path": "/"
+          }
+        ],
+        "facts": {
+          "coverage": {
+            "completed": 1,
+            "insufficient_information": 0,
+            "not_processed": 0,
+            "partially_processed": 0
+          },
+          "declared_reviewed": 1,
+          "primary_units": 1,
+          "derived_fragments": [
+            {
+              "locator": {
+                "start": 0,
+                "end": 88
+              },
+              "reliability": "usable"
+            }
+          ],
+          "open_prior_blockers": 0,
+          "scope": null,
+          "semantic_reading_proven": false
+        }
+      },
+      "expert": {
+        "status": "pending",
+        "annotation_status": "preliminary"
+      },
+      "relationship": null,
+      "reference_fixture_role": "engineering_control"
+    },
+    {
+      "case_id": "S01",
+      "example_id": "extract",
+      "attempt": 6,
+      "operation": "extract_feedback",
+      "technical_outcome": "returned",
+      "duration_ms": null,
+      "request_sha256": "a7c4e736bcd564e0776b05554f9b0bfc4f8b066c996d500966afef6a92bcbae5",
+      "automatic": {
+        "status": "violations_found",
+        "diagnostics": [
+          {
+            "category": "coverage",
+            "code": "COVERAGE-KEYS",
+            "side": "response",
+            "path": "/"
+          },
+          {
+            "category": "coverage",
+            "code": "RESULT-FROM-UNREVIEWED",
+            "side": "response",
+            "path": "/"
+          },
+          {
+            "category": "coverage",
+            "code": "RESULT-FROM-UNREVIEWED",
+            "side": "response",
+            "path": "/"
+          }
+        ],
+        "facts": {
+          "coverage": {
+            "completed": 1,
+            "insufficient_information": 0,
+            "not_processed": 0,
+            "partially_processed": 0
+          },
+          "declared_reviewed": 1,
+          "primary_units": 1,
+          "derived_fragments": [
+            {
+              "locator": {
+                "start": 0,
+                "end": 88
+              },
+              "reliability": "usable"
+            }
+          ],
+          "open_prior_blockers": 0,
+          "scope": null,
+          "semantic_reading_proven": false
+        }
+      },
+      "expert": {
+        "status": "pending",
+        "annotation_status": "preliminary"
+      },
+      "relationship": null,
+      "reference_fixture_role": "engineering_control"
+    },
+    {
+      "case_id": "S11",
+      "example_id": "evidence-control",
+      "attempt": 1,
+      "operation": "generate_requirements",
+      "technical_outcome": "returned",
+      "duration_ms": null,
+      "request_sha256": "cafd05769af3d0748e2d160ecc67d92e0876bfa946850ce374d122acbbee0ce6",
+      "automatic": {
+        "status": "violations_found",
+        "diagnostics": [
+          {
+            "category": "provenance",
+            "code": "REQUIREMENT-EVIDENCE-MISMATCH",
+            "side": "response",
+            "path": "/"
+          }
+        ],
+        "facts": {
+          "coverage": {
+            "completed": 1,
+            "insufficient_information": 0,
+            "not_processed": 0,
+            "partially_processed": 0
+          },
+          "declared_reviewed": 1,
+          "primary_units": 1,
+          "derived_fragments": [],
+          "open_prior_blockers": 0,
+          "scope": null,
+          "semantic_reading_proven": false
+        }
+      },
+      "expert": {
+        "status": "pending",
+        "annotation_status": "preliminary"
+      },
+      "relationship": null,
+      "reference_fixture_role": "engineering_control"
+    },
+    {
+      "case_id": "S05",
+      "example_id": "group",
+      "attempt": 1,
+      "operation": "group_findings",
+      "technical_outcome": "returned",
+      "duration_ms": null,
+      "request_sha256": "2c8a6c1ec3445c26bbd76a427a1feffc793f1504304e64236b5bbf18a7840fda",
+      "automatic": {
+        "status": "violations_found",
+        "diagnostics": [
+          {
+            "category": "provenance",
+            "code": "GROUP-MEMBER-MISSING",
+            "side": "response",
+            "path": "/"
+          },
+          {
+            "category": "coverage",
+            "code": "RESULT-FROM-UNREVIEWED",
+            "side": "response",
+            "path": "/"
+          },
+          {
+            "category": "coverage",
+            "code": "GROUP-MEMBER-NOT-CONSIDERED",
+            "side": "response",
+            "path": "/"
+          },
+          {
+            "category": "coverage",
+            "code": "GROUP-COVERAGE",
+            "side": "response",
+            "path": "/"
+          }
+        ],
+        "facts": {
+          "coverage": {
+            "completed": 2,
+            "insufficient_information": 0,
+            "not_processed": 0,
+            "partially_processed": 0
+          },
+          "declared_reviewed": 2,
+          "primary_units": 2,
+          "derived_fragments": [],
+          "open_prior_blockers": 0,
+          "scope": null,
+          "semantic_reading_proven": false
+        }
+      },
+      "expert": {
+        "status": "pending",
+        "annotation_status": "preliminary"
+      },
+      "relationship": null,
+      "reference_fixture_role": "engineering_control"
+    },
+    {
+      "case_id": "S06",
+      "example_id": "group",
+      "attempt": 1,
+      "operation": "group_findings",
+      "technical_outcome": "returned",
+      "duration_ms": null,
+      "request_sha256": "b319654fa06b58fad93e3ea62c51dbcef611866dd68c76b66df6c002eb410d7a",
+      "automatic": {
+        "status": "violations_found",
+        "diagnostics": [
+          {
+            "category": "provenance",
+            "code": "CONFLICT-MEMBER-OUTSIDE-GROUP",
+            "side": "response",
+            "path": "/"
+          }
+        ],
+        "facts": {
+          "coverage": {
+            "completed": 2,
+            "insufficient_information": 0,
+            "not_processed": 0,
+            "partially_processed": 0
+          },
+          "declared_reviewed": 2,
+          "primary_units": 2,
+          "derived_fragments": [],
+          "open_prior_blockers": 0,
+          "scope": null,
+          "semantic_reading_proven": false
+        }
+      },
+      "expert": {
+        "status": "pending",
+        "annotation_status": "preliminary"
+      },
+      "relationship": null,
+      "reference_fixture_role": "engineering_control"
+    },
+    {
+      "case_id": "S06",
+      "example_id": "question",
+      "attempt": 1,
+      "operation": "generate_requirements",
+      "technical_outcome": "returned",
+      "duration_ms": null,
+      "request_sha256": "12d52c2aa8ff3860c917aeee5b6b27025d7462aa223bdce96730663cd3d284a8",
+      "automatic": {
+        "status": "violations_found",
+        "diagnostics": [
+          {
+            "category": "consistency",
+            "code": "QUESTION-SCOPE",
+            "side": "response",
+            "path": "/"
+          }
+        ],
+        "facts": {
+          "coverage": {
+            "completed": 0,
+            "insufficient_information": 2,
+            "not_processed": 0,
+            "partially_processed": 0
+          },
+          "declared_reviewed": 2,
+          "primary_units": 2,
+          "derived_fragments": [],
+          "open_prior_blockers": 0,
+          "scope": null,
+          "semantic_reading_proven": false
+        }
+      },
+      "expert": {
+        "status": "pending",
+        "annotation_status": "preliminary"
+      },
+      "relationship": null,
+      "reference_fixture_role": "engineering_control"
+    },
+    {
+      "case_id": "S10",
+      "example_id": "partial-comparison",
+      "attempt": 1,
+      "operation": "verify_requirement",
+      "technical_outcome": "returned",
+      "duration_ms": null,
+      "request_sha256": "64e056909be699c1956cfa1dce8c50ac5a7163279d8b0778002ba6bdce683dbf",
+      "automatic": {
+        "status": "violations_found",
+        "diagnostics": [
+          {
+            "category": "coverage",
+            "code": "DUPLICATES-INCOMPLETE-CLEAN",
+            "side": "response",
+            "path": "/"
+          }
+        ],
+        "facts": {
+          "coverage": {
+            "completed": 0,
+            "insufficient_information": 0,
+            "not_processed": 0,
+            "partially_processed": 1
+          },
+          "declared_reviewed": 1,
+          "primary_units": 1,
+          "derived_fragments": [],
+          "open_prior_blockers": 0,
+          "scope": "project_snapshot",
+          "semantic_reading_proven": false
+        }
+      },
+      "expert": {
+        "status": "pending",
+        "annotation_status": "preliminary"
+      },
+      "relationship": null,
+      "reference_fixture_role": "engineering_control"
+    },
+    {
+      "case_id": "S10",
+      "example_id": "partial-comparison",
+      "attempt": 2,
+      "operation": "verify_requirement",
+      "technical_outcome": "returned",
+      "duration_ms": null,
+      "request_sha256": "64e056909be699c1956cfa1dce8c50ac5a7163279d8b0778002ba6bdce683dbf",
+      "automatic": {
+        "status": "violations_found",
+        "diagnostics": [
+          {
+            "category": "coverage",
+            "code": "COMPARISON-PARTIAL-COVERAGE",
+            "side": "response",
+            "path": "/"
+          }
+        ],
+        "facts": {
+          "coverage": {
+            "completed": 1,
+            "insufficient_information": 0,
+            "not_processed": 0,
+            "partially_processed": 0
+          },
+          "declared_reviewed": 1,
+          "primary_units": 1,
+          "derived_fragments": [],
+          "open_prior_blockers": 0,
+          "scope": "project_snapshot",
+          "semantic_reading_proven": false
+        }
+      },
+      "expert": {
+        "status": "pending",
+        "annotation_status": "preliminary"
+      },
+      "relationship": null,
+      "reference_fixture_role": "engineering_control"
+    },
+    {
+      "case_id": "S09",
+      "example_id": "unsupported",
+      "attempt": 1,
+      "operation": "verify_requirement",
+      "technical_outcome": "returned",
+      "duration_ms": null,
+      "request_sha256": "66e75ed6354432c325959bef88f4168e11c4ad183b0a21eed96c15ae3ee4b81d",
+      "automatic": {
+        "status": "violations_found",
+        "diagnostics": [
+          {
+            "category": "consistency",
+            "code": "ISSUE-CHECK-CONTRADICTION",
+            "side": "response",
+            "path": "/"
+          }
+        ],
+        "facts": {
+          "coverage": {
+            "completed": 1,
+            "insufficient_information": 0,
+            "not_processed": 0,
+            "partially_processed": 0
+          },
+          "declared_reviewed": 1,
+          "primary_units": 1,
+          "derived_fragments": [],
+          "open_prior_blockers": 0,
+          "scope": "project_snapshot",
+          "semantic_reading_proven": false
+        }
+      },
+      "expert": {
+        "status": "pending",
+        "annotation_status": "preliminary"
+      },
+      "relationship": null,
+      "reference_fixture_role": "engineering_control"
+    },
+    {
+      "case_id": "S09",
+      "example_id": "unsupported",
+      "attempt": 2,
+      "operation": "verify_requirement",
+      "technical_outcome": "returned",
+      "duration_ms": null,
+      "request_sha256": "66e75ed6354432c325959bef88f4168e11c4ad183b0a21eed96c15ae3ee4b81d",
+      "automatic": {
+        "status": "violations_found",
+        "diagnostics": [
+          {
+            "category": "provenance",
+            "code": "ISSUE-QUESTION-MISSING",
+            "side": "response",
+            "path": "/"
+          }
+        ],
+        "facts": {
+          "coverage": {
+            "completed": 1,
+            "insufficient_information": 0,
+            "not_processed": 0,
+            "partially_processed": 0
+          },
+          "declared_reviewed": 1,
+          "primary_units": 1,
+          "derived_fragments": [],
+          "open_prior_blockers": 0,
+          "scope": "project_snapshot",
+          "semantic_reading_proven": false
+        }
+      },
+      "expert": {
+        "status": "pending",
+        "annotation_status": "preliminary"
+      },
+      "relationship": null,
+      "reference_fixture_role": "engineering_control"
+    },
+    {
+      "case_id": "S13",
+      "example_id": "own-revision",
+      "attempt": 1,
+      "operation": "verify_requirement",
+      "technical_outcome": "returned",
+      "duration_ms": null,
+      "request_sha256": "1bc7f0b2f8cea7310efa74d7bbaf185cb4f579b61314a7b3569062e5ac43f58a",
+      "automatic": {
+        "status": "violations_found",
+        "diagnostics": [
+          {
+            "category": "provenance",
+            "code": "DUPLICATE-SAME-REQUIREMENT",
+            "side": "response",
+            "path": "/"
+          }
+        ],
+        "facts": {
+          "coverage": {
+            "completed": 1,
+            "insufficient_information": 0,
+            "not_processed": 0,
+            "partially_processed": 0
+          },
+          "declared_reviewed": 1,
+          "primary_units": 1,
+          "derived_fragments": [],
+          "open_prior_blockers": 0,
+          "scope": "project_snapshot",
+          "semantic_reading_proven": false
+        }
+      },
+      "expert": {
+        "status": "pending",
+        "annotation_status": "preliminary"
+      },
+      "relationship": null,
+      "reference_fixture_role": "engineering_control"
+    },
+    {
+      "case_id": "S10",
+      "example_id": "independent-pdf",
+      "attempt": 1,
+      "operation": "extract_feedback",
+      "technical_outcome": "failed",
+      "duration_ms": null,
+      "request_sha256": "5c7f4af3c6370b667ee2b6fc985b1c3cdb5d56d8b7e4c32296fdeb16b3c147c3",
+      "automatic": {
+        "status": "violations_found",
+        "diagnostics": [
+          {
+            "category": "technical",
+            "code": "TECH-TIMEOUT",
+            "side": "execution",
+            "path": "/"
+          }
+        ],
+        "facts": {}
+      },
+      "expert": {
+        "status": "pending",
+        "annotation_status": "preliminary"
+      },
+      "relationship": null,
+      "reference_fixture_role": "engineering_control"
+    },
+    {
+      "case_id": "S10",
+      "example_id": "independent-pdf",
+      "attempt": 2,
+      "operation": "extract_feedback",
+      "technical_outcome": "failed",
+      "duration_ms": null,
+      "request_sha256": "5c7f4af3c6370b667ee2b6fc985b1c3cdb5d56d8b7e4c32296fdeb16b3c147c3",
+      "automatic": {
+        "status": "violations_found",
+        "diagnostics": [
+          {
+            "category": "technical",
+            "code": "TECH-PROVIDER_ERROR",
+            "side": "execution",
+            "path": "/"
+          }
+        ],
+        "facts": {}
+      },
+      "expert": {
+        "status": "pending",
+        "annotation_status": "preliminary"
+      },
+      "relationship": null,
+      "reference_fixture_role": "engineering_control"
+    },
+    {
+      "case_id": "S10",
+      "example_id": "independent-pdf",
+      "attempt": 3,
+      "operation": "extract_feedback",
+      "technical_outcome": "failed",
+      "duration_ms": null,
+      "request_sha256": "5c7f4af3c6370b667ee2b6fc985b1c3cdb5d56d8b7e4c32296fdeb16b3c147c3",
+      "automatic": {
+        "status": "violations_found",
+        "diagnostics": [
+          {
+            "category": "technical",
+            "code": "TECH-INVALID_RESPONSE",
+            "side": "execution",
+            "path": "/"
+          }
+        ],
+        "facts": {}
+      },
+      "expert": {
+        "status": "pending",
+        "annotation_status": "preliminary"
+      },
+      "relationship": null,
+      "reference_fixture_role": "engineering_control"
+    },
+    {
+      "case_id": "S10",
+      "example_id": "independent-pdf",
+      "attempt": 4,
+      "operation": "extract_feedback",
+      "technical_outcome": "failed",
+      "duration_ms": null,
+      "request_sha256": "5c7f4af3c6370b667ee2b6fc985b1c3cdb5d56d8b7e4c32296fdeb16b3c147c3",
+      "automatic": {
+        "status": "violations_found",
+        "diagnostics": [
+          {
+            "category": "technical",
+            "code": "TECH-CANCELLED",
+            "side": "execution",
+            "path": "/"
+          }
+        ],
+        "facts": {}
+      },
+      "expert": {
+        "status": "pending",
+        "annotation_status": "preliminary"
+      },
+      "relationship": null,
+      "reference_fixture_role": "engineering_control"
+    },
+    {
+      "case_id": "S11",
+      "example_id": "unicode-repeated",
+      "attempt": 3,
+      "operation": "extract_feedback",
+      "technical_outcome": "returned",
+      "duration_ms": null,
+      "request_sha256": "ab1d96d865579e22e1dd1a2a739229a1f60d4bf059af36f0f55236712ec39436",
+      "automatic": {
+        "status": "violations_found",
+        "diagnostics": [
+          {
+            "category": "structure",
+            "code": "RESPONSE-JSON-DUPLICATE-PROPERTY",
+            "side": "response",
+            "path": "/"
+          }
+        ],
+        "facts": {}
+      },
+      "expert": {
+        "status": "pending",
+        "annotation_status": "preliminary"
+      },
+      "relationship": null,
+      "reference_fixture_role": "engineering_control"
+    },
+    {
+      "case_id": "S11",
+      "example_id": "unicode-repeated",
+      "attempt": 4,
+      "operation": "extract_feedback",
+      "technical_outcome": "returned",
+      "duration_ms": null,
+      "request_sha256": "ab1d96d865579e22e1dd1a2a739229a1f60d4bf059af36f0f55236712ec39436",
+      "automatic": {
+        "status": "violations_found",
+        "diagnostics": [
+          {
+            "category": "structure",
+            "code": "RESPONSE-JSON-NONFINITE-NUMBER",
+            "side": "response",
+            "path": "/"
+          }
+        ],
+        "facts": {}
+      },
+      "expert": {
+        "status": "pending",
+        "annotation_status": "preliminary"
+      },
+      "relationship": null,
+      "reference_fixture_role": "engineering_control"
+    },
+    {
+      "case_id": "S11",
+      "example_id": "unicode-repeated",
+      "attempt": 5,
+      "operation": "extract_feedback",
+      "technical_outcome": "returned",
+      "duration_ms": null,
+      "request_sha256": "ab1d96d865579e22e1dd1a2a739229a1f60d4bf059af36f0f55236712ec39436",
+      "automatic": {
+        "status": "violations_found",
+        "diagnostics": [
+          {
+            "category": "structure",
+            "code": "RESPONSE-JSON-UNREADABLE",
+            "side": "response",
+            "path": "/"
+          }
+        ],
+        "facts": {}
+      },
+      "expert": {
+        "status": "pending",
+        "annotation_status": "preliminary"
+      },
+      "relationship": null,
+      "reference_fixture_role": "engineering_control"
+    }
+  ],
+  "limitations": [
+    "PRELIMINARY annotations; no final semantic quality score or model ranking.",
+    "Coverage is declared, not proof of semantic reading.",
+    "Trusted states are synthetic fixture facts, not database/permission/race checks.",
+    "No ASR, application lifecycle, provider calls, or deletion implementation tested.",
+    "Semantic support, completeness, false positives, uncertainty/conflicts and robustness require expert review.",
+    "Engineering reference fixtures, including intentional_semantic_error, are not positive semantic gold.",
+    "S06 has only conflicting positions: independent continuation during a semantic conflict is not covered; S10 covers a technical failure."
+  ]
+}

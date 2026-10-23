@@ -1,0 +1,369 @@
+{
+  "diagnostic_only": true,
+  "final_model_quality_assessment": false,
+  "dataset": {
+    "version": "1.1.0",
+    "sha256": "6926cb777854891d20727d868036e0e5fcfb0956952bf4e2ef566e224ea6169d",
+    "annotation_version": "0.2.0",
+    "annotation_status": "preliminary"
+  },
+  "same_inputs_and_checks": true,
+  "configuration_equal": true,
+  "models_equal": true,
+  "replays": [
+    "f6a8fca850cca1a63d1a981e6e9633e90578c37e1932f29284d9ecffd888da49",
+    "f6a8fca850cca1a63d1a981e6e9633e90578c37e1932f29284d9ecffd888da49"
+  ],
+  "scenarios": [
+    {
+      "case_id": "S01",
+      "left": {
+        "records": 4,
+        "automatic_categories": {
+          "technical": 0,
+          "structure": 0,
+          "provenance": 0,
+          "coverage": 0,
+          "consistency": 0
+        },
+        "expert_pending": 4
+      },
+      "right": {
+        "records": 4,
+        "automatic_categories": {
+          "technical": 0,
+          "structure": 0,
+          "provenance": 0,
+          "coverage": 0,
+          "consistency": 0
+        },
+        "expert_pending": 4
+      }
+    },
+    {
+      "case_id": "S02",
+      "left": {
+        "records": 2,
+        "automatic_categories": {
+          "technical": 0,
+          "structure": 0,
+          "provenance": 0,
+          "coverage": 0,
+          "consistency": 0
+        },
+        "expert_pending": 2
+      },
+      "right": {
+        "records": 2,
+        "automatic_categories": {
+          "technical": 0,
+          "structure": 0,
+          "provenance": 0,
+          "coverage": 0,
+          "consistency": 0
+        },
+        "expert_pending": 2
+      }
+    },
+    {
+      "case_id": "S03",
+      "left": {
+        "records": 3,
+        "automatic_categories": {
+          "technical": 0,
+          "structure": 0,
+          "provenance": 0,
+          "coverage": 0,
+          "consistency": 0
+        },
+        "expert_pending": 3
+      },
+      "right": {
+        "records": 3,
+        "automatic_categories": {
+          "technical": 0,
+          "structure": 0,
+          "provenance": 0,
+          "coverage": 0,
+          "consistency": 0
+        },
+        "expert_pending": 3
+      }
+    },
+    {
+      "case_id": "S04",
+      "left": {
+        "records": 3,
+        "automatic_categories": {
+          "technical": 0,
+          "structure": 0,
+          "provenance": 0,
+          "coverage": 0,
+          "consistency": 0
+        },
+        "expert_pending": 3
+      },
+      "right": {
+        "records": 3,
+        "automatic_categories": {
+          "technical": 0,
+          "structure": 0,
+          "provenance": 0,
+          "coverage": 0,
+          "consistency": 0
+        },
+        "expert_pending": 3
+      }
+    },
+    {
+      "case_id": "S05",
+      "left": {
+        "records": 3,
+        "automatic_categories": {
+          "technical": 0,
+          "structure": 0,
+          "provenance": 0,
+          "coverage": 0,
+          "consistency": 0
+        },
+        "expert_pending": 3
+      },
+      "right": {
+        "records": 3,
+        "automatic_categories": {
+          "technical": 0,
+          "structure": 0,
+          "provenance": 0,
+          "coverage": 0,
+          "consistency": 0
+        },
+        "expert_pending": 3
+      }
+    },
+    {
+      "case_id": "S06",
+      "left": {
+        "records": 3,
+        "automatic_categories": {
+          "technical": 0,
+          "structure": 0,
+          "provenance": 0,
+          "coverage": 0,
+          "consistency": 0
+        },
+        "expert_pending": 3
+      },
+      "right": {
+        "records": 3,
+        "automatic_categories": {
+          "technical": 0,
+          "structure": 0,
+          "provenance": 0,
+          "coverage": 0,
+          "consistency": 0
+        },
+        "expert_pending": 3
+      }
+    },
+    {
+      "case_id": "S07",
+      "left": {
+        "records": 3,
+        "automatic_categories": {
+          "technical": 0,
+          "structure": 0,
+          "provenance": 0,
+          "coverage": 0,
+          "consistency": 0
+        },
+        "expert_pending": 3
+      },
+      "right": {
+        "records": 3,
+        "automatic_categories": {
+          "technical": 0,
+          "structure": 0,
+          "provenance": 0,
+          "coverage": 0,
+          "consistency": 0
+        },
+        "expert_pending": 3
+      }
+    },
+    {
+      "case_id": "S08",
+      "left": {
+        "records": 3,
+        "automatic_categories": {
+          "technical": 0,
+          "structure": 0,
+          "provenance": 0,
+          "coverage": 0,
+          "consistency": 0
+        },
+        "expert_pending": 3
+      },
+      "right": {
+        "records": 3,
+        "automatic_categories": {
+          "technical": 0,
+          "structure": 0,
+          "provenance": 0,
+          "coverage": 0,
+          "consistency": 0
+        },
+        "expert_pending": 3
+      }
+    },
+    {
+      "case_id": "S09",
+      "left": {
+        "records": 5,
+        "automatic_categories": {
+          "technical": 0,
+          "structure": 0,
+          "provenance": 0,
+          "coverage": 0,
+          "consistency": 0
+        },
+        "expert_pending": 5
+      },
+      "right": {
+        "records": 5,
+        "automatic_categories": {
+          "technical": 0,
+          "structure": 0,
+          "provenance": 0,
+          "coverage": 0,
+          "consistency": 0
+        },
+        "expert_pending": 5
+      }
+    },
+    {
+      "case_id": "S10",
+      "left": {
+        "records": 5,
+        "automatic_categories": {
+          "technical": 0,
+          "structure": 0,
+          "provenance": 0,
+          "coverage": 0,
+          "consistency": 0
+        },
+        "expert_pending": 5
+      },
+      "right": {
+        "records": 5,
+        "automatic_categories": {
+          "technical": 0,
+          "structure": 0,
+          "provenance": 0,
+          "coverage": 0,
+          "consistency": 0
+        },
+        "expert_pending": 5
+      }
+    },
+    {
+      "case_id": "S11",
+      "left": {
+        "records": 3,
+        "automatic_categories": {
+          "technical": 0,
+          "structure": 0,
+          "provenance": 0,
+          "coverage": 0,
+          "consistency": 0
+        },
+        "expert_pending": 3
+      },
+      "right": {
+        "records": 3,
+        "automatic_categories": {
+          "technical": 0,
+          "structure": 0,
+          "provenance": 0,
+          "coverage": 0,
+          "consistency": 0
+        },
+        "expert_pending": 3
+      }
+    },
+    {
+      "case_id": "S12",
+      "left": {
+        "records": 3,
+        "automatic_categories": {
+          "technical": 0,
+          "structure": 0,
+          "provenance": 0,
+          "coverage": 0,
+          "consistency": 0
+        },
+        "expert_pending": 3
+      },
+      "right": {
+        "records": 3,
+        "automatic_categories": {
+          "technical": 0,
+          "structure": 0,
+          "provenance": 0,
+          "coverage": 0,
+          "consistency": 0
+        },
+        "expert_pending": 3
+      }
+    },
+    {
+      "case_id": "S13",
+      "left": {
+        "records": 4,
+        "automatic_categories": {
+          "technical": 0,
+          "structure": 0,
+          "provenance": 0,
+          "coverage": 0,
+          "consistency": 0
+        },
+        "expert_pending": 4
+      },
+      "right": {
+        "records": 4,
+        "automatic_categories": {
+          "technical": 0,
+          "structure": 0,
+          "provenance": 0,
+          "coverage": 0,
+          "consistency": 0
+        },
+        "expert_pending": 4
+      }
+    },
+    {
+      "case_id": "S14",
+      "left": {
+        "records": 2,
+        "automatic_categories": {
+          "technical": 0,
+          "structure": 0,
+          "provenance": 0,
+          "coverage": 0,
+          "consistency": 0
+        },
+        "expert_pending": 2
+      },
+      "right": {
+        "records": 2,
+        "automatic_categories": {
+          "technical": 0,
+          "structure": 0,
+          "provenance": 0,
+          "coverage": 0,
+          "consistency": 0
+        },
+        "expert_pending": 2
+      }
+    }
+  ]
+}
