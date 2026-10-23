@@ -1,0 +1,650 @@
+{
+  "id": "S04",
+  "version": "1.0.0",
+  "synthetic": true,
+  "title": "Нет основания новой доработки",
+  "traceability": {
+    "requirements": [
+      "FR-008",
+      "FR-009",
+      "FR-014"
+    ],
+    "acceptance_criteria": [
+      "AC-03",
+      "AC-05"
+    ],
+    "contract_rules": [
+      "AP-06",
+      "AP-07"
+    ]
+  },
+  "annotation": {
+    "version": "0.2.0",
+    "status": "preliminary",
+    "required_meanings": [
+      "Положительное наблюдение не создаёт потребность изменить фильтр; прощание не содержит продуктового пожелания."
+    ],
+    "allowed_alternatives": [
+      "Для положительного наблюдения допустима находка observation; для прощания допустим пустой результат."
+    ],
+    "forbidden_claims": [
+      "Создать доработку из одного лишь документа или положительного наблюдения."
+    ],
+    "expert_questions": []
+  },
+  "examples": [
+    {
+      "id": "observation",
+      "request": {
+        "contract_version": "1.0",
+        "operation": "extract_feedback",
+        "project_id": "SYNTHETIC-S04",
+        "request_id": "S04-observation",
+        "input": {
+          "segments": [
+            {
+              "key": "s1",
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "S04-observation-SYN-SRC-1",
+                "state_id": "S04-observation-SYN-SRC-1-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "S04-observation-SYN-SRC-1",
+                "state_id": "S04-observation-SYN-SRC-1-v1"
+              },
+              "locator": {
+                "start": 0,
+                "end": 48
+              },
+              "reliability": "usable",
+              "text": "Фильтр по статусу работает; менять его не нужно."
+            }
+          ],
+          "documents": [
+            {
+              "key": "d1",
+              "ref": {
+                "kind": "product_document",
+                "id": "S04-observation-DOC-1",
+                "state_id": "S04-observation-DOC-1-v1"
+              },
+              "text": "Список задач фильтруется по статусу и исполнителю. После повторного открытия фильтры сбрасываются.",
+              "locator": {
+                "start": 0,
+                "end": 98
+              }
+            },
+            {
+              "key": "d2",
+              "ref": {
+                "kind": "product_document",
+                "id": "S04-observation-DOC-2",
+                "state_id": "S04-observation-DOC-2-v1"
+              },
+              "text": "Звуковые уведомления об изменении статуса включены по умолчанию. Пользовательской настройки звука нет.",
+              "locator": {
+                "start": 0,
+                "end": 102
+              }
+            },
+            {
+              "key": "d3",
+              "ref": {
+                "kind": "product_document",
+                "id": "S04-observation-DOC-3",
+                "state_id": "S04-observation-DOC-3-v1"
+              },
+              "text": "Экспорт CSV доступен через меню «Отчёты → CSV».",
+              "locator": {
+                "start": 0,
+                "end": 47
+              }
+            },
+            {
+              "key": "d4",
+              "ref": {
+                "kind": "product_document",
+                "id": "S04-observation-DOC-4",
+                "state_id": "S04-observation-DOC-4-v1"
+              },
+              "text": "При закрытии формы создания задачи введённый текст теряется. Черновики не сохраняются.",
+              "locator": {
+                "start": 0,
+                "end": 86
+              }
+            }
+          ]
+        }
+      },
+      "trusted": {
+        "texts": [
+          {
+            "ref": {
+              "kind": "feedback_source",
+              "id": "S04-observation-SYN-SRC-1",
+              "state_id": "S04-observation-SYN-SRC-1-v1"
+            },
+            "source_ref": {
+              "kind": "feedback_source",
+              "id": "S04-observation-SYN-SRC-1",
+              "state_id": "S04-observation-SYN-SRC-1-v1"
+            },
+            "text": "Фильтр по статусу работает; менять его не нужно.",
+            "reliability": "usable"
+          }
+        ],
+        "documents": [
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S04-observation-DOC-1",
+              "state_id": "S04-observation-DOC-1-v1"
+            },
+            "text": "Список задач фильтруется по статусу и исполнителю. После повторного открытия фильтры сбрасываются."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S04-observation-DOC-2",
+              "state_id": "S04-observation-DOC-2-v1"
+            },
+            "text": "Звуковые уведомления об изменении статуса включены по умолчанию. Пользовательской настройки звука нет."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S04-observation-DOC-3",
+              "state_id": "S04-observation-DOC-3-v1"
+            },
+            "text": "Экспорт CSV доступен через меню «Отчёты → CSV»."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S04-observation-DOC-4",
+              "state_id": "S04-observation-DOC-4-v1"
+            },
+            "text": "При закрытии формы создания задачи введённый текст теряется. Черновики не сохраняются."
+          }
+        ],
+        "project_id": "SYNTHETIC-S04",
+        "states": [
+          {
+            "kind": "feedback_source",
+            "id": "S04-observation-SYN-SRC-1",
+            "state_id": "S04-observation-SYN-SRC-1-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S04-observation-DOC-1",
+            "state_id": "S04-observation-DOC-1-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S04-observation-DOC-2",
+            "state_id": "S04-observation-DOC-2-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S04-observation-DOC-3",
+            "state_id": "S04-observation-DOC-3-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S04-observation-DOC-4",
+            "state_id": "S04-observation-DOC-4-v1"
+          }
+        ]
+      },
+      "fixture_response": {
+        "coverage": [
+          {
+            "input_key": "s1",
+            "reviewed": true,
+            "disposition": "completed"
+          }
+        ],
+        "uncertainties": [],
+        "questions": [],
+        "result": {
+          "fragments": [
+            {
+              "local_id": "fragment-1",
+              "segment_key": "s1",
+              "quote": "Фильтр по статусу работает; менять его не нужно.",
+              "occurrence": 0
+            }
+          ],
+          "findings": [
+            {
+              "local_id": "finding-1",
+              "text": "Фильтр по статусу работает; менять его не нужно.",
+              "types": [
+                "observation"
+              ],
+              "mode": "direct",
+              "fragment_ids": [
+                "fragment-1"
+              ],
+              "considered_keys": [
+                "s1"
+              ],
+              "context_keys": []
+            }
+          ]
+        }
+      },
+      "fixture_role": "engineering_control",
+      "relationship": null
+    },
+    {
+      "id": "no-requirements",
+      "request": {
+        "contract_version": "1.0",
+        "operation": "generate_requirements",
+        "project_id": "SYNTHETIC-S04",
+        "request_id": "S04-no-requirements",
+        "input": {
+          "findings": [
+            {
+              "key": "f1",
+              "ref": {
+                "kind": "finding",
+                "id": "S04-no-requirements-SYN-FINDING-1",
+                "state_id": "S04-no-requirements-SYN-FINDING-1-v1"
+              },
+              "text": "Фильтр по статусу работает; менять его не нужно.",
+              "types": [
+                "observation"
+              ],
+              "mode": "direct",
+              "evidence": [
+                {
+                  "kind": "available",
+                  "fragment_key": "e1"
+                }
+              ],
+              "uncertainty_notes": [],
+              "open_questions": [],
+              "authorship": "ai"
+            }
+          ],
+          "fragments": [
+            {
+              "key": "e1",
+              "ref": {
+                "kind": "fragment",
+                "id": "S04-no-requirements-SYN-FRAGMENT-1",
+                "state_id": "S04-no-requirements-SYN-FRAGMENT-1-v1"
+              },
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "S04-no-requirements-SYN-SRC-1",
+                "state_id": "S04-no-requirements-SYN-SRC-1-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "S04-no-requirements-SYN-SRC-1",
+                "state_id": "S04-no-requirements-SYN-SRC-1-v1"
+              },
+              "quote": "Фильтр по статусу работает; менять его не нужно.",
+              "locator": {
+                "start": 0,
+                "end": 48
+              },
+              "reliability": "usable"
+            }
+          ],
+          "groups": [],
+          "documents": [
+            {
+              "key": "d1",
+              "ref": {
+                "kind": "product_document",
+                "id": "S04-no-requirements-DOC-1",
+                "state_id": "S04-no-requirements-DOC-1-v1"
+              },
+              "text": "Список задач фильтруется по статусу и исполнителю. После повторного открытия фильтры сбрасываются.",
+              "locator": {
+                "start": 0,
+                "end": 98
+              }
+            },
+            {
+              "key": "d2",
+              "ref": {
+                "kind": "product_document",
+                "id": "S04-no-requirements-DOC-2",
+                "state_id": "S04-no-requirements-DOC-2-v1"
+              },
+              "text": "Звуковые уведомления об изменении статуса включены по умолчанию. Пользовательской настройки звука нет.",
+              "locator": {
+                "start": 0,
+                "end": 102
+              }
+            },
+            {
+              "key": "d3",
+              "ref": {
+                "kind": "product_document",
+                "id": "S04-no-requirements-DOC-3",
+                "state_id": "S04-no-requirements-DOC-3-v1"
+              },
+              "text": "Экспорт CSV доступен через меню «Отчёты → CSV».",
+              "locator": {
+                "start": 0,
+                "end": 47
+              }
+            },
+            {
+              "key": "d4",
+              "ref": {
+                "kind": "product_document",
+                "id": "S04-no-requirements-DOC-4",
+                "state_id": "S04-no-requirements-DOC-4-v1"
+              },
+              "text": "При закрытии формы создания задачи введённый текст теряется. Черновики не сохраняются.",
+              "locator": {
+                "start": 0,
+                "end": 86
+              }
+            }
+          ]
+        }
+      },
+      "trusted": {
+        "texts": [
+          {
+            "ref": {
+              "kind": "feedback_source",
+              "id": "S04-no-requirements-SYN-SRC-1",
+              "state_id": "S04-no-requirements-SYN-SRC-1-v1"
+            },
+            "source_ref": {
+              "kind": "feedback_source",
+              "id": "S04-no-requirements-SYN-SRC-1",
+              "state_id": "S04-no-requirements-SYN-SRC-1-v1"
+            },
+            "text": "Фильтр по статусу работает; менять его не нужно.",
+            "reliability": "usable"
+          }
+        ],
+        "documents": [
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S04-no-requirements-DOC-1",
+              "state_id": "S04-no-requirements-DOC-1-v1"
+            },
+            "text": "Список задач фильтруется по статусу и исполнителю. После повторного открытия фильтры сбрасываются."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S04-no-requirements-DOC-2",
+              "state_id": "S04-no-requirements-DOC-2-v1"
+            },
+            "text": "Звуковые уведомления об изменении статуса включены по умолчанию. Пользовательской настройки звука нет."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S04-no-requirements-DOC-3",
+              "state_id": "S04-no-requirements-DOC-3-v1"
+            },
+            "text": "Экспорт CSV доступен через меню «Отчёты → CSV»."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S04-no-requirements-DOC-4",
+              "state_id": "S04-no-requirements-DOC-4-v1"
+            },
+            "text": "При закрытии формы создания задачи введённый текст теряется. Черновики не сохраняются."
+          }
+        ],
+        "project_id": "SYNTHETIC-S04",
+        "states": [
+          {
+            "kind": "finding",
+            "id": "S04-no-requirements-SYN-FINDING-1",
+            "state_id": "S04-no-requirements-SYN-FINDING-1-v1"
+          },
+          {
+            "kind": "fragment",
+            "id": "S04-no-requirements-SYN-FRAGMENT-1",
+            "state_id": "S04-no-requirements-SYN-FRAGMENT-1-v1"
+          },
+          {
+            "kind": "feedback_source",
+            "id": "S04-no-requirements-SYN-SRC-1",
+            "state_id": "S04-no-requirements-SYN-SRC-1-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S04-no-requirements-DOC-1",
+            "state_id": "S04-no-requirements-DOC-1-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S04-no-requirements-DOC-2",
+            "state_id": "S04-no-requirements-DOC-2-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S04-no-requirements-DOC-3",
+            "state_id": "S04-no-requirements-DOC-3-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S04-no-requirements-DOC-4",
+            "state_id": "S04-no-requirements-DOC-4-v1"
+          }
+        ]
+      },
+      "fixture_response": {
+        "coverage": [
+          {
+            "input_key": "f1",
+            "reviewed": true,
+            "disposition": "completed",
+            "reason": "Новая доработка не следует из рассмотренных наблюдений."
+          }
+        ],
+        "uncertainties": [],
+        "questions": [],
+        "result": {
+          "requirements": []
+        }
+      },
+      "fixture_role": "engineering_control",
+      "relationship": null
+    },
+    {
+      "id": "no-findings",
+      "request": {
+        "contract_version": "1.0",
+        "operation": "extract_feedback",
+        "project_id": "SYNTHETIC-S04",
+        "request_id": "S04-no-findings",
+        "input": {
+          "segments": [
+            {
+              "key": "s1",
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "S04-no-findings-SYN-SRC-1",
+                "state_id": "S04-no-findings-SYN-SRC-1-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "S04-no-findings-SYN-SRC-1",
+                "state_id": "S04-no-findings-SYN-SRC-1-v1"
+              },
+              "locator": {
+                "start": 0,
+                "end": 32
+              },
+              "reliability": "usable",
+              "text": "Спасибо за встречу. До свидания."
+            }
+          ],
+          "documents": [
+            {
+              "key": "d1",
+              "ref": {
+                "kind": "product_document",
+                "id": "S04-no-findings-DOC-1",
+                "state_id": "S04-no-findings-DOC-1-v1"
+              },
+              "text": "Список задач фильтруется по статусу и исполнителю. После повторного открытия фильтры сбрасываются.",
+              "locator": {
+                "start": 0,
+                "end": 98
+              }
+            },
+            {
+              "key": "d2",
+              "ref": {
+                "kind": "product_document",
+                "id": "S04-no-findings-DOC-2",
+                "state_id": "S04-no-findings-DOC-2-v1"
+              },
+              "text": "Звуковые уведомления об изменении статуса включены по умолчанию. Пользовательской настройки звука нет.",
+              "locator": {
+                "start": 0,
+                "end": 102
+              }
+            },
+            {
+              "key": "d3",
+              "ref": {
+                "kind": "product_document",
+                "id": "S04-no-findings-DOC-3",
+                "state_id": "S04-no-findings-DOC-3-v1"
+              },
+              "text": "Экспорт CSV доступен через меню «Отчёты → CSV».",
+              "locator": {
+                "start": 0,
+                "end": 47
+              }
+            },
+            {
+              "key": "d4",
+              "ref": {
+                "kind": "product_document",
+                "id": "S04-no-findings-DOC-4",
+                "state_id": "S04-no-findings-DOC-4-v1"
+              },
+              "text": "При закрытии формы создания задачи введённый текст теряется. Черновики не сохраняются.",
+              "locator": {
+                "start": 0,
+                "end": 86
+              }
+            }
+          ]
+        }
+      },
+      "trusted": {
+        "texts": [
+          {
+            "ref": {
+              "kind": "feedback_source",
+              "id": "S04-no-findings-SYN-SRC-1",
+              "state_id": "S04-no-findings-SYN-SRC-1-v1"
+            },
+            "source_ref": {
+              "kind": "feedback_source",
+              "id": "S04-no-findings-SYN-SRC-1",
+              "state_id": "S04-no-findings-SYN-SRC-1-v1"
+            },
+            "text": "Спасибо за встречу. До свидания.",
+            "reliability": "usable"
+          }
+        ],
+        "documents": [
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S04-no-findings-DOC-1",
+              "state_id": "S04-no-findings-DOC-1-v1"
+            },
+            "text": "Список задач фильтруется по статусу и исполнителю. После повторного открытия фильтры сбрасываются."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S04-no-findings-DOC-2",
+              "state_id": "S04-no-findings-DOC-2-v1"
+            },
+            "text": "Звуковые уведомления об изменении статуса включены по умолчанию. Пользовательской настройки звука нет."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S04-no-findings-DOC-3",
+              "state_id": "S04-no-findings-DOC-3-v1"
+            },
+            "text": "Экспорт CSV доступен через меню «Отчёты → CSV»."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S04-no-findings-DOC-4",
+              "state_id": "S04-no-findings-DOC-4-v1"
+            },
+            "text": "При закрытии формы создания задачи введённый текст теряется. Черновики не сохраняются."
+          }
+        ],
+        "project_id": "SYNTHETIC-S04",
+        "states": [
+          {
+            "kind": "feedback_source",
+            "id": "S04-no-findings-SYN-SRC-1",
+            "state_id": "S04-no-findings-SYN-SRC-1-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S04-no-findings-DOC-1",
+            "state_id": "S04-no-findings-DOC-1-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S04-no-findings-DOC-2",
+            "state_id": "S04-no-findings-DOC-2-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S04-no-findings-DOC-3",
+            "state_id": "S04-no-findings-DOC-3-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S04-no-findings-DOC-4",
+            "state_id": "S04-no-findings-DOC-4-v1"
+          }
+        ]
+      },
+      "fixture_response": {
+        "coverage": [
+          {
+            "input_key": "s1",
+            "reviewed": true,
+            "disposition": "completed",
+            "reason": "Продуктовая обратная связь отсутствует."
+          }
+        ],
+        "uncertainties": [],
+        "questions": [],
+        "result": {
+          "fragments": [],
+          "findings": []
+        }
+      },
+      "fixture_role": "engineering_control",
+      "relationship": null
+    }
+  ]
+}

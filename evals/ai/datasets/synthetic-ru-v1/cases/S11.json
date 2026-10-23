@@ -1,0 +1,812 @@
+{
+  "id": "S11",
+  "version": "1.0.0",
+  "synthetic": true,
+  "title": "Цитаты, координаты и ссылки",
+  "traceability": {
+    "requirements": [
+      "FR-006",
+      "FR-008",
+      "FR-016"
+    ],
+    "acceptance_criteria": [
+      "AC-02",
+      "AC-03",
+      "AC-05"
+    ],
+    "contract_rules": [
+      "AP-02",
+      "AP-03",
+      "AP-04",
+      "AP-06"
+    ]
+  },
+  "annotation": {
+    "version": "0.2.0",
+    "status": "preliminary",
+    "required_meanings": [
+      "Точные цитаты, нумерация всех вхождений с нуля, Unicode code points, сохранение исходного текста."
+    ],
+    "allowed_alternatives": [
+      "Разные точные поддерживающие цитаты и разные границы содержательного фрагмента."
+    ],
+    "forbidden_claims": [
+      "Несуществующая цитата, неверное вхождение, ссылка на чужое основание; смыслово нерелевантная цитата."
+    ],
+    "expert_questions": [
+      "Существующая ссылка не доказывает смысловую поддержку; её оценивает человек."
+    ]
+  },
+  "examples": [
+    {
+      "id": "unicode-repeated",
+      "request": {
+        "contract_version": "1.0",
+        "operation": "extract_feedback",
+        "project_id": "SYNTHETIC-S11",
+        "request_id": "S11-unicode-repeated",
+        "input": {
+          "segments": [
+            {
+              "key": "s1",
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "S11-unicode-repeated-SYN-SRC-1",
+                "state_id": "S11-unicode-repeated-SYN-SRC-1-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "S11-unicode-repeated-SYN-SRC-1",
+                "state_id": "S11-unicode-repeated-SYN-SRC-1-v1"
+              },
+              "locator": {
+                "start": 0,
+                "end": 53
+              },
+              "reliability": "usable",
+              "text": "🙂 ё\r\nХочу сохранять фильтры. Хочу сохранять фильтры."
+            }
+          ],
+          "documents": [
+            {
+              "key": "d1",
+              "ref": {
+                "kind": "product_document",
+                "id": "S11-unicode-repeated-DOC-1",
+                "state_id": "S11-unicode-repeated-DOC-1-v1"
+              },
+              "text": "Список задач фильтруется по статусу и исполнителю. После повторного открытия фильтры сбрасываются.",
+              "locator": {
+                "start": 0,
+                "end": 98
+              }
+            },
+            {
+              "key": "d2",
+              "ref": {
+                "kind": "product_document",
+                "id": "S11-unicode-repeated-DOC-2",
+                "state_id": "S11-unicode-repeated-DOC-2-v1"
+              },
+              "text": "Звуковые уведомления об изменении статуса включены по умолчанию. Пользовательской настройки звука нет.",
+              "locator": {
+                "start": 0,
+                "end": 102
+              }
+            },
+            {
+              "key": "d3",
+              "ref": {
+                "kind": "product_document",
+                "id": "S11-unicode-repeated-DOC-3",
+                "state_id": "S11-unicode-repeated-DOC-3-v1"
+              },
+              "text": "Экспорт CSV доступен через меню «Отчёты → CSV».",
+              "locator": {
+                "start": 0,
+                "end": 47
+              }
+            },
+            {
+              "key": "d4",
+              "ref": {
+                "kind": "product_document",
+                "id": "S11-unicode-repeated-DOC-4",
+                "state_id": "S11-unicode-repeated-DOC-4-v1"
+              },
+              "text": "При закрытии формы создания задачи введённый текст теряется. Черновики не сохраняются.",
+              "locator": {
+                "start": 0,
+                "end": 86
+              }
+            }
+          ]
+        }
+      },
+      "trusted": {
+        "texts": [
+          {
+            "ref": {
+              "kind": "feedback_source",
+              "id": "S11-unicode-repeated-SYN-SRC-1",
+              "state_id": "S11-unicode-repeated-SYN-SRC-1-v1"
+            },
+            "source_ref": {
+              "kind": "feedback_source",
+              "id": "S11-unicode-repeated-SYN-SRC-1",
+              "state_id": "S11-unicode-repeated-SYN-SRC-1-v1"
+            },
+            "text": "🙂 ё\r\nХочу сохранять фильтры. Хочу сохранять фильтры.",
+            "reliability": "usable"
+          }
+        ],
+        "documents": [
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S11-unicode-repeated-DOC-1",
+              "state_id": "S11-unicode-repeated-DOC-1-v1"
+            },
+            "text": "Список задач фильтруется по статусу и исполнителю. После повторного открытия фильтры сбрасываются."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S11-unicode-repeated-DOC-2",
+              "state_id": "S11-unicode-repeated-DOC-2-v1"
+            },
+            "text": "Звуковые уведомления об изменении статуса включены по умолчанию. Пользовательской настройки звука нет."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S11-unicode-repeated-DOC-3",
+              "state_id": "S11-unicode-repeated-DOC-3-v1"
+            },
+            "text": "Экспорт CSV доступен через меню «Отчёты → CSV»."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S11-unicode-repeated-DOC-4",
+              "state_id": "S11-unicode-repeated-DOC-4-v1"
+            },
+            "text": "При закрытии формы создания задачи введённый текст теряется. Черновики не сохраняются."
+          }
+        ],
+        "project_id": "SYNTHETIC-S11",
+        "states": [
+          {
+            "kind": "feedback_source",
+            "id": "S11-unicode-repeated-SYN-SRC-1",
+            "state_id": "S11-unicode-repeated-SYN-SRC-1-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S11-unicode-repeated-DOC-1",
+            "state_id": "S11-unicode-repeated-DOC-1-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S11-unicode-repeated-DOC-2",
+            "state_id": "S11-unicode-repeated-DOC-2-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S11-unicode-repeated-DOC-3",
+            "state_id": "S11-unicode-repeated-DOC-3-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S11-unicode-repeated-DOC-4",
+            "state_id": "S11-unicode-repeated-DOC-4-v1"
+          }
+        ]
+      },
+      "fixture_response": {
+        "coverage": [
+          {
+            "input_key": "s1",
+            "reviewed": true,
+            "disposition": "completed"
+          }
+        ],
+        "uncertainties": [],
+        "questions": [],
+        "result": {
+          "fragments": [
+            {
+              "local_id": "fragment-1",
+              "segment_key": "s1",
+              "quote": "Хочу сохранять фильтры.",
+              "occurrence": 1
+            }
+          ],
+          "findings": [
+            {
+              "local_id": "finding-1",
+              "text": "🙂 ё\r\nХочу сохранять фильтры. Хочу сохранять фильтры.",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "fragment_ids": [
+                "fragment-1"
+              ],
+              "considered_keys": [
+                "s1"
+              ],
+              "context_keys": []
+            }
+          ]
+        }
+      },
+      "fixture_role": "engineering_control",
+      "relationship": null
+    },
+    {
+      "id": "evidence-control",
+      "request": {
+        "contract_version": "1.0",
+        "operation": "generate_requirements",
+        "project_id": "SYNTHETIC-S11",
+        "request_id": "S11-evidence-control",
+        "input": {
+          "findings": [
+            {
+              "key": "f1",
+              "ref": {
+                "kind": "finding",
+                "id": "S11-evidence-control-SYN-FINDING-1",
+                "state_id": "S11-evidence-control-SYN-FINDING-1-v1"
+              },
+              "text": "Хочу, чтобы выбранные статус и исполнитель сохранялись после повторного открытия списка.",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "evidence": [
+                {
+                  "kind": "available",
+                  "fragment_key": "e1"
+                }
+              ],
+              "uncertainty_notes": [],
+              "open_questions": [],
+              "authorship": "ai"
+            }
+          ],
+          "fragments": [
+            {
+              "key": "e1",
+              "ref": {
+                "kind": "fragment",
+                "id": "S11-evidence-control-SYN-FRAGMENT-1",
+                "state_id": "S11-evidence-control-SYN-FRAGMENT-1-v1"
+              },
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "S11-evidence-control-SYN-SRC-1",
+                "state_id": "S11-evidence-control-SYN-SRC-1-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "S11-evidence-control-SYN-SRC-1",
+                "state_id": "S11-evidence-control-SYN-SRC-1-v1"
+              },
+              "quote": "Хочу, чтобы выбранные статус и исполнитель сохранялись после повторного открытия списка.",
+              "locator": {
+                "start": 0,
+                "end": 88
+              },
+              "reliability": "usable"
+            }
+          ],
+          "groups": [],
+          "documents": [
+            {
+              "key": "d1",
+              "ref": {
+                "kind": "product_document",
+                "id": "S11-evidence-control-DOC-1",
+                "state_id": "S11-evidence-control-DOC-1-v1"
+              },
+              "text": "Список задач фильтруется по статусу и исполнителю. После повторного открытия фильтры сбрасываются.",
+              "locator": {
+                "start": 0,
+                "end": 98
+              }
+            },
+            {
+              "key": "d2",
+              "ref": {
+                "kind": "product_document",
+                "id": "S11-evidence-control-DOC-2",
+                "state_id": "S11-evidence-control-DOC-2-v1"
+              },
+              "text": "Звуковые уведомления об изменении статуса включены по умолчанию. Пользовательской настройки звука нет.",
+              "locator": {
+                "start": 0,
+                "end": 102
+              }
+            },
+            {
+              "key": "d3",
+              "ref": {
+                "kind": "product_document",
+                "id": "S11-evidence-control-DOC-3",
+                "state_id": "S11-evidence-control-DOC-3-v1"
+              },
+              "text": "Экспорт CSV доступен через меню «Отчёты → CSV».",
+              "locator": {
+                "start": 0,
+                "end": 47
+              }
+            },
+            {
+              "key": "d4",
+              "ref": {
+                "kind": "product_document",
+                "id": "S11-evidence-control-DOC-4",
+                "state_id": "S11-evidence-control-DOC-4-v1"
+              },
+              "text": "При закрытии формы создания задачи введённый текст теряется. Черновики не сохраняются.",
+              "locator": {
+                "start": 0,
+                "end": 86
+              }
+            }
+          ]
+        }
+      },
+      "trusted": {
+        "texts": [
+          {
+            "ref": {
+              "kind": "feedback_source",
+              "id": "S11-evidence-control-SYN-SRC-1",
+              "state_id": "S11-evidence-control-SYN-SRC-1-v1"
+            },
+            "source_ref": {
+              "kind": "feedback_source",
+              "id": "S11-evidence-control-SYN-SRC-1",
+              "state_id": "S11-evidence-control-SYN-SRC-1-v1"
+            },
+            "text": "Хочу, чтобы выбранные статус и исполнитель сохранялись после повторного открытия списка.",
+            "reliability": "usable"
+          }
+        ],
+        "documents": [
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S11-evidence-control-DOC-1",
+              "state_id": "S11-evidence-control-DOC-1-v1"
+            },
+            "text": "Список задач фильтруется по статусу и исполнителю. После повторного открытия фильтры сбрасываются."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S11-evidence-control-DOC-2",
+              "state_id": "S11-evidence-control-DOC-2-v1"
+            },
+            "text": "Звуковые уведомления об изменении статуса включены по умолчанию. Пользовательской настройки звука нет."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S11-evidence-control-DOC-3",
+              "state_id": "S11-evidence-control-DOC-3-v1"
+            },
+            "text": "Экспорт CSV доступен через меню «Отчёты → CSV»."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S11-evidence-control-DOC-4",
+              "state_id": "S11-evidence-control-DOC-4-v1"
+            },
+            "text": "При закрытии формы создания задачи введённый текст теряется. Черновики не сохраняются."
+          }
+        ],
+        "project_id": "SYNTHETIC-S11",
+        "states": [
+          {
+            "kind": "finding",
+            "id": "S11-evidence-control-SYN-FINDING-1",
+            "state_id": "S11-evidence-control-SYN-FINDING-1-v1"
+          },
+          {
+            "kind": "fragment",
+            "id": "S11-evidence-control-SYN-FRAGMENT-1",
+            "state_id": "S11-evidence-control-SYN-FRAGMENT-1-v1"
+          },
+          {
+            "kind": "feedback_source",
+            "id": "S11-evidence-control-SYN-SRC-1",
+            "state_id": "S11-evidence-control-SYN-SRC-1-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S11-evidence-control-DOC-1",
+            "state_id": "S11-evidence-control-DOC-1-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S11-evidence-control-DOC-2",
+            "state_id": "S11-evidence-control-DOC-2-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S11-evidence-control-DOC-3",
+            "state_id": "S11-evidence-control-DOC-3-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S11-evidence-control-DOC-4",
+            "state_id": "S11-evidence-control-DOC-4-v1"
+          }
+        ]
+      },
+      "fixture_response": {
+        "coverage": [
+          {
+            "input_key": "f1",
+            "reviewed": true,
+            "disposition": "completed"
+          }
+        ],
+        "uncertainties": [],
+        "questions": [],
+        "result": {
+          "requirements": [
+            {
+              "local_id": "requirement-1",
+              "title": "Сохранять выбранные статус и исполнителя при повторном открытии списка.",
+              "text": "Сохранять выбранные статус и исполнителя при повторном открытии списка.",
+              "rationale": "Предложение основано на переданной синтетической обратной связи.",
+              "evidence": [
+                {
+                  "finding_key": "f1",
+                  "fragment_keys": [
+                    "e1"
+                  ]
+                }
+              ],
+              "considered_keys": [
+                "f1"
+              ],
+              "context_keys": []
+            }
+          ]
+        }
+      },
+      "fixture_role": "engineering_control",
+      "relationship": null
+    },
+    {
+      "id": "irrelevant-evidence",
+      "request": {
+        "contract_version": "1.0",
+        "operation": "generate_requirements",
+        "project_id": "SYNTHETIC-S11",
+        "request_id": "S11-irrelevant-evidence",
+        "input": {
+          "findings": [
+            {
+              "key": "f1",
+              "ref": {
+                "kind": "finding",
+                "id": "S11-irrelevant-evidence-SYN-FINDING-1",
+                "state_id": "S11-irrelevant-evidence-SYN-FINDING-1-v1"
+              },
+              "text": "Хочу, чтобы выбранные статус и исполнитель сохранялись после повторного открытия списка.",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "evidence": [
+                {
+                  "kind": "available",
+                  "fragment_key": "e1"
+                }
+              ],
+              "uncertainty_notes": [],
+              "open_questions": [],
+              "authorship": "ai"
+            },
+            {
+              "key": "f2",
+              "ref": {
+                "kind": "finding",
+                "id": "S11-irrelevant-evidence-SYN-FINDING-2",
+                "state_id": "S11-irrelevant-evidence-SYN-FINDING-2-v1"
+              },
+              "text": "Цвет заголовка синий.",
+              "types": [
+                "observation"
+              ],
+              "mode": "direct",
+              "evidence": [
+                {
+                  "kind": "available",
+                  "fragment_key": "e2"
+                }
+              ],
+              "uncertainty_notes": [],
+              "open_questions": [],
+              "authorship": "ai"
+            }
+          ],
+          "fragments": [
+            {
+              "key": "e1",
+              "ref": {
+                "kind": "fragment",
+                "id": "S11-irrelevant-evidence-SYN-FRAGMENT-1",
+                "state_id": "S11-irrelevant-evidence-SYN-FRAGMENT-1-v1"
+              },
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "S11-irrelevant-evidence-SYN-SRC-1",
+                "state_id": "S11-irrelevant-evidence-SYN-SRC-1-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "S11-irrelevant-evidence-SYN-SRC-1",
+                "state_id": "S11-irrelevant-evidence-SYN-SRC-1-v1"
+              },
+              "quote": "Хочу, чтобы выбранные статус и исполнитель сохранялись после повторного открытия списка.",
+              "locator": {
+                "start": 0,
+                "end": 88
+              },
+              "reliability": "usable"
+            },
+            {
+              "key": "e2",
+              "ref": {
+                "kind": "fragment",
+                "id": "S11-irrelevant-evidence-SYN-FRAGMENT-2",
+                "state_id": "S11-irrelevant-evidence-SYN-FRAGMENT-2-v1"
+              },
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "S11-irrelevant-evidence-SYN-SRC-2",
+                "state_id": "S11-irrelevant-evidence-SYN-SRC-2-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "S11-irrelevant-evidence-SYN-SRC-2",
+                "state_id": "S11-irrelevant-evidence-SYN-SRC-2-v1"
+              },
+              "quote": "Цвет заголовка синий.",
+              "locator": {
+                "start": 0,
+                "end": 21
+              },
+              "reliability": "usable"
+            }
+          ],
+          "groups": [],
+          "documents": [
+            {
+              "key": "d1",
+              "ref": {
+                "kind": "product_document",
+                "id": "S11-irrelevant-evidence-DOC-1",
+                "state_id": "S11-irrelevant-evidence-DOC-1-v1"
+              },
+              "text": "Список задач фильтруется по статусу и исполнителю. После повторного открытия фильтры сбрасываются.",
+              "locator": {
+                "start": 0,
+                "end": 98
+              }
+            },
+            {
+              "key": "d2",
+              "ref": {
+                "kind": "product_document",
+                "id": "S11-irrelevant-evidence-DOC-2",
+                "state_id": "S11-irrelevant-evidence-DOC-2-v1"
+              },
+              "text": "Звуковые уведомления об изменении статуса включены по умолчанию. Пользовательской настройки звука нет.",
+              "locator": {
+                "start": 0,
+                "end": 102
+              }
+            },
+            {
+              "key": "d3",
+              "ref": {
+                "kind": "product_document",
+                "id": "S11-irrelevant-evidence-DOC-3",
+                "state_id": "S11-irrelevant-evidence-DOC-3-v1"
+              },
+              "text": "Экспорт CSV доступен через меню «Отчёты → CSV».",
+              "locator": {
+                "start": 0,
+                "end": 47
+              }
+            },
+            {
+              "key": "d4",
+              "ref": {
+                "kind": "product_document",
+                "id": "S11-irrelevant-evidence-DOC-4",
+                "state_id": "S11-irrelevant-evidence-DOC-4-v1"
+              },
+              "text": "При закрытии формы создания задачи введённый текст теряется. Черновики не сохраняются.",
+              "locator": {
+                "start": 0,
+                "end": 86
+              }
+            }
+          ]
+        }
+      },
+      "trusted": {
+        "texts": [
+          {
+            "ref": {
+              "kind": "feedback_source",
+              "id": "S11-irrelevant-evidence-SYN-SRC-1",
+              "state_id": "S11-irrelevant-evidence-SYN-SRC-1-v1"
+            },
+            "source_ref": {
+              "kind": "feedback_source",
+              "id": "S11-irrelevant-evidence-SYN-SRC-1",
+              "state_id": "S11-irrelevant-evidence-SYN-SRC-1-v1"
+            },
+            "text": "Хочу, чтобы выбранные статус и исполнитель сохранялись после повторного открытия списка.",
+            "reliability": "usable"
+          },
+          {
+            "ref": {
+              "kind": "feedback_source",
+              "id": "S11-irrelevant-evidence-SYN-SRC-2",
+              "state_id": "S11-irrelevant-evidence-SYN-SRC-2-v1"
+            },
+            "source_ref": {
+              "kind": "feedback_source",
+              "id": "S11-irrelevant-evidence-SYN-SRC-2",
+              "state_id": "S11-irrelevant-evidence-SYN-SRC-2-v1"
+            },
+            "text": "Цвет заголовка синий.",
+            "reliability": "usable"
+          }
+        ],
+        "documents": [
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S11-irrelevant-evidence-DOC-1",
+              "state_id": "S11-irrelevant-evidence-DOC-1-v1"
+            },
+            "text": "Список задач фильтруется по статусу и исполнителю. После повторного открытия фильтры сбрасываются."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S11-irrelevant-evidence-DOC-2",
+              "state_id": "S11-irrelevant-evidence-DOC-2-v1"
+            },
+            "text": "Звуковые уведомления об изменении статуса включены по умолчанию. Пользовательской настройки звука нет."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S11-irrelevant-evidence-DOC-3",
+              "state_id": "S11-irrelevant-evidence-DOC-3-v1"
+            },
+            "text": "Экспорт CSV доступен через меню «Отчёты → CSV»."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S11-irrelevant-evidence-DOC-4",
+              "state_id": "S11-irrelevant-evidence-DOC-4-v1"
+            },
+            "text": "При закрытии формы создания задачи введённый текст теряется. Черновики не сохраняются."
+          }
+        ],
+        "project_id": "SYNTHETIC-S11",
+        "states": [
+          {
+            "kind": "finding",
+            "id": "S11-irrelevant-evidence-SYN-FINDING-1",
+            "state_id": "S11-irrelevant-evidence-SYN-FINDING-1-v1"
+          },
+          {
+            "kind": "finding",
+            "id": "S11-irrelevant-evidence-SYN-FINDING-2",
+            "state_id": "S11-irrelevant-evidence-SYN-FINDING-2-v1"
+          },
+          {
+            "kind": "fragment",
+            "id": "S11-irrelevant-evidence-SYN-FRAGMENT-1",
+            "state_id": "S11-irrelevant-evidence-SYN-FRAGMENT-1-v1"
+          },
+          {
+            "kind": "feedback_source",
+            "id": "S11-irrelevant-evidence-SYN-SRC-1",
+            "state_id": "S11-irrelevant-evidence-SYN-SRC-1-v1"
+          },
+          {
+            "kind": "fragment",
+            "id": "S11-irrelevant-evidence-SYN-FRAGMENT-2",
+            "state_id": "S11-irrelevant-evidence-SYN-FRAGMENT-2-v1"
+          },
+          {
+            "kind": "feedback_source",
+            "id": "S11-irrelevant-evidence-SYN-SRC-2",
+            "state_id": "S11-irrelevant-evidence-SYN-SRC-2-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S11-irrelevant-evidence-DOC-1",
+            "state_id": "S11-irrelevant-evidence-DOC-1-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S11-irrelevant-evidence-DOC-2",
+            "state_id": "S11-irrelevant-evidence-DOC-2-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S11-irrelevant-evidence-DOC-3",
+            "state_id": "S11-irrelevant-evidence-DOC-3-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S11-irrelevant-evidence-DOC-4",
+            "state_id": "S11-irrelevant-evidence-DOC-4-v1"
+          }
+        ]
+      },
+      "fixture_response": {
+        "coverage": [
+          {
+            "input_key": "f1",
+            "reviewed": true,
+            "disposition": "completed",
+            "reason": "Инженерный пример намеренно не использовал подходящее основание."
+          },
+          {
+            "input_key": "f2",
+            "reviewed": true,
+            "disposition": "completed"
+          }
+        ],
+        "uncertainties": [],
+        "questions": [],
+        "result": {
+          "requirements": [
+            {
+              "local_id": "requirement-1",
+              "title": "Сохранять выбранные статус и исполнителя при повторном открытии списка.",
+              "text": "Сохранять выбранные статус и исполнителя при повторном открытии списка.",
+              "rationale": "Предложение основано на переданной синтетической обратной связи.",
+              "evidence": [
+                {
+                  "finding_key": "f2",
+                  "fragment_keys": [
+                    "e2"
+                  ]
+                }
+              ],
+              "considered_keys": [
+                "f2"
+              ],
+              "context_keys": []
+            }
+          ]
+        }
+      },
+      "fixture_role": "intentional_semantic_error",
+      "relationship": null,
+      "review_note": "Существующая цитата о цвете не поддерживает сохранение фильтров. Структура и принадлежность ссылки валидны; предварительно semantic_support/not_met, решение остаётся за экспертом."
+    }
+  ]
+}
