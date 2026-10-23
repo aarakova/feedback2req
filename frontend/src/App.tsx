@@ -3,7 +3,7 @@ import { ApiClient, ApiError, errorMessage } from './api';
 import type { Session } from './api';
 import { AuthForm } from './AuthForm';
 import { ProjectDetail, ProjectList } from './Projects';
-import { Brand, ErrorNotice, Loading } from './ui';
+import { Brand, ErrorNotice, Loading, OwnId } from './ui';
 
 export function App() {
   const [session, setSession] = useState<Session | null | undefined>(undefined);
@@ -102,7 +102,8 @@ export function App() {
 
   if (session === null) return <AuthForm api={api} onLogin={setSession} />;
 
-  const projectMatch = /^#\/projects\/([0-9a-f-]{36})(\/materials(?:\/(sources|documents)\/([0-9a-f-]{36}))?)?$/i.exec(hash);
+  const projectMatch = /^#\/projects\/([0-9a-f-]{36})(?:\/(access|materials)(?:\/(sources|documents)\/([0-9a-f-]{36}))?)?$/i.exec(hash);
+  const validProjectRoute = projectMatch && !(projectMatch[2]?.toLowerCase() === 'access' && projectMatch[3]);
   const listRoute = ['', '#', '#/', '#/projects'].includes(hash);
   return <>
     {rechecking && <main className="centered"><Loading>Проверяем сессию…</Loading></main>}
@@ -115,14 +116,14 @@ export function App() {
         <a className="nav-link active" href="#/projects" aria-current={listRoute ? 'page' : undefined}>
           <span aria-hidden="true">▤</span> Проекты</a></nav>
       <div className="side-foot"><span className="avatar" aria-hidden="true">{session.user.login.slice(0, 1).toUpperCase()}</span>
-        <span className="user-login">{session.user.login}</span></div>
+        <OwnId key={session.user.id} user={session.user} /></div>
     </aside>
     <div className="main-area"><header className="app-header"><span className="muted">Рабочее пространство</span>
       <button className="secondary" onClick={logout}>Выйти</button></header>
       <main id="main-content" className="content" tabIndex={-1}>
-        {projectMatch ? <ProjectDetail key={`${session.user.id}/${projectMatch[1]}`} api={api} id={projectMatch[1]}
+        {validProjectRoute ? <ProjectDetail key={`${session.user.id}/${projectMatch[1]}`} api={api} id={projectMatch[1]}
           accessRevision={accessRevision}
-          materials={!!projectMatch[2]} selected={projectMatch[3] && projectMatch[4]
+          section={(projectMatch[2]?.toLowerCase() ?? 'overview') as 'overview' | 'materials' | 'access'} selected={projectMatch[3] && projectMatch[4]
             ? { kind: projectMatch[3].toLowerCase() as 'sources' | 'documents', id: projectMatch[4] } : undefined} />
           : listRoute ? <ProjectList key={`${session.user.id}/${accessRevision}`} api={api} /> : <section className="panel empty"><h1>Страница не найдена</h1>
             <a href="#/projects">Вернуться к проектам</a></section>}

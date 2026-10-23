@@ -5,6 +5,7 @@ import type { Page, Project } from './api';
 import { ErrorNotice, Loading, Permissions } from './ui';
 import { Materials } from './Materials';
 import type { MaterialSelection } from './Materials';
+import { ProjectAccess } from './Access';
 
 export function ProjectList({ api }: { api: ApiClient }) {
   const [projects, setProjects] = useState<Project[]>([]);
@@ -98,8 +99,8 @@ function CreateProject({ api, onCancel }: { api: ApiClient; onCancel: () => void
   </section>;
 }
 
-export function ProjectDetail({ api, id, materials = false, selected, accessRevision = 0 }: {
-  api: ApiClient; id: string; materials?: boolean; selected?: MaterialSelection; accessRevision?: number;
+export function ProjectDetail({ api, id, section = 'overview', selected, accessRevision = 0 }: {
+  api: ApiClient; id: string; section?: 'overview' | 'materials' | 'access'; selected?: MaterialSelection; accessRevision?: number;
 }) {
   const [project, setProject] = useState<Project | null>(null);
   const [loading, setLoading] = useState(true);
@@ -109,6 +110,7 @@ export function ProjectDetail({ api, id, materials = false, selected, accessRevi
   const unavailable = useCallback(() => {
     setProject(null); setError('Проект или материал недоступен. Доступ мог быть отозван. Повторите проверку проекта.');
   }, []);
+  const recheckProject = useCallback(() => setRevision(n => n + 1), []);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -135,10 +137,18 @@ export function ProjectDetail({ api, id, materials = false, selected, accessRevi
       <div className="page-heading"><div><p className="eyebrow">Проект</p><h1>{project.name}</h1></div>
         <button className="secondary" onClick={() => setRevision(n => n + 1)}>Обновить проект</button></div>
       <nav className="project-tabs" aria-label="Разделы проекта">
-        <a href={`#/projects/${id}`} aria-current={!materials ? 'page' : undefined}>Обзор проекта</a>
-        <a href={`#/projects/${id}/materials`} aria-current={materials ? 'page' : undefined}>Материалы</a>
+        <a href={`#/projects/${id}`} aria-current={section === 'overview' ? 'page' : undefined}>Обзор проекта</a>
+        <a href={`#/projects/${id}/materials`} aria-current={section === 'materials' ? 'page' : undefined}>Материалы</a>
+        {project.permissions.is_owner && <a href={`#/projects/${id}/access`}
+          aria-current={section === 'access' ? 'page' : undefined}>Участники</a>}
       </nav>
-      {materials ? <Materials api={api} projectId={id} selected={selected} onUnavailable={unavailable} />
+      {section === 'access' ? project.permissions.is_owner
+        ? <ProjectAccess api={api} projectId={id} ownerId={project.owner_id}
+            refreshToken={`${accessRevision}/${revision}`} onUnavailable={unavailable} onForbidden={recheckProject} />
+        : <section className="panel detail-panel"><h2>Участники</h2>
+            <p>Просмотр и управление участниками доступны только владельцу проекта.</p>
+            <a href={`#/projects/${id}`}>Вернуться к обзору проекта</a></section>
+        : section === 'materials' ? <Materials api={api} projectId={id} selected={selected} onUnavailable={unavailable} />
         : <section className="panel detail-panel"><h2>Ваши полномочия</h2><Permissions project={project} />
         <p className="muted">{project.permissions.is_owner
           ? 'Вы — владелец этого проекта с правами участника и утверждения.'
