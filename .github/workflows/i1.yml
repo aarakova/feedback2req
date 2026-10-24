@@ -75,6 +75,12 @@ jobs:
           docker compose -f compose.yaml -f compose.infrastructure-test.yaml up -d --no-build
           docker compose -f compose.yaml -f compose.infrastructure-test.yaml up -d --wait backend frontend
           mkdir -p .local
+      - name: Require successful worker infrastructure check
+        run: |
+          worker_id="$(docker compose -f compose.yaml -f compose.infrastructure-test.yaml ps -aq worker)"
+          test -n "$worker_id"
+          worker_exit="$(timeout --kill-after=5s 30s docker wait "$worker_id")"
+          test "$worker_exit" -eq 0
       - name: Real Nginx HTTP, cookies, CSRF, materials and isolation
         run: docker run --rm --user 0 --network feedback2req-infra-test_proxy --mount "type=bind,source=$PWD,target=/workspace" --mount "type=bind,source=$PWD/.local,target=/state" -w /workspace feedback2req-backend python scripts/check_infrastructure.py smoke
       - name: Restart isolated database and backend

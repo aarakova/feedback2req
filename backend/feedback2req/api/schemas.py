@@ -12,6 +12,15 @@ class LoginCredentials(ClosedModel):
     login: str = Field(min_length=1, max_length=256)
     password: SecretStr = Field(min_length=1, max_length=1024)
 
+    @field_validator("password")
+    @classmethod
+    def unicode_password(cls, value: SecretStr):
+        try:
+            value.get_secret_value().encode("utf-8")
+        except UnicodeEncodeError:
+            raise ValueError("Password must be valid Unicode") from None
+        return value
+
 
 class Credentials(LoginCredentials):
     password: SecretStr = Field(min_length=12, max_length=1024)
@@ -24,8 +33,8 @@ class ProjectName(ClosedModel):
     @classmethod
     def meaningful_name(cls, value: str):
         value = value.strip()
-        if not value:
-            raise ValueError("Name cannot be blank")
+        if not value or "\x00" in value:
+            raise ValueError("Name must be nonblank PostgreSQL-compatible text")
         return value
 
 
