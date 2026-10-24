@@ -2,8 +2,11 @@ import { useEffect, useState } from 'react';
 import { ApiClient, ApiError, errorMessage } from './api';
 import type { Session } from './api';
 import { AuthForm } from './AuthForm';
-import { ProjectDetail, ProjectList } from './Projects';
-import { Brand, ErrorNotice, Loading, OwnId } from './ui';
+import { ProjectList } from './Projects';
+import { ProjectLayout } from './ProjectLayout';
+import { AppLayout } from './Layout';
+import { parseRoute } from './routes';
+import { Brand, ErrorNotice, Loading } from './ui';
 
 export function App() {
   const [session, setSession] = useState<Session | null | undefined>(undefined);
@@ -102,32 +105,17 @@ export function App() {
 
   if (session === null) return <AuthForm api={api} onLogin={setSession} />;
 
-  const projectMatch = /^#\/projects\/([0-9a-f-]{36})(?:\/(access|materials)(?:\/(sources|documents)\/([0-9a-f-]{36}))?)?$/i.exec(hash);
-  const validProjectRoute = projectMatch && !(projectMatch[2]?.toLowerCase() === 'access' && projectMatch[3]);
-  const listRoute = ['', '#', '#/', '#/projects'].includes(hash);
+  const route = parseRoute(hash);
   return <>
     {rechecking && <main className="centered"><Loading>Проверяем сессию…</Loading></main>}
-    <div className="workspace" style={{ display: rechecking ? 'none' : undefined }}>
-    <a className="skip-link" href="#main-content" onClick={event => {
-      event.preventDefault(); document.getElementById('main-content')?.focus();
-    }}>К содержимому</a>
-    <aside className="sidebar"><Brand />
-      <nav aria-label="Основная навигация"><p className="eyebrow">Рабочее пространство</p>
-        <a className="nav-link active" href="#/projects" aria-current={listRoute ? 'page' : undefined}>
-          <span aria-hidden="true">▤</span> Проекты</a></nav>
-      <div className="side-foot"><span className="avatar" aria-hidden="true">{session.user.login.slice(0, 1).toUpperCase()}</span>
-        <OwnId key={session.user.id} user={session.user} /></div>
-    </aside>
-    <div className="main-area"><header className="app-header"><span className="muted">Рабочее пространство</span>
-      <button className="secondary" onClick={logout}>Выйти</button></header>
-      <main id="main-content" className="content" tabIndex={-1}>
-        {validProjectRoute ? <ProjectDetail key={`${session.user.id}/${projectMatch[1]}`} api={api} id={projectMatch[1]}
-          accessRevision={accessRevision}
-          section={(projectMatch[2]?.toLowerCase() ?? 'overview') as 'overview' | 'materials' | 'access'} selected={projectMatch[3] && projectMatch[4]
-            ? { kind: projectMatch[3].toLowerCase() as 'sources' | 'documents', id: projectMatch[4] } : undefined} />
-          : listRoute ? <ProjectList key={`${session.user.id}/${accessRevision}`} api={api} /> : <section className="panel empty"><h1>Страница не найдена</h1>
-            <a href="#/projects">Вернуться к проектам</a></section>}
-      </main>
-    </div>
+    <div style={{ display: rechecking ? 'none' : undefined }}>
+      {route.kind === 'project' ? <ProjectLayout key={`${session.user.id}/${route.id}`}
+        api={api} user={session.user} onLogout={logout} id={route.id} accessRevision={accessRevision}
+        section={route.section} selected={route.selected} />
+        : <AppLayout user={session.user} onLogout={logout} listRoute={route.kind === 'projects'}>
+          {route.kind === 'projects' ? <ProjectList key={`${session.user.id}/${accessRevision}`} api={api} />
+            : <section className="panel empty"><h1>Страница не найдена</h1>
+                <a href="#/projects">Вернуться к проектам</a></section>}
+        </AppLayout>}
   </div></>;
 }
