@@ -17,7 +17,16 @@ export function AuthForm({ api, onLogin }: { api: ApiClient; onLogin: (session: 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (busy) return;
-    if (registering && [...password].length < 12) {
+    if ([...login].length > 256) {
+      setError('Логин должен содержать не более 256 символов.');
+      return;
+    }
+    const passwordLength = [...password].length;
+    if (passwordLength > 1024) {
+      setError('Пароль должен содержать не более 1024 символов.');
+      return;
+    }
+    if (registering && passwordLength < 12) {
       setError('Пароль должен содержать не менее 12 символов.');
       return;
     }
@@ -58,9 +67,9 @@ export function AuthForm({ api, onLogin }: { api: ApiClient; onLogin: (session: 
       {notice && <p className="success-notice" role="status">{notice}</p>}
       {error && <ErrorNotice message={error} />}
       <form onSubmit={submit} className="stack">
-        <label>Логин<input name="login" autoComplete="username" required maxLength={256}
+        <label>Логин<input name="login" autoComplete="username" required
           value={login} onChange={e => setLogin(e.target.value)} disabled={busy} /></label>
-        <label>Пароль<input name="password" type="password" required maxLength={1024}
+        <label>Пароль<input name="password" type="password" required
           autoComplete={registering ? 'new-password' : 'current-password'}
           aria-describedby={registering ? 'password-help' : undefined}
           value={password} onChange={e => setPassword(e.target.value)} disabled={busy} /></label>
