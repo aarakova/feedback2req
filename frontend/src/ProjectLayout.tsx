@@ -7,14 +7,17 @@ import { Materials } from './Materials';
 import type { MaterialSelection } from './Materials';
 import { ProjectAccess } from './Access';
 import { ProjectSettings } from './ProjectSettings';
-import { FutureSection, ProjectOverview } from './ProjectOverview';
-import { futureSection } from './ProjectNavigation';
-import { projectHref } from './routes';
+import { ProjectOverview } from './ProjectOverview';
+import { FindingsScreen } from './observer/Findings';
+import { RequirementsScreen } from './observer/Requirements';
+import { ProcessingScreen } from './observer/Processing';
+import { groupHref, projectHref, requirementHref } from './routes';
 import type { ProjectSection } from './routes';
 
-export function ProjectLayout({ api, user, onLogout, id, section, selected, accessRevision }: {
+export function ProjectLayout({ api, user, onLogout, id, section, selected, accessRevision, requirementId, groupId }: {
   api: ApiClient; user: User; onLogout: () => void; id: string; section: ProjectSection;
   selected?: MaterialSelection; accessRevision: number;
+  requirementId?: string; groupId?: string;
 }) {
   const [project, setProject] = useState<Project | null>(null);
   const [loading, setLoading] = useState(true);
@@ -51,18 +54,21 @@ export function ProjectLayout({ api, user, onLogout, id, section, selected, acce
       <button className="secondary retry" onClick={recheckProject}>Повторить запрос</button></div>}
     {project && <div className="project-section" style={{ display: checking ? 'none' : undefined }}>
       {section === 'access' ? project.permissions.is_owner
-        ? <div className="stack">
-            <ProjectSettings api={api} project={project} refreshToken={`${accessRevision}/${revision}`}
-              onUpdated={updatedProject} onUnavailable={unavailable} onForbidden={recheckProject} />
+        ? <div className="observer-access">
             <ProjectAccess api={api} projectId={id} ownerId={project.owner_id}
               refreshToken={`${accessRevision}/${revision}`} onUnavailable={unavailable} onForbidden={recheckProject} />
+            <ProjectSettings api={api} project={project} refreshToken={`${accessRevision}/${revision}`}
+              onUpdated={updatedProject} onUnavailable={unavailable} onForbidden={recheckProject} />
           </div>
         : <section className="panel detail-panel"><h2>Участники</h2>
             <p>Просмотр и управление участниками доступны только владельцу проекта.</p>
             <a href={projectHref(id)}>Вернуться к обзору проекта</a></section>
         : section === 'materials' ? <Materials api={api} projectId={id} selected={selected} onUnavailable={unavailable} />
-        : futureSection(section) ? <FutureSection projectId={id}
-            section={section as 'findings' | 'requirements' | 'processing'} />
+        : section === 'findings' ? <FindingsScreen project={project} selectedGroupId={groupId}
+            onSelectGroup={group => { window.location.hash = group ? groupHref(id, group) : projectHref(id, 'findings'); }} />
+        : section === 'requirements' ? <RequirementsScreen project={project} selectedId={requirementId}
+            onSelect={requirement => { window.location.hash = requirementHref(id, requirement); }} />
+        : section === 'processing' ? <ProcessingScreen projectId={id} />
         : <ProjectOverview project={project} />}
     </div>}
   </AppLayout>;

@@ -29,8 +29,7 @@ export function ProjectNavigation({ project, section }: { project: Project; sect
 
 export function ProjectHeader({ project, section }: { project: Project; section: ProjectSection }) {
   return <div className="project-header">
-    <p className="eyebrow">Проект <span aria-hidden="true">/</span> {sectionNames[section]}</p>
-    <h1>{project.name}</h1>
+    <div className="observer-breadcrumb"><h1>{project.name}</h1><span aria-hidden="true">/</span><span>{sectionNames[section]}</span></div>
     <p className="project-role">{project.permissions.is_owner ? 'Владелец проекта'
       : project.permissions.can_approve ? 'Участник проекта · Approver' : 'Участник проекта'}</p>
   </div>;

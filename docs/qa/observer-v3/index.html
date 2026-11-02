@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Observer v3 · визуальное сравнение</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#121d2d;color:#e8eef7;font:14px/1.6 system-ui,sans-serif}header,main{max-width:1800px;margin:auto;padding:24px}header{border-bottom:1px solid #304157}h1{font-size:25px;margin:0 0 8px}h2{font-size:15px}p{margin:6px 0;color:#94a6bc}a{color:#63c8b5}.controls{display:flex;gap:20px;flex-wrap:wrap;margin-top:18px}label{display:grid;gap:6px}select{font:inherit;padding:8px 12px;color:#e8eef7;background:#1a293d;border:1px solid #52657d;border-radius:7px}.comparison{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}section{min-width:0}figure{margin:0;border:1px solid #304157;border-radius:10px;overflow:hidden;background:#1a293d}img{display:block;width:100%;height:auto}figcaption{padding:12px 16px;font-size:12px}.fixture{margin-top:30px;max-width:1100px}.fixture p{padding:0 0 12px}.small{font-size:12px}.tag{color:#e5bc6f}a:focus-visible,select:focus-visible{outline:2px solid #9bdccb;outline-offset:4px}@media(max-width:800px){.comparison{grid-template-columns:1fr}header,main{padding:18px}}
+</style></head><body>
+<header><h1>Observer v3 · сравнение с исходным прототипом</h1>
+<p>Слева — production-сборка с реальным API и изолированной тестовой БД. Справа — исходный HTML-прототип с демонстрационными значениями.</p>
+<p>Неизвестные показатели в рабочем приложении обозначены «—». Они не заменены нулями или данными прототипа.</p>
+<p class="small"><a href="../../plans/observer-v3.md">Матрица до/после, backend-зависимости и результаты</a> · <a href="../../../prototype/index.html">Исходный прототип</a></p>
+<div class="controls"><label>Раздел<select id="section"><option value="overview">Обзор</option><option value="materials">Материалы</option><option value="findings">Находки</option><option value="requirements">Требования</option><option value="processing">Обработка</option><option value="access">Доступ</option></select></label>
+<label>Ширина исходного экрана<select id="width"><option>1440</option><option>1280</option><option>390</option><option>320</option></select></label></div>
+</header>
+<main><div class="comparison"><section><h2>Рабочее приложение</h2><figure><a id="app-link"><img id="app-image" alt="Экран рабочего приложения Observer v3"></a><figcaption>Реальные операции с синтетическими текстовыми материалами и пользователями тестовой БД. Просмотр полного размера — по нажатию.</figcaption></figure></section>
+<section><h2>Исходный Observer v3</h2><figure><a id="reference-link"><img id="reference-image" alt="Соответствующий экран исходного HTML-прототипа"></a><figcaption>Демонстрационные числа и результаты принадлежат прототипу, а не backend приложения.</figcaption></figure></section></div>
+<section id="fixture" class="fixture"><h2>Подключённые состояния UI · изолированный стенд</h2><p class="tag">Только вымышленные тестовые данные. Это проверка компонентов, а не результат работы семантического backend.</p>
+<figure><a id="fixture-link"><img id="fixture-image" alt="Маркированный тестовый стенд с наполненным состоянием компонентов"></a><figcaption id="fixture-caption"></figcaption></figure></section>
+</main>
+<script>
+const section=document.getElementById('section'),width=document.getElementById('width');
+function update(){
+  for(const kind of ['app','reference']){const path=`screenshots/${kind}-${section.value}-${width.value}.png`;document.getElementById(kind+'-image').src=path;document.getElementById(kind+'-link').href=path;}
+  const show=['overview','findings','requirements','processing'].includes(section.value);document.getElementById('fixture').hidden=!show;
+  if(show){const size=Number(width.value)>=1000?'1440':'390',path=`screenshots/fixture-${section.value}-${size}.png`;document.getElementById('fixture-image').src=path;document.getElementById('fixture-link').href=path;document.getElementById('fixture-caption').textContent=`Изолированный стенд, ширина ${size}px. Для других размеров рабочие экраны проверены отдельно.`;}
+}
+section.addEventListener('change',update);width.addEventListener('change',update);update();
+</script></body></html>

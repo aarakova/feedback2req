@@ -25,7 +25,7 @@ export function AppLayout({ user, onLogout, children, project, section, onRefres
   user: User; onLogout: () => void; children: ReactNode; project?: Project;
   section?: ProjectSection; onRefresh?: () => void; listRoute?: boolean;
 }) {
-  return <div className={`workspace app-shell${section ? ' project-workspace' : ''}`}>
+  return <div className={`workspace app-shell observer-v3${section ? ' project-workspace' : ''}`}>
     <a className="skip-link" href="#main-content" onClick={event => {
       event.preventDefault(); document.getElementById('main-content')?.focus();
     }}>К содержимому</a>
