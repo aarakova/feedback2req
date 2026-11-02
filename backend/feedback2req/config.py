@@ -21,6 +21,11 @@ class Settings(BaseSettings):
     login_limit: int = Field(default=10, ge=1)
     login_window_seconds: int = Field(default=60, ge=1)
     page_size: int = Field(default=50, ge=1, le=200)
+    ai_provider_url: str = Field(default="", max_length=2048)
+    ai_model: str = Field(default="", max_length=128)
+    ai_transfer_enabled: bool = False
+    processing_test_mode: bool = False
+    ai_timeout_seconds: int = Field(default=60, ge=1, le=60)
 
     @model_validator(mode="after")
     def validate_transport(self):

@@ -43,6 +43,12 @@ def test_empty_database_upgrade(database_url):
             "source_text_states",
             "product_documents",
             "document_states",
+            "processing_runs",
+            "processing_units",
+            "stage_attempts",
+            "feedback_fragments",
+            "findings",
+            "finding_evidence",
         }
     finally:
         engine.dispose()
@@ -64,13 +70,19 @@ def test_migration_and_constraints(client, app, database_url):
         "source_text_states",
         "product_documents",
         "document_states",
+        "processing_runs",
+        "processing_units",
+        "stage_attempts",
+        "feedback_fragments",
+        "findings",
+        "finding_evidence",
     }
     user = signup(client, "owner")
     signin(client, "owner")
     p = project(client)
     member = signup(client, "member")
     with app.state.engine.connect() as connection:
-        assert connection.scalar(text("SELECT version_num FROM alembic_version")) == "m02a"
+        assert connection.scalar(text("SELECT version_num FROM alembic_version")) == "m02b"
         assert connection.scalar(text("SHOW server_version")).split(".")[0].isdigit()
         assert compare_metadata(MigrationContext.configure(connection), Base.metadata) == []
     now = datetime.now(UTC)
