@@ -111,7 +111,7 @@ export function App() {
     <div style={{ display: rechecking ? 'none' : undefined }}>
       {route.kind === 'project' ? <ProjectLayout key={`${session.user.id}/${route.id}`}
         api={api} user={session.user} onLogout={logout} id={route.id} accessRevision={accessRevision}
-        section={route.section} selected={route.selected} requirementId={route.requirementId} groupId={route.groupId} />
+        section={route.section} selected={route.selected} requirementId={route.requirementId} groupId={route.groupId} requirementFilter={route.requirementFilter} />
         : <AppLayout user={session.user} onLogout={logout} listRoute={route.kind === 'projects'}>
           {route.kind === 'projects' ? <ProjectList key={`${session.user.id}/${accessRevision}`} api={api} />
             : <section className="panel empty"><h1>Страница не найдена</h1>

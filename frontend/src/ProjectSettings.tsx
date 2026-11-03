@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import type { FormEvent } from 'react';
 import { ApiClient, ApiError, errorMessage } from './api';
 import type { Project } from './api';
@@ -18,7 +18,15 @@ export function ProjectSettings({ api, project, refreshToken, onUpdated, onUnava
   const [notice, setNotice] = useState('');
   const active = useRef<{ controller: AbortController; sent: boolean } | null>(null);
   const editButton = useRef<HTMLButtonElement>(null);
+  const restoreEditFocus = useRef(false);
   const path = `/projects/${project.id}`;
+
+  useLayoutEffect(() => {
+    if (!editing && restoreEditFocus.current) {
+      restoreEditFocus.current = false;
+      editButton.current?.focus();
+    }
+  }, [editing]);
 
   useEffect(() => {
     // A focus/access recheck may interrupt a PATCH after its commit.
@@ -81,8 +89,8 @@ export function ProjectSettings({ api, project, refreshToken, onUpdated, onUnava
       if (controller.signal.aborted) return;
       if (saved.id !== project.id || typeof saved.name !== 'string') throw new Error('Unconfirmed rename response');
       pending.sent = false;
-      onUpdated(saved); setEditing(false); setConflict(null);
-      setNotice('Название проекта сохранено.'); requestAnimationFrame(() => editButton.current?.focus());
+      onUpdated(saved); restoreEditFocus.current = true; setEditing(false); setConflict(null);
+      setNotice('Название проекта сохранено.');
     } catch (cause) {
       if (!controller.signal.aborted && pending.sent && (!(cause instanceof ApiError) || cause.status >= 500)) {
         setUncertain(true);
@@ -126,7 +134,7 @@ export function ProjectSettings({ api, project, refreshToken, onUpdated, onUnava
       <div className="actions">
         <button className="primary" disabled={busy !== null || uncertain}>{conflict !== null ? 'Сохранить моё название' : 'Сохранить название'}</button>
         <button type="button" className="secondary" disabled={busy !== null || uncertain} onClick={() => {
-          setEditing(false); setConflict(null); setError(''); requestAnimationFrame(() => editButton.current?.focus());
+          restoreEditFocus.current = true; setEditing(false); setConflict(null); setError('');
         }}>Отменить переименование</button>
       </div>
     </form>}

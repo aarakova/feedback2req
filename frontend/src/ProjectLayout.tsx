@@ -11,13 +11,13 @@ import { ProjectOverview } from './ProjectOverview';
 import { FindingsScreen } from './observer/Findings';
 import { RequirementsScreen } from './observer/Requirements';
 import { ProcessingScreen } from './observer/Processing';
-import { groupHref, projectHref, requirementHref } from './routes';
-import type { ProjectSection } from './routes';
+import { groupHref, projectHref, requirementHref, requirementsFilterHref } from './routes';
+import type { ProjectSection, RequirementFilter } from './routes';
 
-export function ProjectLayout({ api, user, onLogout, id, section, selected, accessRevision, requirementId, groupId }: {
+export function ProjectLayout({ api, user, onLogout, id, section, selected, accessRevision, requirementId, groupId, requirementFilter }: {
   api: ApiClient; user: User; onLogout: () => void; id: string; section: ProjectSection;
   selected?: MaterialSelection; accessRevision: number;
-  requirementId?: string; groupId?: string;
+  requirementId?: string; groupId?: string; requirementFilter?: RequirementFilter;
 }) {
   const [project, setProject] = useState<Project | null>(null);
   const [loading, setLoading] = useState(true);
@@ -66,8 +66,9 @@ export function ProjectLayout({ api, user, onLogout, id, section, selected, acce
         : section === 'materials' ? <Materials api={api} projectId={id} selected={selected} onUnavailable={unavailable} />
         : section === 'findings' ? <FindingsScreen project={project} selectedGroupId={groupId}
             onSelectGroup={group => { window.location.hash = group ? groupHref(id, group) : projectHref(id, 'findings'); }} />
-        : section === 'requirements' ? <RequirementsScreen project={project} selectedId={requirementId}
-            onSelect={requirement => { window.location.hash = requirementHref(id, requirement); }} />
+        : section === 'requirements' ? <RequirementsScreen project={project} selectedId={requirementId} filter={requirementFilter ?? 'all'}
+            onFilterChange={filter => { window.location.hash = requirementsFilterHref(id, filter); }}
+            onSelect={requirement => { window.location.hash = `${requirementHref(id, requirement)}?filter=${requirementFilter ?? 'all'}`; }} />
         : section === 'processing' ? <ProcessingScreen projectId={id} />
         : <ProjectOverview project={project} />}
     </div>}

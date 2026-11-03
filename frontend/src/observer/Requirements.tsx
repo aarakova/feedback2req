@@ -1,5 +1,6 @@
 import { useId, useState } from 'react';
 import type { Project } from '../api';
+import type { RequirementFilter } from '../routes';
 import { DecisionBadge, EvidenceCard, MissingData, PageHeading, Panel, RequirementBadges, Tabs, VerificationIssue, ViewNotice, evidenceName, verificationName } from './ui';
 import { inProject, unavailable, viewData } from './viewModels';
 import type { RequirementView, RequirementsView, ViewState } from './viewModels';
@@ -80,31 +81,34 @@ function Inspector({ project, item }: { project: Project; item?: RequirementView
   </section>;
 }
 
-export function RequirementsScreen({ project, state, selectedId, onSelect }: {
+export function RequirementsScreen({ project, state, selectedId, onSelect, filter: routedFilter, onFilterChange }: {
   project: Project; state?: ViewState<RequirementsView>; selectedId?: string; onSelect?: (id: string) => void;
+  filter?: RequirementFilter; onFilterChange?: (filter: RequirementFilter) => void;
 }) {
   const current = inProject(state ?? unavailable<RequirementsView>(project.id, 'Список требований и операции с редакциями пока недоступны.'), project.id);
   const data = viewData(current);
-  const [search, setSearch] = useState(''); const [filter, setFilter] = useState('all');
+  const [search, setSearch] = useState(''); const [localFilter, setLocalFilter] = useState<RequirementFilter>('all');
+  const filter = routedFilter ?? localFilter;
+  const setFilter = (value: RequirementFilter) => { setLocalFilter(value); setLocalSelected(undefined); onFilterChange?.(value); };
   const [localSelected, setLocalSelected] = useState<string>();
   const items = data?.items ?? [];
   const filtered = items.filter(item => {
     const match = filter === 'all' || filter === 'draft' && item.decision === 'Draft' || filter === 'approved' && item.decision === 'Approved'
       || filter === 'rejected' && item.decision === 'Rejected' || filter === 'blocker' && item.openBlockingIssues
       || filter === 'issues' && (item.proposal ?? item).issues.some(issue => issue.open)
-      || filter === 'lost' && (item.evidenceState === 'partial' || item.evidenceState === 'lost')
+      || filter === 'lost' && item.decision === 'Approved' && (item.evidenceState === 'partial' || item.evidenceState === 'lost')
       || filter === 'approved_all' && item.decision === 'Approved' && item.evidenceState === 'available'
       || filter === 'approved_partial' && item.decision === 'Approved' && item.evidenceState === 'partial'
       || filter === 'approved_lost' && item.decision === 'Approved' && item.evidenceState === 'lost';
     return match && `${item.id} ${item.title}`.toLocaleLowerCase('ru').includes(search.toLocaleLowerCase('ru'));
   });
-  const chosen = selectedId ?? localSelected;
+  const chosen = selectedId ?? (onSelect ? undefined : localSelected);
   const selected = chosen ? filtered.find(item => item.id === chosen) : filtered[0];
   return <div className="requirements-screen"><PageHeading title="Требования" description="Рассмотрите основания, уточните формулировку и примите решение." />
     <ViewNotice state={current} />
     <div className="panel requirements-toolbar"><label className="search-field"><span className="sr-only">Поиск требования</span>
       <input type="search" placeholder="Найти требование" disabled={!data} value={search} onChange={event => setSearch(event.target.value)} /></label>
-      <select className="observer-select" aria-label="Фильтр требований" disabled={!data} value={filter} onChange={event => setFilter(event.target.value)}>
+      <select className="observer-select" aria-label="Фильтр требований" disabled={!data} value={filter} onChange={event => setFilter(event.target.value as RequirementFilter)}>
         {filters.map(([value, label]) => <option key={value} value={value}>{label}</option>)}</select>
       <button className="secondary" disabled={!data || !search && filter === 'all'} onClick={() => { setSearch(''); setFilter('all'); }}>Сбросить фильтр</button>
     </div>

@@ -31,6 +31,8 @@ export interface HistoryView { id: string; title: string; text?: string; author?
 export interface RequirementSummary {
   id: string; title: string; decision: Decision | null; evidenceState: EvidenceState;
   verificationState: VerificationState; openBlockingIssues: boolean | null;
+  // Explicit count for this requirement, not inferred from a partial issue list.
+  openIssues?: number | null;
 }
 export interface RevisionView {
   revision: string; wording: string; rationale?: string; originLabel?: string;
@@ -60,7 +62,9 @@ export interface OverviewView {
   aggregatesAuthoritative: boolean;
   metrics: { requirements: number | null; approved: number | null; blockers: number | null; lostEvidence: number | null };
   decisions: { draft: number; approved: number; rejected: number } | null;
-  groups: readonly { id: string; title: string; findings: number | null; requirements: number | null }[];
+  // Confirmed comparison scale, not inferred from a paginated/partial group list.
+  groupScaleMaximum?: number | null;
+  groups: readonly { id: string; title: string; findings: number | null; requirements: number | null; openIssues?: number | null }[];
   attention: readonly RequirementSummary[];
   approvedEvidence: { available: number | null; partial: number | null; lost: number | null };
   coverage: string;
