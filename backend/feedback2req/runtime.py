@@ -99,7 +99,7 @@ def main():
             if args.http:
                 check_http()
             if args.action == "worker-check":
-                print("Worker infrastructure check passed; job execution awaits I2b approval.")
+                print("Worker schema check passed; this diagnostic command does not execute jobs.")
     except Exception:
         # SQL/URL/config validation exceptions can contain secrets. Fail closed.
         print(

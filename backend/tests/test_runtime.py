@@ -71,7 +71,7 @@ def test_lock_covers_ddl_and_failure_rolls_back(m01_database_url, fail):
     with observer.begin() as conn:
         assert conn.scalar(text(f"SELECT pg_try_advisory_xact_lock({LOCK})"))
         assert conn.scalar(text("SELECT version_num FROM alembic_version")) == (
-            "m01" if fail else "m02a"
+            "m01" if fail else "m02b"
         )
         assert (conn.scalar(text("SELECT to_regclass('feedback_sources')")) is None) == fail
     observer.dispose()
