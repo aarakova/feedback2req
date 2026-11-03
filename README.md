@@ -5,12 +5,14 @@
 Ф1а/Ф1б добавляют React frontend: регистрация, вход/выход, восстановление сессии,
 проекты и полномочия, ввод/списки/просмотр текстовых отзывов и документов.
 Основание: [DEC-007–DEC-011](docs/DECISIONS.md).
-Nginx/frontend и Python/backend разделены. Сервис worker пока выполняет
-конечную проверку инфраструктуры и завершается; очереди/обработки заданий нет.
-Работающий worker требует отдельного утверждения [И2б](docs/I2B_SPEC.md).
-AI-обработка отсутствует; HTML-прототип в `prototype/` остаётся
-визуальным референсом. Остальной [проект среза](docs/FIRST_TEXT_SLICE.md)
-не утверждён этими решениями.
+Nginx/frontend и Python/backend разделены. По разрешению DEC-015 добавляется
+первый сквозной backend-сценарий extract_feedback: сохраняемая PostgreSQL-очередь,
+worker, валидация и сохранение фрагментов/находок, read API и обзор материалов.
+Точный [контракт](docs/TEXT_PROCESSING_API.md) и [отчёт проверок](docs/plans/text-extraction-implementation.md)
+различают реализованный контур, синтетические тесты и ещё не проверенный live AI.
+Внешняя передача по умолчанию выключена; provider/model/условия требуют отдельного
+разрешения. И2б rev3 остаётся предложением, HTML-прототип — визуальным референсом.
+UI запуска/результатов пока не подключён, оставшийся проект среза не реализован.
 
 ## Локальный запуск Docker Compose
 
@@ -34,20 +36,21 @@ docker compose ps -a
 Интерфейс: `http://localhost:8000/`, API: `http://localhost:8000/api/v1`.
 Frontend отдельно собирается на Node 24 и раздаётся Nginx 1.28; backend —
 Python/FastAPI/Uvicorn без Node/React. db — PostgreSQL 17; worker — общий
-Python-образ с другой командой. На этапе 1 ожидаются три работающих сервиса
-и worker `Exited (0)` с сообщением об ожидающем согласования И2б.
+Python-образ с другой командой. Теперь ожидаются четыре работающих сервиса,
+в том числе worker с healthcheck. Без provider-конфигурации загрузка материалов
+работает, а явно начатый extract завершается provider_not_configured без находок.
 `up -d` не доказывает готовность: проверьте healthy в `ps -a`.
 
 Backend автоматически применяет Alembic перед Uvicorn. Весь online Alembic
 держит transaction advisory lock на том же соединении до commit DDL и версии.
 Ошибка откатывает миграцию и запрещает старт backend. Worker не выполняет DDL.
 Проверка версии: `docker compose run --rm --no-deps backend alembic current`
-(ожидается `m02a`). Отдельная миграция:
+(ожидается `m02b`). Отдельная миграция:
 `docker compose run --rm --no-deps backend python -m feedback2req.runtime migrate`.
 Прямой `alembic upgrade head` защищён той же блокировкой; БД должна работать.
 Это процедура текущего локального одиночного backend, не будущего сервера.
 Несовместимые миграции нельзя запускать под старым worker/приложением.
-Перезапуск с тем же volume: `docker compose restart db backend frontend`.
+Перезапуск с тем же volume: `docker compose restart db backend worker frontend`.
 Остановка: `docker compose stop`. Постоянный `postgres_data` сохраняет БД.
 Команд удаления volume для пользовательских данных инструкция не предусматривает.
 Сохраняйте имя проекта `feedback2req`: другой `-p` выбирает другой volume.
@@ -271,7 +274,7 @@ docker compose -f compose.test.yaml stop db
 pytest требует явную F2R_TEST_DATABASE_URL с `test` в имени БД, создаёт
 уникальную схему на каждый тест, применяет Alembic к пустой схеме, удаляет
 только собственную схему. Отдельный тест также создаёт новую пустую БД с
-уникальным префиксом f2r_test_, применяет m01 → m02a и удаляет только эту БД;
+уникальным префиксом f2r_test_, применяет m01 → m02a → m02b и удаляет только эту БД;
 тестовой роли нужны CREATE SCHEMA и CREATEDB (Compose/CI это предоставляют).
 SQLite не используется. Скрипт restart разрешает
 только loopback-БД `feedback2req_i1_test` и перезапускает только тестовый db

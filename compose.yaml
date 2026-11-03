@@ -54,12 +54,22 @@ services:
     build:
       context: .
       dockerfile: backend/Dockerfile
-    command: ["python", "-m", "feedback2req.runtime", "worker-check"]
-    restart: "no"
+    command: ["python", "-m", "feedback2req.processing.worker"]
+    init: true
+    restart: on-failure
+    healthcheck:
+      test: ["CMD", "python", "-m", "feedback2req.processing.worker", "--probe"]
+      interval: 5s
+      timeout: 8s
+      retries: 2
+      start_period: 15s
     environment:
       F2R_DATABASE_URL: postgresql+psycopg://feedback2req:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}@db/feedback2req
       F2R_ALLOWED_ORIGIN: ${F2R_ALLOWED_ORIGIN:-http://localhost:8000}
       F2R_LOCAL_HTTP: ${F2R_LOCAL_HTTP:-false}
+      F2R_AI_PROVIDER_URL: ${F2R_AI_PROVIDER_URL:-}
+      F2R_AI_MODEL: ${F2R_AI_MODEL:-}
+      F2R_AI_TRANSFER_ENABLED: ${F2R_AI_TRANSFER_ENABLED:-false}
     networks: [data]
     depends_on:
       backend:

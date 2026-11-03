@@ -290,3 +290,26 @@ DEC-005 разрешает JSON Schema, демонстрационные зап�
 Действующий автономный набор проверяет диалект,
 ссылки, позитивные/негативные примеры, закрытость объектов и выбранные свойства
 локальных пар; не заявляет проверку БД, прав, живых состояний или качества AI.
+
+## Сквозное текстовое извлечение — DEC-015
+
+Добавлены реальные PG/API сценарии [test_processing.py](../backend/tests/test_processing.py):
+явный start/get/list, exact quote/Unicode, empty success, idempotency/concurrent
+claim, ручной retry, независимый partial, отказ публикации при отзыве прав,
+смене входа/expiry, неизвестный COMMIT, composite FK, SQL timeout и recovery.
+[Provider tests](../backend/tests/test_processing_provider.py) не выполняют
+сетевых вызовов; [probe tests](../backend/tests/test_worker_probe.py) проверяют
+отказ до process lookup для неполной записи. Синтетический provider не является AI.
+
+Изолированный [Compose](../compose.extraction-test.yaml) и
+[HTTP harness](../scripts/check_text_processing.py) проверяют настоящую цепочку
+API/PG/worker, persistence/retry и 35-секундную compute. Отдельный
+[probe harness](../scripts/check_worker_probe.py) предназначен только для
+тестового контейнера с synthetic marker. CI extraction job проверяет фактический
+RestartCount после сигнала из probe, одного unhealthy недостаточно.
+
+Фактические результаты, даты и непроверенные гарантии записаны в
+[отчёте](plans/text-extraction-implementation.md). 90 passed и успешный
+Docker seed/restart относятся к 26 октября; финальные изменения и вся
+матрица probe/fault после продолжения 2 ноября требуют повторных прогонов.
+Недоступный Docker Engine не заменяется SQLite или рабочей БД другого агента.

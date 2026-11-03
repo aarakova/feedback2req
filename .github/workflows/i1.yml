@@ -3,6 +3,43 @@ on: [push, pull_request]
 permissions:
   contents: read
 jobs:
+  extraction:
+    runs-on: ubuntu-latest
+    env:
+      COMPOSE_PROJECT_NAME: extraction-${{ github.run_id }}-${{ github.run_attempt }}
+      COMPOSE_FILE: compose.extraction-test.yaml
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build -f backend/Dockerfile -t feedback2req-backend .
+      - run: docker build -f backend/Dockerfile.checks -t feedback2req-checks .
+      - run: docker compose up -d --wait db api provider worker
+      - run: docker compose run --rm checks seed
+      - name: Safe unhealthy and actual probe-triggered restart
+        run: |
+          docker compose exec -T worker python /checks/probe.py corrupt
+          worker_id="$(docker compose ps -q worker)"
+          before="$(docker inspect -f '{{.RestartCount}}' "$worker_id")"
+          docker compose exec -T worker python /checks/probe.py hang
+          for tick in $(seq 1 40); do
+            after="$(docker inspect -f '{{.RestartCount}}' "$worker_id")"
+            if test "$after" -gt "$before"; then break; fi
+            sleep 1
+          done
+          test "$after" -gt "$before"
+          docker compose up -d --wait worker
+          docker compose run --rm checks verify
+      - name: Backend, worker and database persistence
+        run: |
+          docker compose stop api worker
+          docker compose restart db
+          docker compose up -d --wait api worker
+          docker compose run --rm checks verify
+      - run: docker compose run --rm checks failure
+      - run: docker compose run --rm checks slow
+      - if: always()
+        run: docker compose logs --no-color
+      - if: always()
+        run: docker compose down --volumes
   i1:
     runs-on: ubuntu-latest
     services:
@@ -75,6 +112,11 @@ jobs:
           docker compose -f compose.yaml -f compose.infrastructure-test.yaml up -d --no-build
           docker compose -f compose.yaml -f compose.infrastructure-test.yaml up -d --wait backend frontend
           mkdir -p .local
+      - name: Require healthy executing worker
+        run: |
+          worker_id="$(docker compose -f compose.yaml -f compose.infrastructure-test.yaml ps -aq worker)"
+          test -n "$worker_id"
+          docker compose -f compose.yaml -f compose.infrastructure-test.yaml up -d --wait worker
       - name: Real Nginx HTTP, cookies, CSRF, materials and isolation
         run: docker run --rm --user 0 --network feedback2req-infra-test_proxy --mount "type=bind,source=$PWD,target=/workspace" --mount "type=bind,source=$PWD/.local,target=/state" -w /workspace feedback2req-backend python scripts/check_infrastructure.py smoke
       - name: Restart isolated database and backend

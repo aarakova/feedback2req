@@ -1,0 +1,65 @@
+# Disposable isolated stack: synthetic provider only, no ports or production volumes.
+services:
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: feedback2req_extract_test
+      POSTGRES_USER: f2r_test
+      POSTGRES_HOST_AUTH_METHOD: trust
+    volumes: [extract_data:/var/lib/postgresql/data]
+    healthcheck:
+      test: [CMD, pg_isready, -U, f2r_test, -d, feedback2req_extract_test]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+  api:
+    image: ${F2R_EXTRACTION_IMAGE:-feedback2req-backend}
+    environment: &runtime
+      F2R_DATABASE_URL: postgresql+psycopg://f2r_test@db/feedback2req_extract_test
+      F2R_LOCAL_HTTP: "true"
+      F2R_ALLOWED_ORIGIN: http://localhost:8000
+    depends_on:
+      db: {condition: service_healthy}
+    healthcheck:
+      test: [CMD, python, -m, feedback2req.runtime, check, --http]
+      interval: 2s
+      timeout: 8s
+      retries: 30
+  provider:
+    image: ${F2R_EXTRACTION_IMAGE:-feedback2req-backend}
+    command: [python, /checks/check.py, provider]
+    volumes: [./scripts/check_text_processing.py:/checks/check.py:ro]
+  worker:
+    image: ${F2R_EXTRACTION_IMAGE:-feedback2req-backend}
+    command: [python, -m, feedback2req.processing.worker]
+    init: true
+    restart: on-failure
+    volumes: [./scripts/check_worker_probe.py:/checks/probe.py:ro]
+    environment:
+      <<: *runtime
+      F2R_AI_TRANSFER_ENABLED: "true"
+      F2R_AI_PROVIDER_URL: http://provider:11434/api/chat
+      F2R_AI_MODEL: synthetic-test-only
+      F2R_PROCESSING_TEST_MODE: "true"
+    depends_on:
+      api: {condition: service_healthy}
+    healthcheck:
+      test: [CMD, python, -m, feedback2req.processing.worker, --probe]
+      interval: 3s
+      timeout: 8s
+      retries: 3
+      start_period: 15s
+  checks:
+    image: feedback2req-checks
+    profiles: [checks]
+    user: "0"
+    entrypoint: [python, /checks/check.py]
+    volumes:
+      - ./scripts/check_text_processing.py:/checks/check.py:ro
+      - extract_checks:/state
+networks:
+  default:
+    internal: true
+volumes:
+  extract_data:
+  extract_checks:
