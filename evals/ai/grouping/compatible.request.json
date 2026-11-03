@@ -1,0 +1,105 @@
+{
+  "contract_version": "1.0",
+  "operation": "group_findings",
+  "project_id": "SYNTHETIC-GROUPING",
+  "request_id": "synthetic-grouping-1",
+  "input": {
+    "findings": [
+      {
+        "key": "f1",
+        "ref": {
+          "kind": "finding",
+          "id": "F1",
+          "state_id": "v1"
+        },
+        "text": "Хочу получать уведомления о статусе заявки.",
+        "types": [
+          "request"
+        ],
+        "mode": "direct",
+        "evidence": [
+          {
+            "kind": "available",
+            "fragment_key": "e1"
+          }
+        ],
+        "uncertainty_notes": [],
+        "open_questions": [],
+        "authorship": "ai"
+      },
+      {
+        "key": "f2",
+        "ref": {
+          "kind": "finding",
+          "id": "F2",
+          "state_id": "v1"
+        },
+        "text": "Мне важно видеть, когда заявка обработана.",
+        "types": [
+          "request"
+        ],
+        "mode": "direct",
+        "evidence": [
+          {
+            "kind": "available",
+            "fragment_key": "e2"
+          }
+        ],
+        "uncertainty_notes": [],
+        "open_questions": [],
+        "authorship": "ai"
+      }
+    ],
+    "fragments": [
+      {
+        "key": "e1",
+        "ref": {
+          "kind": "fragment",
+          "id": "E1",
+          "state_id": "v1"
+        },
+        "source_ref": {
+          "kind": "feedback_source",
+          "id": "s1",
+          "state_id": "v1"
+        },
+        "text_ref": {
+          "kind": "feedback_source",
+          "id": "s1",
+          "state_id": "v1"
+        },
+        "quote": "Хочу получать уведомления о статусе заявки.",
+        "locator": {
+          "start": 0,
+          "end": 43
+        },
+        "reliability": "usable"
+      },
+      {
+        "key": "e2",
+        "ref": {
+          "kind": "fragment",
+          "id": "E2",
+          "state_id": "v1"
+        },
+        "source_ref": {
+          "kind": "feedback_source",
+          "id": "s2",
+          "state_id": "v1"
+        },
+        "text_ref": {
+          "kind": "feedback_source",
+          "id": "s2",
+          "state_id": "v1"
+        },
+        "quote": "Мне важно видеть, когда заявка обработана.",
+        "locator": {
+          "start": 0,
+          "end": 42
+        },
+        "reliability": "usable"
+      }
+    ],
+    "documents": []
+  }
+}

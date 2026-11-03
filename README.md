@@ -233,3 +233,11 @@ pytest на PostgreSQL 17, Ruff, исходный валидатор AI-конт
 TestClient использует совместимый httpx2 вместо deprecated-интеграции с httpx;
 версии включены в requirements-test.lock, предупреждения не подавляются.
 Границы покрытия и фактические результаты: [TESTING.md](docs/TESTING.md).
+
+## Автономная AI-группировка
+
+Операция `group_findings` 1.0 реализована отдельно от backend F2.
+[Запуск, ограничения и граница интеграции](ai/group_findings/README.md),
+[сравнение кандидатов модели](ai/group_findings/MODEL_SELECTION.md),
+[результаты технической проверки](evals/ai/grouping/VALIDATION.md).
+Синтетический replay не подтверждает качество реальной модели.
