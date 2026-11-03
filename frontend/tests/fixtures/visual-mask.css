@@ -1,0 +1,3 @@
+/* Mask only ephemeral test identity/UUIDs in golden checks. Exported review images remain unmasked. */
+.side-foot{visibility:hidden!important;height:28px!important;max-height:28px!important;overflow:hidden!important}
+.mono,dd{visibility:hidden!important}

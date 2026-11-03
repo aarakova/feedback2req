@@ -3,6 +3,7 @@ import type { FormEvent } from 'react';
 import { ApiClient, ApiError, errorMessage, projectUnavailable } from './api';
 import type { Material, MaterialKind, Page } from './api';
 import { ErrorNotice, Loading } from './ui';
+import { ProcessingCallout } from './observer/Processing';
 
 export interface MaterialSelection { kind: MaterialKind; id: string }
 interface ProjectProps {
@@ -22,6 +23,7 @@ export function Materials({ api, projectId, onUnavailable, selected }: ProjectPr
 }) {
   return <div className="materials">
     <div><h2>Материалы</h2><p className="muted">Обратная связь и контекст продукта хранятся отдельно.</p></div>
+    <ProcessingCallout />
     {selected && <MaterialDetail key={`${selected.kind}/${selected.id}`} api={api}
       projectId={projectId} onUnavailable={onUnavailable} selected={selected} />}
     <div className="material-columns">
@@ -87,6 +89,8 @@ function MaterialCollection({ api, projectId, onUnavailable, kind }: ProjectProp
     {items.length > 0 && <ul className="material-list">{items.map(item => <li key={item.id}>
       <a href={materialHref(projectId, kind, item.id)}>
         <span className="material-label">{'title' in item ? item.title : 'Текстовый отзыв'}</span>
+        <span className="badge good">Текст сохранён</span>
+        <span className="material-excerpt">{item.text}</span>
         <span className="mono muted">ID: {item.id}</span>
         <span className="accent small">Открыть <span aria-hidden="true">→</span></span>
       </a>

@@ -8,6 +8,7 @@ export interface Project {
   permissions: { is_owner: boolean; is_member: boolean; can_approve: boolean };
 }
 export interface Page<T> { items: T[]; next_cursor: string | null }
+export interface Access { user_id: string; is_owner: boolean; is_member: boolean; can_approve: boolean }
 export interface TextSource { id: string; state_id: string; kind: 'text'; text: string }
 export interface ProductDocument { id: string; state_id: string; title: string; text: string }
 export type Material = TextSource | ProductDocument;
@@ -87,6 +88,8 @@ export function errorMessage(error: unknown): string {
     login_unavailable: 'Этот логин уже занят. Выберите другой.',
     invalid_login: 'Логин должен содержать от 1 до 128 символов после нормализации, без управляющих символов.',
     invalid_request: 'Проверьте заполнение полей и допустимую длину значений.',
+    invalid_user: 'Пользователь с таким ID не зарегистрирован.',
+    owner_access_immutable: 'Полномочия владельца нельзя изменить или удалить.',
     csrf_rejected: 'Не удалось подтвердить запрос. Перезагрузите страницу и повторите действие.',
     origin_rejected: 'Адрес приложения не разрешён сервером. Проверьте настройку F2R_ALLOWED_ORIGIN.',
     rate_limited: 'Слишком много попыток. Подождите немного и попробуйте снова.',
