@@ -1,0 +1,803 @@
+{
+  "id": "S08",
+  "version": "1.0.0",
+  "synthetic": true,
+  "title": "Расхождение с документацией",
+  "traceability": {
+    "requirements": [
+      "FR-017",
+      "FR-019",
+      "FR-020"
+    ],
+    "acceptance_criteria": [
+      "AC-05",
+      "AC-06"
+    ],
+    "contract_rules": [
+      "AP-05",
+      "AP-06",
+      "AP-10"
+    ]
+  },
+  "annotation": {
+    "version": "0.2.0",
+    "status": "preliminary",
+    "required_meanings": [
+      "Отзыв отрицает CSV, D3 описывает доступный экспорт; обе стороны явно представлены."
+    ],
+    "allowed_alternatives": [
+      "Вопрос о версии, правах, ошибке или обнаружении функции; эти варианты не объявлены фактами."
+    ],
+    "forbidden_claims": [
+      "Самостоятельно выбрать правильную версию; уверенно требовать добавить уже описанную функцию."
+    ],
+    "expert_questions": [
+      "Совпадают ли версия продукта и права участника с документацией?"
+    ]
+  },
+  "examples": [
+    {
+      "id": "extract",
+      "request": {
+        "contract_version": "1.0",
+        "operation": "extract_feedback",
+        "project_id": "SYNTHETIC-S08",
+        "request_id": "S08-extract",
+        "input": {
+          "segments": [
+            {
+              "key": "s1",
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "S08-extract-SYN-SRC-1",
+                "state_id": "S08-extract-SYN-SRC-1-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "S08-extract-SYN-SRC-1",
+                "state_id": "S08-extract-SYN-SRC-1-v1"
+              },
+              "locator": {
+                "start": 0,
+                "end": 57
+              },
+              "reliability": "usable",
+              "text": "Выгрузки CSV нет, приходится переписывать задачи вручную."
+            }
+          ],
+          "documents": [
+            {
+              "key": "d1",
+              "ref": {
+                "kind": "product_document",
+                "id": "S08-extract-DOC-1",
+                "state_id": "S08-extract-DOC-1-v1"
+              },
+              "text": "Список задач фильтруется по статусу и исполнителю. После повторного открытия фильтры сбрасываются.",
+              "locator": {
+                "start": 0,
+                "end": 98
+              }
+            },
+            {
+              "key": "d2",
+              "ref": {
+                "kind": "product_document",
+                "id": "S08-extract-DOC-2",
+                "state_id": "S08-extract-DOC-2-v1"
+              },
+              "text": "Звуковые уведомления об изменении статуса включены по умолчанию. Пользовательской настройки звука нет.",
+              "locator": {
+                "start": 0,
+                "end": 102
+              }
+            },
+            {
+              "key": "d3",
+              "ref": {
+                "kind": "product_document",
+                "id": "S08-extract-DOC-3",
+                "state_id": "S08-extract-DOC-3-v1"
+              },
+              "text": "Экспорт CSV доступен через меню «Отчёты → CSV».",
+              "locator": {
+                "start": 0,
+                "end": 47
+              }
+            },
+            {
+              "key": "d4",
+              "ref": {
+                "kind": "product_document",
+                "id": "S08-extract-DOC-4",
+                "state_id": "S08-extract-DOC-4-v1"
+              },
+              "text": "При закрытии формы создания задачи введённый текст теряется. Черновики не сохраняются.",
+              "locator": {
+                "start": 0,
+                "end": 86
+              }
+            }
+          ]
+        }
+      },
+      "trusted": {
+        "texts": [
+          {
+            "ref": {
+              "kind": "feedback_source",
+              "id": "S08-extract-SYN-SRC-1",
+              "state_id": "S08-extract-SYN-SRC-1-v1"
+            },
+            "source_ref": {
+              "kind": "feedback_source",
+              "id": "S08-extract-SYN-SRC-1",
+              "state_id": "S08-extract-SYN-SRC-1-v1"
+            },
+            "text": "Выгрузки CSV нет, приходится переписывать задачи вручную.",
+            "reliability": "usable"
+          }
+        ],
+        "documents": [
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S08-extract-DOC-1",
+              "state_id": "S08-extract-DOC-1-v1"
+            },
+            "text": "Список задач фильтруется по статусу и исполнителю. После повторного открытия фильтры сбрасываются."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S08-extract-DOC-2",
+              "state_id": "S08-extract-DOC-2-v1"
+            },
+            "text": "Звуковые уведомления об изменении статуса включены по умолчанию. Пользовательской настройки звука нет."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S08-extract-DOC-3",
+              "state_id": "S08-extract-DOC-3-v1"
+            },
+            "text": "Экспорт CSV доступен через меню «Отчёты → CSV»."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S08-extract-DOC-4",
+              "state_id": "S08-extract-DOC-4-v1"
+            },
+            "text": "При закрытии формы создания задачи введённый текст теряется. Черновики не сохраняются."
+          }
+        ],
+        "project_id": "SYNTHETIC-S08",
+        "states": [
+          {
+            "kind": "feedback_source",
+            "id": "S08-extract-SYN-SRC-1",
+            "state_id": "S08-extract-SYN-SRC-1-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S08-extract-DOC-1",
+            "state_id": "S08-extract-DOC-1-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S08-extract-DOC-2",
+            "state_id": "S08-extract-DOC-2-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S08-extract-DOC-3",
+            "state_id": "S08-extract-DOC-3-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S08-extract-DOC-4",
+            "state_id": "S08-extract-DOC-4-v1"
+          }
+        ]
+      },
+      "fixture_response": {
+        "coverage": [
+          {
+            "input_key": "s1",
+            "reviewed": true,
+            "disposition": "completed"
+          }
+        ],
+        "uncertainties": [],
+        "questions": [],
+        "result": {
+          "fragments": [
+            {
+              "local_id": "fragment-1",
+              "segment_key": "s1",
+              "quote": "Выгрузки CSV нет, приходится переписывать задачи вручную.",
+              "occurrence": 0
+            }
+          ],
+          "findings": [
+            {
+              "local_id": "finding-1",
+              "text": "Выгрузки CSV нет, приходится переписывать задачи вручную.",
+              "types": [
+                "problem"
+              ],
+              "mode": "direct",
+              "fragment_ids": [
+                "fragment-1"
+              ],
+              "considered_keys": [
+                "s1"
+              ],
+              "context_keys": []
+            }
+          ]
+        }
+      },
+      "fixture_role": "engineering_control",
+      "relationship": null
+    },
+    {
+      "id": "question",
+      "request": {
+        "contract_version": "1.0",
+        "operation": "generate_requirements",
+        "project_id": "SYNTHETIC-S08",
+        "request_id": "S08-question",
+        "input": {
+          "findings": [
+            {
+              "key": "f1",
+              "ref": {
+                "kind": "finding",
+                "id": "S08-question-SYN-FINDING-1",
+                "state_id": "S08-question-SYN-FINDING-1-v1"
+              },
+              "text": "Выгрузки CSV нет, приходится переписывать задачи вручную.",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "evidence": [
+                {
+                  "kind": "available",
+                  "fragment_key": "e1"
+                }
+              ],
+              "uncertainty_notes": [],
+              "open_questions": [],
+              "authorship": "ai"
+            }
+          ],
+          "fragments": [
+            {
+              "key": "e1",
+              "ref": {
+                "kind": "fragment",
+                "id": "S08-question-SYN-FRAGMENT-1",
+                "state_id": "S08-question-SYN-FRAGMENT-1-v1"
+              },
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "S08-question-SYN-SRC-1",
+                "state_id": "S08-question-SYN-SRC-1-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "S08-question-SYN-SRC-1",
+                "state_id": "S08-question-SYN-SRC-1-v1"
+              },
+              "quote": "Выгрузки CSV нет, приходится переписывать задачи вручную.",
+              "locator": {
+                "start": 0,
+                "end": 57
+              },
+              "reliability": "usable"
+            }
+          ],
+          "groups": [],
+          "documents": [
+            {
+              "key": "d1",
+              "ref": {
+                "kind": "product_document",
+                "id": "S08-question-DOC-1",
+                "state_id": "S08-question-DOC-1-v1"
+              },
+              "text": "Список задач фильтруется по статусу и исполнителю. После повторного открытия фильтры сбрасываются.",
+              "locator": {
+                "start": 0,
+                "end": 98
+              }
+            },
+            {
+              "key": "d2",
+              "ref": {
+                "kind": "product_document",
+                "id": "S08-question-DOC-2",
+                "state_id": "S08-question-DOC-2-v1"
+              },
+              "text": "Звуковые уведомления об изменении статуса включены по умолчанию. Пользовательской настройки звука нет.",
+              "locator": {
+                "start": 0,
+                "end": 102
+              }
+            },
+            {
+              "key": "d3",
+              "ref": {
+                "kind": "product_document",
+                "id": "S08-question-DOC-3",
+                "state_id": "S08-question-DOC-3-v1"
+              },
+              "text": "Экспорт CSV доступен через меню «Отчёты → CSV».",
+              "locator": {
+                "start": 0,
+                "end": 47
+              }
+            },
+            {
+              "key": "d4",
+              "ref": {
+                "kind": "product_document",
+                "id": "S08-question-DOC-4",
+                "state_id": "S08-question-DOC-4-v1"
+              },
+              "text": "При закрытии формы создания задачи введённый текст теряется. Черновики не сохраняются.",
+              "locator": {
+                "start": 0,
+                "end": 86
+              }
+            }
+          ]
+        }
+      },
+      "trusted": {
+        "texts": [
+          {
+            "ref": {
+              "kind": "feedback_source",
+              "id": "S08-question-SYN-SRC-1",
+              "state_id": "S08-question-SYN-SRC-1-v1"
+            },
+            "source_ref": {
+              "kind": "feedback_source",
+              "id": "S08-question-SYN-SRC-1",
+              "state_id": "S08-question-SYN-SRC-1-v1"
+            },
+            "text": "Выгрузки CSV нет, приходится переписывать задачи вручную.",
+            "reliability": "usable"
+          }
+        ],
+        "documents": [
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S08-question-DOC-1",
+              "state_id": "S08-question-DOC-1-v1"
+            },
+            "text": "Список задач фильтруется по статусу и исполнителю. После повторного открытия фильтры сбрасываются."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S08-question-DOC-2",
+              "state_id": "S08-question-DOC-2-v1"
+            },
+            "text": "Звуковые уведомления об изменении статуса включены по умолчанию. Пользовательской настройки звука нет."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S08-question-DOC-3",
+              "state_id": "S08-question-DOC-3-v1"
+            },
+            "text": "Экспорт CSV доступен через меню «Отчёты → CSV»."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S08-question-DOC-4",
+              "state_id": "S08-question-DOC-4-v1"
+            },
+            "text": "При закрытии формы создания задачи введённый текст теряется. Черновики не сохраняются."
+          }
+        ],
+        "project_id": "SYNTHETIC-S08",
+        "states": [
+          {
+            "kind": "finding",
+            "id": "S08-question-SYN-FINDING-1",
+            "state_id": "S08-question-SYN-FINDING-1-v1"
+          },
+          {
+            "kind": "fragment",
+            "id": "S08-question-SYN-FRAGMENT-1",
+            "state_id": "S08-question-SYN-FRAGMENT-1-v1"
+          },
+          {
+            "kind": "feedback_source",
+            "id": "S08-question-SYN-SRC-1",
+            "state_id": "S08-question-SYN-SRC-1-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S08-question-DOC-1",
+            "state_id": "S08-question-DOC-1-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S08-question-DOC-2",
+            "state_id": "S08-question-DOC-2-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S08-question-DOC-3",
+            "state_id": "S08-question-DOC-3-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S08-question-DOC-4",
+            "state_id": "S08-question-DOC-4-v1"
+          }
+        ]
+      },
+      "fixture_response": {
+        "coverage": [
+          {
+            "input_key": "f1",
+            "reviewed": true,
+            "disposition": "insufficient_information",
+            "reason": "В D3 описан CSV; почему он недоступен в описанном опыте?"
+          }
+        ],
+        "uncertainties": [],
+        "questions": [
+          {
+            "local_id": "question-1",
+            "text": "В D3 описан CSV; почему он недоступен в описанном опыте?",
+            "reason": "В D3 описан CSV; почему он недоступен в описанном опыте?",
+            "related": [
+              {
+                "origin": "input",
+                "key": "f1"
+              }
+            ],
+            "blocking": true
+          }
+        ],
+        "result": {
+          "requirements": []
+        }
+      },
+      "fixture_role": "engineering_control",
+      "relationship": null
+    },
+    {
+      "id": "verify",
+      "request": {
+        "contract_version": "1.0",
+        "operation": "verify_requirement",
+        "project_id": "SYNTHETIC-S08",
+        "request_id": "S08-verify",
+        "input": {
+          "target": {
+            "key": "target",
+            "ref": {
+              "kind": "requirement_revision",
+              "id": "S08-verify-SYN-REV-1",
+              "state_id": "S08-verify-SYN-REV-1-v1"
+            },
+            "requirement_id": "S08-verify-SYN-REQ-1",
+            "title": "Синтетический кандидат",
+            "text": "Добавить отсутствующий экспорт CSV.",
+            "rationale": "Кандидат для диагностики инструмента.",
+            "evidence": [
+              {
+                "finding_key": "f1",
+                "links": [
+                  {
+                    "kind": "available",
+                    "fragment_key": "e1"
+                  }
+                ]
+              }
+            ],
+            "open_questions": []
+          },
+          "findings": [
+            {
+              "key": "f1",
+              "ref": {
+                "kind": "finding",
+                "id": "S08-verify-SYN-FINDING-1",
+                "state_id": "S08-verify-SYN-FINDING-1-v1"
+              },
+              "text": "Выгрузки CSV нет, приходится переписывать задачи вручную.",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "evidence": [
+                {
+                  "kind": "available",
+                  "fragment_key": "e1"
+                }
+              ],
+              "uncertainty_notes": [],
+              "open_questions": [],
+              "authorship": "ai"
+            }
+          ],
+          "fragments": [
+            {
+              "key": "e1",
+              "ref": {
+                "kind": "fragment",
+                "id": "S08-verify-SYN-FRAGMENT-1",
+                "state_id": "S08-verify-SYN-FRAGMENT-1-v1"
+              },
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "S08-verify-SYN-SRC-1",
+                "state_id": "S08-verify-SYN-SRC-1-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "S08-verify-SYN-SRC-1",
+                "state_id": "S08-verify-SYN-SRC-1-v1"
+              },
+              "quote": "Выгрузки CSV нет, приходится переписывать задачи вручную.",
+              "locator": {
+                "start": 0,
+                "end": 57
+              },
+              "reliability": "usable"
+            }
+          ],
+          "documents": [
+            {
+              "key": "d1",
+              "ref": {
+                "kind": "product_document",
+                "id": "S08-verify-DOC-1",
+                "state_id": "S08-verify-DOC-1-v1"
+              },
+              "text": "Список задач фильтруется по статусу и исполнителю. После повторного открытия фильтры сбрасываются.",
+              "locator": {
+                "start": 0,
+                "end": 98
+              }
+            },
+            {
+              "key": "d2",
+              "ref": {
+                "kind": "product_document",
+                "id": "S08-verify-DOC-2",
+                "state_id": "S08-verify-DOC-2-v1"
+              },
+              "text": "Звуковые уведомления об изменении статуса включены по умолчанию. Пользовательской настройки звука нет.",
+              "locator": {
+                "start": 0,
+                "end": 102
+              }
+            },
+            {
+              "key": "d3",
+              "ref": {
+                "kind": "product_document",
+                "id": "S08-verify-DOC-3",
+                "state_id": "S08-verify-DOC-3-v1"
+              },
+              "text": "Экспорт CSV доступен через меню «Отчёты → CSV».",
+              "locator": {
+                "start": 0,
+                "end": 47
+              }
+            },
+            {
+              "key": "d4",
+              "ref": {
+                "kind": "product_document",
+                "id": "S08-verify-DOC-4",
+                "state_id": "S08-verify-DOC-4-v1"
+              },
+              "text": "При закрытии формы создания задачи введённый текст теряется. Черновики не сохраняются.",
+              "locator": {
+                "start": 0,
+                "end": 86
+              }
+            }
+          ],
+          "comparisons": [],
+          "comparison_scope": {
+            "extent": "project_snapshot",
+            "required_keys": []
+          },
+          "previous_checks": []
+        }
+      },
+      "trusted": {
+        "texts": [
+          {
+            "ref": {
+              "kind": "feedback_source",
+              "id": "S08-verify-SYN-SRC-1",
+              "state_id": "S08-verify-SYN-SRC-1-v1"
+            },
+            "source_ref": {
+              "kind": "feedback_source",
+              "id": "S08-verify-SYN-SRC-1",
+              "state_id": "S08-verify-SYN-SRC-1-v1"
+            },
+            "text": "Выгрузки CSV нет, приходится переписывать задачи вручную.",
+            "reliability": "usable"
+          }
+        ],
+        "documents": [
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S08-verify-DOC-1",
+              "state_id": "S08-verify-DOC-1-v1"
+            },
+            "text": "Список задач фильтруется по статусу и исполнителю. После повторного открытия фильтры сбрасываются."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S08-verify-DOC-2",
+              "state_id": "S08-verify-DOC-2-v1"
+            },
+            "text": "Звуковые уведомления об изменении статуса включены по умолчанию. Пользовательской настройки звука нет."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S08-verify-DOC-3",
+              "state_id": "S08-verify-DOC-3-v1"
+            },
+            "text": "Экспорт CSV доступен через меню «Отчёты → CSV»."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S08-verify-DOC-4",
+              "state_id": "S08-verify-DOC-4-v1"
+            },
+            "text": "При закрытии формы создания задачи введённый текст теряется. Черновики не сохраняются."
+          }
+        ],
+        "project_id": "SYNTHETIC-S08",
+        "states": [
+          {
+            "kind": "requirement_revision",
+            "id": "S08-verify-SYN-REV-1",
+            "state_id": "S08-verify-SYN-REV-1-v1"
+          },
+          {
+            "kind": "finding",
+            "id": "S08-verify-SYN-FINDING-1",
+            "state_id": "S08-verify-SYN-FINDING-1-v1"
+          },
+          {
+            "kind": "fragment",
+            "id": "S08-verify-SYN-FRAGMENT-1",
+            "state_id": "S08-verify-SYN-FRAGMENT-1-v1"
+          },
+          {
+            "kind": "feedback_source",
+            "id": "S08-verify-SYN-SRC-1",
+            "state_id": "S08-verify-SYN-SRC-1-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S08-verify-DOC-1",
+            "state_id": "S08-verify-DOC-1-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S08-verify-DOC-2",
+            "state_id": "S08-verify-DOC-2-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S08-verify-DOC-3",
+            "state_id": "S08-verify-DOC-3-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S08-verify-DOC-4",
+            "state_id": "S08-verify-DOC-4-v1"
+          }
+        ],
+        "comparison_scope": {
+          "extent": "project_snapshot",
+          "required_keys": []
+        },
+        "comparisons": [],
+        "prior_decision": null,
+        "change_context": null,
+        "followup": null,
+        "previous_checks": []
+      },
+      "fixture_response": {
+        "coverage": [
+          {
+            "input_key": "target",
+            "reviewed": true,
+            "disposition": "completed"
+          }
+        ],
+        "uncertainties": [],
+        "questions": [],
+        "result": {
+          "checks": [
+            {
+              "kind": "support",
+              "conclusion": "no_issue_found",
+              "rationale": "В явно переданном синтетическом контексте замечание не обнаружено.",
+              "considered_keys": [
+                "target",
+                "f1",
+                "e1"
+              ]
+            },
+            {
+              "kind": "contradictions",
+              "conclusion": "issues_found",
+              "rationale": "Отзыв расходится с D3.",
+              "considered_keys": [
+                "target",
+                "f1",
+                "e1",
+                "d3"
+              ]
+            },
+            {
+              "kind": "ambiguity",
+              "conclusion": "no_issue_found",
+              "rationale": "В явно переданном синтетическом контексте замечание не обнаружено.",
+              "considered_keys": [
+                "target",
+                "f1",
+                "e1"
+              ]
+            },
+            {
+              "kind": "duplicates",
+              "conclusion": "no_issue_found",
+              "rationale": "В явно переданном синтетическом контексте замечание не обнаружено.",
+              "considered_keys": []
+            }
+          ],
+          "issues": [
+            {
+              "local_id": "issue-1",
+              "category": "contradiction",
+              "text": "Отзыв расходится с D3.",
+              "reason": "Отзыв расходится с D3.",
+              "severity": "medium",
+              "blocking": true,
+              "blocking_reason": "Существенная причина требует уточнения до нового утверждения.",
+              "related": [
+                {
+                  "origin": "input",
+                  "key": "target"
+                }
+              ],
+              "question_ids": []
+            }
+          ]
+        }
+      },
+      "fixture_role": "engineering_control",
+      "relationship": null
+    }
+  ]
+}

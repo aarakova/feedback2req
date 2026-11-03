@@ -1,0 +1,815 @@
+{
+  "id": "S07",
+  "version": "1.0.0",
+  "synthetic": true,
+  "title": "Неоднозначная формулировка",
+  "traceability": {
+    "requirements": [
+      "FR-019",
+      "FR-020",
+      "FR-025"
+    ],
+    "acceptance_criteria": [
+      "AC-06",
+      "AC-08"
+    ],
+    "contract_rules": [
+      "AP-05",
+      "AP-10"
+    ]
+  },
+  "annotation": {
+    "version": "0.2.0",
+    "status": "preliminary",
+    "required_meanings": [
+      "Объект и событие не определены; существенная неопределённость не скрыта."
+    ],
+    "allowed_alternatives": [
+      "Пустое извлечение с объяснением либо обобщённая проблема без конкретизации объекта."
+    ],
+    "forbidden_claims": [
+      "Уверенно назвать фильтры, черновик или экспорт причиной проблемы."
+    ],
+    "expert_questions": [
+      "Что именно теряется и после какого действия?"
+    ]
+  },
+  "examples": [
+    {
+      "id": "extract",
+      "request": {
+        "contract_version": "1.0",
+        "operation": "extract_feedback",
+        "project_id": "SYNTHETIC-S07",
+        "request_id": "S07-extract",
+        "input": {
+          "segments": [
+            {
+              "key": "s1",
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "S07-extract-SYN-SRC-1",
+                "state_id": "S07-extract-SYN-SRC-1-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "S07-extract-SYN-SRC-1",
+                "state_id": "S07-extract-SYN-SRC-1-v1"
+              },
+              "locator": {
+                "start": 0,
+                "end": 44
+              },
+              "reliability": "usable",
+              "text": "После этого всё слетает. Сделайте нормально."
+            }
+          ],
+          "documents": [
+            {
+              "key": "d1",
+              "ref": {
+                "kind": "product_document",
+                "id": "S07-extract-DOC-1",
+                "state_id": "S07-extract-DOC-1-v1"
+              },
+              "text": "Список задач фильтруется по статусу и исполнителю. После повторного открытия фильтры сбрасываются.",
+              "locator": {
+                "start": 0,
+                "end": 98
+              }
+            },
+            {
+              "key": "d2",
+              "ref": {
+                "kind": "product_document",
+                "id": "S07-extract-DOC-2",
+                "state_id": "S07-extract-DOC-2-v1"
+              },
+              "text": "Звуковые уведомления об изменении статуса включены по умолчанию. Пользовательской настройки звука нет.",
+              "locator": {
+                "start": 0,
+                "end": 102
+              }
+            },
+            {
+              "key": "d3",
+              "ref": {
+                "kind": "product_document",
+                "id": "S07-extract-DOC-3",
+                "state_id": "S07-extract-DOC-3-v1"
+              },
+              "text": "Экспорт CSV доступен через меню «Отчёты → CSV».",
+              "locator": {
+                "start": 0,
+                "end": 47
+              }
+            },
+            {
+              "key": "d4",
+              "ref": {
+                "kind": "product_document",
+                "id": "S07-extract-DOC-4",
+                "state_id": "S07-extract-DOC-4-v1"
+              },
+              "text": "При закрытии формы создания задачи введённый текст теряется. Черновики не сохраняются.",
+              "locator": {
+                "start": 0,
+                "end": 86
+              }
+            }
+          ]
+        }
+      },
+      "trusted": {
+        "texts": [
+          {
+            "ref": {
+              "kind": "feedback_source",
+              "id": "S07-extract-SYN-SRC-1",
+              "state_id": "S07-extract-SYN-SRC-1-v1"
+            },
+            "source_ref": {
+              "kind": "feedback_source",
+              "id": "S07-extract-SYN-SRC-1",
+              "state_id": "S07-extract-SYN-SRC-1-v1"
+            },
+            "text": "После этого всё слетает. Сделайте нормально.",
+            "reliability": "usable"
+          }
+        ],
+        "documents": [
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S07-extract-DOC-1",
+              "state_id": "S07-extract-DOC-1-v1"
+            },
+            "text": "Список задач фильтруется по статусу и исполнителю. После повторного открытия фильтры сбрасываются."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S07-extract-DOC-2",
+              "state_id": "S07-extract-DOC-2-v1"
+            },
+            "text": "Звуковые уведомления об изменении статуса включены по умолчанию. Пользовательской настройки звука нет."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S07-extract-DOC-3",
+              "state_id": "S07-extract-DOC-3-v1"
+            },
+            "text": "Экспорт CSV доступен через меню «Отчёты → CSV»."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S07-extract-DOC-4",
+              "state_id": "S07-extract-DOC-4-v1"
+            },
+            "text": "При закрытии формы создания задачи введённый текст теряется. Черновики не сохраняются."
+          }
+        ],
+        "project_id": "SYNTHETIC-S07",
+        "states": [
+          {
+            "kind": "feedback_source",
+            "id": "S07-extract-SYN-SRC-1",
+            "state_id": "S07-extract-SYN-SRC-1-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S07-extract-DOC-1",
+            "state_id": "S07-extract-DOC-1-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S07-extract-DOC-2",
+            "state_id": "S07-extract-DOC-2-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S07-extract-DOC-3",
+            "state_id": "S07-extract-DOC-3-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S07-extract-DOC-4",
+            "state_id": "S07-extract-DOC-4-v1"
+          }
+        ]
+      },
+      "fixture_response": {
+        "coverage": [
+          {
+            "input_key": "s1",
+            "reviewed": true,
+            "disposition": "insufficient_information",
+            "reason": "Что теряется и после какого действия?"
+          }
+        ],
+        "uncertainties": [],
+        "questions": [
+          {
+            "local_id": "question-1",
+            "text": "Что теряется и после какого действия?",
+            "reason": "Что теряется и после какого действия?",
+            "related": [
+              {
+                "origin": "input",
+                "key": "s1"
+              }
+            ],
+            "blocking": true
+          }
+        ],
+        "result": {
+          "fragments": [
+            {
+              "local_id": "fragment-1",
+              "segment_key": "s1",
+              "quote": "После этого всё слетает. Сделайте нормально.",
+              "occurrence": 0
+            }
+          ],
+          "findings": [
+            {
+              "local_id": "finding-1",
+              "text": "Неуточнённая проблема потери состояния.",
+              "types": [
+                "problem"
+              ],
+              "mode": "direct",
+              "fragment_ids": [
+                "fragment-1"
+              ],
+              "considered_keys": [
+                "s1"
+              ],
+              "context_keys": []
+            }
+          ]
+        }
+      },
+      "fixture_role": "engineering_control",
+      "relationship": null
+    },
+    {
+      "id": "question",
+      "request": {
+        "contract_version": "1.0",
+        "operation": "generate_requirements",
+        "project_id": "SYNTHETIC-S07",
+        "request_id": "S07-question",
+        "input": {
+          "findings": [
+            {
+              "key": "f1",
+              "ref": {
+                "kind": "finding",
+                "id": "S07-question-SYN-FINDING-1",
+                "state_id": "S07-question-SYN-FINDING-1-v1"
+              },
+              "text": "После этого всё слетает. Сделайте нормально.",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "evidence": [
+                {
+                  "kind": "available",
+                  "fragment_key": "e1"
+                }
+              ],
+              "uncertainty_notes": [],
+              "open_questions": [],
+              "authorship": "ai"
+            }
+          ],
+          "fragments": [
+            {
+              "key": "e1",
+              "ref": {
+                "kind": "fragment",
+                "id": "S07-question-SYN-FRAGMENT-1",
+                "state_id": "S07-question-SYN-FRAGMENT-1-v1"
+              },
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "S07-question-SYN-SRC-1",
+                "state_id": "S07-question-SYN-SRC-1-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "S07-question-SYN-SRC-1",
+                "state_id": "S07-question-SYN-SRC-1-v1"
+              },
+              "quote": "После этого всё слетает. Сделайте нормально.",
+              "locator": {
+                "start": 0,
+                "end": 44
+              },
+              "reliability": "usable"
+            }
+          ],
+          "groups": [],
+          "documents": [
+            {
+              "key": "d1",
+              "ref": {
+                "kind": "product_document",
+                "id": "S07-question-DOC-1",
+                "state_id": "S07-question-DOC-1-v1"
+              },
+              "text": "Список задач фильтруется по статусу и исполнителю. После повторного открытия фильтры сбрасываются.",
+              "locator": {
+                "start": 0,
+                "end": 98
+              }
+            },
+            {
+              "key": "d2",
+              "ref": {
+                "kind": "product_document",
+                "id": "S07-question-DOC-2",
+                "state_id": "S07-question-DOC-2-v1"
+              },
+              "text": "Звуковые уведомления об изменении статуса включены по умолчанию. Пользовательской настройки звука нет.",
+              "locator": {
+                "start": 0,
+                "end": 102
+              }
+            },
+            {
+              "key": "d3",
+              "ref": {
+                "kind": "product_document",
+                "id": "S07-question-DOC-3",
+                "state_id": "S07-question-DOC-3-v1"
+              },
+              "text": "Экспорт CSV доступен через меню «Отчёты → CSV».",
+              "locator": {
+                "start": 0,
+                "end": 47
+              }
+            },
+            {
+              "key": "d4",
+              "ref": {
+                "kind": "product_document",
+                "id": "S07-question-DOC-4",
+                "state_id": "S07-question-DOC-4-v1"
+              },
+              "text": "При закрытии формы создания задачи введённый текст теряется. Черновики не сохраняются.",
+              "locator": {
+                "start": 0,
+                "end": 86
+              }
+            }
+          ]
+        }
+      },
+      "trusted": {
+        "texts": [
+          {
+            "ref": {
+              "kind": "feedback_source",
+              "id": "S07-question-SYN-SRC-1",
+              "state_id": "S07-question-SYN-SRC-1-v1"
+            },
+            "source_ref": {
+              "kind": "feedback_source",
+              "id": "S07-question-SYN-SRC-1",
+              "state_id": "S07-question-SYN-SRC-1-v1"
+            },
+            "text": "После этого всё слетает. Сделайте нормально.",
+            "reliability": "usable"
+          }
+        ],
+        "documents": [
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S07-question-DOC-1",
+              "state_id": "S07-question-DOC-1-v1"
+            },
+            "text": "Список задач фильтруется по статусу и исполнителю. После повторного открытия фильтры сбрасываются."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S07-question-DOC-2",
+              "state_id": "S07-question-DOC-2-v1"
+            },
+            "text": "Звуковые уведомления об изменении статуса включены по умолчанию. Пользовательской настройки звука нет."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S07-question-DOC-3",
+              "state_id": "S07-question-DOC-3-v1"
+            },
+            "text": "Экспорт CSV доступен через меню «Отчёты → CSV»."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S07-question-DOC-4",
+              "state_id": "S07-question-DOC-4-v1"
+            },
+            "text": "При закрытии формы создания задачи введённый текст теряется. Черновики не сохраняются."
+          }
+        ],
+        "project_id": "SYNTHETIC-S07",
+        "states": [
+          {
+            "kind": "finding",
+            "id": "S07-question-SYN-FINDING-1",
+            "state_id": "S07-question-SYN-FINDING-1-v1"
+          },
+          {
+            "kind": "fragment",
+            "id": "S07-question-SYN-FRAGMENT-1",
+            "state_id": "S07-question-SYN-FRAGMENT-1-v1"
+          },
+          {
+            "kind": "feedback_source",
+            "id": "S07-question-SYN-SRC-1",
+            "state_id": "S07-question-SYN-SRC-1-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S07-question-DOC-1",
+            "state_id": "S07-question-DOC-1-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S07-question-DOC-2",
+            "state_id": "S07-question-DOC-2-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S07-question-DOC-3",
+            "state_id": "S07-question-DOC-3-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S07-question-DOC-4",
+            "state_id": "S07-question-DOC-4-v1"
+          }
+        ]
+      },
+      "fixture_response": {
+        "coverage": [
+          {
+            "input_key": "f1",
+            "reviewed": true,
+            "disposition": "insufficient_information",
+            "reason": "Что теряется и после какого действия?"
+          }
+        ],
+        "uncertainties": [],
+        "questions": [
+          {
+            "local_id": "question-1",
+            "text": "Что теряется и после какого действия?",
+            "reason": "Что теряется и после какого действия?",
+            "related": [
+              {
+                "origin": "input",
+                "key": "f1"
+              }
+            ],
+            "blocking": true
+          }
+        ],
+        "result": {
+          "requirements": []
+        }
+      },
+      "fixture_role": "engineering_control",
+      "relationship": null
+    },
+    {
+      "id": "verify",
+      "request": {
+        "contract_version": "1.0",
+        "operation": "verify_requirement",
+        "project_id": "SYNTHETIC-S07",
+        "request_id": "S07-verify",
+        "input": {
+          "target": {
+            "key": "target",
+            "ref": {
+              "kind": "requirement_revision",
+              "id": "S07-verify-SYN-REV-1",
+              "state_id": "S07-verify-SYN-REV-1-v1"
+            },
+            "requirement_id": "S07-verify-SYN-REQ-1",
+            "title": "Синтетический кандидат",
+            "text": "Сделать нормально.",
+            "rationale": "Кандидат для диагностики инструмента.",
+            "evidence": [
+              {
+                "finding_key": "f1",
+                "links": [
+                  {
+                    "kind": "available",
+                    "fragment_key": "e1"
+                  }
+                ]
+              }
+            ],
+            "open_questions": []
+          },
+          "findings": [
+            {
+              "key": "f1",
+              "ref": {
+                "kind": "finding",
+                "id": "S07-verify-SYN-FINDING-1",
+                "state_id": "S07-verify-SYN-FINDING-1-v1"
+              },
+              "text": "После этого всё слетает. Сделайте нормально.",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "evidence": [
+                {
+                  "kind": "available",
+                  "fragment_key": "e1"
+                }
+              ],
+              "uncertainty_notes": [],
+              "open_questions": [],
+              "authorship": "ai"
+            }
+          ],
+          "fragments": [
+            {
+              "key": "e1",
+              "ref": {
+                "kind": "fragment",
+                "id": "S07-verify-SYN-FRAGMENT-1",
+                "state_id": "S07-verify-SYN-FRAGMENT-1-v1"
+              },
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "S07-verify-SYN-SRC-1",
+                "state_id": "S07-verify-SYN-SRC-1-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "S07-verify-SYN-SRC-1",
+                "state_id": "S07-verify-SYN-SRC-1-v1"
+              },
+              "quote": "После этого всё слетает. Сделайте нормально.",
+              "locator": {
+                "start": 0,
+                "end": 44
+              },
+              "reliability": "usable"
+            }
+          ],
+          "documents": [
+            {
+              "key": "d1",
+              "ref": {
+                "kind": "product_document",
+                "id": "S07-verify-DOC-1",
+                "state_id": "S07-verify-DOC-1-v1"
+              },
+              "text": "Список задач фильтруется по статусу и исполнителю. После повторного открытия фильтры сбрасываются.",
+              "locator": {
+                "start": 0,
+                "end": 98
+              }
+            },
+            {
+              "key": "d2",
+              "ref": {
+                "kind": "product_document",
+                "id": "S07-verify-DOC-2",
+                "state_id": "S07-verify-DOC-2-v1"
+              },
+              "text": "Звуковые уведомления об изменении статуса включены по умолчанию. Пользовательской настройки звука нет.",
+              "locator": {
+                "start": 0,
+                "end": 102
+              }
+            },
+            {
+              "key": "d3",
+              "ref": {
+                "kind": "product_document",
+                "id": "S07-verify-DOC-3",
+                "state_id": "S07-verify-DOC-3-v1"
+              },
+              "text": "Экспорт CSV доступен через меню «Отчёты → CSV».",
+              "locator": {
+                "start": 0,
+                "end": 47
+              }
+            },
+            {
+              "key": "d4",
+              "ref": {
+                "kind": "product_document",
+                "id": "S07-verify-DOC-4",
+                "state_id": "S07-verify-DOC-4-v1"
+              },
+              "text": "При закрытии формы создания задачи введённый текст теряется. Черновики не сохраняются.",
+              "locator": {
+                "start": 0,
+                "end": 86
+              }
+            }
+          ],
+          "comparisons": [],
+          "comparison_scope": {
+            "extent": "project_snapshot",
+            "required_keys": []
+          },
+          "previous_checks": []
+        }
+      },
+      "trusted": {
+        "texts": [
+          {
+            "ref": {
+              "kind": "feedback_source",
+              "id": "S07-verify-SYN-SRC-1",
+              "state_id": "S07-verify-SYN-SRC-1-v1"
+            },
+            "source_ref": {
+              "kind": "feedback_source",
+              "id": "S07-verify-SYN-SRC-1",
+              "state_id": "S07-verify-SYN-SRC-1-v1"
+            },
+            "text": "После этого всё слетает. Сделайте нормально.",
+            "reliability": "usable"
+          }
+        ],
+        "documents": [
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S07-verify-DOC-1",
+              "state_id": "S07-verify-DOC-1-v1"
+            },
+            "text": "Список задач фильтруется по статусу и исполнителю. После повторного открытия фильтры сбрасываются."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S07-verify-DOC-2",
+              "state_id": "S07-verify-DOC-2-v1"
+            },
+            "text": "Звуковые уведомления об изменении статуса включены по умолчанию. Пользовательской настройки звука нет."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S07-verify-DOC-3",
+              "state_id": "S07-verify-DOC-3-v1"
+            },
+            "text": "Экспорт CSV доступен через меню «Отчёты → CSV»."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S07-verify-DOC-4",
+              "state_id": "S07-verify-DOC-4-v1"
+            },
+            "text": "При закрытии формы создания задачи введённый текст теряется. Черновики не сохраняются."
+          }
+        ],
+        "project_id": "SYNTHETIC-S07",
+        "states": [
+          {
+            "kind": "requirement_revision",
+            "id": "S07-verify-SYN-REV-1",
+            "state_id": "S07-verify-SYN-REV-1-v1"
+          },
+          {
+            "kind": "finding",
+            "id": "S07-verify-SYN-FINDING-1",
+            "state_id": "S07-verify-SYN-FINDING-1-v1"
+          },
+          {
+            "kind": "fragment",
+            "id": "S07-verify-SYN-FRAGMENT-1",
+            "state_id": "S07-verify-SYN-FRAGMENT-1-v1"
+          },
+          {
+            "kind": "feedback_source",
+            "id": "S07-verify-SYN-SRC-1",
+            "state_id": "S07-verify-SYN-SRC-1-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S07-verify-DOC-1",
+            "state_id": "S07-verify-DOC-1-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S07-verify-DOC-2",
+            "state_id": "S07-verify-DOC-2-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S07-verify-DOC-3",
+            "state_id": "S07-verify-DOC-3-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S07-verify-DOC-4",
+            "state_id": "S07-verify-DOC-4-v1"
+          }
+        ],
+        "comparison_scope": {
+          "extent": "project_snapshot",
+          "required_keys": []
+        },
+        "comparisons": [],
+        "prior_decision": null,
+        "change_context": null,
+        "followup": null,
+        "previous_checks": []
+      },
+      "fixture_response": {
+        "coverage": [
+          {
+            "input_key": "target",
+            "reviewed": true,
+            "disposition": "completed"
+          }
+        ],
+        "uncertainties": [],
+        "questions": [],
+        "result": {
+          "checks": [
+            {
+              "kind": "support",
+              "conclusion": "no_issue_found",
+              "rationale": "В явно переданном синтетическом контексте замечание не обнаружено.",
+              "considered_keys": [
+                "target",
+                "f1",
+                "e1"
+              ]
+            },
+            {
+              "kind": "contradictions",
+              "conclusion": "no_issue_found",
+              "rationale": "В явно переданном синтетическом контексте замечание не обнаружено.",
+              "considered_keys": [
+                "target",
+                "f1",
+                "e1"
+              ]
+            },
+            {
+              "kind": "ambiguity",
+              "conclusion": "issues_found",
+              "rationale": "Не определены объект и желаемое изменение.",
+              "considered_keys": [
+                "target",
+                "f1",
+                "e1"
+              ]
+            },
+            {
+              "kind": "duplicates",
+              "conclusion": "no_issue_found",
+              "rationale": "В явно переданном синтетическом контексте замечание не обнаружено.",
+              "considered_keys": []
+            }
+          ],
+          "issues": [
+            {
+              "local_id": "issue-1",
+              "category": "ambiguity",
+              "text": "Не определены объект и желаемое изменение.",
+              "reason": "Не определены объект и желаемое изменение.",
+              "severity": "medium",
+              "blocking": true,
+              "blocking_reason": "Существенная причина требует уточнения до нового утверждения.",
+              "related": [
+                {
+                  "origin": "input",
+                  "key": "target"
+                }
+              ],
+              "question_ids": []
+            }
+          ]
+        }
+      },
+      "fixture_role": "engineering_control",
+      "relationship": null
+    }
+  ]
+}

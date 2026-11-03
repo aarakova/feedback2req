@@ -1,0 +1,1006 @@
+{
+  "id": "S05",
+  "version": "1.0.0",
+  "synthetic": true,
+  "title": "Повторяющиеся пожелания",
+  "traceability": {
+    "requirements": [
+      "FR-011",
+      "FR-013",
+      "FR-014",
+      "FR-016"
+    ],
+    "acceptance_criteria": [
+      "AC-04",
+      "AC-05"
+    ],
+    "contract_rules": [
+      "AP-06",
+      "AP-08"
+    ]
+  },
+  "annotation": {
+    "version": "0.2.0",
+    "status": "preliminary",
+    "required_meanings": [
+      "Близость пожеланий распознана; обе находки и основания сохранены."
+    ],
+    "allowed_alternatives": [
+      "Общее требование или обоснованные варианты группировки; пересекающиеся группы разрешены."
+    ],
+    "forbidden_claims": [
+      "Два источника объявлены двумя уникальными людьми или независимыми подтверждениями."
+    ],
+    "expert_questions": []
+  },
+  "examples": [
+    {
+      "id": "group",
+      "request": {
+        "contract_version": "1.0",
+        "operation": "group_findings",
+        "project_id": "SYNTHETIC-S05",
+        "request_id": "S05-group",
+        "input": {
+          "findings": [
+            {
+              "key": "f1",
+              "ref": {
+                "kind": "finding",
+                "id": "S05-group-SYN-FINDING-1",
+                "state_id": "S05-group-SYN-FINDING-1-v1"
+              },
+              "text": "Хочу, чтобы выбранные статус и исполнитель сохранялись после повторного открытия списка.",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "evidence": [
+                {
+                  "kind": "available",
+                  "fragment_key": "e1"
+                }
+              ],
+              "uncertainty_notes": [],
+              "open_questions": [],
+              "authorship": "ai"
+            },
+            {
+              "key": "f2",
+              "ref": {
+                "kind": "finding",
+                "id": "S05-group-SYN-FINDING-2",
+                "state_id": "S05-group-SYN-FINDING-2-v1"
+              },
+              "text": "Нужно возвращаться к прежнему набору фильтров после открытия списка.",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "evidence": [
+                {
+                  "kind": "available",
+                  "fragment_key": "e2"
+                }
+              ],
+              "uncertainty_notes": [],
+              "open_questions": [],
+              "authorship": "ai"
+            }
+          ],
+          "fragments": [
+            {
+              "key": "e1",
+              "ref": {
+                "kind": "fragment",
+                "id": "S05-group-SYN-FRAGMENT-1",
+                "state_id": "S05-group-SYN-FRAGMENT-1-v1"
+              },
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "S05-group-SYN-SRC-1",
+                "state_id": "S05-group-SYN-SRC-1-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "S05-group-SYN-SRC-1",
+                "state_id": "S05-group-SYN-SRC-1-v1"
+              },
+              "quote": "Хочу, чтобы выбранные статус и исполнитель сохранялись после повторного открытия списка.",
+              "locator": {
+                "start": 0,
+                "end": 88
+              },
+              "reliability": "usable"
+            },
+            {
+              "key": "e2",
+              "ref": {
+                "kind": "fragment",
+                "id": "S05-group-SYN-FRAGMENT-2",
+                "state_id": "S05-group-SYN-FRAGMENT-2-v1"
+              },
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "S05-group-SYN-SRC-2",
+                "state_id": "S05-group-SYN-SRC-2-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "S05-group-SYN-SRC-2",
+                "state_id": "S05-group-SYN-SRC-2-v1"
+              },
+              "quote": "Нужно возвращаться к прежнему набору фильтров после открытия списка.",
+              "locator": {
+                "start": 0,
+                "end": 68
+              },
+              "reliability": "usable"
+            }
+          ],
+          "documents": [
+            {
+              "key": "d1",
+              "ref": {
+                "kind": "product_document",
+                "id": "S05-group-DOC-1",
+                "state_id": "S05-group-DOC-1-v1"
+              },
+              "text": "Список задач фильтруется по статусу и исполнителю. После повторного открытия фильтры сбрасываются.",
+              "locator": {
+                "start": 0,
+                "end": 98
+              }
+            },
+            {
+              "key": "d2",
+              "ref": {
+                "kind": "product_document",
+                "id": "S05-group-DOC-2",
+                "state_id": "S05-group-DOC-2-v1"
+              },
+              "text": "Звуковые уведомления об изменении статуса включены по умолчанию. Пользовательской настройки звука нет.",
+              "locator": {
+                "start": 0,
+                "end": 102
+              }
+            },
+            {
+              "key": "d3",
+              "ref": {
+                "kind": "product_document",
+                "id": "S05-group-DOC-3",
+                "state_id": "S05-group-DOC-3-v1"
+              },
+              "text": "Экспорт CSV доступен через меню «Отчёты → CSV».",
+              "locator": {
+                "start": 0,
+                "end": 47
+              }
+            },
+            {
+              "key": "d4",
+              "ref": {
+                "kind": "product_document",
+                "id": "S05-group-DOC-4",
+                "state_id": "S05-group-DOC-4-v1"
+              },
+              "text": "При закрытии формы создания задачи введённый текст теряется. Черновики не сохраняются.",
+              "locator": {
+                "start": 0,
+                "end": 86
+              }
+            }
+          ]
+        }
+      },
+      "trusted": {
+        "texts": [
+          {
+            "ref": {
+              "kind": "feedback_source",
+              "id": "S05-group-SYN-SRC-1",
+              "state_id": "S05-group-SYN-SRC-1-v1"
+            },
+            "source_ref": {
+              "kind": "feedback_source",
+              "id": "S05-group-SYN-SRC-1",
+              "state_id": "S05-group-SYN-SRC-1-v1"
+            },
+            "text": "Хочу, чтобы выбранные статус и исполнитель сохранялись после повторного открытия списка.",
+            "reliability": "usable"
+          },
+          {
+            "ref": {
+              "kind": "feedback_source",
+              "id": "S05-group-SYN-SRC-2",
+              "state_id": "S05-group-SYN-SRC-2-v1"
+            },
+            "source_ref": {
+              "kind": "feedback_source",
+              "id": "S05-group-SYN-SRC-2",
+              "state_id": "S05-group-SYN-SRC-2-v1"
+            },
+            "text": "Нужно возвращаться к прежнему набору фильтров после открытия списка.",
+            "reliability": "usable"
+          }
+        ],
+        "documents": [
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S05-group-DOC-1",
+              "state_id": "S05-group-DOC-1-v1"
+            },
+            "text": "Список задач фильтруется по статусу и исполнителю. После повторного открытия фильтры сбрасываются."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S05-group-DOC-2",
+              "state_id": "S05-group-DOC-2-v1"
+            },
+            "text": "Звуковые уведомления об изменении статуса включены по умолчанию. Пользовательской настройки звука нет."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S05-group-DOC-3",
+              "state_id": "S05-group-DOC-3-v1"
+            },
+            "text": "Экспорт CSV доступен через меню «Отчёты → CSV»."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S05-group-DOC-4",
+              "state_id": "S05-group-DOC-4-v1"
+            },
+            "text": "При закрытии формы создания задачи введённый текст теряется. Черновики не сохраняются."
+          }
+        ],
+        "project_id": "SYNTHETIC-S05",
+        "states": [
+          {
+            "kind": "finding",
+            "id": "S05-group-SYN-FINDING-1",
+            "state_id": "S05-group-SYN-FINDING-1-v1"
+          },
+          {
+            "kind": "finding",
+            "id": "S05-group-SYN-FINDING-2",
+            "state_id": "S05-group-SYN-FINDING-2-v1"
+          },
+          {
+            "kind": "fragment",
+            "id": "S05-group-SYN-FRAGMENT-1",
+            "state_id": "S05-group-SYN-FRAGMENT-1-v1"
+          },
+          {
+            "kind": "feedback_source",
+            "id": "S05-group-SYN-SRC-1",
+            "state_id": "S05-group-SYN-SRC-1-v1"
+          },
+          {
+            "kind": "fragment",
+            "id": "S05-group-SYN-FRAGMENT-2",
+            "state_id": "S05-group-SYN-FRAGMENT-2-v1"
+          },
+          {
+            "kind": "feedback_source",
+            "id": "S05-group-SYN-SRC-2",
+            "state_id": "S05-group-SYN-SRC-2-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S05-group-DOC-1",
+            "state_id": "S05-group-DOC-1-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S05-group-DOC-2",
+            "state_id": "S05-group-DOC-2-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S05-group-DOC-3",
+            "state_id": "S05-group-DOC-3-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S05-group-DOC-4",
+            "state_id": "S05-group-DOC-4-v1"
+          }
+        ]
+      },
+      "fixture_response": {
+        "coverage": [
+          {
+            "input_key": "f1",
+            "reviewed": true,
+            "disposition": "completed"
+          },
+          {
+            "input_key": "f2",
+            "reviewed": true,
+            "disposition": "completed"
+          }
+        ],
+        "uncertainties": [],
+        "questions": [],
+        "result": {
+          "groups": [
+            {
+              "local_id": "group-1",
+              "title": "Связанные пожелания",
+              "summary": "Сохраняются все исходные позиции.",
+              "finding_keys": [
+                "f1",
+                "f2"
+              ],
+              "considered_keys": [
+                "f1",
+                "f2"
+              ],
+              "context_keys": [],
+              "conflicts": []
+            }
+          ],
+          "ungrouped_finding_keys": []
+        }
+      },
+      "fixture_role": "engineering_control",
+      "relationship": null
+    },
+    {
+      "id": "generate",
+      "request": {
+        "contract_version": "1.0",
+        "operation": "generate_requirements",
+        "project_id": "SYNTHETIC-S05",
+        "request_id": "S05-generate",
+        "input": {
+          "findings": [
+            {
+              "key": "f1",
+              "ref": {
+                "kind": "finding",
+                "id": "S05-generate-SYN-FINDING-1",
+                "state_id": "S05-generate-SYN-FINDING-1-v1"
+              },
+              "text": "Хочу, чтобы выбранные статус и исполнитель сохранялись после повторного открытия списка.",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "evidence": [
+                {
+                  "kind": "available",
+                  "fragment_key": "e1"
+                }
+              ],
+              "uncertainty_notes": [],
+              "open_questions": [],
+              "authorship": "ai"
+            },
+            {
+              "key": "f2",
+              "ref": {
+                "kind": "finding",
+                "id": "S05-generate-SYN-FINDING-2",
+                "state_id": "S05-generate-SYN-FINDING-2-v1"
+              },
+              "text": "Нужно возвращаться к прежнему набору фильтров после открытия списка.",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "evidence": [
+                {
+                  "kind": "available",
+                  "fragment_key": "e2"
+                }
+              ],
+              "uncertainty_notes": [],
+              "open_questions": [],
+              "authorship": "ai"
+            }
+          ],
+          "fragments": [
+            {
+              "key": "e1",
+              "ref": {
+                "kind": "fragment",
+                "id": "S05-generate-SYN-FRAGMENT-1",
+                "state_id": "S05-generate-SYN-FRAGMENT-1-v1"
+              },
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "S05-generate-SYN-SRC-1",
+                "state_id": "S05-generate-SYN-SRC-1-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "S05-generate-SYN-SRC-1",
+                "state_id": "S05-generate-SYN-SRC-1-v1"
+              },
+              "quote": "Хочу, чтобы выбранные статус и исполнитель сохранялись после повторного открытия списка.",
+              "locator": {
+                "start": 0,
+                "end": 88
+              },
+              "reliability": "usable"
+            },
+            {
+              "key": "e2",
+              "ref": {
+                "kind": "fragment",
+                "id": "S05-generate-SYN-FRAGMENT-2",
+                "state_id": "S05-generate-SYN-FRAGMENT-2-v1"
+              },
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "S05-generate-SYN-SRC-2",
+                "state_id": "S05-generate-SYN-SRC-2-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "S05-generate-SYN-SRC-2",
+                "state_id": "S05-generate-SYN-SRC-2-v1"
+              },
+              "quote": "Нужно возвращаться к прежнему набору фильтров после открытия списка.",
+              "locator": {
+                "start": 0,
+                "end": 68
+              },
+              "reliability": "usable"
+            }
+          ],
+          "groups": [],
+          "documents": [
+            {
+              "key": "d1",
+              "ref": {
+                "kind": "product_document",
+                "id": "S05-generate-DOC-1",
+                "state_id": "S05-generate-DOC-1-v1"
+              },
+              "text": "Список задач фильтруется по статусу и исполнителю. После повторного открытия фильтры сбрасываются.",
+              "locator": {
+                "start": 0,
+                "end": 98
+              }
+            },
+            {
+              "key": "d2",
+              "ref": {
+                "kind": "product_document",
+                "id": "S05-generate-DOC-2",
+                "state_id": "S05-generate-DOC-2-v1"
+              },
+              "text": "Звуковые уведомления об изменении статуса включены по умолчанию. Пользовательской настройки звука нет.",
+              "locator": {
+                "start": 0,
+                "end": 102
+              }
+            },
+            {
+              "key": "d3",
+              "ref": {
+                "kind": "product_document",
+                "id": "S05-generate-DOC-3",
+                "state_id": "S05-generate-DOC-3-v1"
+              },
+              "text": "Экспорт CSV доступен через меню «Отчёты → CSV».",
+              "locator": {
+                "start": 0,
+                "end": 47
+              }
+            },
+            {
+              "key": "d4",
+              "ref": {
+                "kind": "product_document",
+                "id": "S05-generate-DOC-4",
+                "state_id": "S05-generate-DOC-4-v1"
+              },
+              "text": "При закрытии формы создания задачи введённый текст теряется. Черновики не сохраняются.",
+              "locator": {
+                "start": 0,
+                "end": 86
+              }
+            }
+          ]
+        }
+      },
+      "trusted": {
+        "texts": [
+          {
+            "ref": {
+              "kind": "feedback_source",
+              "id": "S05-generate-SYN-SRC-1",
+              "state_id": "S05-generate-SYN-SRC-1-v1"
+            },
+            "source_ref": {
+              "kind": "feedback_source",
+              "id": "S05-generate-SYN-SRC-1",
+              "state_id": "S05-generate-SYN-SRC-1-v1"
+            },
+            "text": "Хочу, чтобы выбранные статус и исполнитель сохранялись после повторного открытия списка.",
+            "reliability": "usable"
+          },
+          {
+            "ref": {
+              "kind": "feedback_source",
+              "id": "S05-generate-SYN-SRC-2",
+              "state_id": "S05-generate-SYN-SRC-2-v1"
+            },
+            "source_ref": {
+              "kind": "feedback_source",
+              "id": "S05-generate-SYN-SRC-2",
+              "state_id": "S05-generate-SYN-SRC-2-v1"
+            },
+            "text": "Нужно возвращаться к прежнему набору фильтров после открытия списка.",
+            "reliability": "usable"
+          }
+        ],
+        "documents": [
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S05-generate-DOC-1",
+              "state_id": "S05-generate-DOC-1-v1"
+            },
+            "text": "Список задач фильтруется по статусу и исполнителю. После повторного открытия фильтры сбрасываются."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S05-generate-DOC-2",
+              "state_id": "S05-generate-DOC-2-v1"
+            },
+            "text": "Звуковые уведомления об изменении статуса включены по умолчанию. Пользовательской настройки звука нет."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S05-generate-DOC-3",
+              "state_id": "S05-generate-DOC-3-v1"
+            },
+            "text": "Экспорт CSV доступен через меню «Отчёты → CSV»."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S05-generate-DOC-4",
+              "state_id": "S05-generate-DOC-4-v1"
+            },
+            "text": "При закрытии формы создания задачи введённый текст теряется. Черновики не сохраняются."
+          }
+        ],
+        "project_id": "SYNTHETIC-S05",
+        "states": [
+          {
+            "kind": "finding",
+            "id": "S05-generate-SYN-FINDING-1",
+            "state_id": "S05-generate-SYN-FINDING-1-v1"
+          },
+          {
+            "kind": "finding",
+            "id": "S05-generate-SYN-FINDING-2",
+            "state_id": "S05-generate-SYN-FINDING-2-v1"
+          },
+          {
+            "kind": "fragment",
+            "id": "S05-generate-SYN-FRAGMENT-1",
+            "state_id": "S05-generate-SYN-FRAGMENT-1-v1"
+          },
+          {
+            "kind": "feedback_source",
+            "id": "S05-generate-SYN-SRC-1",
+            "state_id": "S05-generate-SYN-SRC-1-v1"
+          },
+          {
+            "kind": "fragment",
+            "id": "S05-generate-SYN-FRAGMENT-2",
+            "state_id": "S05-generate-SYN-FRAGMENT-2-v1"
+          },
+          {
+            "kind": "feedback_source",
+            "id": "S05-generate-SYN-SRC-2",
+            "state_id": "S05-generate-SYN-SRC-2-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S05-generate-DOC-1",
+            "state_id": "S05-generate-DOC-1-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S05-generate-DOC-2",
+            "state_id": "S05-generate-DOC-2-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S05-generate-DOC-3",
+            "state_id": "S05-generate-DOC-3-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S05-generate-DOC-4",
+            "state_id": "S05-generate-DOC-4-v1"
+          }
+        ]
+      },
+      "fixture_response": {
+        "coverage": [
+          {
+            "input_key": "f1",
+            "reviewed": true,
+            "disposition": "completed"
+          },
+          {
+            "input_key": "f2",
+            "reviewed": true,
+            "disposition": "completed"
+          }
+        ],
+        "uncertainties": [],
+        "questions": [],
+        "result": {
+          "requirements": [
+            {
+              "local_id": "requirement-1",
+              "title": "Сохранять выбранные статус и исполнителя при повторном открытии списка.",
+              "text": "Сохранять выбранные статус и исполнителя при повторном открытии списка.",
+              "rationale": "Предложение основано на переданной синтетической обратной связи.",
+              "evidence": [
+                {
+                  "finding_key": "f1",
+                  "fragment_keys": [
+                    "e1"
+                  ]
+                },
+                {
+                  "finding_key": "f2",
+                  "fragment_keys": [
+                    "e2"
+                  ]
+                }
+              ],
+              "considered_keys": [
+                "f1",
+                "f2"
+              ],
+              "context_keys": []
+            }
+          ]
+        }
+      },
+      "fixture_role": "engineering_control",
+      "relationship": null
+    },
+    {
+      "id": "reordered",
+      "request": {
+        "contract_version": "1.0",
+        "operation": "group_findings",
+        "project_id": "SYNTHETIC-S05",
+        "request_id": "S05-reordered",
+        "input": {
+          "findings": [
+            {
+              "key": "f1",
+              "ref": {
+                "kind": "finding",
+                "id": "S05-reordered-SYN-FINDING-1",
+                "state_id": "S05-reordered-SYN-FINDING-1-v1"
+              },
+              "text": "Нужно возвращаться к прежнему набору фильтров после открытия списка.",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "evidence": [
+                {
+                  "kind": "available",
+                  "fragment_key": "e1"
+                }
+              ],
+              "uncertainty_notes": [],
+              "open_questions": [],
+              "authorship": "ai"
+            },
+            {
+              "key": "f2",
+              "ref": {
+                "kind": "finding",
+                "id": "S05-reordered-SYN-FINDING-2",
+                "state_id": "S05-reordered-SYN-FINDING-2-v1"
+              },
+              "text": "Хочу, чтобы выбранные статус и исполнитель сохранялись после повторного открытия списка.",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "evidence": [
+                {
+                  "kind": "available",
+                  "fragment_key": "e2"
+                }
+              ],
+              "uncertainty_notes": [],
+              "open_questions": [],
+              "authorship": "ai"
+            }
+          ],
+          "fragments": [
+            {
+              "key": "e1",
+              "ref": {
+                "kind": "fragment",
+                "id": "S05-reordered-SYN-FRAGMENT-1",
+                "state_id": "S05-reordered-SYN-FRAGMENT-1-v1"
+              },
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "S05-reordered-SYN-SRC-1",
+                "state_id": "S05-reordered-SYN-SRC-1-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "S05-reordered-SYN-SRC-1",
+                "state_id": "S05-reordered-SYN-SRC-1-v1"
+              },
+              "quote": "Нужно возвращаться к прежнему набору фильтров после открытия списка.",
+              "locator": {
+                "start": 0,
+                "end": 68
+              },
+              "reliability": "usable"
+            },
+            {
+              "key": "e2",
+              "ref": {
+                "kind": "fragment",
+                "id": "S05-reordered-SYN-FRAGMENT-2",
+                "state_id": "S05-reordered-SYN-FRAGMENT-2-v1"
+              },
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "S05-reordered-SYN-SRC-2",
+                "state_id": "S05-reordered-SYN-SRC-2-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "S05-reordered-SYN-SRC-2",
+                "state_id": "S05-reordered-SYN-SRC-2-v1"
+              },
+              "quote": "Хочу, чтобы выбранные статус и исполнитель сохранялись после повторного открытия списка.",
+              "locator": {
+                "start": 0,
+                "end": 88
+              },
+              "reliability": "usable"
+            }
+          ],
+          "documents": [
+            {
+              "key": "d1",
+              "ref": {
+                "kind": "product_document",
+                "id": "S05-reordered-DOC-1",
+                "state_id": "S05-reordered-DOC-1-v1"
+              },
+              "text": "Список задач фильтруется по статусу и исполнителю. После повторного открытия фильтры сбрасываются.",
+              "locator": {
+                "start": 0,
+                "end": 98
+              }
+            },
+            {
+              "key": "d2",
+              "ref": {
+                "kind": "product_document",
+                "id": "S05-reordered-DOC-2",
+                "state_id": "S05-reordered-DOC-2-v1"
+              },
+              "text": "Звуковые уведомления об изменении статуса включены по умолчанию. Пользовательской настройки звука нет.",
+              "locator": {
+                "start": 0,
+                "end": 102
+              }
+            },
+            {
+              "key": "d3",
+              "ref": {
+                "kind": "product_document",
+                "id": "S05-reordered-DOC-3",
+                "state_id": "S05-reordered-DOC-3-v1"
+              },
+              "text": "Экспорт CSV доступен через меню «Отчёты → CSV».",
+              "locator": {
+                "start": 0,
+                "end": 47
+              }
+            },
+            {
+              "key": "d4",
+              "ref": {
+                "kind": "product_document",
+                "id": "S05-reordered-DOC-4",
+                "state_id": "S05-reordered-DOC-4-v1"
+              },
+              "text": "При закрытии формы создания задачи введённый текст теряется. Черновики не сохраняются.",
+              "locator": {
+                "start": 0,
+                "end": 86
+              }
+            }
+          ]
+        }
+      },
+      "trusted": {
+        "texts": [
+          {
+            "ref": {
+              "kind": "feedback_source",
+              "id": "S05-reordered-SYN-SRC-1",
+              "state_id": "S05-reordered-SYN-SRC-1-v1"
+            },
+            "source_ref": {
+              "kind": "feedback_source",
+              "id": "S05-reordered-SYN-SRC-1",
+              "state_id": "S05-reordered-SYN-SRC-1-v1"
+            },
+            "text": "Нужно возвращаться к прежнему набору фильтров после открытия списка.",
+            "reliability": "usable"
+          },
+          {
+            "ref": {
+              "kind": "feedback_source",
+              "id": "S05-reordered-SYN-SRC-2",
+              "state_id": "S05-reordered-SYN-SRC-2-v1"
+            },
+            "source_ref": {
+              "kind": "feedback_source",
+              "id": "S05-reordered-SYN-SRC-2",
+              "state_id": "S05-reordered-SYN-SRC-2-v1"
+            },
+            "text": "Хочу, чтобы выбранные статус и исполнитель сохранялись после повторного открытия списка.",
+            "reliability": "usable"
+          }
+        ],
+        "documents": [
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S05-reordered-DOC-1",
+              "state_id": "S05-reordered-DOC-1-v1"
+            },
+            "text": "Список задач фильтруется по статусу и исполнителю. После повторного открытия фильтры сбрасываются."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S05-reordered-DOC-2",
+              "state_id": "S05-reordered-DOC-2-v1"
+            },
+            "text": "Звуковые уведомления об изменении статуса включены по умолчанию. Пользовательской настройки звука нет."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S05-reordered-DOC-3",
+              "state_id": "S05-reordered-DOC-3-v1"
+            },
+            "text": "Экспорт CSV доступен через меню «Отчёты → CSV»."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S05-reordered-DOC-4",
+              "state_id": "S05-reordered-DOC-4-v1"
+            },
+            "text": "При закрытии формы создания задачи введённый текст теряется. Черновики не сохраняются."
+          }
+        ],
+        "project_id": "SYNTHETIC-S05",
+        "states": [
+          {
+            "kind": "finding",
+            "id": "S05-reordered-SYN-FINDING-1",
+            "state_id": "S05-reordered-SYN-FINDING-1-v1"
+          },
+          {
+            "kind": "finding",
+            "id": "S05-reordered-SYN-FINDING-2",
+            "state_id": "S05-reordered-SYN-FINDING-2-v1"
+          },
+          {
+            "kind": "fragment",
+            "id": "S05-reordered-SYN-FRAGMENT-1",
+            "state_id": "S05-reordered-SYN-FRAGMENT-1-v1"
+          },
+          {
+            "kind": "feedback_source",
+            "id": "S05-reordered-SYN-SRC-1",
+            "state_id": "S05-reordered-SYN-SRC-1-v1"
+          },
+          {
+            "kind": "fragment",
+            "id": "S05-reordered-SYN-FRAGMENT-2",
+            "state_id": "S05-reordered-SYN-FRAGMENT-2-v1"
+          },
+          {
+            "kind": "feedback_source",
+            "id": "S05-reordered-SYN-SRC-2",
+            "state_id": "S05-reordered-SYN-SRC-2-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S05-reordered-DOC-1",
+            "state_id": "S05-reordered-DOC-1-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S05-reordered-DOC-2",
+            "state_id": "S05-reordered-DOC-2-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S05-reordered-DOC-3",
+            "state_id": "S05-reordered-DOC-3-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S05-reordered-DOC-4",
+            "state_id": "S05-reordered-DOC-4-v1"
+          }
+        ]
+      },
+      "fixture_response": {
+        "coverage": [
+          {
+            "input_key": "f1",
+            "reviewed": true,
+            "disposition": "completed"
+          },
+          {
+            "input_key": "f2",
+            "reviewed": true,
+            "disposition": "completed"
+          }
+        ],
+        "uncertainties": [],
+        "questions": [],
+        "result": {
+          "groups": [
+            {
+              "local_id": "group-1",
+              "title": "Связанные пожелания",
+              "summary": "Сохраняются все исходные позиции.",
+              "finding_keys": [
+                "f1",
+                "f2"
+              ],
+              "considered_keys": [
+                "f1",
+                "f2"
+              ],
+              "context_keys": [],
+              "conflicts": []
+            }
+          ],
+          "ungrouped_finding_keys": []
+        }
+      },
+      "fixture_role": "engineering_control",
+      "relationship": {
+        "kind": "reorder",
+        "of": "S05/group",
+        "expert_comparison": "same_membership_by_source_text"
+      }
+    }
+  ]
+}

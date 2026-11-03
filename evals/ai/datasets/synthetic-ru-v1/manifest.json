@@ -1,0 +1,30 @@
+{
+  "dataset_version": "1.1.0",
+  "annotation_version": "0.2.0",
+  "annotation_status": "preliminary",
+  "synthetic": true,
+  "product": "Задачник — вымышленный продукт, не feedback2req",
+  "semantic_gold": false,
+  "documents": [
+    "Список задач фильтруется по статусу и исполнителю. После повторного открытия фильтры сбрасываются.",
+    "Звуковые уведомления об изменении статуса включены по умолчанию. Пользовательской настройки звука нет.",
+    "Экспорт CSV доступен через меню «Отчёты → CSV».",
+    "При закрытии формы создания задачи введённый текст теряется. Черновики не сохраняются."
+  ],
+  "cases": [
+    "cases/S01.json",
+    "cases/S02.json",
+    "cases/S03.json",
+    "cases/S04.json",
+    "cases/S05.json",
+    "cases/S06.json",
+    "cases/S07.json",
+    "cases/S08.json",
+    "cases/S09.json",
+    "cases/S10.json",
+    "cases/S11.json",
+    "cases/S12.json",
+    "cases/S13.json",
+    "cases/S14.json"
+  ]
+}

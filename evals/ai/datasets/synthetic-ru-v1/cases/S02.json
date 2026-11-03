@@ -1,0 +1,536 @@
+{
+  "id": "S02",
+  "version": "1.1.0",
+  "synthetic": true,
+  "title": "Косвенная потребность",
+  "traceability": {
+    "requirements": [
+      "FR-008",
+      "FR-009",
+      "FR-010",
+      "FR-020"
+    ],
+    "acceptance_criteria": [
+      "AC-03",
+      "AC-06"
+    ],
+    "contract_rules": [
+      "AP-04",
+      "AP-05",
+      "AP-06"
+    ]
+  },
+  "annotation": {
+    "version": "0.2.0",
+    "status": "preliminary",
+    "required_meanings": [
+      "Повторная настройка после перезапуска — прямо описанная проблема (direct).",
+      "Потребность избежать повторения — интерпретация (inferred); конкретное решение об автосохранении не обязательно."
+    ],
+    "allowed_alternatives": [
+      "Допустимы вопрос об обстоятельствах перезапуска, отсутствие кандидата при неопределённости и разные обоснованные решения после уточнения."
+    ],
+    "forbidden_claims": [
+      "Приписывать участнику прямую просьбу об автосохранении; автоматически приравнивать перезапуск приложения к повторному открытию списка или считать конкретный вид перезапуска установленным."
+    ],
+    "expert_questions": [
+      "Что здесь означает перезапуск и в каких границах нужно сохранять выбор?"
+    ]
+  },
+  "examples": [
+    {
+      "id": "extract",
+      "request": {
+        "contract_version": "1.0",
+        "operation": "extract_feedback",
+        "project_id": "SYNTHETIC-S02",
+        "request_id": "S02-extract",
+        "input": {
+          "segments": [
+            {
+              "key": "s1",
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "S02-extract-SYN-SRC-1",
+                "state_id": "S02-extract-SYN-SRC-1-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "S02-extract-SYN-SRC-1",
+                "state_id": "S02-extract-SYN-SRC-1-v1"
+              },
+              "locator": {
+                "start": 0,
+                "end": 94
+              },
+              "reliability": "usable",
+              "text": "После каждого перезапуска заново выставляю статус и исполнителя, прежде чем продолжить работу."
+            }
+          ],
+          "documents": [
+            {
+              "key": "d1",
+              "ref": {
+                "kind": "product_document",
+                "id": "S02-extract-DOC-1",
+                "state_id": "S02-extract-DOC-1-v1"
+              },
+              "text": "Список задач фильтруется по статусу и исполнителю. После повторного открытия фильтры сбрасываются.",
+              "locator": {
+                "start": 0,
+                "end": 98
+              }
+            },
+            {
+              "key": "d2",
+              "ref": {
+                "kind": "product_document",
+                "id": "S02-extract-DOC-2",
+                "state_id": "S02-extract-DOC-2-v1"
+              },
+              "text": "Звуковые уведомления об изменении статуса включены по умолчанию. Пользовательской настройки звука нет.",
+              "locator": {
+                "start": 0,
+                "end": 102
+              }
+            },
+            {
+              "key": "d3",
+              "ref": {
+                "kind": "product_document",
+                "id": "S02-extract-DOC-3",
+                "state_id": "S02-extract-DOC-3-v1"
+              },
+              "text": "Экспорт CSV доступен через меню «Отчёты → CSV».",
+              "locator": {
+                "start": 0,
+                "end": 47
+              }
+            },
+            {
+              "key": "d4",
+              "ref": {
+                "kind": "product_document",
+                "id": "S02-extract-DOC-4",
+                "state_id": "S02-extract-DOC-4-v1"
+              },
+              "text": "При закрытии формы создания задачи введённый текст теряется. Черновики не сохраняются.",
+              "locator": {
+                "start": 0,
+                "end": 86
+              }
+            }
+          ]
+        }
+      },
+      "trusted": {
+        "texts": [
+          {
+            "ref": {
+              "kind": "feedback_source",
+              "id": "S02-extract-SYN-SRC-1",
+              "state_id": "S02-extract-SYN-SRC-1-v1"
+            },
+            "source_ref": {
+              "kind": "feedback_source",
+              "id": "S02-extract-SYN-SRC-1",
+              "state_id": "S02-extract-SYN-SRC-1-v1"
+            },
+            "text": "После каждого перезапуска заново выставляю статус и исполнителя, прежде чем продолжить работу.",
+            "reliability": "usable"
+          }
+        ],
+        "documents": [
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S02-extract-DOC-1",
+              "state_id": "S02-extract-DOC-1-v1"
+            },
+            "text": "Список задач фильтруется по статусу и исполнителю. После повторного открытия фильтры сбрасываются."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S02-extract-DOC-2",
+              "state_id": "S02-extract-DOC-2-v1"
+            },
+            "text": "Звуковые уведомления об изменении статуса включены по умолчанию. Пользовательской настройки звука нет."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S02-extract-DOC-3",
+              "state_id": "S02-extract-DOC-3-v1"
+            },
+            "text": "Экспорт CSV доступен через меню «Отчёты → CSV»."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S02-extract-DOC-4",
+              "state_id": "S02-extract-DOC-4-v1"
+            },
+            "text": "При закрытии формы создания задачи введённый текст теряется. Черновики не сохраняются."
+          }
+        ],
+        "project_id": "SYNTHETIC-S02",
+        "states": [
+          {
+            "kind": "feedback_source",
+            "id": "S02-extract-SYN-SRC-1",
+            "state_id": "S02-extract-SYN-SRC-1-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S02-extract-DOC-1",
+            "state_id": "S02-extract-DOC-1-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S02-extract-DOC-2",
+            "state_id": "S02-extract-DOC-2-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S02-extract-DOC-3",
+            "state_id": "S02-extract-DOC-3-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S02-extract-DOC-4",
+            "state_id": "S02-extract-DOC-4-v1"
+          }
+        ]
+      },
+      "fixture_response": {
+        "coverage": [
+          {
+            "input_key": "s1",
+            "reviewed": true,
+            "disposition": "completed"
+          }
+        ],
+        "uncertainties": [],
+        "questions": [],
+        "result": {
+          "fragments": [
+            {
+              "local_id": "fragment-1",
+              "segment_key": "s1",
+              "quote": "После каждого перезапуска заново выставляю статус и исполнителя, прежде чем продолжить работу.",
+              "occurrence": 0
+            }
+          ],
+          "findings": [
+            {
+              "local_id": "finding-1",
+              "text": "После перезапуска приходится заново задавать статус и исполнителя.",
+              "types": [
+                "problem"
+              ],
+              "mode": "direct",
+              "fragment_ids": [
+                "fragment-1"
+              ],
+              "considered_keys": [
+                "s1"
+              ],
+              "context_keys": []
+            },
+            {
+              "local_id": "finding-2",
+              "text": "Нужно избежать повторной настройки фильтров.",
+              "types": [
+                "need"
+              ],
+              "mode": "inferred",
+              "fragment_ids": [
+                "fragment-1"
+              ],
+              "considered_keys": [
+                "s1"
+              ],
+              "context_keys": []
+            }
+          ]
+        }
+      },
+      "fixture_role": "engineering_control",
+      "relationship": null
+    },
+    {
+      "id": "generate",
+      "request": {
+        "contract_version": "1.0",
+        "operation": "generate_requirements",
+        "project_id": "SYNTHETIC-S02",
+        "request_id": "S02-generate",
+        "input": {
+          "findings": [
+            {
+              "key": "f1",
+              "ref": {
+                "kind": "finding",
+                "id": "S02-generate-SYN-FINDING-1",
+                "state_id": "S02-generate-SYN-FINDING-1-v1"
+              },
+              "text": "После перезапуска приходится заново задавать статус и исполнителя.",
+              "types": [
+                "problem"
+              ],
+              "mode": "direct",
+              "evidence": [
+                {
+                  "kind": "available",
+                  "fragment_key": "e1"
+                }
+              ],
+              "uncertainty_notes": [],
+              "open_questions": [],
+              "authorship": "ai"
+            },
+            {
+              "key": "f2",
+              "ref": {
+                "kind": "finding",
+                "id": "S02-generate-SYN-FINDING-2",
+                "state_id": "S02-generate-SYN-FINDING-2-v1"
+              },
+              "text": "Нужно избежать повторной настройки фильтров.",
+              "types": [
+                "need"
+              ],
+              "mode": "inferred",
+              "evidence": [
+                {
+                  "kind": "available",
+                  "fragment_key": "e1"
+                }
+              ],
+              "uncertainty_notes": [],
+              "open_questions": [],
+              "authorship": "ai"
+            }
+          ],
+          "fragments": [
+            {
+              "key": "e1",
+              "ref": {
+                "kind": "fragment",
+                "id": "S02-generate-SYN-FRAGMENT-1",
+                "state_id": "S02-generate-SYN-FRAGMENT-1-v1"
+              },
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "S02-generate-SYN-SRC-1",
+                "state_id": "S02-generate-SYN-SRC-1-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "S02-generate-SYN-SRC-1",
+                "state_id": "S02-generate-SYN-SRC-1-v1"
+              },
+              "quote": "После каждого перезапуска заново выставляю статус и исполнителя, прежде чем продолжить работу.",
+              "locator": {
+                "start": 0,
+                "end": 94
+              },
+              "reliability": "usable"
+            }
+          ],
+          "groups": [],
+          "documents": [
+            {
+              "key": "d1",
+              "ref": {
+                "kind": "product_document",
+                "id": "S02-generate-DOC-1",
+                "state_id": "S02-generate-DOC-1-v1"
+              },
+              "text": "Список задач фильтруется по статусу и исполнителю. После повторного открытия фильтры сбрасываются.",
+              "locator": {
+                "start": 0,
+                "end": 98
+              }
+            },
+            {
+              "key": "d2",
+              "ref": {
+                "kind": "product_document",
+                "id": "S02-generate-DOC-2",
+                "state_id": "S02-generate-DOC-2-v1"
+              },
+              "text": "Звуковые уведомления об изменении статуса включены по умолчанию. Пользовательской настройки звука нет.",
+              "locator": {
+                "start": 0,
+                "end": 102
+              }
+            },
+            {
+              "key": "d3",
+              "ref": {
+                "kind": "product_document",
+                "id": "S02-generate-DOC-3",
+                "state_id": "S02-generate-DOC-3-v1"
+              },
+              "text": "Экспорт CSV доступен через меню «Отчёты → CSV».",
+              "locator": {
+                "start": 0,
+                "end": 47
+              }
+            },
+            {
+              "key": "d4",
+              "ref": {
+                "kind": "product_document",
+                "id": "S02-generate-DOC-4",
+                "state_id": "S02-generate-DOC-4-v1"
+              },
+              "text": "При закрытии формы создания задачи введённый текст теряется. Черновики не сохраняются.",
+              "locator": {
+                "start": 0,
+                "end": 86
+              }
+            }
+          ]
+        }
+      },
+      "trusted": {
+        "texts": [
+          {
+            "ref": {
+              "kind": "feedback_source",
+              "id": "S02-generate-SYN-SRC-1",
+              "state_id": "S02-generate-SYN-SRC-1-v1"
+            },
+            "source_ref": {
+              "kind": "feedback_source",
+              "id": "S02-generate-SYN-SRC-1",
+              "state_id": "S02-generate-SYN-SRC-1-v1"
+            },
+            "text": "После каждого перезапуска заново выставляю статус и исполнителя, прежде чем продолжить работу.",
+            "reliability": "usable"
+          }
+        ],
+        "documents": [
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S02-generate-DOC-1",
+              "state_id": "S02-generate-DOC-1-v1"
+            },
+            "text": "Список задач фильтруется по статусу и исполнителю. После повторного открытия фильтры сбрасываются."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S02-generate-DOC-2",
+              "state_id": "S02-generate-DOC-2-v1"
+            },
+            "text": "Звуковые уведомления об изменении статуса включены по умолчанию. Пользовательской настройки звука нет."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S02-generate-DOC-3",
+              "state_id": "S02-generate-DOC-3-v1"
+            },
+            "text": "Экспорт CSV доступен через меню «Отчёты → CSV»."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S02-generate-DOC-4",
+              "state_id": "S02-generate-DOC-4-v1"
+            },
+            "text": "При закрытии формы создания задачи введённый текст теряется. Черновики не сохраняются."
+          }
+        ],
+        "project_id": "SYNTHETIC-S02",
+        "states": [
+          {
+            "kind": "finding",
+            "id": "S02-generate-SYN-FINDING-1",
+            "state_id": "S02-generate-SYN-FINDING-1-v1"
+          },
+          {
+            "kind": "finding",
+            "id": "S02-generate-SYN-FINDING-2",
+            "state_id": "S02-generate-SYN-FINDING-2-v1"
+          },
+          {
+            "kind": "fragment",
+            "id": "S02-generate-SYN-FRAGMENT-1",
+            "state_id": "S02-generate-SYN-FRAGMENT-1-v1"
+          },
+          {
+            "kind": "feedback_source",
+            "id": "S02-generate-SYN-SRC-1",
+            "state_id": "S02-generate-SYN-SRC-1-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S02-generate-DOC-1",
+            "state_id": "S02-generate-DOC-1-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S02-generate-DOC-2",
+            "state_id": "S02-generate-DOC-2-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S02-generate-DOC-3",
+            "state_id": "S02-generate-DOC-3-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S02-generate-DOC-4",
+            "state_id": "S02-generate-DOC-4-v1"
+          }
+        ]
+      },
+      "fixture_response": {
+        "coverage": [
+          {
+            "input_key": "f1",
+            "reviewed": true,
+            "disposition": "insufficient_information",
+            "reason": "Что означает перезапуск: приложение, повторное открытие списка или другое действие? В каких границах нужно сохранять выбор?"
+          },
+          {
+            "input_key": "f2",
+            "reviewed": true,
+            "disposition": "insufficient_information",
+            "reason": "Что означает перезапуск: приложение, повторное открытие списка или другое действие? В каких границах нужно сохранять выбор?"
+          }
+        ],
+        "uncertainties": [],
+        "questions": [
+          {
+            "local_id": "question-1",
+            "text": "Что означает перезапуск: приложение, повторное открытие списка или другое действие? В каких границах нужно сохранять выбор?",
+            "reason": "Что означает перезапуск: приложение, повторное открытие списка или другое действие? В каких границах нужно сохранять выбор?",
+            "related": [
+              {
+                "origin": "input",
+                "key": "f1"
+              },
+              {
+                "origin": "input",
+                "key": "f2"
+              }
+            ],
+            "blocking": true
+          }
+        ],
+        "result": {
+          "requirements": []
+        }
+      },
+      "fixture_role": "engineering_control",
+      "relationship": null
+    }
+  ]
+}

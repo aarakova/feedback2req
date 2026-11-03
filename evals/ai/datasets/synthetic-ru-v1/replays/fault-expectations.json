@@ -1,0 +1,146 @@
+[
+  {
+    "case_id": "S01",
+    "example_id": "extract",
+    "attempt": 1,
+    "expected_code": "SCHEMA-ADDITIONALPROPERTIES"
+  },
+  {
+    "case_id": "S01",
+    "example_id": "extract",
+    "attempt": 2,
+    "expected_code": "SCHEMA-ENUM"
+  },
+  {
+    "case_id": "S11",
+    "example_id": "unicode-repeated",
+    "attempt": 1,
+    "expected_code": "QUOTE-OCCURRENCE"
+  },
+  {
+    "case_id": "S11",
+    "example_id": "unicode-repeated",
+    "attempt": 2,
+    "expected_code": "QUOTE-OCCURRENCE"
+  },
+  {
+    "case_id": "S01",
+    "example_id": "extract",
+    "attempt": 3,
+    "expected_code": "FINDING-FRAGMENT-MISSING"
+  },
+  {
+    "case_id": "S01",
+    "example_id": "extract",
+    "attempt": 4,
+    "expected_code": "LOCAL-IDS-NOT-UNIQUE"
+  },
+  {
+    "case_id": "S01",
+    "example_id": "extract",
+    "attempt": 5,
+    "expected_code": "LINK-WRONG-ROLE"
+  },
+  {
+    "case_id": "S01",
+    "example_id": "extract",
+    "attempt": 6,
+    "expected_code": "COVERAGE-KEYS"
+  },
+  {
+    "case_id": "S11",
+    "example_id": "evidence-control",
+    "attempt": 1,
+    "expected_code": "REQUIREMENT-EVIDENCE-MISMATCH"
+  },
+  {
+    "case_id": "S05",
+    "example_id": "group",
+    "attempt": 1,
+    "expected_code": "GROUP-MEMBER-MISSING"
+  },
+  {
+    "case_id": "S06",
+    "example_id": "group",
+    "attempt": 1,
+    "expected_code": "CONFLICT-MEMBER-OUTSIDE-GROUP"
+  },
+  {
+    "case_id": "S06",
+    "example_id": "question",
+    "attempt": 1,
+    "expected_code": "QUESTION-SCOPE"
+  },
+  {
+    "case_id": "S10",
+    "example_id": "partial-comparison",
+    "attempt": 1,
+    "expected_code": "DUPLICATES-INCOMPLETE-CLEAN"
+  },
+  {
+    "case_id": "S10",
+    "example_id": "partial-comparison",
+    "attempt": 2,
+    "expected_code": "COMPARISON-PARTIAL-COVERAGE"
+  },
+  {
+    "case_id": "S09",
+    "example_id": "unsupported",
+    "attempt": 1,
+    "expected_code": "ISSUE-CHECK-CONTRADICTION"
+  },
+  {
+    "case_id": "S09",
+    "example_id": "unsupported",
+    "attempt": 2,
+    "expected_code": "ISSUE-QUESTION-MISSING"
+  },
+  {
+    "case_id": "S13",
+    "example_id": "own-revision",
+    "attempt": 1,
+    "expected_code": "DUPLICATE-SAME-REQUIREMENT"
+  },
+  {
+    "case_id": "S10",
+    "example_id": "independent-pdf",
+    "attempt": 1,
+    "expected_code": "TECH-TIMEOUT"
+  },
+  {
+    "case_id": "S10",
+    "example_id": "independent-pdf",
+    "attempt": 2,
+    "expected_code": "TECH-PROVIDER_ERROR"
+  },
+  {
+    "case_id": "S10",
+    "example_id": "independent-pdf",
+    "attempt": 3,
+    "expected_code": "TECH-INVALID_RESPONSE"
+  },
+  {
+    "case_id": "S10",
+    "example_id": "independent-pdf",
+    "attempt": 4,
+    "expected_code": "TECH-CANCELLED"
+  },
+  {
+    "case_id": "S11",
+    "example_id": "unicode-repeated",
+    "attempt": 3,
+    "expected_code": "RESPONSE-JSON-DUPLICATE-PROPERTY"
+  },
+  {
+    "case_id": "S11",
+    "example_id": "unicode-repeated",
+    "attempt": 4,
+    "expected_code": "RESPONSE-JSON-NONFINITE-NUMBER"
+  },
+  {
+    "case_id": "S11",
+    "example_id": "unicode-repeated",
+    "attempt": 5,
+    "expected_code": "RESPONSE-JSON-UNREADABLE"
+  }
+]

@@ -1,0 +1,994 @@
+{
+  "format_version": "1.0",
+  "dataset_version": "1.1.0",
+  "annotation_version": "0.2.0",
+  "mode": "synthetic_fixture_replay",
+  "model": {
+    "name": "none",
+    "revision": "not_applicable"
+  },
+  "configuration": {
+    "prompt_version": "not_applicable",
+    "adapter_version": "not_applicable",
+    "generation_settings": {},
+    "seed": null
+  },
+  "records": [
+    {
+      "case_id": "S01",
+      "example_id": "extract",
+      "outcome": "returned",
+      "request_sha256": "a7c4e736bcd564e0776b05554f9b0bfc4f8b066c996d500966afef6a92bcbae5",
+      "response": {
+        "coverage": [
+          {
+            "input_key": "s1",
+            "reviewed": true,
+            "disposition": "completed"
+          }
+        ],
+        "uncertainties": [],
+        "questions": [],
+        "result": {
+          "fragments": [
+            {
+              "local_id": "fragment-1",
+              "segment_key": "s1",
+              "quote": "Хочу, чтобы выбранные статус и исполнитель сохранялись после повторного открытия списка.",
+              "occurrence": 0
+            }
+          ],
+          "findings": [
+            {
+              "local_id": "finding-1",
+              "text": "Хочу, чтобы выбранные статус и исполнитель сохранялись после повторного открытия списка.",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "fragment_ids": [
+                "fragment-1"
+              ],
+              "considered_keys": [
+                "s1"
+              ],
+              "context_keys": []
+            }
+          ]
+        },
+        "Approved": true
+      },
+      "attempt": 1
+    },
+    {
+      "case_id": "S01",
+      "example_id": "extract",
+      "outcome": "returned",
+      "request_sha256": "a7c4e736bcd564e0776b05554f9b0bfc4f8b066c996d500966afef6a92bcbae5",
+      "response": {
+        "coverage": [
+          {
+            "input_key": "s1",
+            "reviewed": true,
+            "disposition": "partially_processed"
+          }
+        ],
+        "uncertainties": [],
+        "questions": [],
+        "result": {
+          "fragments": [
+            {
+              "local_id": "fragment-1",
+              "segment_key": "s1",
+              "quote": "Хочу, чтобы выбранные статус и исполнитель сохранялись после повторного открытия списка.",
+              "occurrence": 0
+            }
+          ],
+          "findings": [
+            {
+              "local_id": "finding-1",
+              "text": "Хочу, чтобы выбранные статус и исполнитель сохранялись после повторного открытия списка.",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "fragment_ids": [
+                "fragment-1"
+              ],
+              "considered_keys": [
+                "s1"
+              ],
+              "context_keys": []
+            }
+          ]
+        }
+      },
+      "attempt": 2
+    },
+    {
+      "case_id": "S11",
+      "example_id": "unicode-repeated",
+      "outcome": "returned",
+      "request_sha256": "ab1d96d865579e22e1dd1a2a739229a1f60d4bf059af36f0f55236712ec39436",
+      "response": {
+        "coverage": [
+          {
+            "input_key": "s1",
+            "reviewed": true,
+            "disposition": "completed"
+          }
+        ],
+        "uncertainties": [],
+        "questions": [],
+        "result": {
+          "fragments": [
+            {
+              "local_id": "fragment-1",
+              "segment_key": "s1",
+              "quote": "Хочу сохранять фильтры.",
+              "occurrence": 100
+            }
+          ],
+          "findings": [
+            {
+              "local_id": "finding-1",
+              "text": "🙂 ё\r\nХочу сохранять фильтры. Хочу сохранять фильтры.",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "fragment_ids": [
+                "fragment-1"
+              ],
+              "considered_keys": [
+                "s1"
+              ],
+              "context_keys": []
+            }
+          ]
+        }
+      },
+      "attempt": 1
+    },
+    {
+      "case_id": "S11",
+      "example_id": "unicode-repeated",
+      "outcome": "returned",
+      "request_sha256": "ab1d96d865579e22e1dd1a2a739229a1f60d4bf059af36f0f55236712ec39436",
+      "response": {
+        "coverage": [
+          {
+            "input_key": "s1",
+            "reviewed": true,
+            "disposition": "completed"
+          }
+        ],
+        "uncertainties": [],
+        "questions": [],
+        "result": {
+          "fragments": [
+            {
+              "local_id": "fragment-1",
+              "segment_key": "s1",
+              "quote": "Такой цитаты в источнике нет.",
+              "occurrence": 1
+            }
+          ],
+          "findings": [
+            {
+              "local_id": "finding-1",
+              "text": "🙂 ё\r\nХочу сохранять фильтры. Хочу сохранять фильтры.",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "fragment_ids": [
+                "fragment-1"
+              ],
+              "considered_keys": [
+                "s1"
+              ],
+              "context_keys": []
+            }
+          ]
+        }
+      },
+      "attempt": 2
+    },
+    {
+      "case_id": "S01",
+      "example_id": "extract",
+      "outcome": "returned",
+      "request_sha256": "a7c4e736bcd564e0776b05554f9b0bfc4f8b066c996d500966afef6a92bcbae5",
+      "response": {
+        "coverage": [
+          {
+            "input_key": "s1",
+            "reviewed": true,
+            "disposition": "completed"
+          }
+        ],
+        "uncertainties": [],
+        "questions": [],
+        "result": {
+          "fragments": [
+            {
+              "local_id": "fragment-1",
+              "segment_key": "s1",
+              "quote": "Хочу, чтобы выбранные статус и исполнитель сохранялись после повторного открытия списка.",
+              "occurrence": 0
+            }
+          ],
+          "findings": [
+            {
+              "local_id": "finding-1",
+              "text": "Хочу, чтобы выбранные статус и исполнитель сохранялись после повторного открытия списка.",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "fragment_ids": [
+                "missing"
+              ],
+              "considered_keys": [
+                "s1"
+              ],
+              "context_keys": []
+            }
+          ]
+        }
+      },
+      "attempt": 3
+    },
+    {
+      "case_id": "S01",
+      "example_id": "extract",
+      "outcome": "returned",
+      "request_sha256": "a7c4e736bcd564e0776b05554f9b0bfc4f8b066c996d500966afef6a92bcbae5",
+      "response": {
+        "coverage": [
+          {
+            "input_key": "s1",
+            "reviewed": true,
+            "disposition": "completed"
+          }
+        ],
+        "uncertainties": [],
+        "questions": [],
+        "result": {
+          "fragments": [
+            {
+              "local_id": "fragment-1",
+              "segment_key": "s1",
+              "quote": "Хочу, чтобы выбранные статус и исполнитель сохранялись после повторного открытия списка.",
+              "occurrence": 0
+            }
+          ],
+          "findings": [
+            {
+              "local_id": "fragment-1",
+              "text": "Хочу, чтобы выбранные статус и исполнитель сохранялись после повторного открытия списка.",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "fragment_ids": [
+                "fragment-1"
+              ],
+              "considered_keys": [
+                "s1"
+              ],
+              "context_keys": []
+            }
+          ]
+        }
+      },
+      "attempt": 4
+    },
+    {
+      "case_id": "S01",
+      "example_id": "extract",
+      "outcome": "returned",
+      "request_sha256": "a7c4e736bcd564e0776b05554f9b0bfc4f8b066c996d500966afef6a92bcbae5",
+      "response": {
+        "coverage": [
+          {
+            "input_key": "s1",
+            "reviewed": true,
+            "disposition": "completed"
+          }
+        ],
+        "uncertainties": [],
+        "questions": [],
+        "result": {
+          "fragments": [
+            {
+              "local_id": "fragment-1",
+              "segment_key": "s1",
+              "quote": "Хочу, чтобы выбранные статус и исполнитель сохранялись после повторного открытия списка.",
+              "occurrence": 0
+            }
+          ],
+          "findings": [
+            {
+              "local_id": "finding-1",
+              "text": "Хочу, чтобы выбранные статус и исполнитель сохранялись после повторного открытия списка.",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "fragment_ids": [
+                "fragment-1"
+              ],
+              "considered_keys": [
+                "s1"
+              ],
+              "context_keys": [
+                "s1"
+              ]
+            }
+          ]
+        }
+      },
+      "attempt": 5
+    },
+    {
+      "case_id": "S01",
+      "example_id": "extract",
+      "outcome": "returned",
+      "request_sha256": "a7c4e736bcd564e0776b05554f9b0bfc4f8b066c996d500966afef6a92bcbae5",
+      "response": {
+        "coverage": [
+          {
+            "input_key": "missing",
+            "reviewed": true,
+            "disposition": "completed"
+          }
+        ],
+        "uncertainties": [],
+        "questions": [],
+        "result": {
+          "fragments": [
+            {
+              "local_id": "fragment-1",
+              "segment_key": "s1",
+              "quote": "Хочу, чтобы выбранные статус и исполнитель сохранялись после повторного открытия списка.",
+              "occurrence": 0
+            }
+          ],
+          "findings": [
+            {
+              "local_id": "finding-1",
+              "text": "Хочу, чтобы выбранные статус и исполнитель сохранялись после повторного открытия списка.",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "fragment_ids": [
+                "fragment-1"
+              ],
+              "considered_keys": [
+                "s1"
+              ],
+              "context_keys": []
+            }
+          ]
+        }
+      },
+      "attempt": 6
+    },
+    {
+      "case_id": "S11",
+      "example_id": "evidence-control",
+      "outcome": "returned",
+      "request_sha256": "cafd05769af3d0748e2d160ecc67d92e0876bfa946850ce374d122acbbee0ce6",
+      "response": {
+        "coverage": [
+          {
+            "input_key": "f1",
+            "reviewed": true,
+            "disposition": "completed"
+          }
+        ],
+        "uncertainties": [],
+        "questions": [],
+        "result": {
+          "requirements": [
+            {
+              "local_id": "requirement-1",
+              "title": "Сохранять выбранные статус и исполнителя при повторном открытии списка.",
+              "text": "Сохранять выбранные статус и исполнителя при повторном открытии списка.",
+              "rationale": "Предложение основано на переданной синтетической обратной связи.",
+              "evidence": [
+                {
+                  "finding_key": "f1",
+                  "fragment_keys": [
+                    "missing"
+                  ]
+                }
+              ],
+              "considered_keys": [
+                "f1"
+              ],
+              "context_keys": []
+            }
+          ]
+        }
+      },
+      "attempt": 1
+    },
+    {
+      "case_id": "S05",
+      "example_id": "group",
+      "outcome": "returned",
+      "request_sha256": "2c8a6c1ec3445c26bbd76a427a1feffc793f1504304e64236b5bbf18a7840fda",
+      "response": {
+        "coverage": [
+          {
+            "input_key": "f1",
+            "reviewed": true,
+            "disposition": "completed"
+          },
+          {
+            "input_key": "f2",
+            "reviewed": true,
+            "disposition": "completed"
+          }
+        ],
+        "uncertainties": [],
+        "questions": [],
+        "result": {
+          "groups": [
+            {
+              "local_id": "group-1",
+              "title": "Связанные пожелания",
+              "summary": "Сохраняются все исходные позиции.",
+              "finding_keys": [
+                "missing"
+              ],
+              "considered_keys": [
+                "f1",
+                "f2"
+              ],
+              "context_keys": [],
+              "conflicts": []
+            }
+          ],
+          "ungrouped_finding_keys": []
+        }
+      },
+      "attempt": 1
+    },
+    {
+      "case_id": "S06",
+      "example_id": "group",
+      "outcome": "returned",
+      "request_sha256": "b319654fa06b58fad93e3ea62c51dbcef611866dd68c76b66df6c002eb410d7a",
+      "response": {
+        "coverage": [
+          {
+            "input_key": "f1",
+            "reviewed": true,
+            "disposition": "completed"
+          },
+          {
+            "input_key": "f2",
+            "reviewed": true,
+            "disposition": "completed"
+          }
+        ],
+        "uncertainties": [],
+        "questions": [],
+        "result": {
+          "groups": [
+            {
+              "local_id": "group-1",
+              "title": "Связанные пожелания",
+              "summary": "Сохраняются все исходные позиции.",
+              "finding_keys": [
+                "f1",
+                "f2"
+              ],
+              "considered_keys": [
+                "f1",
+                "f2"
+              ],
+              "context_keys": [],
+              "conflicts": [
+                {
+                  "local_id": "conflict-1",
+                  "description": "Противоположные ожидания о поведении по умолчанию.",
+                  "positions": [
+                    {
+                      "description": "По умолчанию звук изменения статуса должен быть включён.",
+                      "finding_keys": [
+                        "missing"
+                      ]
+                    },
+                    {
+                      "description": "По умолчанию звук изменения статуса должен быть выключен.",
+                      "finding_keys": [
+                        "f2"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "ungrouped_finding_keys": []
+        }
+      },
+      "attempt": 1
+    },
+    {
+      "case_id": "S06",
+      "example_id": "question",
+      "outcome": "returned",
+      "request_sha256": "12d52c2aa8ff3860c917aeee5b6b27025d7462aa223bdce96730663cd3d284a8",
+      "response": {
+        "coverage": [
+          {
+            "input_key": "f1",
+            "reviewed": true,
+            "disposition": "insufficient_information",
+            "reason": "Какое поведение звука по умолчанию требуется?"
+          },
+          {
+            "input_key": "f2",
+            "reviewed": true,
+            "disposition": "insufficient_information",
+            "reason": "Какое поведение звука по умолчанию требуется?"
+          }
+        ],
+        "uncertainties": [],
+        "questions": [
+          {
+            "local_id": "question-1",
+            "text": "Какое поведение звука по умолчанию требуется?",
+            "reason": "Какое поведение звука по умолчанию требуется?",
+            "related": [
+              {
+                "origin": "input",
+                "key": "d1"
+              }
+            ],
+            "blocking": true
+          }
+        ],
+        "result": {
+          "requirements": []
+        }
+      },
+      "attempt": 1
+    },
+    {
+      "case_id": "S10",
+      "example_id": "partial-comparison",
+      "outcome": "returned",
+      "request_sha256": "64e056909be699c1956cfa1dce8c50ac5a7163279d8b0778002ba6bdce683dbf",
+      "response": {
+        "coverage": [
+          {
+            "input_key": "target",
+            "reviewed": true,
+            "disposition": "partially_processed",
+            "reason": "Сравнение other1 не выполнено."
+          }
+        ],
+        "uncertainties": [],
+        "questions": [],
+        "result": {
+          "checks": [
+            {
+              "kind": "support",
+              "conclusion": "no_issue_found",
+              "rationale": "В явно переданном синтетическом контексте замечание не обнаружено.",
+              "considered_keys": [
+                "target",
+                "f1",
+                "e1"
+              ]
+            },
+            {
+              "kind": "contradictions",
+              "conclusion": "no_issue_found",
+              "rationale": "В явно переданном синтетическом контексте замечание не обнаружено.",
+              "considered_keys": [
+                "target",
+                "f1",
+                "e1"
+              ]
+            },
+            {
+              "kind": "ambiguity",
+              "conclusion": "no_issue_found",
+              "rationale": "В явно переданном синтетическом контексте замечание не обнаружено.",
+              "considered_keys": [
+                "target",
+                "f1",
+                "e1"
+              ]
+            },
+            {
+              "kind": "duplicates",
+              "conclusion": "no_issue_found",
+              "rationale": "other1 не рассмотрен.",
+              "considered_keys": []
+            }
+          ],
+          "issues": []
+        }
+      },
+      "attempt": 1
+    },
+    {
+      "case_id": "S10",
+      "example_id": "partial-comparison",
+      "outcome": "returned",
+      "request_sha256": "64e056909be699c1956cfa1dce8c50ac5a7163279d8b0778002ba6bdce683dbf",
+      "response": {
+        "coverage": [
+          {
+            "input_key": "target",
+            "reviewed": true,
+            "disposition": "completed",
+            "reason": "Сравнение other1 не выполнено."
+          }
+        ],
+        "uncertainties": [],
+        "questions": [],
+        "result": {
+          "checks": [
+            {
+              "kind": "support",
+              "conclusion": "no_issue_found",
+              "rationale": "В явно переданном синтетическом контексте замечание не обнаружено.",
+              "considered_keys": [
+                "target",
+                "f1",
+                "e1"
+              ]
+            },
+            {
+              "kind": "contradictions",
+              "conclusion": "no_issue_found",
+              "rationale": "В явно переданном синтетическом контексте замечание не обнаружено.",
+              "considered_keys": [
+                "target",
+                "f1",
+                "e1"
+              ]
+            },
+            {
+              "kind": "ambiguity",
+              "conclusion": "no_issue_found",
+              "rationale": "В явно переданном синтетическом контексте замечание не обнаружено.",
+              "considered_keys": [
+                "target",
+                "f1",
+                "e1"
+              ]
+            },
+            {
+              "kind": "duplicates",
+              "conclusion": "inconclusive",
+              "rationale": "other1 не рассмотрен.",
+              "considered_keys": []
+            }
+          ],
+          "issues": []
+        }
+      },
+      "attempt": 2
+    },
+    {
+      "case_id": "S09",
+      "example_id": "unsupported",
+      "outcome": "returned",
+      "request_sha256": "66e75ed6354432c325959bef88f4168e11c4ad183b0a21eed96c15ae3ee4b81d",
+      "response": {
+        "coverage": [
+          {
+            "input_key": "target",
+            "reviewed": true,
+            "disposition": "completed"
+          }
+        ],
+        "uncertainties": [],
+        "questions": [],
+        "result": {
+          "checks": [
+            {
+              "kind": "support",
+              "conclusion": "no_issue_found",
+              "rationale": "Межустройственная синхронизация не следует из отзыва.",
+              "considered_keys": [
+                "target",
+                "f1",
+                "e1"
+              ]
+            },
+            {
+              "kind": "contradictions",
+              "conclusion": "no_issue_found",
+              "rationale": "В явно переданном синтетическом контексте замечание не обнаружено.",
+              "considered_keys": [
+                "target",
+                "f1",
+                "e1"
+              ]
+            },
+            {
+              "kind": "ambiguity",
+              "conclusion": "no_issue_found",
+              "rationale": "В явно переданном синтетическом контексте замечание не обнаружено.",
+              "considered_keys": [
+                "target",
+                "f1",
+                "e1"
+              ]
+            },
+            {
+              "kind": "duplicates",
+              "conclusion": "no_issue_found",
+              "rationale": "В явно переданном синтетическом контексте замечание не обнаружено.",
+              "considered_keys": []
+            }
+          ],
+          "issues": [
+            {
+              "local_id": "issue-1",
+              "category": "unsupported_claim",
+              "text": "Межустройственная синхронизация не следует из отзыва.",
+              "reason": "Межустройственная синхронизация не следует из отзыва.",
+              "severity": "medium",
+              "blocking": true,
+              "blocking_reason": "Существенная причина требует уточнения до нового утверждения.",
+              "related": [
+                {
+                  "origin": "input",
+                  "key": "target"
+                }
+              ],
+              "question_ids": []
+            }
+          ]
+        }
+      },
+      "attempt": 1
+    },
+    {
+      "case_id": "S09",
+      "example_id": "unsupported",
+      "outcome": "returned",
+      "request_sha256": "66e75ed6354432c325959bef88f4168e11c4ad183b0a21eed96c15ae3ee4b81d",
+      "response": {
+        "coverage": [
+          {
+            "input_key": "target",
+            "reviewed": true,
+            "disposition": "completed"
+          }
+        ],
+        "uncertainties": [],
+        "questions": [],
+        "result": {
+          "checks": [
+            {
+              "kind": "support",
+              "conclusion": "issues_found",
+              "rationale": "Межустройственная синхронизация не следует из отзыва.",
+              "considered_keys": [
+                "target",
+                "f1",
+                "e1"
+              ]
+            },
+            {
+              "kind": "contradictions",
+              "conclusion": "no_issue_found",
+              "rationale": "В явно переданном синтетическом контексте замечание не обнаружено.",
+              "considered_keys": [
+                "target",
+                "f1",
+                "e1"
+              ]
+            },
+            {
+              "kind": "ambiguity",
+              "conclusion": "no_issue_found",
+              "rationale": "В явно переданном синтетическом контексте замечание не обнаружено.",
+              "considered_keys": [
+                "target",
+                "f1",
+                "e1"
+              ]
+            },
+            {
+              "kind": "duplicates",
+              "conclusion": "no_issue_found",
+              "rationale": "В явно переданном синтетическом контексте замечание не обнаружено.",
+              "considered_keys": []
+            }
+          ],
+          "issues": [
+            {
+              "local_id": "issue-1",
+              "category": "unsupported_claim",
+              "text": "Межустройственная синхронизация не следует из отзыва.",
+              "reason": "Межустройственная синхронизация не следует из отзыва.",
+              "severity": "medium",
+              "blocking": true,
+              "blocking_reason": "Существенная причина требует уточнения до нового утверждения.",
+              "related": [
+                {
+                  "origin": "input",
+                  "key": "target"
+                }
+              ],
+              "question_ids": [
+                "missing"
+              ]
+            }
+          ]
+        }
+      },
+      "attempt": 2
+    },
+    {
+      "case_id": "S13",
+      "example_id": "own-revision",
+      "outcome": "returned",
+      "request_sha256": "1bc7f0b2f8cea7310efa74d7bbaf185cb4f579b61314a7b3569062e5ac43f58a",
+      "response": {
+        "coverage": [
+          {
+            "input_key": "target",
+            "reviewed": true,
+            "disposition": "completed"
+          }
+        ],
+        "uncertainties": [],
+        "questions": [
+          {
+            "local_id": "question-1",
+            "text": "Это одна доработка или разные задачи, требующие отдельных требований?",
+            "reason": "Сходство не устанавливает дубль автоматически.",
+            "related": [
+              {
+                "origin": "input",
+                "key": "target"
+              }
+            ],
+            "blocking": true
+          }
+        ],
+        "result": {
+          "checks": [
+            {
+              "kind": "support",
+              "conclusion": "no_issue_found",
+              "rationale": "В явно переданном синтетическом контексте замечание не обнаружено.",
+              "considered_keys": [
+                "target",
+                "f1",
+                "e1"
+              ]
+            },
+            {
+              "kind": "contradictions",
+              "conclusion": "no_issue_found",
+              "rationale": "В явно переданном синтетическом контексте замечание не обнаружено.",
+              "considered_keys": [
+                "target",
+                "f1",
+                "e1"
+              ]
+            },
+            {
+              "kind": "ambiguity",
+              "conclusion": "no_issue_found",
+              "rationale": "В явно переданном синтетическом контексте замечание не обнаружено.",
+              "considered_keys": [
+                "target",
+                "f1",
+                "e1"
+              ]
+            },
+            {
+              "kind": "duplicates",
+              "conclusion": "issues_found",
+              "rationale": "Текст предложения другого требования сходен по смыслу; это возможный дубль, окончательное различение требует решения человека.",
+              "considered_keys": [
+                "other1"
+              ]
+            }
+          ],
+          "issues": [
+            {
+              "local_id": "issue-1",
+              "category": "possible_duplicate",
+              "text": "Текст предложения другого требования сходен по смыслу; это возможный дубль, окончательное различение требует решения человека.",
+              "reason": "Текст предложения другого требования сходен по смыслу; это возможный дубль, окончательное различение требует решения человека.",
+              "severity": "medium",
+              "blocking": true,
+              "blocking_reason": "Существенная причина требует уточнения до нового утверждения.",
+              "related": [
+                {
+                  "origin": "input",
+                  "key": "target"
+                },
+                {
+                  "origin": "input",
+                  "key": "other1"
+                }
+              ],
+              "question_ids": [
+                "question-1"
+              ]
+            }
+          ]
+        }
+      },
+      "attempt": 1
+    },
+    {
+      "case_id": "S10",
+      "example_id": "independent-pdf",
+      "outcome": "failed",
+      "request_sha256": "5c7f4af3c6370b667ee2b6fc985b1c3cdb5d56d8b7e4c32296fdeb16b3c147c3",
+      "attempt": 1,
+      "error_code": "timeout"
+    },
+    {
+      "case_id": "S10",
+      "example_id": "independent-pdf",
+      "outcome": "failed",
+      "request_sha256": "5c7f4af3c6370b667ee2b6fc985b1c3cdb5d56d8b7e4c32296fdeb16b3c147c3",
+      "attempt": 2,
+      "error_code": "provider_error"
+    },
+    {
+      "case_id": "S10",
+      "example_id": "independent-pdf",
+      "outcome": "failed",
+      "request_sha256": "5c7f4af3c6370b667ee2b6fc985b1c3cdb5d56d8b7e4c32296fdeb16b3c147c3",
+      "attempt": 3,
+      "error_code": "invalid_response"
+    },
+    {
+      "case_id": "S10",
+      "example_id": "independent-pdf",
+      "outcome": "failed",
+      "request_sha256": "5c7f4af3c6370b667ee2b6fc985b1c3cdb5d56d8b7e4c32296fdeb16b3c147c3",
+      "attempt": 4,
+      "error_code": "cancelled"
+    },
+    {
+      "case_id": "S11",
+      "example_id": "unicode-repeated",
+      "outcome": "returned",
+      "request_sha256": "ab1d96d865579e22e1dd1a2a739229a1f60d4bf059af36f0f55236712ec39436",
+      "attempt": 3,
+      "response_file": "responses/duplicate.json"
+    },
+    {
+      "case_id": "S11",
+      "example_id": "unicode-repeated",
+      "outcome": "returned",
+      "request_sha256": "ab1d96d865579e22e1dd1a2a739229a1f60d4bf059af36f0f55236712ec39436",
+      "attempt": 4,
+      "response_file": "responses/nonfinite.json"
+    },
+    {
+      "case_id": "S11",
+      "example_id": "unicode-repeated",
+      "outcome": "returned",
+      "request_sha256": "ab1d96d865579e22e1dd1a2a739229a1f60d4bf059af36f0f55236712ec39436",
+      "attempt": 5,
+      "response_file": "responses/truncated.json"
+    }
+  ],
+  "dataset_sha256": "6926cb777854891d20727d868036e0e5fcfb0956952bf4e2ef566e224ea6169d"
+}

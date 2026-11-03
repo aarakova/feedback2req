@@ -1,0 +1,1463 @@
+{
+  "id": "S10",
+  "version": "1.0.0",
+  "synthetic": true,
+  "title": "Частичная обработка и речь",
+  "traceability": {
+    "requirements": [
+      "FR-006",
+      "FR-007",
+      "FR-019",
+      "FR-023"
+    ],
+    "acceptance_criteria": [
+      "AC-02",
+      "AC-06",
+      "AC-07"
+    ],
+    "contract_rules": [
+      "AP-04",
+      "AP-05",
+      "AP-07",
+      "AP-09"
+    ]
+  },
+  "annotation": {
+    "version": "0.2.0",
+    "status": "preliminary",
+    "required_meanings": [
+      "Пригодный независимый результат не теряется; пропущенное сравнение видно; сбой отличим от ненадёжности."
+    ],
+    "allowed_alternatives": [
+      "При неполном сравнении допустимы уже найденные замечания; отсутствие находок даёт inconclusive."
+    ],
+    "forbidden_claims": [
+      "partially_processed для extract; no_issue_found для незавершённого поиска дублей; повышение надёжности."
+    ],
+    "expert_questions": [
+      "Содержательное чтение и точность ASR этим офлайн-набором не доказываются."
+    ]
+  },
+  "examples": [
+    {
+      "id": "speech-usable",
+      "request": {
+        "contract_version": "1.0",
+        "operation": "extract_feedback",
+        "project_id": "SYNTHETIC-S10",
+        "request_id": "S10-speech-usable",
+        "input": {
+          "segments": [
+            {
+              "key": "s1",
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "S10-speech-usable-SYN-SRC-1",
+                "state_id": "S10-speech-usable-SYN-SRC-1-v1"
+              },
+              "text_ref": {
+                "kind": "transcript",
+                "id": "S10-speech-usable-SYN-TRANSCRIPT-1",
+                "state_id": "S10-speech-usable-SYN-TRANSCRIPT-1-v1"
+              },
+              "locator": {
+                "start": 0,
+                "end": 88
+              },
+              "reliability": "usable",
+              "time_range": {
+                "start_ms": 1000,
+                "end_ms": 1900
+              },
+              "text": "Хочу, чтобы выбранные статус и исполнитель сохранялись после повторного открытия списка."
+            }
+          ],
+          "documents": [
+            {
+              "key": "d1",
+              "ref": {
+                "kind": "product_document",
+                "id": "S10-speech-usable-DOC-1",
+                "state_id": "S10-speech-usable-DOC-1-v1"
+              },
+              "text": "Список задач фильтруется по статусу и исполнителю. После повторного открытия фильтры сбрасываются.",
+              "locator": {
+                "start": 0,
+                "end": 98
+              }
+            },
+            {
+              "key": "d2",
+              "ref": {
+                "kind": "product_document",
+                "id": "S10-speech-usable-DOC-2",
+                "state_id": "S10-speech-usable-DOC-2-v1"
+              },
+              "text": "Звуковые уведомления об изменении статуса включены по умолчанию. Пользовательской настройки звука нет.",
+              "locator": {
+                "start": 0,
+                "end": 102
+              }
+            },
+            {
+              "key": "d3",
+              "ref": {
+                "kind": "product_document",
+                "id": "S10-speech-usable-DOC-3",
+                "state_id": "S10-speech-usable-DOC-3-v1"
+              },
+              "text": "Экспорт CSV доступен через меню «Отчёты → CSV».",
+              "locator": {
+                "start": 0,
+                "end": 47
+              }
+            },
+            {
+              "key": "d4",
+              "ref": {
+                "kind": "product_document",
+                "id": "S10-speech-usable-DOC-4",
+                "state_id": "S10-speech-usable-DOC-4-v1"
+              },
+              "text": "При закрытии формы создания задачи введённый текст теряется. Черновики не сохраняются.",
+              "locator": {
+                "start": 0,
+                "end": 86
+              }
+            }
+          ]
+        }
+      },
+      "trusted": {
+        "texts": [
+          {
+            "ref": {
+              "kind": "transcript",
+              "id": "S10-speech-usable-SYN-TRANSCRIPT-1",
+              "state_id": "S10-speech-usable-SYN-TRANSCRIPT-1-v1"
+            },
+            "source_ref": {
+              "kind": "feedback_source",
+              "id": "S10-speech-usable-SYN-SRC-1",
+              "state_id": "S10-speech-usable-SYN-SRC-1-v1"
+            },
+            "text": "Хочу, чтобы выбранные статус и исполнитель сохранялись после повторного открытия списка.",
+            "reliability": "usable",
+            "time_range": {
+              "start_ms": 1000,
+              "end_ms": 1900
+            }
+          }
+        ],
+        "documents": [
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S10-speech-usable-DOC-1",
+              "state_id": "S10-speech-usable-DOC-1-v1"
+            },
+            "text": "Список задач фильтруется по статусу и исполнителю. После повторного открытия фильтры сбрасываются."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S10-speech-usable-DOC-2",
+              "state_id": "S10-speech-usable-DOC-2-v1"
+            },
+            "text": "Звуковые уведомления об изменении статуса включены по умолчанию. Пользовательской настройки звука нет."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S10-speech-usable-DOC-3",
+              "state_id": "S10-speech-usable-DOC-3-v1"
+            },
+            "text": "Экспорт CSV доступен через меню «Отчёты → CSV»."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S10-speech-usable-DOC-4",
+              "state_id": "S10-speech-usable-DOC-4-v1"
+            },
+            "text": "При закрытии формы создания задачи введённый текст теряется. Черновики не сохраняются."
+          }
+        ],
+        "project_id": "SYNTHETIC-S10",
+        "states": [
+          {
+            "kind": "feedback_source",
+            "id": "S10-speech-usable-SYN-SRC-1",
+            "state_id": "S10-speech-usable-SYN-SRC-1-v1"
+          },
+          {
+            "kind": "transcript",
+            "id": "S10-speech-usable-SYN-TRANSCRIPT-1",
+            "state_id": "S10-speech-usable-SYN-TRANSCRIPT-1-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S10-speech-usable-DOC-1",
+            "state_id": "S10-speech-usable-DOC-1-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S10-speech-usable-DOC-2",
+            "state_id": "S10-speech-usable-DOC-2-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S10-speech-usable-DOC-3",
+            "state_id": "S10-speech-usable-DOC-3-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S10-speech-usable-DOC-4",
+            "state_id": "S10-speech-usable-DOC-4-v1"
+          }
+        ]
+      },
+      "fixture_response": {
+        "coverage": [
+          {
+            "input_key": "s1",
+            "reviewed": true,
+            "disposition": "completed"
+          }
+        ],
+        "uncertainties": [],
+        "questions": [],
+        "result": {
+          "fragments": [
+            {
+              "local_id": "fragment-1",
+              "segment_key": "s1",
+              "quote": "Хочу, чтобы выбранные статус и исполнитель сохранялись после повторного открытия списка.",
+              "occurrence": 0
+            }
+          ],
+          "findings": [
+            {
+              "local_id": "finding-1",
+              "text": "Хочу, чтобы выбранные статус и исполнитель сохранялись после повторного открытия списка.",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "fragment_ids": [
+                "fragment-1"
+              ],
+              "considered_keys": [
+                "s1"
+              ],
+              "context_keys": []
+            }
+          ]
+        }
+      },
+      "fixture_role": "engineering_control",
+      "relationship": null
+    },
+    {
+      "id": "speech-uncertain",
+      "request": {
+        "contract_version": "1.0",
+        "operation": "extract_feedback",
+        "project_id": "SYNTHETIC-S10",
+        "request_id": "S10-speech-uncertain",
+        "input": {
+          "segments": [
+            {
+              "key": "s1",
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "S10-speech-uncertain-SYN-SRC-1",
+                "state_id": "S10-speech-uncertain-SYN-SRC-1-v1"
+              },
+              "text_ref": {
+                "kind": "transcript",
+                "id": "S10-speech-uncertain-SYN-TRANSCRIPT-1",
+                "state_id": "S10-speech-uncertain-SYN-TRANSCRIPT-1-v1"
+              },
+              "locator": {
+                "start": 0,
+                "end": 28
+              },
+              "reliability": "uncertain",
+              "time_range": {
+                "start_ms": 1000,
+                "end_ms": 1900
+              },
+              "text": "Хочу [неразборчиво] фильтры."
+            }
+          ],
+          "documents": [
+            {
+              "key": "d1",
+              "ref": {
+                "kind": "product_document",
+                "id": "S10-speech-uncertain-DOC-1",
+                "state_id": "S10-speech-uncertain-DOC-1-v1"
+              },
+              "text": "Список задач фильтруется по статусу и исполнителю. После повторного открытия фильтры сбрасываются.",
+              "locator": {
+                "start": 0,
+                "end": 98
+              }
+            },
+            {
+              "key": "d2",
+              "ref": {
+                "kind": "product_document",
+                "id": "S10-speech-uncertain-DOC-2",
+                "state_id": "S10-speech-uncertain-DOC-2-v1"
+              },
+              "text": "Звуковые уведомления об изменении статуса включены по умолчанию. Пользовательской настройки звука нет.",
+              "locator": {
+                "start": 0,
+                "end": 102
+              }
+            },
+            {
+              "key": "d3",
+              "ref": {
+                "kind": "product_document",
+                "id": "S10-speech-uncertain-DOC-3",
+                "state_id": "S10-speech-uncertain-DOC-3-v1"
+              },
+              "text": "Экспорт CSV доступен через меню «Отчёты → CSV».",
+              "locator": {
+                "start": 0,
+                "end": 47
+              }
+            },
+            {
+              "key": "d4",
+              "ref": {
+                "kind": "product_document",
+                "id": "S10-speech-uncertain-DOC-4",
+                "state_id": "S10-speech-uncertain-DOC-4-v1"
+              },
+              "text": "При закрытии формы создания задачи введённый текст теряется. Черновики не сохраняются.",
+              "locator": {
+                "start": 0,
+                "end": 86
+              }
+            }
+          ]
+        }
+      },
+      "trusted": {
+        "texts": [
+          {
+            "ref": {
+              "kind": "transcript",
+              "id": "S10-speech-uncertain-SYN-TRANSCRIPT-1",
+              "state_id": "S10-speech-uncertain-SYN-TRANSCRIPT-1-v1"
+            },
+            "source_ref": {
+              "kind": "feedback_source",
+              "id": "S10-speech-uncertain-SYN-SRC-1",
+              "state_id": "S10-speech-uncertain-SYN-SRC-1-v1"
+            },
+            "text": "Хочу [неразборчиво] фильтры.",
+            "reliability": "uncertain",
+            "time_range": {
+              "start_ms": 1000,
+              "end_ms": 1900
+            }
+          }
+        ],
+        "documents": [
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S10-speech-uncertain-DOC-1",
+              "state_id": "S10-speech-uncertain-DOC-1-v1"
+            },
+            "text": "Список задач фильтруется по статусу и исполнителю. После повторного открытия фильтры сбрасываются."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S10-speech-uncertain-DOC-2",
+              "state_id": "S10-speech-uncertain-DOC-2-v1"
+            },
+            "text": "Звуковые уведомления об изменении статуса включены по умолчанию. Пользовательской настройки звука нет."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S10-speech-uncertain-DOC-3",
+              "state_id": "S10-speech-uncertain-DOC-3-v1"
+            },
+            "text": "Экспорт CSV доступен через меню «Отчёты → CSV»."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S10-speech-uncertain-DOC-4",
+              "state_id": "S10-speech-uncertain-DOC-4-v1"
+            },
+            "text": "При закрытии формы создания задачи введённый текст теряется. Черновики не сохраняются."
+          }
+        ],
+        "project_id": "SYNTHETIC-S10",
+        "states": [
+          {
+            "kind": "feedback_source",
+            "id": "S10-speech-uncertain-SYN-SRC-1",
+            "state_id": "S10-speech-uncertain-SYN-SRC-1-v1"
+          },
+          {
+            "kind": "transcript",
+            "id": "S10-speech-uncertain-SYN-TRANSCRIPT-1",
+            "state_id": "S10-speech-uncertain-SYN-TRANSCRIPT-1-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S10-speech-uncertain-DOC-1",
+            "state_id": "S10-speech-uncertain-DOC-1-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S10-speech-uncertain-DOC-2",
+            "state_id": "S10-speech-uncertain-DOC-2-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S10-speech-uncertain-DOC-3",
+            "state_id": "S10-speech-uncertain-DOC-3-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S10-speech-uncertain-DOC-4",
+            "state_id": "S10-speech-uncertain-DOC-4-v1"
+          }
+        ]
+      },
+      "fixture_response": {
+        "coverage": [
+          {
+            "input_key": "s1",
+            "reviewed": true,
+            "disposition": "insufficient_information",
+            "reason": "Смысл зависит от ненадёжного участка."
+          }
+        ],
+        "uncertainties": [
+          {
+            "local_id": "u1",
+            "related": [
+              {
+                "origin": "input",
+                "key": "s1"
+              }
+            ],
+            "reason": "Ненадёжный транскрипт."
+          }
+        ],
+        "questions": [],
+        "result": {
+          "fragments": [],
+          "findings": []
+        }
+      },
+      "fixture_role": "engineering_control",
+      "relationship": null
+    },
+    {
+      "id": "independent-pdf",
+      "request": {
+        "contract_version": "1.0",
+        "operation": "extract_feedback",
+        "project_id": "SYNTHETIC-S10",
+        "request_id": "S10-independent-pdf",
+        "input": {
+          "segments": [
+            {
+              "key": "s1",
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "S10-independent-pdf-SYN-SRC-1",
+                "state_id": "S10-independent-pdf-SYN-SRC-1-v1"
+              },
+              "text_ref": {
+                "kind": "transcript",
+                "id": "S10-independent-pdf-SYN-TRANSCRIPT-1",
+                "state_id": "S10-independent-pdf-SYN-TRANSCRIPT-1-v1"
+              },
+              "locator": {
+                "start": 0,
+                "end": 28
+              },
+              "reliability": "usable",
+              "time_range": {
+                "start_ms": 1000,
+                "end_ms": 1900
+              },
+              "text": "Нужна выгрузка списка в PDF."
+            }
+          ],
+          "documents": [
+            {
+              "key": "d1",
+              "ref": {
+                "kind": "product_document",
+                "id": "S10-independent-pdf-DOC-1",
+                "state_id": "S10-independent-pdf-DOC-1-v1"
+              },
+              "text": "Список задач фильтруется по статусу и исполнителю. После повторного открытия фильтры сбрасываются.",
+              "locator": {
+                "start": 0,
+                "end": 98
+              }
+            },
+            {
+              "key": "d2",
+              "ref": {
+                "kind": "product_document",
+                "id": "S10-independent-pdf-DOC-2",
+                "state_id": "S10-independent-pdf-DOC-2-v1"
+              },
+              "text": "Звуковые уведомления об изменении статуса включены по умолчанию. Пользовательской настройки звука нет.",
+              "locator": {
+                "start": 0,
+                "end": 102
+              }
+            },
+            {
+              "key": "d3",
+              "ref": {
+                "kind": "product_document",
+                "id": "S10-independent-pdf-DOC-3",
+                "state_id": "S10-independent-pdf-DOC-3-v1"
+              },
+              "text": "Экспорт CSV доступен через меню «Отчёты → CSV».",
+              "locator": {
+                "start": 0,
+                "end": 47
+              }
+            },
+            {
+              "key": "d4",
+              "ref": {
+                "kind": "product_document",
+                "id": "S10-independent-pdf-DOC-4",
+                "state_id": "S10-independent-pdf-DOC-4-v1"
+              },
+              "text": "При закрытии формы создания задачи введённый текст теряется. Черновики не сохраняются.",
+              "locator": {
+                "start": 0,
+                "end": 86
+              }
+            }
+          ]
+        }
+      },
+      "trusted": {
+        "texts": [
+          {
+            "ref": {
+              "kind": "transcript",
+              "id": "S10-independent-pdf-SYN-TRANSCRIPT-1",
+              "state_id": "S10-independent-pdf-SYN-TRANSCRIPT-1-v1"
+            },
+            "source_ref": {
+              "kind": "feedback_source",
+              "id": "S10-independent-pdf-SYN-SRC-1",
+              "state_id": "S10-independent-pdf-SYN-SRC-1-v1"
+            },
+            "text": "Нужна выгрузка списка в PDF.",
+            "reliability": "usable",
+            "time_range": {
+              "start_ms": 1000,
+              "end_ms": 1900
+            }
+          }
+        ],
+        "documents": [
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S10-independent-pdf-DOC-1",
+              "state_id": "S10-independent-pdf-DOC-1-v1"
+            },
+            "text": "Список задач фильтруется по статусу и исполнителю. После повторного открытия фильтры сбрасываются."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S10-independent-pdf-DOC-2",
+              "state_id": "S10-independent-pdf-DOC-2-v1"
+            },
+            "text": "Звуковые уведомления об изменении статуса включены по умолчанию. Пользовательской настройки звука нет."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S10-independent-pdf-DOC-3",
+              "state_id": "S10-independent-pdf-DOC-3-v1"
+            },
+            "text": "Экспорт CSV доступен через меню «Отчёты → CSV»."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S10-independent-pdf-DOC-4",
+              "state_id": "S10-independent-pdf-DOC-4-v1"
+            },
+            "text": "При закрытии формы создания задачи введённый текст теряется. Черновики не сохраняются."
+          }
+        ],
+        "project_id": "SYNTHETIC-S10",
+        "states": [
+          {
+            "kind": "feedback_source",
+            "id": "S10-independent-pdf-SYN-SRC-1",
+            "state_id": "S10-independent-pdf-SYN-SRC-1-v1"
+          },
+          {
+            "kind": "transcript",
+            "id": "S10-independent-pdf-SYN-TRANSCRIPT-1",
+            "state_id": "S10-independent-pdf-SYN-TRANSCRIPT-1-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S10-independent-pdf-DOC-1",
+            "state_id": "S10-independent-pdf-DOC-1-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S10-independent-pdf-DOC-2",
+            "state_id": "S10-independent-pdf-DOC-2-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S10-independent-pdf-DOC-3",
+            "state_id": "S10-independent-pdf-DOC-3-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S10-independent-pdf-DOC-4",
+            "state_id": "S10-independent-pdf-DOC-4-v1"
+          }
+        ]
+      },
+      "fixture_response": {
+        "coverage": [
+          {
+            "input_key": "s1",
+            "reviewed": true,
+            "disposition": "completed"
+          }
+        ],
+        "uncertainties": [],
+        "questions": [],
+        "result": {
+          "fragments": [
+            {
+              "local_id": "fragment-1",
+              "segment_key": "s1",
+              "quote": "Нужна выгрузка списка в PDF.",
+              "occurrence": 0
+            }
+          ],
+          "findings": [
+            {
+              "local_id": "finding-1",
+              "text": "Нужна выгрузка списка в PDF.",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "fragment_ids": [
+                "fragment-1"
+              ],
+              "considered_keys": [
+                "s1"
+              ],
+              "context_keys": []
+            }
+          ]
+        }
+      },
+      "fixture_role": "engineering_control",
+      "relationship": null
+    },
+    {
+      "id": "partial-comparison",
+      "request": {
+        "contract_version": "1.0",
+        "operation": "verify_requirement",
+        "project_id": "SYNTHETIC-S10",
+        "request_id": "S10-partial-comparison",
+        "input": {
+          "target": {
+            "key": "target",
+            "ref": {
+              "kind": "requirement_revision",
+              "id": "S10-partial-comparison-SYN-REV-1",
+              "state_id": "S10-partial-comparison-SYN-REV-1-v1"
+            },
+            "requirement_id": "S10-partial-comparison-SYN-REQ-1",
+            "title": "Синтетический кандидат",
+            "text": "Сохранять выбранные статус и исполнителя при повторном открытии списка.",
+            "rationale": "Кандидат для диагностики инструмента.",
+            "evidence": [
+              {
+                "finding_key": "f1",
+                "links": [
+                  {
+                    "kind": "available",
+                    "fragment_key": "e1"
+                  }
+                ]
+              }
+            ],
+            "open_questions": []
+          },
+          "findings": [
+            {
+              "key": "f1",
+              "ref": {
+                "kind": "finding",
+                "id": "S10-partial-comparison-SYN-FINDING-1",
+                "state_id": "S10-partial-comparison-SYN-FINDING-1-v1"
+              },
+              "text": "Хочу, чтобы выбранные статус и исполнитель сохранялись после повторного открытия списка.",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "evidence": [
+                {
+                  "kind": "available",
+                  "fragment_key": "e1"
+                }
+              ],
+              "uncertainty_notes": [],
+              "open_questions": [],
+              "authorship": "ai"
+            }
+          ],
+          "fragments": [
+            {
+              "key": "e1",
+              "ref": {
+                "kind": "fragment",
+                "id": "S10-partial-comparison-SYN-FRAGMENT-1",
+                "state_id": "S10-partial-comparison-SYN-FRAGMENT-1-v1"
+              },
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "S10-partial-comparison-SYN-SRC-1",
+                "state_id": "S10-partial-comparison-SYN-SRC-1-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "S10-partial-comparison-SYN-SRC-1",
+                "state_id": "S10-partial-comparison-SYN-SRC-1-v1"
+              },
+              "quote": "Хочу, чтобы выбранные статус и исполнитель сохранялись после повторного открытия списка.",
+              "locator": {
+                "start": 0,
+                "end": 88
+              },
+              "reliability": "usable"
+            }
+          ],
+          "documents": [
+            {
+              "key": "d1",
+              "ref": {
+                "kind": "product_document",
+                "id": "S10-partial-comparison-DOC-1",
+                "state_id": "S10-partial-comparison-DOC-1-v1"
+              },
+              "text": "Список задач фильтруется по статусу и исполнителю. После повторного открытия фильтры сбрасываются.",
+              "locator": {
+                "start": 0,
+                "end": 98
+              }
+            },
+            {
+              "key": "d2",
+              "ref": {
+                "kind": "product_document",
+                "id": "S10-partial-comparison-DOC-2",
+                "state_id": "S10-partial-comparison-DOC-2-v1"
+              },
+              "text": "Звуковые уведомления об изменении статуса включены по умолчанию. Пользовательской настройки звука нет.",
+              "locator": {
+                "start": 0,
+                "end": 102
+              }
+            },
+            {
+              "key": "d3",
+              "ref": {
+                "kind": "product_document",
+                "id": "S10-partial-comparison-DOC-3",
+                "state_id": "S10-partial-comparison-DOC-3-v1"
+              },
+              "text": "Экспорт CSV доступен через меню «Отчёты → CSV».",
+              "locator": {
+                "start": 0,
+                "end": 47
+              }
+            },
+            {
+              "key": "d4",
+              "ref": {
+                "kind": "product_document",
+                "id": "S10-partial-comparison-DOC-4",
+                "state_id": "S10-partial-comparison-DOC-4-v1"
+              },
+              "text": "При закрытии формы создания задачи введённый текст теряется. Черновики не сохраняются.",
+              "locator": {
+                "start": 0,
+                "end": 86
+              }
+            }
+          ],
+          "comparisons": [
+            {
+              "key": "other1",
+              "ref": {
+                "kind": "requirement_revision",
+                "id": "S10-partial-comparison-SYN-REV-2",
+                "state_id": "S10-partial-comparison-SYN-REV-2-v1"
+              },
+              "requirement_id": "S10-partial-comparison-SYN-REQ-2",
+              "roles": [
+                "pending_change"
+              ],
+              "proposal_ref": {
+                "kind": "requirement_change_proposal",
+                "id": "S10-partial-comparison-SYN-PROPOSAL-2",
+                "state_id": "S10-partial-comparison-SYN-PROPOSAL-2-v1"
+              },
+              "title": "Сохранение фильтров",
+              "text": "Сохранять выбранные статус и исполнителя при повторном открытии списка."
+            }
+          ],
+          "comparison_scope": {
+            "extent": "project_snapshot",
+            "required_keys": [
+              "other1"
+            ]
+          },
+          "previous_checks": []
+        }
+      },
+      "trusted": {
+        "texts": [
+          {
+            "ref": {
+              "kind": "feedback_source",
+              "id": "S10-partial-comparison-SYN-SRC-1",
+              "state_id": "S10-partial-comparison-SYN-SRC-1-v1"
+            },
+            "source_ref": {
+              "kind": "feedback_source",
+              "id": "S10-partial-comparison-SYN-SRC-1",
+              "state_id": "S10-partial-comparison-SYN-SRC-1-v1"
+            },
+            "text": "Хочу, чтобы выбранные статус и исполнитель сохранялись после повторного открытия списка.",
+            "reliability": "usable"
+          }
+        ],
+        "documents": [
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S10-partial-comparison-DOC-1",
+              "state_id": "S10-partial-comparison-DOC-1-v1"
+            },
+            "text": "Список задач фильтруется по статусу и исполнителю. После повторного открытия фильтры сбрасываются."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S10-partial-comparison-DOC-2",
+              "state_id": "S10-partial-comparison-DOC-2-v1"
+            },
+            "text": "Звуковые уведомления об изменении статуса включены по умолчанию. Пользовательской настройки звука нет."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S10-partial-comparison-DOC-3",
+              "state_id": "S10-partial-comparison-DOC-3-v1"
+            },
+            "text": "Экспорт CSV доступен через меню «Отчёты → CSV»."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S10-partial-comparison-DOC-4",
+              "state_id": "S10-partial-comparison-DOC-4-v1"
+            },
+            "text": "При закрытии формы создания задачи введённый текст теряется. Черновики не сохраняются."
+          }
+        ],
+        "project_id": "SYNTHETIC-S10",
+        "states": [
+          {
+            "kind": "requirement_revision",
+            "id": "S10-partial-comparison-SYN-REV-1",
+            "state_id": "S10-partial-comparison-SYN-REV-1-v1"
+          },
+          {
+            "kind": "finding",
+            "id": "S10-partial-comparison-SYN-FINDING-1",
+            "state_id": "S10-partial-comparison-SYN-FINDING-1-v1"
+          },
+          {
+            "kind": "fragment",
+            "id": "S10-partial-comparison-SYN-FRAGMENT-1",
+            "state_id": "S10-partial-comparison-SYN-FRAGMENT-1-v1"
+          },
+          {
+            "kind": "feedback_source",
+            "id": "S10-partial-comparison-SYN-SRC-1",
+            "state_id": "S10-partial-comparison-SYN-SRC-1-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S10-partial-comparison-DOC-1",
+            "state_id": "S10-partial-comparison-DOC-1-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S10-partial-comparison-DOC-2",
+            "state_id": "S10-partial-comparison-DOC-2-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S10-partial-comparison-DOC-3",
+            "state_id": "S10-partial-comparison-DOC-3-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S10-partial-comparison-DOC-4",
+            "state_id": "S10-partial-comparison-DOC-4-v1"
+          },
+          {
+            "kind": "requirement_revision",
+            "id": "S10-partial-comparison-SYN-REV-2",
+            "state_id": "S10-partial-comparison-SYN-REV-2-v1"
+          },
+          {
+            "kind": "requirement_change_proposal",
+            "id": "S10-partial-comparison-SYN-PROPOSAL-2",
+            "state_id": "S10-partial-comparison-SYN-PROPOSAL-2-v1"
+          }
+        ],
+        "comparison_scope": {
+          "extent": "project_snapshot",
+          "required_keys": [
+            "other1"
+          ]
+        },
+        "comparisons": [
+          {
+            "key": "other1",
+            "ref": {
+              "kind": "requirement_revision",
+              "id": "S10-partial-comparison-SYN-REV-2",
+              "state_id": "S10-partial-comparison-SYN-REV-2-v1"
+            },
+            "requirement_id": "S10-partial-comparison-SYN-REQ-2",
+            "roles": [
+              "pending_change"
+            ],
+            "proposal_ref": {
+              "kind": "requirement_change_proposal",
+              "id": "S10-partial-comparison-SYN-PROPOSAL-2",
+              "state_id": "S10-partial-comparison-SYN-PROPOSAL-2-v1"
+            },
+            "title": "Сохранение фильтров",
+            "text": "Сохранять выбранные статус и исполнителя при повторном открытии списка."
+          }
+        ],
+        "prior_decision": null,
+        "change_context": null,
+        "followup": null,
+        "previous_checks": []
+      },
+      "fixture_response": {
+        "coverage": [
+          {
+            "input_key": "target",
+            "reviewed": true,
+            "disposition": "partially_processed",
+            "reason": "Сравнение other1 не выполнено."
+          }
+        ],
+        "uncertainties": [],
+        "questions": [],
+        "result": {
+          "checks": [
+            {
+              "kind": "support",
+              "conclusion": "no_issue_found",
+              "rationale": "В явно переданном синтетическом контексте замечание не обнаружено.",
+              "considered_keys": [
+                "target",
+                "f1",
+                "e1"
+              ]
+            },
+            {
+              "kind": "contradictions",
+              "conclusion": "no_issue_found",
+              "rationale": "В явно переданном синтетическом контексте замечание не обнаружено.",
+              "considered_keys": [
+                "target",
+                "f1",
+                "e1"
+              ]
+            },
+            {
+              "kind": "ambiguity",
+              "conclusion": "no_issue_found",
+              "rationale": "В явно переданном синтетическом контексте замечание не обнаружено.",
+              "considered_keys": [
+                "target",
+                "f1",
+                "e1"
+              ]
+            },
+            {
+              "kind": "duplicates",
+              "conclusion": "inconclusive",
+              "rationale": "other1 не рассмотрен.",
+              "considered_keys": []
+            }
+          ],
+          "issues": []
+        }
+      },
+      "fixture_role": "engineering_control",
+      "relationship": null
+    },
+    {
+      "id": "partial-found",
+      "request": {
+        "contract_version": "1.0",
+        "operation": "verify_requirement",
+        "project_id": "SYNTHETIC-S10",
+        "request_id": "S10-partial-found",
+        "input": {
+          "target": {
+            "key": "target",
+            "ref": {
+              "kind": "requirement_revision",
+              "id": "S10-partial-found-SYN-REV-1",
+              "state_id": "S10-partial-found-SYN-REV-1-v1"
+            },
+            "requirement_id": "S10-partial-found-SYN-REQ-1",
+            "title": "Синтетический кандидат",
+            "text": "Сохранять выбранные статус и исполнителя при повторном открытии списка.",
+            "rationale": "Кандидат для диагностики инструмента.",
+            "evidence": [
+              {
+                "finding_key": "f1",
+                "links": [
+                  {
+                    "kind": "available",
+                    "fragment_key": "e1"
+                  }
+                ]
+              }
+            ],
+            "open_questions": []
+          },
+          "findings": [
+            {
+              "key": "f1",
+              "ref": {
+                "kind": "finding",
+                "id": "S10-partial-found-SYN-FINDING-1",
+                "state_id": "S10-partial-found-SYN-FINDING-1-v1"
+              },
+              "text": "Хочу, чтобы выбранные статус и исполнитель сохранялись после повторного открытия списка.",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "evidence": [
+                {
+                  "kind": "available",
+                  "fragment_key": "e1"
+                }
+              ],
+              "uncertainty_notes": [],
+              "open_questions": [],
+              "authorship": "ai"
+            }
+          ],
+          "fragments": [
+            {
+              "key": "e1",
+              "ref": {
+                "kind": "fragment",
+                "id": "S10-partial-found-SYN-FRAGMENT-1",
+                "state_id": "S10-partial-found-SYN-FRAGMENT-1-v1"
+              },
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "S10-partial-found-SYN-SRC-1",
+                "state_id": "S10-partial-found-SYN-SRC-1-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "S10-partial-found-SYN-SRC-1",
+                "state_id": "S10-partial-found-SYN-SRC-1-v1"
+              },
+              "quote": "Хочу, чтобы выбранные статус и исполнитель сохранялись после повторного открытия списка.",
+              "locator": {
+                "start": 0,
+                "end": 88
+              },
+              "reliability": "usable"
+            }
+          ],
+          "documents": [
+            {
+              "key": "d1",
+              "ref": {
+                "kind": "product_document",
+                "id": "S10-partial-found-DOC-1",
+                "state_id": "S10-partial-found-DOC-1-v1"
+              },
+              "text": "Список задач фильтруется по статусу и исполнителю. После повторного открытия фильтры сбрасываются.",
+              "locator": {
+                "start": 0,
+                "end": 98
+              }
+            },
+            {
+              "key": "d2",
+              "ref": {
+                "kind": "product_document",
+                "id": "S10-partial-found-DOC-2",
+                "state_id": "S10-partial-found-DOC-2-v1"
+              },
+              "text": "Звуковые уведомления об изменении статуса включены по умолчанию. Пользовательской настройки звука нет.",
+              "locator": {
+                "start": 0,
+                "end": 102
+              }
+            },
+            {
+              "key": "d3",
+              "ref": {
+                "kind": "product_document",
+                "id": "S10-partial-found-DOC-3",
+                "state_id": "S10-partial-found-DOC-3-v1"
+              },
+              "text": "Экспорт CSV доступен через меню «Отчёты → CSV».",
+              "locator": {
+                "start": 0,
+                "end": 47
+              }
+            },
+            {
+              "key": "d4",
+              "ref": {
+                "kind": "product_document",
+                "id": "S10-partial-found-DOC-4",
+                "state_id": "S10-partial-found-DOC-4-v1"
+              },
+              "text": "При закрытии формы создания задачи введённый текст теряется. Черновики не сохраняются.",
+              "locator": {
+                "start": 0,
+                "end": 86
+              }
+            }
+          ],
+          "comparisons": [
+            {
+              "key": "other1",
+              "ref": {
+                "kind": "requirement_revision",
+                "id": "S10-partial-found-SYN-REV-2",
+                "state_id": "S10-partial-found-SYN-REV-2-v1"
+              },
+              "requirement_id": "S10-partial-found-SYN-REQ-2",
+              "roles": [
+                "pending_change"
+              ],
+              "proposal_ref": {
+                "kind": "requirement_change_proposal",
+                "id": "S10-partial-found-SYN-PROPOSAL-2",
+                "state_id": "S10-partial-found-SYN-PROPOSAL-2-v1"
+              },
+              "title": "Сохранение фильтров",
+              "text": "Сохранять выбранные статус и исполнителя при повторном открытии списка."
+            },
+            {
+              "key": "other2",
+              "ref": {
+                "kind": "requirement_revision",
+                "id": "S10-partial-found-SYN-REV-3",
+                "state_id": "S10-partial-found-SYN-REV-3-v1"
+              },
+              "requirement_id": "S10-partial-found-SYN-REQ-3",
+              "roles": [
+                "current"
+              ],
+              "title": "Сохранение фильтров",
+              "text": "Сохранять выбранные статус и исполнителя при повторном открытии списка."
+            }
+          ],
+          "comparison_scope": {
+            "extent": "project_snapshot",
+            "required_keys": [
+              "other1",
+              "other2"
+            ]
+          },
+          "previous_checks": []
+        }
+      },
+      "trusted": {
+        "texts": [
+          {
+            "ref": {
+              "kind": "feedback_source",
+              "id": "S10-partial-found-SYN-SRC-1",
+              "state_id": "S10-partial-found-SYN-SRC-1-v1"
+            },
+            "source_ref": {
+              "kind": "feedback_source",
+              "id": "S10-partial-found-SYN-SRC-1",
+              "state_id": "S10-partial-found-SYN-SRC-1-v1"
+            },
+            "text": "Хочу, чтобы выбранные статус и исполнитель сохранялись после повторного открытия списка.",
+            "reliability": "usable"
+          }
+        ],
+        "documents": [
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S10-partial-found-DOC-1",
+              "state_id": "S10-partial-found-DOC-1-v1"
+            },
+            "text": "Список задач фильтруется по статусу и исполнителю. После повторного открытия фильтры сбрасываются."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S10-partial-found-DOC-2",
+              "state_id": "S10-partial-found-DOC-2-v1"
+            },
+            "text": "Звуковые уведомления об изменении статуса включены по умолчанию. Пользовательской настройки звука нет."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S10-partial-found-DOC-3",
+              "state_id": "S10-partial-found-DOC-3-v1"
+            },
+            "text": "Экспорт CSV доступен через меню «Отчёты → CSV»."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S10-partial-found-DOC-4",
+              "state_id": "S10-partial-found-DOC-4-v1"
+            },
+            "text": "При закрытии формы создания задачи введённый текст теряется. Черновики не сохраняются."
+          }
+        ],
+        "project_id": "SYNTHETIC-S10",
+        "states": [
+          {
+            "kind": "requirement_revision",
+            "id": "S10-partial-found-SYN-REV-1",
+            "state_id": "S10-partial-found-SYN-REV-1-v1"
+          },
+          {
+            "kind": "finding",
+            "id": "S10-partial-found-SYN-FINDING-1",
+            "state_id": "S10-partial-found-SYN-FINDING-1-v1"
+          },
+          {
+            "kind": "fragment",
+            "id": "S10-partial-found-SYN-FRAGMENT-1",
+            "state_id": "S10-partial-found-SYN-FRAGMENT-1-v1"
+          },
+          {
+            "kind": "feedback_source",
+            "id": "S10-partial-found-SYN-SRC-1",
+            "state_id": "S10-partial-found-SYN-SRC-1-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S10-partial-found-DOC-1",
+            "state_id": "S10-partial-found-DOC-1-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S10-partial-found-DOC-2",
+            "state_id": "S10-partial-found-DOC-2-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S10-partial-found-DOC-3",
+            "state_id": "S10-partial-found-DOC-3-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S10-partial-found-DOC-4",
+            "state_id": "S10-partial-found-DOC-4-v1"
+          },
+          {
+            "kind": "requirement_revision",
+            "id": "S10-partial-found-SYN-REV-2",
+            "state_id": "S10-partial-found-SYN-REV-2-v1"
+          },
+          {
+            "kind": "requirement_change_proposal",
+            "id": "S10-partial-found-SYN-PROPOSAL-2",
+            "state_id": "S10-partial-found-SYN-PROPOSAL-2-v1"
+          },
+          {
+            "kind": "requirement_revision",
+            "id": "S10-partial-found-SYN-REV-3",
+            "state_id": "S10-partial-found-SYN-REV-3-v1"
+          }
+        ],
+        "comparison_scope": {
+          "extent": "project_snapshot",
+          "required_keys": [
+            "other1",
+            "other2"
+          ]
+        },
+        "comparisons": [
+          {
+            "key": "other1",
+            "ref": {
+              "kind": "requirement_revision",
+              "id": "S10-partial-found-SYN-REV-2",
+              "state_id": "S10-partial-found-SYN-REV-2-v1"
+            },
+            "requirement_id": "S10-partial-found-SYN-REQ-2",
+            "roles": [
+              "pending_change"
+            ],
+            "proposal_ref": {
+              "kind": "requirement_change_proposal",
+              "id": "S10-partial-found-SYN-PROPOSAL-2",
+              "state_id": "S10-partial-found-SYN-PROPOSAL-2-v1"
+            },
+            "title": "Сохранение фильтров",
+            "text": "Сохранять выбранные статус и исполнителя при повторном открытии списка."
+          },
+          {
+            "key": "other2",
+            "ref": {
+              "kind": "requirement_revision",
+              "id": "S10-partial-found-SYN-REV-3",
+              "state_id": "S10-partial-found-SYN-REV-3-v1"
+            },
+            "requirement_id": "S10-partial-found-SYN-REQ-3",
+            "roles": [
+              "current"
+            ],
+            "title": "Сохранение фильтров",
+            "text": "Сохранять выбранные статус и исполнителя при повторном открытии списка."
+          }
+        ],
+        "prior_decision": null,
+        "change_context": null,
+        "followup": null,
+        "previous_checks": []
+      },
+      "fixture_response": {
+        "coverage": [
+          {
+            "input_key": "target",
+            "reviewed": true,
+            "disposition": "partially_processed",
+            "reason": "other2 не рассмотрен; найденное замечание сохраняется."
+          }
+        ],
+        "uncertainties": [],
+        "questions": [],
+        "result": {
+          "checks": [
+            {
+              "kind": "support",
+              "conclusion": "no_issue_found",
+              "rationale": "В явно переданном синтетическом контексте замечание не обнаружено.",
+              "considered_keys": [
+                "target",
+                "f1",
+                "e1"
+              ]
+            },
+            {
+              "kind": "contradictions",
+              "conclusion": "no_issue_found",
+              "rationale": "В явно переданном синтетическом контексте замечание не обнаружено.",
+              "considered_keys": [
+                "target",
+                "f1",
+                "e1"
+              ]
+            },
+            {
+              "kind": "ambiguity",
+              "conclusion": "no_issue_found",
+              "rationale": "В явно переданном синтетическом контексте замечание не обнаружено.",
+              "considered_keys": [
+                "target",
+                "f1",
+                "e1"
+              ]
+            },
+            {
+              "kind": "duplicates",
+              "conclusion": "issues_found",
+              "rationale": "other1 может дублировать цель.",
+              "considered_keys": [
+                "other1"
+              ]
+            }
+          ],
+          "issues": [
+            {
+              "local_id": "issue-1",
+              "category": "possible_duplicate",
+              "text": "other1 может дублировать цель.",
+              "reason": "other1 может дублировать цель.",
+              "severity": "medium",
+              "blocking": true,
+              "blocking_reason": "Существенная причина требует уточнения до нового утверждения.",
+              "related": [
+                {
+                  "origin": "input",
+                  "key": "target"
+                },
+                {
+                  "origin": "input",
+                  "key": "other1"
+                }
+              ],
+              "question_ids": []
+            }
+          ]
+        }
+      },
+      "fixture_role": "engineering_control",
+      "relationship": null
+    }
+  ]
+}

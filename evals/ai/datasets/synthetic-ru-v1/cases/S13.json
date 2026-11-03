@@ -1,0 +1,1545 @@
+{
+  "id": "S13",
+  "version": "1.1.0",
+  "synthetic": true,
+  "title": "Редакции, область дублей и старый блокер",
+  "traceability": {
+    "requirements": [
+      "FR-019",
+      "FR-025",
+      "FR-026",
+      "FR-027"
+    ],
+    "acceptance_criteria": [
+      "AC-06",
+      "AC-08"
+    ],
+    "contract_rules": [
+      "AP-09",
+      "AP-10",
+      "AP-12",
+      "AP-14"
+    ]
+  },
+  "annotation": {
+    "version": "0.2.0",
+    "status": "preliminary",
+    "required_meanings": [
+      "Собственная прежняя редакция не отдельный дубль; чужое предложение рассматривается как возможный дубль, а не автоматически установленное совпадение; selected ограничивает вывод."
+    ],
+    "allowed_alternatives": [
+      "Допустим вывод possible_duplicate и вопрос человеку: смысловое сходство может оказаться самостоятельной доработкой после уточнения."
+    ],
+    "forbidden_claims": [
+      "Глобальный вывод из selected; объявление установленного дубля только по сходству чужого предложения; автоматическое закрытие прежнего блокера или перенос Approved."
+    ],
+    "expert_questions": [
+      "Чужое предложение — дубль или самостоятельная доработка? Старый блокер закрывает только прикладной процесс."
+    ]
+  },
+  "examples": [
+    {
+      "id": "own-revision",
+      "request": {
+        "contract_version": "1.0",
+        "operation": "verify_requirement",
+        "project_id": "SYNTHETIC-S13",
+        "request_id": "S13-own-revision",
+        "input": {
+          "target": {
+            "key": "target",
+            "ref": {
+              "kind": "requirement_revision",
+              "id": "S13-own-revision-SYN-REV-1",
+              "state_id": "S13-own-revision-SYN-REV-1-v1"
+            },
+            "requirement_id": "S13-own-revision-SYN-REQ-1",
+            "title": "Синтетический кандидат",
+            "text": "Сохранять выбранные статус и исполнителя при повторном открытии списка.",
+            "rationale": "Кандидат для диагностики инструмента.",
+            "evidence": [
+              {
+                "finding_key": "f1",
+                "links": [
+                  {
+                    "kind": "available",
+                    "fragment_key": "e1"
+                  }
+                ]
+              }
+            ],
+            "open_questions": []
+          },
+          "findings": [
+            {
+              "key": "f1",
+              "ref": {
+                "kind": "finding",
+                "id": "S13-own-revision-SYN-FINDING-1",
+                "state_id": "S13-own-revision-SYN-FINDING-1-v1"
+              },
+              "text": "Хочу, чтобы выбранные статус и исполнитель сохранялись после повторного открытия списка.",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "evidence": [
+                {
+                  "kind": "available",
+                  "fragment_key": "e1"
+                }
+              ],
+              "uncertainty_notes": [],
+              "open_questions": [],
+              "authorship": "ai"
+            }
+          ],
+          "fragments": [
+            {
+              "key": "e1",
+              "ref": {
+                "kind": "fragment",
+                "id": "S13-own-revision-SYN-FRAGMENT-1",
+                "state_id": "S13-own-revision-SYN-FRAGMENT-1-v1"
+              },
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "S13-own-revision-SYN-SRC-1",
+                "state_id": "S13-own-revision-SYN-SRC-1-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "S13-own-revision-SYN-SRC-1",
+                "state_id": "S13-own-revision-SYN-SRC-1-v1"
+              },
+              "quote": "Хочу, чтобы выбранные статус и исполнитель сохранялись после повторного открытия списка.",
+              "locator": {
+                "start": 0,
+                "end": 88
+              },
+              "reliability": "usable"
+            }
+          ],
+          "documents": [
+            {
+              "key": "d1",
+              "ref": {
+                "kind": "product_document",
+                "id": "S13-own-revision-DOC-1",
+                "state_id": "S13-own-revision-DOC-1-v1"
+              },
+              "text": "Список задач фильтруется по статусу и исполнителю. После повторного открытия фильтры сбрасываются.",
+              "locator": {
+                "start": 0,
+                "end": 98
+              }
+            },
+            {
+              "key": "d2",
+              "ref": {
+                "kind": "product_document",
+                "id": "S13-own-revision-DOC-2",
+                "state_id": "S13-own-revision-DOC-2-v1"
+              },
+              "text": "Звуковые уведомления об изменении статуса включены по умолчанию. Пользовательской настройки звука нет.",
+              "locator": {
+                "start": 0,
+                "end": 102
+              }
+            },
+            {
+              "key": "d3",
+              "ref": {
+                "kind": "product_document",
+                "id": "S13-own-revision-DOC-3",
+                "state_id": "S13-own-revision-DOC-3-v1"
+              },
+              "text": "Экспорт CSV доступен через меню «Отчёты → CSV».",
+              "locator": {
+                "start": 0,
+                "end": 47
+              }
+            },
+            {
+              "key": "d4",
+              "ref": {
+                "kind": "product_document",
+                "id": "S13-own-revision-DOC-4",
+                "state_id": "S13-own-revision-DOC-4-v1"
+              },
+              "text": "При закрытии формы создания задачи введённый текст теряется. Черновики не сохраняются.",
+              "locator": {
+                "start": 0,
+                "end": 86
+              }
+            }
+          ],
+          "comparisons": [
+            {
+              "key": "other1",
+              "ref": {
+                "kind": "requirement_revision",
+                "id": "S13-own-revision-SYN-REV-2",
+                "state_id": "S13-own-revision-SYN-REV-2-v1"
+              },
+              "requirement_id": "S13-own-revision-SYN-REQ-1",
+              "roles": [
+                "current"
+              ],
+              "title": "Сохранение фильтров",
+              "text": "Сохранять выбранные статус и исполнителя при повторном открытии списка."
+            }
+          ],
+          "comparison_scope": {
+            "extent": "project_snapshot",
+            "required_keys": [
+              "other1"
+            ]
+          },
+          "previous_checks": [],
+          "change_context": {
+            "base_revision_ref": {
+              "kind": "requirement_revision",
+              "id": "S13-own-revision-SYN-REV-2",
+              "state_id": "S13-own-revision-SYN-REV-2-v1"
+            },
+            "reason": "Проверка новой редакции того же требования."
+          }
+        }
+      },
+      "trusted": {
+        "texts": [
+          {
+            "ref": {
+              "kind": "feedback_source",
+              "id": "S13-own-revision-SYN-SRC-1",
+              "state_id": "S13-own-revision-SYN-SRC-1-v1"
+            },
+            "source_ref": {
+              "kind": "feedback_source",
+              "id": "S13-own-revision-SYN-SRC-1",
+              "state_id": "S13-own-revision-SYN-SRC-1-v1"
+            },
+            "text": "Хочу, чтобы выбранные статус и исполнитель сохранялись после повторного открытия списка.",
+            "reliability": "usable"
+          }
+        ],
+        "documents": [
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S13-own-revision-DOC-1",
+              "state_id": "S13-own-revision-DOC-1-v1"
+            },
+            "text": "Список задач фильтруется по статусу и исполнителю. После повторного открытия фильтры сбрасываются."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S13-own-revision-DOC-2",
+              "state_id": "S13-own-revision-DOC-2-v1"
+            },
+            "text": "Звуковые уведомления об изменении статуса включены по умолчанию. Пользовательской настройки звука нет."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S13-own-revision-DOC-3",
+              "state_id": "S13-own-revision-DOC-3-v1"
+            },
+            "text": "Экспорт CSV доступен через меню «Отчёты → CSV»."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S13-own-revision-DOC-4",
+              "state_id": "S13-own-revision-DOC-4-v1"
+            },
+            "text": "При закрытии формы создания задачи введённый текст теряется. Черновики не сохраняются."
+          }
+        ],
+        "project_id": "SYNTHETIC-S13",
+        "states": [
+          {
+            "kind": "requirement_revision",
+            "id": "S13-own-revision-SYN-REV-1",
+            "state_id": "S13-own-revision-SYN-REV-1-v1"
+          },
+          {
+            "kind": "finding",
+            "id": "S13-own-revision-SYN-FINDING-1",
+            "state_id": "S13-own-revision-SYN-FINDING-1-v1"
+          },
+          {
+            "kind": "fragment",
+            "id": "S13-own-revision-SYN-FRAGMENT-1",
+            "state_id": "S13-own-revision-SYN-FRAGMENT-1-v1"
+          },
+          {
+            "kind": "feedback_source",
+            "id": "S13-own-revision-SYN-SRC-1",
+            "state_id": "S13-own-revision-SYN-SRC-1-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S13-own-revision-DOC-1",
+            "state_id": "S13-own-revision-DOC-1-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S13-own-revision-DOC-2",
+            "state_id": "S13-own-revision-DOC-2-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S13-own-revision-DOC-3",
+            "state_id": "S13-own-revision-DOC-3-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S13-own-revision-DOC-4",
+            "state_id": "S13-own-revision-DOC-4-v1"
+          },
+          {
+            "kind": "requirement_revision",
+            "id": "S13-own-revision-SYN-REV-2",
+            "state_id": "S13-own-revision-SYN-REV-2-v1"
+          }
+        ],
+        "comparison_scope": {
+          "extent": "project_snapshot",
+          "required_keys": [
+            "other1"
+          ]
+        },
+        "comparisons": [
+          {
+            "key": "other1",
+            "ref": {
+              "kind": "requirement_revision",
+              "id": "S13-own-revision-SYN-REV-2",
+              "state_id": "S13-own-revision-SYN-REV-2-v1"
+            },
+            "requirement_id": "S13-own-revision-SYN-REQ-1",
+            "roles": [
+              "current"
+            ],
+            "title": "Сохранение фильтров",
+            "text": "Сохранять выбранные статус и исполнителя при повторном открытии списка."
+          }
+        ],
+        "prior_decision": null,
+        "change_context": {
+          "base_revision_ref": {
+            "kind": "requirement_revision",
+            "id": "S13-own-revision-SYN-REV-2",
+            "state_id": "S13-own-revision-SYN-REV-2-v1"
+          },
+          "reason": "Проверка новой редакции того же требования."
+        },
+        "followup": null,
+        "previous_checks": []
+      },
+      "fixture_response": {
+        "coverage": [
+          {
+            "input_key": "target",
+            "reviewed": true,
+            "disposition": "completed"
+          }
+        ],
+        "uncertainties": [],
+        "questions": [],
+        "result": {
+          "checks": [
+            {
+              "kind": "support",
+              "conclusion": "no_issue_found",
+              "rationale": "В явно переданном синтетическом контексте замечание не обнаружено.",
+              "considered_keys": [
+                "target",
+                "f1",
+                "e1"
+              ]
+            },
+            {
+              "kind": "contradictions",
+              "conclusion": "no_issue_found",
+              "rationale": "В явно переданном синтетическом контексте замечание не обнаружено.",
+              "considered_keys": [
+                "target",
+                "f1",
+                "e1"
+              ]
+            },
+            {
+              "kind": "ambiguity",
+              "conclusion": "no_issue_found",
+              "rationale": "В явно переданном синтетическом контексте замечание не обнаружено.",
+              "considered_keys": [
+                "target",
+                "f1",
+                "e1"
+              ]
+            },
+            {
+              "kind": "duplicates",
+              "conclusion": "no_issue_found",
+              "rationale": "В явно переданном синтетическом контексте замечание не обнаружено.",
+              "considered_keys": [
+                "other1"
+              ]
+            }
+          ],
+          "issues": []
+        }
+      },
+      "fixture_role": "engineering_control",
+      "relationship": null
+    },
+    {
+      "id": "other-proposal",
+      "request": {
+        "contract_version": "1.0",
+        "operation": "verify_requirement",
+        "project_id": "SYNTHETIC-S13",
+        "request_id": "S13-other-proposal",
+        "input": {
+          "target": {
+            "key": "target",
+            "ref": {
+              "kind": "requirement_revision",
+              "id": "S13-other-proposal-SYN-REV-1",
+              "state_id": "S13-other-proposal-SYN-REV-1-v1"
+            },
+            "requirement_id": "S13-other-proposal-SYN-REQ-1",
+            "title": "Синтетический кандидат",
+            "text": "Сохранять выбранные статус и исполнителя при повторном открытии списка.",
+            "rationale": "Кандидат для диагностики инструмента.",
+            "evidence": [
+              {
+                "finding_key": "f1",
+                "links": [
+                  {
+                    "kind": "available",
+                    "fragment_key": "e1"
+                  }
+                ]
+              }
+            ],
+            "open_questions": []
+          },
+          "findings": [
+            {
+              "key": "f1",
+              "ref": {
+                "kind": "finding",
+                "id": "S13-other-proposal-SYN-FINDING-1",
+                "state_id": "S13-other-proposal-SYN-FINDING-1-v1"
+              },
+              "text": "Хочу, чтобы выбранные статус и исполнитель сохранялись после повторного открытия списка.",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "evidence": [
+                {
+                  "kind": "available",
+                  "fragment_key": "e1"
+                }
+              ],
+              "uncertainty_notes": [],
+              "open_questions": [],
+              "authorship": "ai"
+            }
+          ],
+          "fragments": [
+            {
+              "key": "e1",
+              "ref": {
+                "kind": "fragment",
+                "id": "S13-other-proposal-SYN-FRAGMENT-1",
+                "state_id": "S13-other-proposal-SYN-FRAGMENT-1-v1"
+              },
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "S13-other-proposal-SYN-SRC-1",
+                "state_id": "S13-other-proposal-SYN-SRC-1-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "S13-other-proposal-SYN-SRC-1",
+                "state_id": "S13-other-proposal-SYN-SRC-1-v1"
+              },
+              "quote": "Хочу, чтобы выбранные статус и исполнитель сохранялись после повторного открытия списка.",
+              "locator": {
+                "start": 0,
+                "end": 88
+              },
+              "reliability": "usable"
+            }
+          ],
+          "documents": [
+            {
+              "key": "d1",
+              "ref": {
+                "kind": "product_document",
+                "id": "S13-other-proposal-DOC-1",
+                "state_id": "S13-other-proposal-DOC-1-v1"
+              },
+              "text": "Список задач фильтруется по статусу и исполнителю. После повторного открытия фильтры сбрасываются.",
+              "locator": {
+                "start": 0,
+                "end": 98
+              }
+            },
+            {
+              "key": "d2",
+              "ref": {
+                "kind": "product_document",
+                "id": "S13-other-proposal-DOC-2",
+                "state_id": "S13-other-proposal-DOC-2-v1"
+              },
+              "text": "Звуковые уведомления об изменении статуса включены по умолчанию. Пользовательской настройки звука нет.",
+              "locator": {
+                "start": 0,
+                "end": 102
+              }
+            },
+            {
+              "key": "d3",
+              "ref": {
+                "kind": "product_document",
+                "id": "S13-other-proposal-DOC-3",
+                "state_id": "S13-other-proposal-DOC-3-v1"
+              },
+              "text": "Экспорт CSV доступен через меню «Отчёты → CSV».",
+              "locator": {
+                "start": 0,
+                "end": 47
+              }
+            },
+            {
+              "key": "d4",
+              "ref": {
+                "kind": "product_document",
+                "id": "S13-other-proposal-DOC-4",
+                "state_id": "S13-other-proposal-DOC-4-v1"
+              },
+              "text": "При закрытии формы создания задачи введённый текст теряется. Черновики не сохраняются.",
+              "locator": {
+                "start": 0,
+                "end": 86
+              }
+            }
+          ],
+          "comparisons": [
+            {
+              "key": "other1",
+              "ref": {
+                "kind": "requirement_revision",
+                "id": "S13-other-proposal-SYN-REV-2",
+                "state_id": "S13-other-proposal-SYN-REV-2-v1"
+              },
+              "requirement_id": "S13-other-proposal-SYN-REQ-2",
+              "roles": [
+                "pending_change"
+              ],
+              "proposal_ref": {
+                "kind": "requirement_change_proposal",
+                "id": "S13-other-proposal-SYN-PROPOSAL-2",
+                "state_id": "S13-other-proposal-SYN-PROPOSAL-2-v1"
+              },
+              "title": "Сохранение фильтров",
+              "text": "Сохранять выбранные статус и исполнителя при повторном открытии списка."
+            }
+          ],
+          "comparison_scope": {
+            "extent": "project_snapshot",
+            "required_keys": [
+              "other1"
+            ]
+          },
+          "previous_checks": []
+        }
+      },
+      "trusted": {
+        "texts": [
+          {
+            "ref": {
+              "kind": "feedback_source",
+              "id": "S13-other-proposal-SYN-SRC-1",
+              "state_id": "S13-other-proposal-SYN-SRC-1-v1"
+            },
+            "source_ref": {
+              "kind": "feedback_source",
+              "id": "S13-other-proposal-SYN-SRC-1",
+              "state_id": "S13-other-proposal-SYN-SRC-1-v1"
+            },
+            "text": "Хочу, чтобы выбранные статус и исполнитель сохранялись после повторного открытия списка.",
+            "reliability": "usable"
+          }
+        ],
+        "documents": [
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S13-other-proposal-DOC-1",
+              "state_id": "S13-other-proposal-DOC-1-v1"
+            },
+            "text": "Список задач фильтруется по статусу и исполнителю. После повторного открытия фильтры сбрасываются."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S13-other-proposal-DOC-2",
+              "state_id": "S13-other-proposal-DOC-2-v1"
+            },
+            "text": "Звуковые уведомления об изменении статуса включены по умолчанию. Пользовательской настройки звука нет."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S13-other-proposal-DOC-3",
+              "state_id": "S13-other-proposal-DOC-3-v1"
+            },
+            "text": "Экспорт CSV доступен через меню «Отчёты → CSV»."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S13-other-proposal-DOC-4",
+              "state_id": "S13-other-proposal-DOC-4-v1"
+            },
+            "text": "При закрытии формы создания задачи введённый текст теряется. Черновики не сохраняются."
+          }
+        ],
+        "project_id": "SYNTHETIC-S13",
+        "states": [
+          {
+            "kind": "requirement_revision",
+            "id": "S13-other-proposal-SYN-REV-1",
+            "state_id": "S13-other-proposal-SYN-REV-1-v1"
+          },
+          {
+            "kind": "finding",
+            "id": "S13-other-proposal-SYN-FINDING-1",
+            "state_id": "S13-other-proposal-SYN-FINDING-1-v1"
+          },
+          {
+            "kind": "fragment",
+            "id": "S13-other-proposal-SYN-FRAGMENT-1",
+            "state_id": "S13-other-proposal-SYN-FRAGMENT-1-v1"
+          },
+          {
+            "kind": "feedback_source",
+            "id": "S13-other-proposal-SYN-SRC-1",
+            "state_id": "S13-other-proposal-SYN-SRC-1-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S13-other-proposal-DOC-1",
+            "state_id": "S13-other-proposal-DOC-1-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S13-other-proposal-DOC-2",
+            "state_id": "S13-other-proposal-DOC-2-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S13-other-proposal-DOC-3",
+            "state_id": "S13-other-proposal-DOC-3-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S13-other-proposal-DOC-4",
+            "state_id": "S13-other-proposal-DOC-4-v1"
+          },
+          {
+            "kind": "requirement_revision",
+            "id": "S13-other-proposal-SYN-REV-2",
+            "state_id": "S13-other-proposal-SYN-REV-2-v1"
+          },
+          {
+            "kind": "requirement_change_proposal",
+            "id": "S13-other-proposal-SYN-PROPOSAL-2",
+            "state_id": "S13-other-proposal-SYN-PROPOSAL-2-v1"
+          }
+        ],
+        "comparison_scope": {
+          "extent": "project_snapshot",
+          "required_keys": [
+            "other1"
+          ]
+        },
+        "comparisons": [
+          {
+            "key": "other1",
+            "ref": {
+              "kind": "requirement_revision",
+              "id": "S13-other-proposal-SYN-REV-2",
+              "state_id": "S13-other-proposal-SYN-REV-2-v1"
+            },
+            "requirement_id": "S13-other-proposal-SYN-REQ-2",
+            "roles": [
+              "pending_change"
+            ],
+            "proposal_ref": {
+              "kind": "requirement_change_proposal",
+              "id": "S13-other-proposal-SYN-PROPOSAL-2",
+              "state_id": "S13-other-proposal-SYN-PROPOSAL-2-v1"
+            },
+            "title": "Сохранение фильтров",
+            "text": "Сохранять выбранные статус и исполнителя при повторном открытии списка."
+          }
+        ],
+        "prior_decision": null,
+        "change_context": null,
+        "followup": null,
+        "previous_checks": []
+      },
+      "fixture_response": {
+        "coverage": [
+          {
+            "input_key": "target",
+            "reviewed": true,
+            "disposition": "completed"
+          }
+        ],
+        "uncertainties": [],
+        "questions": [
+          {
+            "local_id": "question-1",
+            "text": "Это одна доработка или разные задачи, требующие отдельных требований?",
+            "reason": "Сходство не устанавливает дубль автоматически.",
+            "related": [
+              {
+                "origin": "input",
+                "key": "target"
+              }
+            ],
+            "blocking": true
+          }
+        ],
+        "result": {
+          "checks": [
+            {
+              "kind": "support",
+              "conclusion": "no_issue_found",
+              "rationale": "В явно переданном синтетическом контексте замечание не обнаружено.",
+              "considered_keys": [
+                "target",
+                "f1",
+                "e1"
+              ]
+            },
+            {
+              "kind": "contradictions",
+              "conclusion": "no_issue_found",
+              "rationale": "В явно переданном синтетическом контексте замечание не обнаружено.",
+              "considered_keys": [
+                "target",
+                "f1",
+                "e1"
+              ]
+            },
+            {
+              "kind": "ambiguity",
+              "conclusion": "no_issue_found",
+              "rationale": "В явно переданном синтетическом контексте замечание не обнаружено.",
+              "considered_keys": [
+                "target",
+                "f1",
+                "e1"
+              ]
+            },
+            {
+              "kind": "duplicates",
+              "conclusion": "issues_found",
+              "rationale": "Текст предложения другого требования сходен по смыслу; это возможный дубль, окончательное различение требует решения человека.",
+              "considered_keys": [
+                "other1"
+              ]
+            }
+          ],
+          "issues": [
+            {
+              "local_id": "issue-1",
+              "category": "possible_duplicate",
+              "text": "Текст предложения другого требования сходен по смыслу; это возможный дубль, окончательное различение требует решения человека.",
+              "reason": "Текст предложения другого требования сходен по смыслу; это возможный дубль, окончательное различение требует решения человека.",
+              "severity": "medium",
+              "blocking": true,
+              "blocking_reason": "Существенная причина требует уточнения до нового утверждения.",
+              "related": [
+                {
+                  "origin": "input",
+                  "key": "target"
+                },
+                {
+                  "origin": "input",
+                  "key": "other1"
+                }
+              ],
+              "question_ids": [
+                "question-1"
+              ]
+            }
+          ]
+        }
+      },
+      "fixture_role": "engineering_control",
+      "relationship": null
+    },
+    {
+      "id": "selected",
+      "request": {
+        "contract_version": "1.0",
+        "operation": "verify_requirement",
+        "project_id": "SYNTHETIC-S13",
+        "request_id": "S13-selected",
+        "input": {
+          "target": {
+            "key": "target",
+            "ref": {
+              "kind": "requirement_revision",
+              "id": "S13-selected-SYN-REV-1",
+              "state_id": "S13-selected-SYN-REV-1-v1"
+            },
+            "requirement_id": "S13-selected-SYN-REQ-1",
+            "title": "Синтетический кандидат",
+            "text": "Сохранять выбранные статус и исполнителя при повторном открытии списка.",
+            "rationale": "Кандидат для диагностики инструмента.",
+            "evidence": [
+              {
+                "finding_key": "f1",
+                "links": [
+                  {
+                    "kind": "available",
+                    "fragment_key": "e1"
+                  }
+                ]
+              }
+            ],
+            "open_questions": []
+          },
+          "findings": [
+            {
+              "key": "f1",
+              "ref": {
+                "kind": "finding",
+                "id": "S13-selected-SYN-FINDING-1",
+                "state_id": "S13-selected-SYN-FINDING-1-v1"
+              },
+              "text": "Хочу, чтобы выбранные статус и исполнитель сохранялись после повторного открытия списка.",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "evidence": [
+                {
+                  "kind": "available",
+                  "fragment_key": "e1"
+                }
+              ],
+              "uncertainty_notes": [],
+              "open_questions": [],
+              "authorship": "ai"
+            }
+          ],
+          "fragments": [
+            {
+              "key": "e1",
+              "ref": {
+                "kind": "fragment",
+                "id": "S13-selected-SYN-FRAGMENT-1",
+                "state_id": "S13-selected-SYN-FRAGMENT-1-v1"
+              },
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "S13-selected-SYN-SRC-1",
+                "state_id": "S13-selected-SYN-SRC-1-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "S13-selected-SYN-SRC-1",
+                "state_id": "S13-selected-SYN-SRC-1-v1"
+              },
+              "quote": "Хочу, чтобы выбранные статус и исполнитель сохранялись после повторного открытия списка.",
+              "locator": {
+                "start": 0,
+                "end": 88
+              },
+              "reliability": "usable"
+            }
+          ],
+          "documents": [
+            {
+              "key": "d1",
+              "ref": {
+                "kind": "product_document",
+                "id": "S13-selected-DOC-1",
+                "state_id": "S13-selected-DOC-1-v1"
+              },
+              "text": "Список задач фильтруется по статусу и исполнителю. После повторного открытия фильтры сбрасываются.",
+              "locator": {
+                "start": 0,
+                "end": 98
+              }
+            },
+            {
+              "key": "d2",
+              "ref": {
+                "kind": "product_document",
+                "id": "S13-selected-DOC-2",
+                "state_id": "S13-selected-DOC-2-v1"
+              },
+              "text": "Звуковые уведомления об изменении статуса включены по умолчанию. Пользовательской настройки звука нет.",
+              "locator": {
+                "start": 0,
+                "end": 102
+              }
+            },
+            {
+              "key": "d3",
+              "ref": {
+                "kind": "product_document",
+                "id": "S13-selected-DOC-3",
+                "state_id": "S13-selected-DOC-3-v1"
+              },
+              "text": "Экспорт CSV доступен через меню «Отчёты → CSV».",
+              "locator": {
+                "start": 0,
+                "end": 47
+              }
+            },
+            {
+              "key": "d4",
+              "ref": {
+                "kind": "product_document",
+                "id": "S13-selected-DOC-4",
+                "state_id": "S13-selected-DOC-4-v1"
+              },
+              "text": "При закрытии формы создания задачи введённый текст теряется. Черновики не сохраняются.",
+              "locator": {
+                "start": 0,
+                "end": 86
+              }
+            }
+          ],
+          "comparisons": [
+            {
+              "key": "other1",
+              "ref": {
+                "kind": "requirement_revision",
+                "id": "S13-selected-SYN-REV-2",
+                "state_id": "S13-selected-SYN-REV-2-v1"
+              },
+              "requirement_id": "S13-selected-SYN-REQ-2",
+              "roles": [
+                "pending_change"
+              ],
+              "proposal_ref": {
+                "kind": "requirement_change_proposal",
+                "id": "S13-selected-SYN-PROPOSAL-2",
+                "state_id": "S13-selected-SYN-PROPOSAL-2-v1"
+              },
+              "title": "Сохранение фильтров",
+              "text": "Сохранять выбранные статус и исполнителя при повторном открытии списка."
+            }
+          ],
+          "comparison_scope": {
+            "extent": "selected",
+            "required_keys": [
+              "other1"
+            ],
+            "selection_reason": "Диагностическая ограниченная выборка."
+          },
+          "previous_checks": []
+        }
+      },
+      "trusted": {
+        "texts": [
+          {
+            "ref": {
+              "kind": "feedback_source",
+              "id": "S13-selected-SYN-SRC-1",
+              "state_id": "S13-selected-SYN-SRC-1-v1"
+            },
+            "source_ref": {
+              "kind": "feedback_source",
+              "id": "S13-selected-SYN-SRC-1",
+              "state_id": "S13-selected-SYN-SRC-1-v1"
+            },
+            "text": "Хочу, чтобы выбранные статус и исполнитель сохранялись после повторного открытия списка.",
+            "reliability": "usable"
+          }
+        ],
+        "documents": [
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S13-selected-DOC-1",
+              "state_id": "S13-selected-DOC-1-v1"
+            },
+            "text": "Список задач фильтруется по статусу и исполнителю. После повторного открытия фильтры сбрасываются."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S13-selected-DOC-2",
+              "state_id": "S13-selected-DOC-2-v1"
+            },
+            "text": "Звуковые уведомления об изменении статуса включены по умолчанию. Пользовательской настройки звука нет."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S13-selected-DOC-3",
+              "state_id": "S13-selected-DOC-3-v1"
+            },
+            "text": "Экспорт CSV доступен через меню «Отчёты → CSV»."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S13-selected-DOC-4",
+              "state_id": "S13-selected-DOC-4-v1"
+            },
+            "text": "При закрытии формы создания задачи введённый текст теряется. Черновики не сохраняются."
+          }
+        ],
+        "project_id": "SYNTHETIC-S13",
+        "states": [
+          {
+            "kind": "requirement_revision",
+            "id": "S13-selected-SYN-REV-1",
+            "state_id": "S13-selected-SYN-REV-1-v1"
+          },
+          {
+            "kind": "finding",
+            "id": "S13-selected-SYN-FINDING-1",
+            "state_id": "S13-selected-SYN-FINDING-1-v1"
+          },
+          {
+            "kind": "fragment",
+            "id": "S13-selected-SYN-FRAGMENT-1",
+            "state_id": "S13-selected-SYN-FRAGMENT-1-v1"
+          },
+          {
+            "kind": "feedback_source",
+            "id": "S13-selected-SYN-SRC-1",
+            "state_id": "S13-selected-SYN-SRC-1-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S13-selected-DOC-1",
+            "state_id": "S13-selected-DOC-1-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S13-selected-DOC-2",
+            "state_id": "S13-selected-DOC-2-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S13-selected-DOC-3",
+            "state_id": "S13-selected-DOC-3-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S13-selected-DOC-4",
+            "state_id": "S13-selected-DOC-4-v1"
+          },
+          {
+            "kind": "requirement_revision",
+            "id": "S13-selected-SYN-REV-2",
+            "state_id": "S13-selected-SYN-REV-2-v1"
+          },
+          {
+            "kind": "requirement_change_proposal",
+            "id": "S13-selected-SYN-PROPOSAL-2",
+            "state_id": "S13-selected-SYN-PROPOSAL-2-v1"
+          }
+        ],
+        "comparison_scope": {
+          "extent": "selected",
+          "required_keys": [
+            "other1"
+          ],
+          "selection_reason": "Диагностическая ограниченная выборка."
+        },
+        "comparisons": [
+          {
+            "key": "other1",
+            "ref": {
+              "kind": "requirement_revision",
+              "id": "S13-selected-SYN-REV-2",
+              "state_id": "S13-selected-SYN-REV-2-v1"
+            },
+            "requirement_id": "S13-selected-SYN-REQ-2",
+            "roles": [
+              "pending_change"
+            ],
+            "proposal_ref": {
+              "kind": "requirement_change_proposal",
+              "id": "S13-selected-SYN-PROPOSAL-2",
+              "state_id": "S13-selected-SYN-PROPOSAL-2-v1"
+            },
+            "title": "Сохранение фильтров",
+            "text": "Сохранять выбранные статус и исполнителя при повторном открытии списка."
+          }
+        ],
+        "prior_decision": null,
+        "change_context": null,
+        "followup": null,
+        "previous_checks": []
+      },
+      "fixture_response": {
+        "coverage": [
+          {
+            "input_key": "target",
+            "reviewed": true,
+            "disposition": "completed"
+          }
+        ],
+        "uncertainties": [],
+        "questions": [],
+        "result": {
+          "checks": [
+            {
+              "kind": "support",
+              "conclusion": "no_issue_found",
+              "rationale": "В явно переданном синтетическом контексте замечание не обнаружено.",
+              "considered_keys": [
+                "target",
+                "f1",
+                "e1"
+              ]
+            },
+            {
+              "kind": "contradictions",
+              "conclusion": "no_issue_found",
+              "rationale": "В явно переданном синтетическом контексте замечание не обнаружено.",
+              "considered_keys": [
+                "target",
+                "f1",
+                "e1"
+              ]
+            },
+            {
+              "kind": "ambiguity",
+              "conclusion": "no_issue_found",
+              "rationale": "В явно переданном синтетическом контексте замечание не обнаружено.",
+              "considered_keys": [
+                "target",
+                "f1",
+                "e1"
+              ]
+            },
+            {
+              "kind": "duplicates",
+              "conclusion": "issues_found",
+              "rationale": "В выбранном наборе найден возможный дубль.",
+              "considered_keys": [
+                "other1"
+              ]
+            }
+          ],
+          "issues": [
+            {
+              "local_id": "issue-1",
+              "category": "possible_duplicate",
+              "text": "В выбранном наборе найден возможный дубль.",
+              "reason": "В выбранном наборе найден возможный дубль.",
+              "severity": "medium",
+              "blocking": true,
+              "blocking_reason": "Существенная причина требует уточнения до нового утверждения.",
+              "related": [
+                {
+                  "origin": "input",
+                  "key": "target"
+                },
+                {
+                  "origin": "input",
+                  "key": "other1"
+                }
+              ],
+              "question_ids": []
+            }
+          ]
+        }
+      },
+      "fixture_role": "engineering_control",
+      "relationship": null
+    },
+    {
+      "id": "previous-blocker",
+      "request": {
+        "contract_version": "1.0",
+        "operation": "verify_requirement",
+        "project_id": "SYNTHETIC-S13",
+        "request_id": "S13-previous-blocker",
+        "input": {
+          "target": {
+            "key": "target",
+            "ref": {
+              "kind": "requirement_revision",
+              "id": "S13-previous-blocker-SYN-REV-1",
+              "state_id": "S13-previous-blocker-SYN-REV-1-v1"
+            },
+            "requirement_id": "S13-previous-blocker-SYN-REQ-1",
+            "title": "Синтетический кандидат",
+            "text": "Сохранять выбранные статус и исполнителя при повторном открытии списка.",
+            "rationale": "Кандидат для диагностики инструмента.",
+            "evidence": [
+              {
+                "finding_key": "f1",
+                "links": [
+                  {
+                    "kind": "available",
+                    "fragment_key": "e1"
+                  }
+                ]
+              }
+            ],
+            "open_questions": []
+          },
+          "findings": [
+            {
+              "key": "f1",
+              "ref": {
+                "kind": "finding",
+                "id": "S13-previous-blocker-SYN-FINDING-1",
+                "state_id": "S13-previous-blocker-SYN-FINDING-1-v1"
+              },
+              "text": "Хочу, чтобы выбранные статус и исполнитель сохранялись после повторного открытия списка.",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "evidence": [
+                {
+                  "kind": "available",
+                  "fragment_key": "e1"
+                }
+              ],
+              "uncertainty_notes": [],
+              "open_questions": [],
+              "authorship": "ai"
+            }
+          ],
+          "fragments": [
+            {
+              "key": "e1",
+              "ref": {
+                "kind": "fragment",
+                "id": "S13-previous-blocker-SYN-FRAGMENT-1",
+                "state_id": "S13-previous-blocker-SYN-FRAGMENT-1-v1"
+              },
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "S13-previous-blocker-SYN-SRC-1",
+                "state_id": "S13-previous-blocker-SYN-SRC-1-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "S13-previous-blocker-SYN-SRC-1",
+                "state_id": "S13-previous-blocker-SYN-SRC-1-v1"
+              },
+              "quote": "Хочу, чтобы выбранные статус и исполнитель сохранялись после повторного открытия списка.",
+              "locator": {
+                "start": 0,
+                "end": 88
+              },
+              "reliability": "usable"
+            }
+          ],
+          "documents": [
+            {
+              "key": "d1",
+              "ref": {
+                "kind": "product_document",
+                "id": "S13-previous-blocker-DOC-1",
+                "state_id": "S13-previous-blocker-DOC-1-v1"
+              },
+              "text": "Список задач фильтруется по статусу и исполнителю. После повторного открытия фильтры сбрасываются.",
+              "locator": {
+                "start": 0,
+                "end": 98
+              }
+            },
+            {
+              "key": "d2",
+              "ref": {
+                "kind": "product_document",
+                "id": "S13-previous-blocker-DOC-2",
+                "state_id": "S13-previous-blocker-DOC-2-v1"
+              },
+              "text": "Звуковые уведомления об изменении статуса включены по умолчанию. Пользовательской настройки звука нет.",
+              "locator": {
+                "start": 0,
+                "end": 102
+              }
+            },
+            {
+              "key": "d3",
+              "ref": {
+                "kind": "product_document",
+                "id": "S13-previous-blocker-DOC-3",
+                "state_id": "S13-previous-blocker-DOC-3-v1"
+              },
+              "text": "Экспорт CSV доступен через меню «Отчёты → CSV».",
+              "locator": {
+                "start": 0,
+                "end": 47
+              }
+            },
+            {
+              "key": "d4",
+              "ref": {
+                "kind": "product_document",
+                "id": "S13-previous-blocker-DOC-4",
+                "state_id": "S13-previous-blocker-DOC-4-v1"
+              },
+              "text": "При закрытии формы создания задачи введённый текст теряется. Черновики не сохраняются.",
+              "locator": {
+                "start": 0,
+                "end": 86
+              }
+            }
+          ],
+          "comparisons": [],
+          "comparison_scope": {
+            "extent": "project_snapshot",
+            "required_keys": []
+          },
+          "previous_checks": [
+            {
+              "ref": {
+                "kind": "verification_result",
+                "id": "S13-previous-blocker-SYN-CHECK",
+                "state_id": "S13-previous-blocker-SYN-CHECK-v1"
+              },
+              "revision_ref": {
+                "kind": "requirement_revision",
+                "id": "S13-previous-blocker-SYN-REV-1",
+                "state_id": "S13-previous-blocker-SYN-REV-1-v1"
+              },
+              "issues": [
+                {
+                  "ref": {
+                    "kind": "verification_issue",
+                    "id": "S13-previous-blocker-SYN-BLOCKER",
+                    "state_id": "S13-previous-blocker-SYN-BLOCKER-v1"
+                  },
+                  "text": "Прежний существенный вопрос открыт.",
+                  "category": "ambiguity",
+                  "severity": "high",
+                  "blocking": true,
+                  "is_open": true
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "trusted": {
+        "texts": [
+          {
+            "ref": {
+              "kind": "feedback_source",
+              "id": "S13-previous-blocker-SYN-SRC-1",
+              "state_id": "S13-previous-blocker-SYN-SRC-1-v1"
+            },
+            "source_ref": {
+              "kind": "feedback_source",
+              "id": "S13-previous-blocker-SYN-SRC-1",
+              "state_id": "S13-previous-blocker-SYN-SRC-1-v1"
+            },
+            "text": "Хочу, чтобы выбранные статус и исполнитель сохранялись после повторного открытия списка.",
+            "reliability": "usable"
+          }
+        ],
+        "documents": [
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S13-previous-blocker-DOC-1",
+              "state_id": "S13-previous-blocker-DOC-1-v1"
+            },
+            "text": "Список задач фильтруется по статусу и исполнителю. После повторного открытия фильтры сбрасываются."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S13-previous-blocker-DOC-2",
+              "state_id": "S13-previous-blocker-DOC-2-v1"
+            },
+            "text": "Звуковые уведомления об изменении статуса включены по умолчанию. Пользовательской настройки звука нет."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S13-previous-blocker-DOC-3",
+              "state_id": "S13-previous-blocker-DOC-3-v1"
+            },
+            "text": "Экспорт CSV доступен через меню «Отчёты → CSV»."
+          },
+          {
+            "ref": {
+              "kind": "product_document",
+              "id": "S13-previous-blocker-DOC-4",
+              "state_id": "S13-previous-blocker-DOC-4-v1"
+            },
+            "text": "При закрытии формы создания задачи введённый текст теряется. Черновики не сохраняются."
+          }
+        ],
+        "project_id": "SYNTHETIC-S13",
+        "states": [
+          {
+            "kind": "requirement_revision",
+            "id": "S13-previous-blocker-SYN-REV-1",
+            "state_id": "S13-previous-blocker-SYN-REV-1-v1"
+          },
+          {
+            "kind": "finding",
+            "id": "S13-previous-blocker-SYN-FINDING-1",
+            "state_id": "S13-previous-blocker-SYN-FINDING-1-v1"
+          },
+          {
+            "kind": "fragment",
+            "id": "S13-previous-blocker-SYN-FRAGMENT-1",
+            "state_id": "S13-previous-blocker-SYN-FRAGMENT-1-v1"
+          },
+          {
+            "kind": "feedback_source",
+            "id": "S13-previous-blocker-SYN-SRC-1",
+            "state_id": "S13-previous-blocker-SYN-SRC-1-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S13-previous-blocker-DOC-1",
+            "state_id": "S13-previous-blocker-DOC-1-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S13-previous-blocker-DOC-2",
+            "state_id": "S13-previous-blocker-DOC-2-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S13-previous-blocker-DOC-3",
+            "state_id": "S13-previous-blocker-DOC-3-v1"
+          },
+          {
+            "kind": "product_document",
+            "id": "S13-previous-blocker-DOC-4",
+            "state_id": "S13-previous-blocker-DOC-4-v1"
+          },
+          {
+            "kind": "verification_result",
+            "id": "S13-previous-blocker-SYN-CHECK",
+            "state_id": "S13-previous-blocker-SYN-CHECK-v1"
+          },
+          {
+            "kind": "verification_issue",
+            "id": "S13-previous-blocker-SYN-BLOCKER",
+            "state_id": "S13-previous-blocker-SYN-BLOCKER-v1"
+          }
+        ],
+        "comparison_scope": {
+          "extent": "project_snapshot",
+          "required_keys": []
+        },
+        "comparisons": [],
+        "prior_decision": null,
+        "change_context": null,
+        "followup": null,
+        "previous_checks": [
+          {
+            "ref": {
+              "kind": "verification_result",
+              "id": "S13-previous-blocker-SYN-CHECK",
+              "state_id": "S13-previous-blocker-SYN-CHECK-v1"
+            },
+            "revision_ref": {
+              "kind": "requirement_revision",
+              "id": "S13-previous-blocker-SYN-REV-1",
+              "state_id": "S13-previous-blocker-SYN-REV-1-v1"
+            },
+            "issues": [
+              {
+                "ref": {
+                  "kind": "verification_issue",
+                  "id": "S13-previous-blocker-SYN-BLOCKER",
+                  "state_id": "S13-previous-blocker-SYN-BLOCKER-v1"
+                },
+                "text": "Прежний существенный вопрос открыт.",
+                "category": "ambiguity",
+                "severity": "high",
+                "blocking": true,
+                "is_open": true
+              }
+            ]
+          }
+        ]
+      },
+      "fixture_response": {
+        "coverage": [
+          {
+            "input_key": "target",
+            "reviewed": true,
+            "disposition": "completed"
+          }
+        ],
+        "uncertainties": [],
+        "questions": [],
+        "result": {
+          "checks": [
+            {
+              "kind": "support",
+              "conclusion": "no_issue_found",
+              "rationale": "В явно переданном синтетическом контексте замечание не обнаружено.",
+              "considered_keys": [
+                "target",
+                "f1",
+                "e1"
+              ]
+            },
+            {
+              "kind": "contradictions",
+              "conclusion": "no_issue_found",
+              "rationale": "В явно переданном синтетическом контексте замечание не обнаружено.",
+              "considered_keys": [
+                "target",
+                "f1",
+                "e1"
+              ]
+            },
+            {
+              "kind": "ambiguity",
+              "conclusion": "no_issue_found",
+              "rationale": "В явно переданном синтетическом контексте замечание не обнаружено.",
+              "considered_keys": [
+                "target",
+                "f1",
+                "e1"
+              ]
+            },
+            {
+              "kind": "duplicates",
+              "conclusion": "no_issue_found",
+              "rationale": "В явно переданном синтетическом контексте замечание не обнаружено.",
+              "considered_keys": []
+            }
+          ],
+          "issues": []
+        }
+      },
+      "fixture_role": "engineering_control",
+      "relationship": null
+    }
+  ]
+}
