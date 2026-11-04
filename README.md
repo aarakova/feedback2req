@@ -385,3 +385,5 @@ TestClient использует совместимый httpx2 вместо depre
 [сравнение кандидатов модели](ai/group_findings/MODEL_SELECTION.md),
 [результаты технической проверки](evals/ai/grouping/VALIDATION.md).
 Синтетический replay не подтверждает качество реальной модели.
+
+[Общая интеграционная база AI: состав, проверки и границы](docs/plans/ai-foundation-integration.md).
