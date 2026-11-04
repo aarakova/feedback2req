@@ -1,7 +1,9 @@
 # F2: хранение, приём и чтение групп находок
 
-**PROPOSED, ревизия 1, 2026-11-03.** Пакет для согласования перед этапами
-B–D. Создание этого документа и коммита не утверждает предложенные DDL/API.
+**APPROVED в пределах DEC-016; отчёт реализации от 2026-11-04.**
+§3–6 ревизии 1 от 2026-11-03 (снимок dbf365b) утверждены пользователем
+с уточнениями из сообщения о продолжении F2. Ниже сохранено содержание
+исходного проекта; фактические отличия и проверки вынесены в §7–8.
 Основание задачи — вложение пользователя «Задача: реализовать следующий
 backend-срез F2 — группировка находок». Снимок вложения не изменялся.
 
@@ -20,10 +22,10 @@ backend-срез F2 — группировка находок». Снимок в
   его область не распространяется автоматически на DDL/API группировки.
 - [Проект backend](backend-prototype-support.md), §6, и
   [FIRST_TEXT_SLICE](../FIRST_TEXT_SLICE.md) оставляют физическую схему и API
-  F2 предложениями. Требуемое согласование касается §3–6 этого документа.
+  F2 предложениями. Последующий DEC-016 отдельно утвердил §3–6 этого пакета.
 
-Следующие этапы: после утверждения записать область и ревизию в
-[DECISIONS](../DECISIONS.md), реализовать миграцию/приём, затем чтение и проверки.
+Область и ревизия утверждения записаны в [DECISIONS](../DECISIONS.md).
+Этапы B–D реализованы; результаты итоговых проверок приведены в §8.
 Frontend, генерация/проверка требований, решения Approver и подключение
 реального AI в текущий объём не входят.
 
@@ -251,9 +253,34 @@ Synthetic fixtures помечаются synthetic=true, ai_performed=false; runt
 
 ## 7. Уже выполнено и что остаётся
 
-Этап A: проверены refs/worktree, код F1, статусы документов; подготовлен пакет
-ревизии 1. Этапы B–D ещё не реализованы: таблиц, миграции и HTTP групп нет.
-Утверждение §3–6 необходимо до их реализации согласно AGENTS.md и заданию.
+Этап A завершён в dbf365b. По DEC-016 реализованы M03 после M02b, 11 таблиц,
+типизированные входы, внутренние prepare/renew/accept/fail, три GET групп
+и минимальное расширение чтения Run. Фактический контракт и инструкция
+подключения: [FINDING_GROUPS_API](../FINDING_GROUPS_API.md).
+
+Технические отличия от первоначального проекта, без изменения предметных правил:
+
+- Добавлены необходимые UNIQUE для составных FK state/attempt, position/state
+  и member/state. FK group_members → group_scope гарантирует, что member
+  относится к рассмотренному набору. FK позиции и её members замыкаются
+  на один project/group_state, без проверки только в Python.
+- Отложенные constraint triggers PostgreSQL проверяют непустую группу,
+  минимум две позиции конфликта, непустую позицию и непустой finding_set
+  у группировочной Unit. Они выполняются после записи полного результата.
+- Дополнительный Attempt.grouping_owner_hash хранит SHA-256 capability
+  для проверки completed replay после очистки временного owner_token.
+  Хеш и token не входят в HTTP DTO.
+- prepare принимает Identity и текущий session token вместо доверия
+  переданному actor_id. Сессия/права проверяются в транзакции; token не хранится.
+  Replay prepare возвращает идентификаторы без request/token и не разрешает
+  второй вызов AI, в том числе после потерянного подтверждения COMMIT.
+- Общие exact read views F1 вынесены из HTTP-модуля для использования F2.
+  Existing inspect/extract DTO и команды сохраняются. Обновлены только
+  ожидаемые перечень таблиц/версия head в миграционных тестах; assert целостности
+  и compare_metadata сохранены. Observer теста освобождается и при ошибке.
+- Тестовый стенд использует отдельную сеть/БД Compose без опубликованных портов;
+  snapshot перезапуска находится в отдельном тестовом volume. CI проверяет
+  seed → restart PostgreSQL → verify в новом процессе.
 
 2026-11-03 выполнена автономная проверка неизменённых контрактов:
 
@@ -266,12 +293,12 @@ PASS 38 schema-positive and 34 schema-negative examples; 399 unknown-field mutat
 PASS 20 offline fixture pairs (APP-* checks only)
 ```
 
-Это проверка контрактных артефактов, не F2, PostgreSQL, HTTP, регрессий F1 или
-качества AI. Docker Engine доступен; локальные python/python3 — Windows aliases,
+Этот прогон 2026-11-03 проверял контрактные артефакты, не F2, PostgreSQL,
+HTTP, регрессии F1 или качество AI. Локальные python/python3 — Windows aliases,
 поэтому использован отдельный контейнер с read-only mount и без сети/БД.
 Чужие контейнеры/volumes не менялись. Независимое ревью пакета не выполнено.
 
-После реализации frontend потребуются новые GET, загрузка точного detail и
+Для подключения frontend потребуются новые GET, загрузка точного detail и
 evidence, чтение grouping_result даже при пустых groups, отдельное отображение
 synthetic/freshness/coverage/вопросов/конфликтов. Подключение будущего адаптера:
 prepare → request в group_findings 1.0 → heartbeat во время compute → accept
@@ -281,3 +308,56 @@ prepare → request в group_findings 1.0 → heartbeat во время compute 
 координатор группировки, проверенный приём F2 и правила выбора exact evidence;
 группы и документы остаются контекстом, находки/фрагменты — основаниями.
 Реальный AI и его качество требуют отдельного подключения и оценки.
+
+## 8. Фактическая валидация реализации
+
+На 2026-11-04:
+
+- PASS: автономные 9 схем / 88 локальных refs, 38 позитивных и 34 негативных
+  примера, 399 проверок неизвестных полей, 20 APP-пар; AI 1.0 не менялись.
+- PASS: 23 целевых PG/API/unit-проверки после исправлений миграционных
+  ожиданий, освобождения observer и сохранения вопросов previous_groups.
+- PASS: synthetic seed в настоящую PostgreSQL 17; перезапуск БД; отдельный
+  Python-процесс сравнил exact group/state/evidence/conflict/Run snapshots.
+- PASS: итоговый полный backend-прогон на PostgreSQL 17 — **149 passed**,
+  256.61 секунды, с `-W error`, без пропусков. Включены F2, миграционные,
+  identity/security/materials, processing/provider/worker и runtime проверки F1.
+- PASS: `ruff check backend scripts/check_finding_groups_restart.py`,
+  `git diff --check` и Compose config.
+- PASS: сборка отдельного `f2r-f2-runtime-dbf365b:local`; запуск настоящего
+  backend из образа и `python -m feedback2req.runtime check --http`.
+  Реальные внешние AI-вызовы не выполнялись.
+
+Итоговая команда:
+
+```text
+docker compose -f compose.grouping-test.yaml -p f2r-f2-validation-20261104 run --rm checks -m pytest backend/tests -q -W error -p no:cacheprovider --tb=short --junitxml=/state/backend-final.xml
+```
+
+JUnit и synthetic restart snapshot хранятся только в volume собственного
+тестового project. До финального прогона выполнены только исправления,
+обоснованные отказами тестов/проверкой кода; после него код не менялся.
+
+Первый полный прогон: 140 passed / 4 failed. Три отказа были устаревшими
+ожиданиями таблиц/head после добавления M03; четвёртый — ResourceWarning
+незакрытого observer при падении assert в миграционном тесте. Ожидания
+обновлены для утверждённой схемы; освобождение ресурса перенесено в finally.
+Проверки не ослаблялись и предупреждения не игнорировались.
+
+Повторяемый стенд: [compose.grouping-test.yaml](../../compose.grouping-test.yaml),
+PG/API тесты [test_grouping](../../backend/tests/test_grouping.py),
+[совместимость M02b](../../backend/tests/test_grouping_migration.py),
+[проверка перезапуска](../../scripts/check_finding_groups_restart.py).
+Команды запуска приведены в [TESTING](../TESTING.md).
+
+Независимое ревью реализации не выполнено. Реальные AI-вызовы и оценка
+смыслового качества NOT RUN; frontend и human-write endpoints не изменялись.
+Отдельная матрица аварий живого F1-worker (probe/hang/slow из прежней extraction
+Compose) в этой итерации NOT RUN; существующие backend processing/worker tests
+входят в итоговый прогон. Удаления и downgrade M03 не реализованы.
+
+Собственные тестовые ресурсы оставлены с данными для повторного чтения:
+Compose project `f2r-f2-validation-20261104`, его DB/snapshot volumes,
+контейнер `f2r-f2-runtime-http-dbf365b`; ранний стенд
+`f2r-f2-dbf365b-01-db` и его task-labelled сеть/volume. Чужие контейнеры,
+volumes и checkout не менялись. Внешний CI после публикации ещё не проверен.

@@ -5,6 +5,10 @@ rev3 или всего FIRST_TEXT_SLICE. Код: [маршруты](../backend/f
 [сервис](../backend/feedback2req/processing/service.py);
 [отличия и фактические проверки](plans/text-extraction-implementation.md).
 
+Последующий DEC-016 добавляет backend F2; группа и условное расширение чтения
+group_findings Run описаны в [FINDING_GROUPS_API](FINDING_GROUPS_API.md).
+Публичные inspect/extract команды и их DTO сохраняются.
+
 ## Общие правила
 
 `p=/api/v1/projects/{project_id}`. Все операции требуют текущую сессию и Member
@@ -130,7 +134,8 @@ Freshness current/requires_update определяется по выбранно
 или states. Пустой поддержанный набор даёт0. latest_run_id=null — запусков нет;
 иначе последний по created_at DESC,id DESC, включая failed. Semantic metrics
 означает будущую агрегирующую аналитику: находки читаются отдельным API,
-группы/требования/решения ещё не реализованы. SQL/сетевая ошибка не подменяется
+группы читаются отдельным F2 API, требования/решения ещё не реализованы.
+SQL/сетевая ошибка не подменяется
 нулём или not_implemented. Ошибка загрузки и отсутствие результатов различаются.
 
 ## Ошибки и frontend

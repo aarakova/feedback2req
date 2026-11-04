@@ -3,6 +3,24 @@ on: [push, pull_request]
 permissions:
   contents: read
 jobs:
+  grouping-persistence:
+    runs-on: ubuntu-latest
+    env:
+      COMPOSE_PROJECT_NAME: f2r-f2-${{ github.run_id }}-${{ github.run_attempt }}
+      COMPOSE_FILE: compose.grouping-test.yaml
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build -f backend/Dockerfile -t feedback2req-backend .
+      - run: docker build -f backend/Dockerfile.checks -t feedback2req-checks .
+      - run: docker compose up -d --wait f2r-f2-db
+      - run: docker compose run --rm checks scripts/check_finding_groups_restart.py seed /state/groups.json
+      - run: docker compose restart f2r-f2-db
+      - run: docker compose up -d --wait f2r-f2-db
+      - run: docker compose run --rm checks scripts/check_finding_groups_restart.py verify /state/groups.json
+      - if: always()
+        run: docker compose logs --no-color
+      - if: always()
+        run: docker compose down --volumes
   extraction:
     runs-on: ubuntu-latest
     env:

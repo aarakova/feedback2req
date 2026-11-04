@@ -313,3 +313,38 @@ RestartCount после сигнала из probe, одного unhealthy нед
 Docker seed/restart относятся к 26 октября; финальные изменения и вся
 матрица probe/fault после продолжения 2 ноября требуют повторных прогонов.
 Недоступный Docker Engine не заменяется SQLite или рабочей БД другого агента.
+
+## Backend F2 — DEC-016
+
+[PG/API/unit тесты](../backend/tests/test_grouping.py) проверяют M:N, exact
+evidence до источника, конфликты/позиции, ungrouped/пустой результат, coverage,
+схему/локальные ID, current/access/lease/deadline, идемпотентный и конкурентный
+приём, rollback и потерю подтверждения COMMIT. Прямые SQL-вставки/удаления
+проверяют составные FK и отложенные cardinality constraints. Отдельный
+[тест миграции](../backend/tests/test_grouping_migration.py) создаёт настоящую
+M02b с сохранёнными F1-данными и сравнивает все прежние столбцы после M03.
+
+Из собственного checkout, с установленным Docker и собранными образами
+feedback2req-backend / feedback2req-checks:
+
+```text
+docker compose -f compose.grouping-test.yaml -p <own-new-f2-test-project> up -d --wait f2r-f2-db
+docker compose -f compose.grouping-test.yaml -p <own-new-f2-test-project> run --rm checks
+docker compose -f compose.grouping-test.yaml -p <own-new-f2-test-project> run --rm checks scripts/check_finding_groups_restart.py seed /state/groups.json
+docker compose -f compose.grouping-test.yaml -p <own-new-f2-test-project> restart f2r-f2-db
+docker compose -f compose.grouping-test.yaml -p <own-new-f2-test-project> up -d --wait f2r-f2-db
+docker compose -f compose.grouping-test.yaml -p <own-new-f2-test-project> run --rm checks scripts/check_finding_groups_restart.py verify /state/groups.json
+```
+
+Новая сеть, PostgreSQL 17 и volumes принадлежат указанному test project;
+порты БД не публикуются. Source checkout монтируется read-only, snapshot
+хранится в отдельном volume. Повтор seed с существующим snapshot отклоняется.
+CI job grouping-persistence выполняет seed/restart/verify; backend suite
+по-прежнему запускается в основном job. Все AI-ответы этих проверок synthetic;
+смысловое качество и работа внешней модели этим не подтверждаются.
+Фактические результаты и ограничения записаны в [пакете F2](plans/backend-finding-groups.md#8-фактическая-валидация-реализации).
+
+2026-11-04: итоговый backend suite — **149 passed**, PostgreSQL 17, `-W error`;
+synthetic seed/restart/verify и runtime image HTTP readiness — PASS. Старые
+assert о полном составе таблиц/head обновлены под M03, а проверки FK/constraints/
+compare_metadata сохранены. Независимое ревью и реальные AI-вызовы NOT RUN.

@@ -1,14 +1,20 @@
 # API
 
-Статус: **APPROVED только для И1 и И2а**, DEC-007/DEC-008 от 2026-10-21, на основе
+Статус: **APPROVED для И1 и И2а**, DEC-007/DEC-008 от 2026-10-21, на основе
 FIRST_TEXT_SLICE.md, ревизия 1. Реализованы регистрация/сессии/projects/access
 и создание/список/чтение текстовых материалов.
+Последующие DEC-015/DEC-016 расширяют scope в объёме дополнений ниже.
 Остальной внешний API остаётся PROPOSED; DEC-006 утверждает стек.
 
 **Дополнение DEC-015:** пользователь разрешил сквозной extract_feedback с
 самостоятельным проектированием необходимых API. Реализуемые start/list/get/retry,
 findings/fragments и overview описаны в [TEXT_PROCESSING_API.md](TEXT_PROCESSING_API.md).
 Ранее предложенная И2б rev3 и остальной FIRST_TEXT_SLICE не утверждаются этим дополнением.
+
+**Дополнение DEC-016:** backend F2 добавляет три GET групп и внутренний приём
+group_findings; точные DTO, охват и чтение Run описаны в
+[FINDING_GROUPS_API.md](FINDING_GROUPS_API.md). Публичный запуск группировки
+и изменение групп человеком в этот срез не входят.
 
 Проект HTTP API первого текстового сценария находится в
 [FIRST_TEXT_SLICE.md](FIRST_TEXT_SLICE.md#4-предлагаемый-http-api).
