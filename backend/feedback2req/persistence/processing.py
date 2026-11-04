@@ -22,12 +22,16 @@ from sqlalchemy.orm import Mapped, mapped_column
 from feedback2req.persistence.models import Base
 
 
+def material_input_kind(context):
+    return "source" if context.get_current_parameters().get("source_id") else "document"
+
+
 class Run(Base):
     __tablename__ = "processing_runs"
     __table_args__ = (
         UniqueConstraint("project_id", "id"),
         UniqueConstraint("project_id", "initiated_by", "command_kind", "idempotency_key"),
-        CheckConstraint("operation IN ('inspect_text','extract_feedback')"),
+        CheckConstraint("operation IN ('inspect_text','extract_feedback','group_findings')"),
         CheckConstraint("command_kind IN ('start','retry')"),
         CheckConstraint("length(fingerprint) = 64"),
     )
@@ -70,10 +74,12 @@ class Unit(Base):
             name="fk_unit_retry",
         ),
         CheckConstraint(
-            "(source_id IS NOT NULL AND source_state_id IS NOT NULL "
+            "(input_kind='source' AND source_id IS NOT NULL AND source_state_id IS NOT NULL "
             "AND document_id IS NULL AND document_state_id IS NULL) OR "
-            "(document_id IS NOT NULL AND document_state_id IS NOT NULL "
-            "AND source_id IS NULL AND source_state_id IS NULL)"
+            "(input_kind='document' AND document_id IS NOT NULL AND document_state_id IS NOT NULL "
+            "AND source_id IS NULL AND source_state_id IS NULL) OR "
+            "(input_kind='finding_set' AND source_id IS NULL AND source_state_id IS NULL "
+            "AND document_id IS NULL AND document_state_id IS NULL)"
         ),
         CheckConstraint("state IN ('queued','running','completed','failed','cancelled')"),
         Index("ix_units_queue", "state", "created_at", "id"),
@@ -82,6 +88,7 @@ class Unit(Base):
     id: Mapped[UUID] = mapped_column(primary_key=True, default=uuid4)
     project_id: Mapped[UUID] = mapped_column(ForeignKey("projects.id"))
     run_id: Mapped[UUID]
+    input_kind: Mapped[str] = mapped_column(String(16), default=material_input_kind)
     source_id: Mapped[UUID | None]
     source_state_id: Mapped[UUID | None]
     document_id: Mapped[UUID | None]
@@ -134,6 +141,8 @@ class Attempt(Base):
     ai_performed: Mapped[bool | None] = mapped_column(Boolean, default=False)
     coverage: Mapped[list | None] = mapped_column(JSONB)
     annotations: Mapped[dict | None] = mapped_column(JSONB)
+    ungrouped_findings: Mapped[list | None] = mapped_column(JSONB(none_as_null=True))
+    grouping_owner_hash: Mapped[str | None] = mapped_column(String(64))
     character_count: Mapped[int | None] = mapped_column(BigInteger)
     utf8_byte_count: Mapped[int | None] = mapped_column(BigInteger)
 

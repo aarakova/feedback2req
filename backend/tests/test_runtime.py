@@ -58,23 +58,25 @@ def test_lock_covers_ddl_and_failure_rolls_back(m01_database_url, fail):
         if fail:
             raise RuntimeError("injected migration failure")
 
-    event.listen(Engine, "after_cursor_execute", after_execute)
     try:
-        if fail:
-            with pytest.raises(RuntimeError, match="injected"):
+        event.listen(Engine, "after_cursor_execute", after_execute)
+        try:
+            if fail:
+                with pytest.raises(RuntimeError, match="injected"):
+                    runtime.migrate(settings(m01_database_url))
+            else:
                 runtime.migrate(settings(m01_database_url))
-        else:
-            runtime.migrate(settings(m01_database_url))
+        finally:
+            event.remove(Engine, "after_cursor_execute", after_execute)
+        assert observed
+        with observer.begin() as conn:
+            assert conn.scalar(text(f"SELECT pg_try_advisory_xact_lock({LOCK})"))
+            assert conn.scalar(text("SELECT version_num FROM alembic_version")) == (
+                "m01" if fail else "m03"
+            )
+            assert (conn.scalar(text("SELECT to_regclass('feedback_sources')")) is None) == fail
     finally:
-        event.remove(Engine, "after_cursor_execute", after_execute)
-    assert observed
-    with observer.begin() as conn:
-        assert conn.scalar(text(f"SELECT pg_try_advisory_xact_lock({LOCK})"))
-        assert conn.scalar(text("SELECT version_num FROM alembic_version")) == (
-            "m01" if fail else "m02b"
-        )
-        assert (conn.scalar(text("SELECT to_regclass('feedback_sources')")) is None) == fail
-    observer.dispose()
+        observer.dispose()
 
 
 def test_standalone_migrators_wait_for_database_lock(m01_database_url):

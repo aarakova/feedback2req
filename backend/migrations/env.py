@@ -2,7 +2,7 @@ from alembic import context
 from sqlalchemy import create_engine, pool, text
 
 from feedback2req.config import Settings
-from feedback2req.persistence import processing  # noqa: F401
+from feedback2req.persistence import grouping, processing  # noqa: F401
 from feedback2req.persistence.models import Base
 
 config = context.config
