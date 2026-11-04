@@ -12,12 +12,12 @@ from feedback2req.persistence.models import FeedbackSource, ProductDocument, Pro
 from feedback2req.persistence.processing import (
     Attempt,
     Finding,
-    FindingEvidence,
     Fragment,
     Run,
     Unit,
 )
 from feedback2req.processing.service import command, run_view
+from feedback2req.processing.views import finding_view, fragment_view
 from feedback2req.projects.service import require_project
 
 router = APIRouter(prefix="/api/v1/projects/{project_id}")
@@ -125,6 +125,8 @@ def retry(project_id: UUID, unit_id: UUID, body: Retry, tx: Tx, actor: Actor, ke
     unit = tx.scalar(select(Unit).where(Unit.project_id == project_id, Unit.id == unit_id))
     if unit is None:
         raise AppError(404, "not_found", "Project or object not found")
+    if unit.input_kind == "finding_set":
+        raise AppError(409, "retry_not_allowed", "Grouping retry requires coordinator integration")
     attempt = tx.scalar(select(Attempt).where(Attempt.unit_id == unit.id))
     if attempt is None or attempt.id != body.expected_attempt_id:
         raise AppError(409, "retry_not_allowed", "Expected failed attempt is required")
@@ -142,63 +144,6 @@ def retry(project_id: UUID, unit_id: UUID, body: Retry, tx: Tx, actor: Actor, ke
         retry=attempt.id,
     )
     return run_view(tx, result)
-
-
-def fragment_view(row):
-    return {
-        "id": row.id,
-        "state_id": row.id,
-        "attempt_id": row.attempt_id,
-        "source_ref": {
-            "kind": "feedback_source",
-            "id": row.source_id,
-            "state_id": row.source_state_id,
-        },
-        "text_ref": {
-            "kind": "feedback_source",
-            "id": row.source_id,
-            "state_id": row.source_state_id,
-        },
-        "quote": row.quote,
-        "locator": {"start": row.start, "end": row.end},
-        "reliability": row.reliability,
-    }
-
-
-def finding_view(tx, row):
-    attempt = tx.get(Attempt, row.attempt_id)
-    fragments = tx.scalars(
-        select(Fragment)
-        .join(FindingEvidence, FindingEvidence.fragment_id == Fragment.id)
-        .where(FindingEvidence.finding_id == row.id, FindingEvidence.project_id == row.project_id)
-    ).all()
-    current = all(
-        tx.scalar(
-            select(FeedbackSource.current_state_id).where(
-                FeedbackSource.project_id == row.project_id, FeedbackSource.id == fragment.source_id
-            )
-        )
-        == fragment.source_state_id
-        for fragment in fragments
-    )
-    return {
-        "id": row.id,
-        "state_id": row.id,
-        "text": row.text,
-        "types": row.types,
-        "mode": row.mode,
-        "authorship": "ai",
-        "synthetic": attempt.synthetic,
-        "attempt_id": attempt.id,
-        "created_at": row.created_at,
-        "freshness": "current" if current else "requires_update",
-        "evidence": [fragment_view(fragment) for fragment in fragments],
-        "coverage": attempt.coverage,
-        "annotations": attempt.annotations,
-        "provider": attempt.provider,
-        "model": attempt.model,
-        "ai_performed": attempt.ai_performed,
-    }
 
 
 @router.get("/findings")
