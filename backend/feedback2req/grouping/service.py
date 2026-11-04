@@ -635,6 +635,12 @@ def fail_grouping(sessions, unit_id, owner_token, reason_code):
             return result_view(tx, unit, attempt)
         if not owned(tx, attempt, owner_token):
             raise AppError(409, "attempt_not_owned", "Attempt expired or is terminal")
+        try:
+            build_request(tx, unit, attempt)
+        except AppError:
+            end(tx, unit, attempt, "cancelled", "input_changed", owner_token)
+            tx.refresh(attempt)
+            return result_view(tx, unit, attempt)
         if reason_code == "provider_not_configured":
             attempt.ai_performed = False
         elif reason_code == "invalid_response":

@@ -361,3 +361,10 @@ Compose project `f2r-f2-validation-20261104`, его DB/snapshot volumes,
 контейнер `f2r-f2-runtime-http-dbf365b`; ранний стенд
 `f2r-f2-dbf365b-01-db` и его task-labelled сеть/volume. Чужие контейнеры,
 volumes и checkout не менялись. Внешний CI после публикации ещё не проверен.
+
+Продолжение от 2026-11-04: внутренний исполнитель подключён к неизменённому
+standalone group_findings. Полный backend-прогон с ним — 167 passed; отдельные
+тесты компонента — 37 passed. Объём, отличия, команды подключения и оставшийся
+вопрос input-ссылок на previous_groups описаны в
+[отчёте интеграции](grouping-component-integration.md). Это не публичный запуск
+и не подключение внешней модели.

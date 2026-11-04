@@ -84,6 +84,7 @@ jobs:
       - run: python -m pip install --no-deps -e backend
       - run: python -m ruff check backend scripts/check_i1_restart.py
       - run: python -m pytest backend/tests -q -W error
+      - run: python -B -W error -m unittest discover -s ai/tests -v
       - run: python scripts/validate_ai_contracts.py
       - name: Start isolated restart database
         env:

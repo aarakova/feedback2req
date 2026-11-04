@@ -5,6 +5,8 @@ COPY backend/requirements.lock /app/requirements.lock
 RUN pip install --no-cache-dir -r requirements.lock
 COPY backend/ /app/
 COPY docs/contracts/ai/v1/ /docs/contracts/ai/v1/
+COPY ai/ /app/ai/
+COPY docs/contracts/ai/v1/ /app/docs/contracts/ai/v1/
 RUN pip install --no-cache-dir --no-deps . \
     && useradd --create-home app
 USER app

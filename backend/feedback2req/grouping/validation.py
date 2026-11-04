@@ -59,10 +59,8 @@ def accept(request, response):
         ungrouped = set(response["result"]["ungrouped_finding_keys"])
         if grouped & ungrouped or not ungrouped <= reviewed or not completed <= grouped | ungrouped:
             raise InvalidResponse()
-        # A completed item without any related group must explain its empty result.
-        for key in completed - grouped:
-            if not coverage[key].get("reason"):
-                raise InvalidResponse()
+        # Explicit ungrouped membership is itself a substantive classification.
+        # It does not require an extra reason for an allegedly empty result.
         outputs = {group["local_id"] for group in groups}
         for item in response["questions"] + response["uncertainties"]:
             for link in item["related"]:

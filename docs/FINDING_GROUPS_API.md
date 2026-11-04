@@ -111,7 +111,53 @@ if not h["replayed"]:
     result = accept_grouping(sessions, h["unit_id"], h["owner_token"], response)
 ```
 
-Это инструкция будущей интеграции, не существующий вызов модели.
+Подготовка/приём доступны отдельно. Реализован также внутренний исполнитель
+[execute_grouping](../backend/feedback2req/grouping/execution.py), соединяющий
+их с перенесённым без изменения компонентом `ai.group_findings`:
+
+```python
+receipt = execute_grouping(
+    sessions, identity, session_token, project_id, command_key, finding_refs,
+    provider=explicit_provider,
+    document_refs=document_refs, previous_group_refs=previous_group_refs,
+)
+# receipt: run_id, unit_id, attempt_id, replayed, result
+# result: attempt_id, state, reason_code, group_ids, ungrouped_findings
+```
+
+Провайдер обязателен и не выбирается по умолчанию. Внешняя модель этой
+итерацией не подключается: все выполненные вызовы использовали synthetic Replay.
+Реальная конфигурация по-прежнему требует отдельного разрешения. Исполнитель
+не является новым HTTP endpoint или частью публичной очереди.
+
+Перед вызовом компонента callback открывает короткую транзакцию и сверяет
+весь request с заново собранными доверенными данными, project membership и
+владением попыткой. Блокировки освобождаются перед provider.group. Heartbeat
+каждые 5 секунд вызывает renew_grouping; потеря lease/прав запрещает публикацию.
+После остановки heartbeat кандидат проходит независимый финальный приём F2.
+Синхронный исполнитель не обещает принудительно прервать чужую функцию:
+переданный адаптер должен иметь timeout в пределах deadline попытки.
+
+Compute-ошибки сохраняют безопасные существующие reason codes:
+invalid_response → invalid_response; provider_not_configured сохраняется;
+transport/timeout → provider_error; непригодный запрос/ошибка исполнения →
+execution_error. Если изменились входы или права, итог cancelled input_changed/
+access_revoked имеет приоритет. Технический отказ не создаёт coverage.
+Ошибка записи/COMMIT не попадает в этот обработчик и выходит вызывающему коду.
+Повтор execute с прежним command_key только читает прежний run; provider
+повторно не вызывается, в том числе после неизвестного prepare/final COMMIT.
+
+Модуль компонента ограничивает request/response 1 MiB, без урезания.
+Передача более крупного запроса завершает attempt технической ошибкой до
+вызова провайдера. JSON Schema 1.0 этим ограничением не меняется.
+
+Совместимость: явное ungrouped — содержательная классификация, поэтому
+completed+ungrouped не требует дополнительной reason. Текущая согласованная
+политика F2 для input related сохраняется: только основная finding. Вопрос
+на previous_group, хотя разрешён автономным компонентом, пока отклоняется
+финальным приёмом F2. Расширение вынесено отдельно в
+[предложение интеграции](plans/grouping-component-integration.md).
+
 prepare аутентифицирует session_token через существующий Identity и заново
 проверяет membership под Project lock; raw session token не сохраняется.
 finding_refs — `{id,state_id}` (kind=finding необязателен), documents аналогично

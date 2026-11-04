@@ -348,3 +348,24 @@ CI job grouping-persistence выполняет seed/restart/verify; backend suit
 synthetic seed/restart/verify и runtime image HTTP readiness — PASS. Старые
 assert о полном составе таблиц/head обновлены под M03, а проверки FK/constraints/
 compare_metadata сохранены. Независимое ревью и реальные AI-вызовы NOT RUN.
+
+Последующая внутренняя интеграция: [тесты исполнителя](../backend/tests/test_grouping_execution.py)
+используют настоящий standalone group_findings с synthetic transport и
+реальной PostgreSQL. Проверяются DB verifier до вызова, отсутствие долгой
+Project lock, heartbeat/lease, безопасные ошибки, ungrouped без лишней reason,
+COMMIT replay без повторного provider call и текущая политика previous_groups.
+Исходные 37 автономных тестов запускаются отдельно:
+
+```text
+python -B -W error -m unittest discover -s ai/tests -v
+```
+
+Происхождение неизменённых файлов — [ai/UPSTREAM](../ai/UPSTREAM.md).
+Фактические результаты и оставшийся вопрос контракта —
+[отчёт интеграции](plans/grouping-component-integration.md).
+
+Фактический прогон интеграции 2026-11-04: **167 backend tests passed**
+(PostgreSQL 17, `-W error`, включая 18 новых тестов исполнителя и регрессии F1);
+**37 standalone tests passed** без сети. Сборка нового runtime-образа и
+синтетический replay в нём PASS. Прежние seed/restart/HTTP-readiness результаты
+относятся к основной F2 итерации и отдельно в интеграции не повторялись.
