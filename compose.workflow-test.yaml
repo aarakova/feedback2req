@@ -1,0 +1,110 @@
+# Owned synthetic integration environment. Never overlay a production project.
+name: feedback2req-workflow-test
+services:
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: feedback2req_processing_f1_test
+      POSTGRES_USER: f2r_test
+      POSTGRES_HOST_AUTH_METHOD: trust
+    volumes: [workflow_data:/var/lib/postgresql/data]
+    networks: [data]
+    healthcheck:
+      test: [CMD, pg_isready, -U, f2r_test, -d, feedback2req_processing_f1_test]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+  backend:
+    image: feedback2req-workflow-runtime
+    build: {context: ., dockerfile: backend/Dockerfile}
+    environment: &runtime
+      F2R_DATABASE_URL: postgresql+psycopg://f2r_test@db/feedback2req_processing_f1_test
+      F2R_LOCAL_HTTP: "true"
+      F2R_ALLOWED_ORIGIN: ${F2R_WORKFLOW_ORIGIN:-http://localhost:18080}
+      F2R_TRUSTED_PROXY_IP: 10.219.246.2
+      F2R_PAGE_SIZE: "2"
+      F2R_LOGIN_LIMIT: "1000"
+      F2R_ARGON_MEMORY_COST: "8192"
+      F2R_ARGON_TIME_COST: "1"
+    networks:
+      proxy: {ipv4_address: 10.219.246.3}
+      data: {}
+    depends_on:
+      db: {condition: service_healthy}
+    healthcheck:
+      test: [CMD, python, -m, feedback2req.runtime, check, --http]
+      interval: 2s
+      timeout: 8s
+      retries: 30
+  frontend:
+    image: feedback2req-workflow-frontend
+    build: {context: ., dockerfile: frontend/Dockerfile}
+    ports: ["127.0.0.1:18080:80"]
+    networks:
+      proxy: {ipv4_address: 10.219.246.2}
+    depends_on:
+      backend: {condition: service_healthy}
+  provider:
+    image: feedback2req-workflow-runtime
+    command: [python, /support/synthetic_provider.py]
+    volumes: [./frontend/tests/support:/support:ro]
+    networks: [data]
+  worker:
+    image: feedback2req-workflow-runtime
+    command: [python, -m, feedback2req.processing.worker]
+    init: true
+    environment:
+      <<: *runtime
+      F2R_PROCESSING_TEST_MODE: ${F2R_WORKFLOW_SYNTHETIC:-true}
+      F2R_AI_TRANSFER_ENABLED: ${F2R_WORKFLOW_SYNTHETIC:-true}
+      F2R_AI_PROVIDER_URL: http://provider:11434/api/chat
+      F2R_AI_MODEL: synthetic-test-only
+    networks: [data]
+    depends_on:
+      backend: {condition: service_healthy}
+      provider: {condition: service_started}
+    healthcheck:
+      test: [CMD, python, -m, feedback2req.processing.worker, --probe]
+      interval: 3s
+      timeout: 8s
+      retries: 5
+      start_period: 10s
+  checks:
+    image: feedback2req-workflow-checks
+    build:
+      context: .
+      dockerfile: backend/Dockerfile.checks
+      args: {RUNTIME_IMAGE: feedback2req-workflow-runtime}
+    profiles: [checks]
+    environment:
+      <<: *runtime
+      F2R_TEST_DATABASE_URL: postgresql+psycopg://f2r_test@db/feedback2req_processing_f1_test
+      F1_TEST_API: http://backend:8000
+      PYTHONPATH: /workspace/backend:/workspace
+    working_dir: /workspace
+    volumes: [.:/workspace]
+    networks: [data, proxy]
+  browser:
+    image: feedback2req-workflow-browser
+    build: {context: ., dockerfile: frontend/Dockerfile.checks}
+    profiles: [checks]
+    init: true
+    ipc: host
+    environment:
+      F2R_E2E_MODE: built
+      F2R_E2E_TUNNEL: frontend:80
+      F2R_E2E_API_EXTERNAL: "true"
+      F2R_API_PROXY_TARGET: http://backend:8000
+    volumes:
+      - .:/tests
+      - browser_modules:/tests/frontend/node_modules
+    networks: [proxy]
+networks:
+  data: {internal: true}
+  proxy:
+    internal: true
+    ipam:
+      config: [{subnet: 10.219.246.0/28}]
+volumes:
+  workflow_data:
+  browser_modules:

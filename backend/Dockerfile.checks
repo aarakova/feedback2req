@@ -1,5 +1,6 @@
 # Development/CI tools are separate from the runtime image.
-FROM feedback2req-backend
+ARG RUNTIME_IMAGE=feedback2req-backend
+FROM ${RUNTIME_IMAGE}
 USER root
 COPY backend/requirements-test.lock /tmp/requirements-test.lock
 RUN pip install --no-cache-dir -r /tmp/requirements-test.lock

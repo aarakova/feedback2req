@@ -138,17 +138,8 @@ jobs:
         run: docker run --rm --network feedback2req-infra-test_proxy --mount "type=bind,source=$PWD,target=/workspace" -w /workspace feedback2req-backend python scripts/check_infrastructure.py rate
       - name: Restore browser test settings
         run: docker compose -f compose.yaml -f compose.infrastructure-test.yaml up -d --no-deps --wait backend
-      - name: Browser scenarios through Nginx
-        working-directory: frontend
-        env:
-          F2R_E2E_MODE: compose
-          F2R_E2E_BASE_URL: http://localhost:18080
-        run: npm run test:e2e
-      - name: Start isolated database for Vite scenarios
-        run: docker compose -f compose.test.yaml up -d --wait db
-      - name: Browser scenarios through Vite without rebuilding frontend
-        working-directory: frontend
-        run: npm run test:e2e
+      # Full browser suites have their own synthetic PG/provider/seed/worker
+      # environment in workflow-ui.yml; this stack deliberately has no AI.
       - name: Stop isolated services; preserve volumes
         if: always()
         run: |

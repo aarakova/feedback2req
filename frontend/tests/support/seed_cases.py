@@ -35,7 +35,9 @@ class Failed(Synthetic):
         raise ProviderError(self.reason)
 
 
-with httpx.Client(base_url=os.environ['F1_TEST_API'], headers={'Origin': 'http://localhost:5173'}, trust_env=False) as client:
+with httpx.Client(base_url=os.environ['F1_TEST_API'], headers={
+    'Origin': os.environ.get('F2R_ALLOWED_ORIGIN', 'http://localhost:5173')
+}, trust_env=False) as client:
     login = 'f1-fixture-' + uuid4().hex
     credentials = {'login': login, 'password': 'frontend-test-only-2026'}
     assert client.post('/api/v1/auth/register', json=credentials).status_code == 201

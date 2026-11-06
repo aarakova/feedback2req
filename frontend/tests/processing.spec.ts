@@ -293,7 +293,12 @@ test.describe('real synthetic F1', () => {
     test.setTimeout(90000); const { project, material } = await setup(page); const value = await startApi(page, project.id, [ref(material)]);
     const path = `**${apiRoot(project.id)}/runs/${value.run.id}`; let reads = 0;
     await page.route(path, async route => { reads++; await route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(value.run) }); });
-    await page.clock.install(); await page.goto('/' + runHref(project.id, value.run.id)); await expect(runPanel(page)).toContainText('В очереди'); await page.clock.pauseAt(new Date());
+    // Pause before navigation at a known future browser instant. Host wall time
+    // can lag the installed clock after navigation on a loaded CI runner.
+    const clockStart = new Date('2026-01-01T00:00:00Z');
+    await page.clock.install({ time: clockStart });
+    await page.clock.pauseAt(new Date(clockStart.getTime() + 1000));
+    await page.goto('/' + runHref(project.id, value.run.id)); await expect(runPanel(page)).toContainText('В очереди');
     const initialReads = reads; expect(initialReads).toBeGreaterThanOrEqual(1); expect(initialReads).toBeLessThanOrEqual(2); // StrictMode can abort its first setup read.
     for (let index = 1; index < 60; index++) {
       const response = page.waitForResponse(response => response.url().endsWith(`/runs/${value.run.id}`));

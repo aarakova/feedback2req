@@ -1,0 +1,44 @@
+name: Observer workflow through real services
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  workflow-ui:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build runtime, production Nginx and browser
+        run: docker compose -f compose.workflow-test.yaml build backend frontend browser
+      - name: Build checks against the same runtime
+        run: docker compose -f compose.workflow-test.yaml build checks
+      - name: Start owned PostgreSQL, API and Nginx before worker
+        run: docker compose -f compose.workflow-test.yaml up -d --wait db backend frontend provider
+      - name: Prepare exact historical states before worker starts
+        run: docker compose -f compose.workflow-test.yaml run --rm checks python frontend/tests/support/seed_cases.py
+      - name: Start synthetic test worker
+        run: docker compose -f compose.workflow-test.yaml up -d --wait worker
+      - name: Full browser suite through production Nginx
+        run: docker compose -f compose.workflow-test.yaml run --rm browser npm run test:e2e -- --reporter=line
+      - name: Stop worker before seeding Vite environment
+        run: docker compose -f compose.workflow-test.yaml stop worker
+      - name: Switch API Origin to Vite and prepare its fixtures
+        env:
+          F2R_WORKFLOW_ORIGIN: http://localhost:5173
+        run: |
+          docker compose -f compose.workflow-test.yaml up -d --wait backend
+          docker compose -f compose.workflow-test.yaml run --rm checks python frontend/tests/support/seed_cases.py
+          docker compose -f compose.workflow-test.yaml up -d --wait worker
+      - name: Full browser suite through Vite with the same API and worker
+        run: docker compose -f compose.workflow-test.yaml run --rm -e F2R_E2E_MODE=vite browser npm run test:e2e -- --reporter=line
+      - name: Stop synthetic worker before negative provider scenario
+        run: docker compose -f compose.workflow-test.yaml stop worker
+      - name: Disable inference permission and restore Nginx Origin
+        env:
+          F2R_WORKFLOW_SYNTHETIC: "false"
+        run: docker compose -f compose.workflow-test.yaml up -d --wait backend worker
+      - name: Missing provider remains a real failure with no findings
+        run: docker compose -f compose.workflow-test.yaml run --rm -e F2R_E2E_NO_PROVIDER=true browser npm run test:e2e -- processing.spec.ts --grep 'unconfigured provider' --reporter=line
+      - name: Preserve services data and stop only this project
+        if: always()
+        run: docker compose -f compose.workflow-test.yaml stop
