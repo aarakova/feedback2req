@@ -146,12 +146,12 @@ test.describe('isolated overview data', () => {
   });
 });
 
-test('real project filter routes survive reload, reject invalid filters and never call a semantic API', async ({ page }) => {
+test('real project filter routes survive reload, reject invalid filters and never call an unsupported F2 API', async ({ page }) => {
   await registerAndLogin(page);
   const first = await createProject(page, 'Обзор → фильтры 🧭');
   const second = await createProject(page, 'Другой проект');
   const semantic: string[] = [];
-  page.on('request', request => { if (request.url().includes('/api/') && /\/(overview|requirements|groups|findings)(\/|$)/.test(new URL(request.url()).pathname)) semantic.push(request.url()); });
+  page.on('request', request => { if (request.url().includes('/api/') && /\/(requirements|groups)(\/|$)/.test(new URL(request.url()).pathname)) semantic.push(request.url()); });
   await page.goto(`/#/projects/${first.id}`);
   await expect(page.locator('.metric-value')).toHaveText(['—', '—', '—', '—']);
   await expect(page.locator('.metric-grid a, .decision-legend a, a.availability-row')).toHaveCount(0);

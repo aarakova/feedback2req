@@ -31,14 +31,20 @@ test('all projects stays independent and opens the correct project shell', async
   await expect(page.getByText(first.name, { exact: true })).toHaveCount(0);
 });
 
-test('overview and future sections never fetch unsupported API or fabricate product metrics', async ({ page }) => {
+test('overview and F1 sections use supported reads without fabricated semantic metrics or implicit commands', async ({ page }) => {
   const { first } = await setup(page);
   const requested: string[] = [];
-  page.on('request', request => { if (request.url().includes('/api/')) requested.push(new URL(request.url()).pathname); });
+  const commands: string[] = [];
+  page.on('request', request => {
+    if (request.url().includes('/api/')) {
+      requested.push(new URL(request.url()).pathname);
+      if (request.method() === 'POST' && /\/(runs|retries)$/.test(new URL(request.url()).pathname)) commands.push(request.url());
+    }
+  });
   await open(page, first.id, first.name);
   const capabilities = page.getByRole('region', { name: 'Возможности проекта', exact: true });
   await expect(capabilities).toBeVisible();
-  await expect(capabilities.locator('.capability-state')).toHaveText(['Доступно', 'Доступно', 'Не подключено']);
+  await expect(capabilities.locator('.capability-state')).toHaveText(['Доступно', 'Доступно', 'Доступно']);
   await expect(page.getByRole('heading', { name: 'Ваши полномочия', exact: true })).toBeVisible();
   await expect(page.getByRole('combobox')).toHaveCount(0);
   await expect(page.getByText(/Открытые блокеры|Вымышленные данные|Сбросить демо|Вы · демо/)).toHaveCount(0);
@@ -46,14 +52,19 @@ test('overview and future sections never fetch unsupported API or fabricate prod
   for (const name of ['Находки', 'Требования', 'Обработка']) {
     await nav(page).getByRole('link', { name, exact: true }).click();
     await expect(page.getByRole('heading', { name, exact: true })).toBeVisible();
-    await expect(page.getByText('Функция не подключена', { exact: true })).toBeVisible();
+    if (name === 'Обработка') await expect(page.getByRole('form', { name: 'Запуск обработки текста', exact: true })).toBeVisible();
+    else await expect(page.getByText('Функция не подключена', { exact: true })).toBeVisible();
     await expect(nav(page).getByRole('link', { name, exact: true })).toHaveAttribute('aria-current', 'page');
     await expect(page.getByRole('button', { name: /Запустить|Создать требование|Повторить обработку/ })).toHaveCount(0);
     await page.reload();
     await expect(page.getByRole('heading', { name, exact: true })).toBeVisible();
     await expect(page.getByRole('heading', { name: first.name, exact: true })).toBeVisible();
   }
-  expect(requested.some(path => /\/(findings|requirements|runs|processing)(\/|$)/.test(path))).toBe(false);
+  expect(requested.some(path => /\/(requirements|groups|processing)(\/|$)/.test(path))).toBe(false);
+  expect(requested.some(path => /\/overview$/.test(path))).toBe(true);
+  expect(requested.some(path => /\/findings$/.test(path))).toBe(true);
+  expect(requested.some(path => /\/runs$/.test(path))).toBe(true);
+  expect(commands).toEqual([]);
 });
 
 test('material and access routes reload inside the project shell and preserve direct material links', async ({ page }) => {
@@ -66,6 +77,7 @@ test('material and access routes reload inside the project shell and preserve di
   expect(response.status()).toBe(201); const source = await response.json();
   await open(page, first.id, first.name, `materials/sources/${source.id}`);
   const detail = page.getByRole('region', { name: 'Просмотр материала', exact: true });
+  await expect(page.getByText('Операция запуска обработки недоступна на сервере.', { exact: true })).toHaveCount(0);
   await expect(detail.getByLabel('Сохранённый текст')).toBeVisible();
   expect(await detail.getByLabel('Сохранённый текст').textContent()).toBe(text);
   await page.reload();

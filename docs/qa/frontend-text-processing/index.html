@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="ru"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Observer · реальная обработка текста F1</title>
+<style>
+:root{color-scheme:dark;font:15px/1.6 system-ui;background:#131f2e;color:#e5edf7}body{max-width:1440px;margin:auto;padding:24px}h1{font-size:26px}a{color:#60c9ba}nav{display:flex;flex-wrap:wrap;gap:16px;margin:24px 0}section{border-top:1px solid #304256;padding-top:12px;margin-top:36px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:20px}figure{margin:0;min-width:0}img{display:block;width:100%;height:auto;border:1px solid #304256}figcaption{margin:8px 0}p{max-width:90ch}.note{background:#203047;border:1px solid #304256;padding:16px}a:focus-visible{outline:2px solid #60c9ba;outline-offset:4px}
+</style>
+<h1>Observer · обработка текста F1</h1>
+<p class="note">Настоящие API, PostgreSQL и worker в отдельном тестовом окружении. Результаты явно синтетические: внешняя языковая модель не вызывалась. Снимки не содержат рабочих данных. Четыре семантических KPI остаются неизвестными; количества материалов получены через /overview.</p>
+<p><a href="../../plans/frontend-text-processing.md">Реализация, проверки и ограничения</a> · <a href="../../../prototype/index.html">Исходный прототип</a> · <a href="../observer-v3/index.html">Предыдущее сравнение с прототипом</a></p>
+<nav aria-label="Размер экрана"><a href="#w1440">1440 px</a><a href="#w1280">1280 px</a><a href="#w390">390 px</a><a href="#w320">320 px</a></nav>
+<main id="screenshots"></main>
+<script>
+const main=document.getElementById('screenshots');
+for(const width of [1440,1280,390,320]){
+  const section=document.createElement('section');section.id='w'+width;
+  const heading=document.createElement('h2');heading.textContent=width+' px';section.append(heading);
+  const grid=document.createElement('div');grid.className='grid';
+  for(const [key,label] of [['overview','Обзор'],['processing','Обработка'],['findings','Находка'],['fragment','Точное состояние фрагмента']]){
+    const figure=document.createElement('figure'),caption=document.createElement('figcaption'),link=document.createElement('a'),img=document.createElement('img');
+    caption.textContent=label;link.href=key+'-'+width+'.png';img.src=link.href;img.alt=label+' на экране '+width+' px';img.loading='lazy';link.append(img);figure.append(caption,link);grid.append(figure);
+  }
+  section.append(grid);main.append(section);
+}
+</script>
+</html>

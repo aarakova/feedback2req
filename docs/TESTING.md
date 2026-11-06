@@ -553,3 +553,35 @@ RestartCount после сигнала из probe, одного unhealthy нед
 Docker seed/restart относятся к 26 октября; финальные изменения и вся
 матрица probe/fault после продолжения 2 ноября требуют повторных прогонов.
 Недоступный Docker Engine не заменяется SQLite или рабочей БД другого агента.
+
+## Frontend F1 — DEC-017
+
+Реальная цепочка UI → API → PostgreSQL → worker → Findings/Fragments проверяется
+в собственной БД `feedback2req_processing_f1_test` и собственной internal
+Docker-сети. Положительный путь использует явно синтетический HTTP provider,
+внешняя модель не вызывается. Подготовка, ограничения fault-fixtures и команды —
+[test support](../frontend/tests/support/README.md).
+
+- `processing.spec.ts`: явный start с точными id/state_id, две операции, текущие
+  Run/Unit/Attempt, partial/failed/running, история/reload, same-key start/retry
+  после потерянного ответа, лимит 32 и cursor pages, annotations/coverage,
+  Unicode/CRLF exact evidence, изменённый source state, project isolation,
+  поздние ответы, отзыв Member-доступа и остановка/предел polling.
+- `processing-faults.spec.ts`: ограниченный GET backoff при 503 и ручное
+  восстановление; `processing-units.spec.ts`: адаптеры, ключи/session storage,
+  strict hash routes. Эти модульные проверки используют browser/Vite imports;
+  они не выдаются за интеграцию API и не раздаются Nginx.
+- Отдельный worker без провайдера проверяет фактический provider_not_configured,
+  ai_performed=false и отсутствие вымышленных находок.
+- `processing-visual.spec.ts`: 16 golden-сравнений четырёх экранов в четырёх
+  размерах; немаскированные [снимки](qa/frontend-text-processing/index.html).
+  Бизнес-содержимое, synthetic и счётчики не маскируются. Прежние эталоны
+  меняются только для просмотренных ожидаемых F1-различий.
+
+Фактические результаты итоговых прогонов, исходные SHA, границы проверки и
+отклонения записаны в [отчёте F1](plans/frontend-text-processing.md).
+2026-11-06: build/Docker build — PASS; полный Vite — **149 passed, 1 skipped**;
+production/Nginx на окончательном UI — **91 passed, 59 skipped**; отдельный
+provider_not_configured и заключительные проверки — **5 passed, 1 skipped**;
+backend processing/provider — **24 passed**. Итоговые прогоны без падений и
+без обновления эталонов. Положительные результаты остаются синтетическими.
