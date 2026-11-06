@@ -1,0 +1,37 @@
+# Optional serving on a host with sufficient RAM. Never started by the harness.
+# Requires explicit approval, preloaded image and approved weights in .local.
+services:
+  ollama:
+    image: ollama/ollama:0.40.14
+    pull_policy: never
+    entrypoint: ["/bin/ollama"]
+    command: ["serve"]
+    environment:
+      OLLAMA_HOST: "0.0.0.0:11435"
+      OLLAMA_MODELS: /models
+      OLLAMA_NO_CLOUD: "1"
+      OLLAMA_MAX_LOADED_MODELS: "1"
+      OLLAMA_NUM_PARALLEL: "1"
+      OLLAMA_MAX_QUEUE: "1"
+      OLLAMA_CONTEXT_LENGTH: "8192"
+      OLLAMA_KEEP_ALIVE: "0"
+      OLLAMA_DEBUG: "0"
+    ports:
+      - "127.0.0.1:11435:11435"
+    volumes:
+      - ../../.local/qwen-models:/models:ro
+    tmpfs:
+      - /tmp:size=64m
+      - /root/.ollama:size=1m
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    cpus: 4
+    mem_limit: 5g
+    memswap_limit: 5g
+    pids_limit: 128
+    restart: "no"
+    networks: [experiment]
+networks:
+  experiment:
+    internal: true
