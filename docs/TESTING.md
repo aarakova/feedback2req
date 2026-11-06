@@ -382,3 +382,27 @@ python -B -W error -m unittest discover -s ai/tests -v
 38 PG/API/исполнитель tests входят в полный backend-прогон. Ruff и AI-контракты
 1.0 PASS. Первый CLI-тест не имел writable /tmp в read-only контейнере;
 повтор с отдельным tmpfs успешен. Детали и команды — в отчёте интеграции.
+
+## Backend F3 — DEC-017
+
+[Тесты очереди](../backend/tests/test_grouping_queue.py) выполняются на отдельной
+PostgreSQL с реальными `processing.worker --once` процессами, включая два
+конкурирующих worker и прерывание процесса с последующим recovery. Проверяются
+one/many/ungrouped/conflicts, idempotency и отсутствие повторного model call,
+доступ/stale source/previous groups, lease/deadline, unknown COMMIT (запись и
+rollback), provider/invalid errors, контекст/annotations, GET и неизменность POST.
+
+Стенд: собственный новый Compose project с существующим compose.grouping-test.yaml:
+
+```text
+docker compose -f compose.grouping-test.yaml -p <unique-f3-test-project> up -d --wait f2r-f2-db
+docker compose -f compose.grouping-test.yaml -p <unique-f3-test-project> run --rm checks -m pytest backend/tests -q -W error -p no:cacheprovider --junitxml=/state/f3-backend-final.xml
+```
+
+Имя сервиса f2r-f2-db историческое; сеть/volumes создаются для собственного
+уникального F3 project. Исходники read-only, JUnit сохраняется в его snapshot
+volume. Фактический результат 2026-11-06: **213 tests, errors=0, failures=0,
+skipped=0**, 416.263 s; включает 26 F3 tests и все прежние F1/F2 проверки.
+Результат восстановлен из полного JUnit после утраты terminal session;
+это не вывод из количества точек прогресса. Остальные проверки и ограничения —
+[отчёт F3](plans/backend-grouping-orchestration.md).
