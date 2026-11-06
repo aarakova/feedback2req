@@ -1,5 +1,10 @@
 # feedback2req
 
+Автономная [генерация требований 1.0](ai/generate_requirements/README.md):
+локальный replay, проверка evidence и граница будущей интеграции с backend.
+[Результаты проверки](evals/ai/generation/VALIDATION.md) и
+[научные расширения контракта](docs/research/generation-contract-evolution.md).
+
 И1/И2а: backend с PostgreSQL, локальными учётными записями, серверными сессиями,
 проектами, управлением доступом и сохранением текстовых отзывов/документов.
 Ф1а/Ф1б добавляют React frontend: регистрация, вход/выход, восстановление сессии,
