@@ -1,5 +1,9 @@
 # feedback2req
 
+Автономная [проверка требований 1.0](ai/verify_requirement/README.md):
+четыре оценки, замечания, охват и граница человеческих решений.
+[Результаты проверки](evals/ai/verification/VALIDATION.md).
+
 Автономная [генерация требований 1.0](ai/generate_requirements/README.md):
 локальный replay, проверка evidence и граница будущей интеграции с backend.
 [Результаты проверки](evals/ai/generation/VALIDATION.md) и
