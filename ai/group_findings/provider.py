@@ -71,6 +71,8 @@ class OllamaConfig:
 class Ollama:
     name = "ollama"
     synthetic = False
+    system_prompt = SYSTEM_PROMPT
+    response_schema = staticmethod(response_format)
 
     def __init__(self, config: OllamaConfig):
         self.config = config
@@ -107,11 +109,11 @@ class Ollama:
         body = {
             "model": cfg.model,
             "stream": False,
-            "format": response_format(),
+            "format": self.response_schema(),
             "options": {"temperature": cfg.temperature},
             "think": cfg.think,
             "messages": [
-                {"role": "system", "content": SYSTEM_PROMPT},
+                {"role": "system", "content": self.system_prompt},
                 {"role": "user", "content": json.dumps(value, ensure_ascii=False)},
             ],
         }
