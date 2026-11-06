@@ -49,4 +49,3 @@ export function usePages<T extends { id: string }>(api: ApiClient, path: string,
     more: () => setPage(previous => previous.next && !previous.loading ? { ...previous, cursor: previous.next } : previous),
     reload: () => { setPage({ path, items: [], cursor: null, next: null, loading: true, error: '' }); setRevision(value => value + 1); } };
 }
-

@@ -1,0 +1,30 @@
+.processing-runtime{min-width:0}
+.processing-operation{display:grid;gap:8px}
+time{font-variant-numeric:tabular-nums}
+.processing-runtime p,.processing-runtime dd,.processing-runtime .mono,.result-details .mono{overflow-wrap:anywhere}
+.processing-runtime label:has(>select){display:grid;gap:8px}
+.processing-runtime .observer-select{max-width:100%;width:100%}
+.processing-choices{min-width:0;margin:0;border:1px solid var(--line);border-radius:8px;padding:16px}
+.processing-choices legend{font-size:13px;padding:0 6px;color:var(--ink)}
+.processing-choice{display:grid;grid-template-columns:18px minmax(0,1fr);align-items:start;gap:12px;padding:14px 0;border-bottom:1px solid var(--line);font-size:12px;cursor:pointer}
+.processing-choice:last-of-type{border-bottom:0}
+.processing-choice>span{display:grid;gap:7px;min-width:0}
+.processing-choice input{width:18px;height:18px;margin:2px 0 0;accent-color:var(--accent)}
+.input-preview{white-space:pre-wrap;overflow-wrap:anywhere;color:var(--muted);display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;overflow:hidden}
+.processing-facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;font-size:12px;min-width:0}
+.processing-facts>div{min-width:0}
+.processing-facts dt{font-size:10px;color:var(--muted);margin-bottom:5px}
+.processing-facts dd{margin:0;overflow-wrap:anywhere}
+.run-list{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.run-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:9px;padding:14px;border:1px solid var(--line);border-radius:8px;color:var(--ink);text-decoration:none;font-size:12px}
+.run-row .mono{grid-column:1/-1;overflow-wrap:anywhere}
+.run-row[aria-current=true]{background:var(--soft);border-color:var(--accent)}
+.processing-unit{display:grid;gap:12px;border:1px solid var(--line);border-radius:9px;padding:17px;min-width:0}
+.processing-unit .source-link{overflow-wrap:anywhere}
+.processing-unit .retry-unit,.processing-runtime form>button,.processing-runtime fieldset>button{justify-self:start}
+.result-details{font-size:12px;min-width:0}
+.result-details h4{font-size:12px;margin-bottom:8px}
+.result-details ul{padding-left:18px;display:grid;gap:7px;overflow-wrap:anywhere}
+.observer-v3 .material-list a.process-material{display:inline-flex;padding:8px 0 16px;border:0;font-size:11px;background:none;color:var(--accent)}
+.observer-v3 .finding-card{overflow-wrap:anywhere}
+@media(max-width:440px){.processing-choices{padding:12px}.processing-unit{padding:13px}.run-row{grid-template-columns:1fr}.run-row .badge{justify-self:start}.processing-runtime .panel-body{padding:15px}.processing-facts{grid-template-columns:1fr}}

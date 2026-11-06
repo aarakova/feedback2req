@@ -45,4 +45,3 @@ export interface OverviewDTO {
 export const INPUT_LIMIT = 32;
 export const uuidPattern = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 export const activeRun = (run: RunDTO) => run.state === 'queued' || run.state === 'running';
-

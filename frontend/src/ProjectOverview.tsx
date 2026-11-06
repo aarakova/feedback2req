@@ -46,7 +46,7 @@ function DecisionChart({ decisions, projectId }: { decisions?: OverviewView['dec
   </div>;
 }
 
-export function ProjectOverview({ project, state }: { project: Project; state?: ViewState<OverviewView> }) {
+export function ProjectOverview({ project, state, runtime, processingAvailable = false }: { project: Project; state?: ViewState<OverviewView>; runtime?: ReactNode; processingAvailable?: boolean }) {
   const current = inProject(state ?? unavailable<OverviewView>(project.id, 'Сводные данные анализа пока недоступны. Материалы и доступ уже работают.'), project.id);
   const data = viewData(current);
   const aggregates = data?.aggregatesAuthoritative ? data : undefined;
@@ -101,11 +101,12 @@ export function ProjectOverview({ project, state }: { project: Project; state?: 
     </div>
     <p className="small muted observer-space">{data?.coverage ?? 'Показатели не вычисляются по частично загруженным страницам материалов.'}</p>
     <details className="observer-live-tools observer-space" open><summary>Поддерживаемые операции и ваши полномочия</summary>
+      {runtime}
       <div className="observer-twos observer-space"><section className="panel overview-panel stack" aria-label="Возможности проекта">
         <h3>Доступные действия</h3><div className="live-capabilities">
           <p>Текстовые отзывы <span className="capability-state">Доступно</span></p>
           <p>Документация <span className="capability-state">Доступно</span></p>
-          <p>Семантический анализ <span className="capability-state">Не подключено</span></p>
+          <p>{processingAvailable ? 'Обработка сохранённых текстов' : 'Семантический анализ'} <span className="capability-state">{processingAvailable ? 'Доступно' : 'Не подключено'}</span></p>
         </div><a className="primary action-link" href={projectHref(project.id, 'materials')}>Открыть материалы →</a>
         {project.permissions.is_owner && <a className="secondary action-link" href={projectHref(project.id, 'access')}>Управлять доступом</a>}
       </section><section className="panel overview-panel stack"><h3>Ваши полномочия</h3><Permissions project={project} />

@@ -7,17 +7,19 @@ import { Materials } from './Materials';
 import type { MaterialSelection } from './Materials';
 import { ProjectAccess } from './Access';
 import { ProjectSettings } from './ProjectSettings';
-import { ProjectOverview } from './ProjectOverview';
-import { FindingsScreen } from './observer/Findings';
+import { ProjectOverviewData } from './processing/ProjectOverviewData';
+import { ProjectFindings } from './processing/ProjectFindings';
+import { ProjectProcessing } from './processing/ProjectProcessing';
+import type { InputRef } from './processing/dto';
 import { RequirementsScreen } from './observer/Requirements';
-import { ProcessingScreen } from './observer/Processing';
 import { groupHref, projectHref, requirementHref, requirementsFilterHref } from './routes';
 import type { ProjectSection, RequirementFilter } from './routes';
 
-export function ProjectLayout({ api, user, onLogout, id, section, selected, accessRevision, requirementId, groupId, requirementFilter }: {
+export function ProjectLayout({ api, user, onLogout, id, section, selected, accessRevision, requirementId, groupId, requirementFilter, runId, findingId, fragment, attemptId, processingInput }: {
   api: ApiClient; user: User; onLogout: () => void; id: string; section: ProjectSection;
   selected?: MaterialSelection; accessRevision: number;
   requirementId?: string; groupId?: string; requirementFilter?: RequirementFilter;
+  runId?: string; findingId?: string; fragment?: { id: string; stateId: string }; attemptId?: string; processingInput?: InputRef;
 }) {
   const [project, setProject] = useState<Project | null>(null);
   const [loading, setLoading] = useState(true);
@@ -64,13 +66,14 @@ export function ProjectLayout({ api, user, onLogout, id, section, selected, acce
             <p>Просмотр и управление участниками доступны только владельцу проекта.</p>
             <a href={projectHref(id)}>Вернуться к обзору проекта</a></section>
         : section === 'materials' ? <Materials api={api} projectId={id} selected={selected} onUnavailable={unavailable} />
-        : section === 'findings' ? <FindingsScreen project={project} selectedGroupId={groupId}
+        : section === 'findings' ? <ProjectFindings api={api} project={project} groupId={groupId} findingId={findingId} fragment={fragment} attemptId={attemptId} onRecheck={recheckProject}
             onSelectGroup={group => { window.location.hash = group ? groupHref(id, group) : projectHref(id, 'findings'); }} />
         : section === 'requirements' ? <RequirementsScreen project={project} selectedId={requirementId} filter={requirementFilter ?? 'all'}
             onFilterChange={filter => { window.location.hash = requirementsFilterHref(id, filter); }}
             onSelect={requirement => { window.location.hash = `${requirementHref(id, requirement)}?filter=${requirementFilter ?? 'all'}`; }} />
-        : section === 'processing' ? <ProcessingScreen projectId={id} />
-        : <ProjectOverview project={project} />}
+        : section === 'processing' ? <ProjectProcessing key={processingInput ? `${processingInput.kind}/${processingInput.id}/${processingInput.state_id}` : 'processing'}
+            api={api} user={user} projectId={id} selectedRunId={runId} prefill={processingInput} onRecheck={recheckProject} />
+        : <ProjectOverviewData api={api} project={project} onRecheck={recheckProject} />}
     </div>}
   </AppLayout>;
 }

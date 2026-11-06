@@ -63,4 +63,3 @@ export function exactFragmentText(fragment: FragmentDTO, source: { id: string; s
   return source.id === fragment.source_ref.id && source.state_id === fragment.source_ref.state_id
     && Array.from(source.text).slice(fragment.locator.start, fragment.locator.end).join('') === fragment.quote;
 }
-

@@ -2,7 +2,7 @@ import { useId, useRef } from 'react';
 import type { ReactNode } from 'react';
 import { Loading } from '../ui';
 import type { Decision, EvidenceState, EvidenceView, IssueView, RequirementSummary, VerificationState, ViewState } from './viewModels';
-import { projectHref } from '../routes';
+import { fragmentHref, materialStateHref, projectHref } from '../routes';
 
 export function Panel({ title, children, extra, className = '' }: {
   title: string; children: ReactNode; extra?: ReactNode; className?: string;
@@ -44,7 +44,7 @@ export function RequirementBadges({ item }: { item: RequirementSummary }) {
     {item.verificationState !== 'current' && <span className="badge warn">{verificationName(item.verificationState)}</span>}
   </div>;
 }
-export function EvidenceCard({ evidence, projectId, context = false }: { evidence: EvidenceView; projectId: string; context?: boolean }) {
+export function EvidenceCard({ evidence, projectId, context = false, showFragmentLink = true }: { evidence: EvidenceView; projectId: string; context?: boolean; showFragmentLink?: boolean }) {
   const productContext = context || evidence.source?.kind === 'documents';
   return <article className="basis-evidence" aria-label={`${productContext ? 'Контекст' : 'Свидетельство'}: ${evidence.sourceLabel}`}>
     <div className="observer-row between"><strong>{evidence.sourceLabel}</strong><span className="badge">{productContext ? 'Контекст продукта' : 'Исходное свидетельство'}</span></div>
@@ -53,7 +53,10 @@ export function EvidenceCard({ evidence, projectId, context = false }: { evidenc
     {evidence.state === 'available' ? <>
       {evidence.quote && <blockquote className="quote"><p>«{evidence.quote}»</p></blockquote>}
       {evidence.position && <p className="small muted">{evidence.position}</p>}
-      {evidence.source ? <a className="source-link" href={`${projectHref(projectId, 'materials')}/${evidence.source.kind}/${encodeURIComponent(evidence.source.id)}`}>Открыть источник ↗</a>
+      {evidence.fragment && <p className="mono small muted">Источник: {evidence.source?.id}<br />Состояние источника: {evidence.fragment.sourceStateId}</p>}
+      {evidence.fragment && showFragmentLink && <a className="source-link" href={fragmentHref(projectId, evidence.fragment.id, evidence.fragment.stateId)}>Открыть точное состояние фрагмента ↗</a>}
+      {evidence.source ? <a className="source-link" href={evidence.fragment ? materialStateHref(projectId, evidence.source.kind, evidence.source.id, evidence.fragment.sourceStateId)
+        : `${projectHref(projectId, 'materials')}/${evidence.source.kind}/${encodeURIComponent(evidence.source.id)}`}>Открыть источник ↗</a>
         : <p className="small muted">Переход к источнику пока недоступен.</p>}
     </> : <p className={`notice ${evidence.state === 'deleted' ? 'bad' : 'warn'}`}>
       {evidence.state === 'deleted' ? 'Источник удалён. Исходный фрагмент недоступен; историческая связь не заменяет подтверждение.' : 'Исходное свидетельство сейчас недоступно.'}

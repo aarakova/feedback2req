@@ -1,19 +1,27 @@
 import { useState } from 'react';
+import type { ReactNode } from 'react';
 import type { Project } from '../api';
-import { groupHref, projectHref, requirementHref } from '../routes';
+import { findingHref, groupHref, projectHref, requirementHref } from '../routes';
+import { ResultDetails } from '../processing/ResultDetails';
 import { EvidenceCard, MissingData, PageHeading, Panel, RequirementBadges, Tabs, VerificationIssue, ViewNotice } from './ui';
 import { inProject, unavailable, viewData } from './viewModels';
 import type { FindingView, FindingsView, ViewState } from './viewModels';
 
 const groupTabs = [{ id: 'findings', label: 'Находки' }, { id: 'requirements', label: 'Требования' }, { id: 'issues', label: 'Замечания требований' }];
 
-function FindingCard({ finding, data, projectId }: { finding: FindingView; data: FindingsView; projectId: string }) {
+export function FindingCard({ finding, data, projectId, detail = false }: { finding: FindingView; data: FindingsView; projectId: string; detail?: boolean }) {
   const opponents = data.findings.filter(item => finding.conflictsWith.includes(item.id));
   return <article className="finding-card" id={`finding-${encodeURIComponent(finding.id)}`} tabIndex={-1}>
     <div className="observer-badges">{finding.types.map(type => <span className="badge blue" key={type}>{type}</span>)}
       <span className="badge">{finding.originLabel}</span>{finding.humanEdited && <span className="badge warn">Правка человека</span>}
       <span className="mono muted">{finding.id}</span></div>
     <h4>{finding.text}</h4>
+    {finding.extraction && <div className="stack">
+      <p className={`notice ${finding.extraction.stale ? 'warn' : ''}`}>{finding.extraction.freshness}</p>
+      <p className="mono small muted">Состояние находки: {finding.extraction.stateId}<br />Попытка: {finding.extraction.attemptId}<br />Создано: {finding.extraction.createdAt}</p>
+      <ResultDetails value={finding.extraction} />
+      {!detail && <a className="source-link" href={findingHref(projectId, finding.id)}>Открыть находку ↗</a>}
+    </div>}
     {finding.evidence.map(evidence => <EvidenceCard key={evidence.id} evidence={evidence} projectId={projectId} />)}
     {finding.conflictsWith.length > 0 && <div className="conflict-notice">
       <strong>Конфликтующие позиции · не усреднять</strong>
@@ -28,13 +36,14 @@ function FindingCard({ finding, data, projectId }: { finding: FindingView; data:
       {opponents.length !== finding.conflictsWith.length && <p className="small muted">Часть конфликтующих позиций не загружена.</p>}
     </div>}
     <div className="observer-space"><strong className="small">Связанные требования</strong><div className="related-links">
-      {finding.requirementIds.length ? finding.requirementIds.map(id => <a key={id} href={requirementHref(projectId, id)}>
+      {data.relationsAvailable === false ? <span className="small muted">Связи с требованиями пока не подключены.</span> : finding.requirementIds.length ? finding.requirementIds.map(id => <a key={id} href={requirementHref(projectId, id)}>
         {data.requirements.find(item => item.id === id)?.title ?? id} ↗</a>) : <span className="small muted">В этой выборке связи не переданы.</span>}</div></div>
   </article>;
 }
 
-export function FindingsScreen({ project, state, selectedGroupId, onSelectGroup }: {
+export function FindingsScreen({ project, state, selectedGroupId, onSelectGroup, runtime, controls, detailMode = false }: {
   project: Project; state?: ViewState<FindingsView>; selectedGroupId?: string; onSelectGroup?: (id: string | undefined) => void;
+  runtime?: ReactNode; controls?: ReactNode; detailMode?: boolean;
 }) {
   const current = inProject(state ?? unavailable<FindingsView>(project.id, 'Находки, группы и связи с исходными свидетельствами пока недоступны.'), project.id);
   const data = viewData(current);
@@ -44,13 +53,15 @@ export function FindingsScreen({ project, state, selectedGroupId, onSelectGroup 
   const findings = selected ? data!.findings.filter(item => selected.findingIds.includes(item.id)) : data?.findings ?? [];
   const select = (id: string | undefined) => { setLocalGroup(id); setTab('findings'); onSelectGroup?.(id); };
   return <div className="findings-screen">
-    <PageHeading title={selected?.title ?? 'Находки и группы'} label="Находки" description="Откройте группу, чтобы увидеть её состав, требования и замечания." />
+    <PageHeading title={selected?.title ?? 'Находки и группы'} label="Находки" description={runtime ? 'Результаты извлечения из текстовой обратной связи и их исходные свидетельства.' : 'Откройте группу, чтобы увидеть её состав, требования и замечания.'} />
     <ViewNotice state={current} />
+    {runtime}
     {chosen ? <><a className="source-link" href={projectHref(project.id, 'findings')} onClick={event => {
       if (onSelectGroup) { event.preventDefault(); select(undefined); }
     }}>← К находкам и группам</a>
       <Panel title="Состав группы" className="observer-space"><Tabs tabs={groupTabs} selected={tab} onSelect={setTab} label="Содержимое группы">
-        {!selected || !data ? <MissingData>{data ? 'Группа отсутствует в загруженной выборке.' : 'Состав группы пока недоступен.'}</MissingData>
+        {data?.groupsAvailable === false ? <div className="stack"><span className="badge">Функция не подключена</span><p>Группировка F2 пока не предоставляет состав группы. Отсутствие API не означает отсутствие групп.</p></div>
+          : !selected || !data ? <MissingData>{data ? 'Группа отсутствует в загруженной выборке.' : 'Состав группы пока недоступен.'}</MissingData>
           : tab === 'findings' ? <>
             {selected.summary && <p className="notice">{selected.summary}</p>}
             {selected.conflict && <p className="notice warn">В группе есть несовместимые ожидания. Обе позиции показаны отдельно.</p>}
@@ -71,18 +82,20 @@ export function FindingsScreen({ project, state, selectedGroupId, onSelectGroup 
           </div> : <MissingData>Замечания проверок требований в этой выборке не переданы.</MissingData>}
       </Tabs></Panel>
     </> : <>
-      <Panel title="Группы находок" extra={<span className="small muted">{data ? `Загружено ${data.groups.length}` : 'Нет данных'}</span>}>
-        {data?.groups.length ? <div className="group-grid panel-body">{data.groups.map(group => <a key={group.id} className="group-card"
+      <Panel title="Группы находок" extra={<span className="small muted">{data?.groupsAvailable === false ? 'Данные недоступны' : data ? `Загружено ${data.groups.length}` : 'Нет данных'}</span>}>
+        {data?.groupsAvailable === false ? <div className="panel-body stack"><span className="badge">Функция не подключена</span><p className="muted small">Группировка F2 пока не подключена. Находки ниже получены сервером; группы на frontend не создаются.</p></div>
+          : data?.groups.length ? <div className="group-grid panel-body">{data.groups.map(group => <a key={group.id} className="group-card"
           href={groupHref(project.id, group.id)} onClick={event => { if (onSelectGroup) { event.preventDefault(); select(group.id); } }}>
           <div className="observer-row between"><span className="mono">{group.id}</span>{group.conflict && <span className="badge warn">Конфликт</span>}</div>
           <h3>{group.title}</h3><p className="small muted">Загруженный состав: {data.findings.filter(item => group.findingIds.includes(item.id)).length} находок</p>
           <span className="source-link">Открыть состав группы →</span></a>)}</div>
           : <MissingData loading={current.status === 'loading'} empty={!!data || current.status === 'empty'} />}
       </Panel>
-      <Panel title="Все находки" className="observer-space" extra={<span className="small muted">Содержательные выводы из отзывов</span>}>
+      {!detailMode && <Panel title="Все находки" className="observer-space" extra={<span className="small muted">Содержательные выводы из отзывов</span>}>
         {data?.findings.length ? data.findings.map(finding => <FindingCard key={finding.id} finding={finding} data={data} projectId={project.id} />)
           : <MissingData loading={current.status === 'loading'} empty={!!data || current.status === 'empty'} />}
-      </Panel>
+      </Panel>}
     </>}
+    {controls}
   </div>;
 }

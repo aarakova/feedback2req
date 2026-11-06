@@ -42,4 +42,3 @@ export function useRun(api: ApiClient, projectId: string, runId: string | undefi
     error: result.key === key ? result.error : '', paused: result.key === key && result.paused,
     refresh: () => setRevision(value => value + 1) };
 }
-

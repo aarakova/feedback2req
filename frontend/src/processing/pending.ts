@@ -40,4 +40,3 @@ export function writePending(userId: string, projectId: string, command: Pending
 export function clearPendingCommands() {
   try { for (const key of Object.keys(sessionStorage)) if (key.startsWith(prefix)) sessionStorage.removeItem(key); } catch { /* No text or credentials are stored. */ }
 }
-

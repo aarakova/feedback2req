@@ -58,4 +58,3 @@ export function useCommand(api: ApiClient, userId: string, projectId: string, on
     replay: () => locked.current ? send(locked.current) : Promise.resolve(undefined),
   };
 }
-
