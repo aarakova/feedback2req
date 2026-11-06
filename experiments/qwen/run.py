@@ -24,7 +24,7 @@ from ai.group_findings.validation import (
 
 from .adapter import ADAPTER_VERSION, ExperimentalOllama, config_check, sha
 from .dataset import ROOT, load_cases
-from .prompt import PROMPT_VERSION, SYSTEM_PROMPT
+from .profiles import prompt_profile
 
 
 def write(path, value):
@@ -197,6 +197,7 @@ def run(cfg, lock, output, selected, *, allowed=False, synthetic_only=False):
             "provider_error", "explicit_local_synthetic_opt_in_required"
         )
     config_check(cfg)
+    profile_name, prompt_version, system_prompt = prompt_profile(cfg)
     dataset, cases, applicability = load_cases()
     inventory = cases
     if selected:
@@ -219,8 +220,9 @@ def run(cfg, lock, output, selected, *, allowed=False, synthetic_only=False):
         "configuration": cfg,
         "wall_deadline_includes_child_startup": True,
         "adapter_version": ADAPTER_VERSION,
-        "prompt_version": PROMPT_VERSION,
-        "prompt_sha256": sha(SYSTEM_PROMPT),
+        "prompt_profile": profile_name,
+        "prompt_version": prompt_version,
+        "prompt_sha256": sha(system_prompt),
         "python": sys.version,
         "dependencies": {name: version(name) for name in ("jsonschema", "referencing")},
         "platform": platform.platform(),
@@ -404,7 +406,7 @@ def run(cfg, lock, output, selected, *, allowed=False, synthetic_only=False):
             "mode": "saved_model_responses",
             "model": {"name": cfg["model"], "revision": lock["digest"]},
             "configuration": {
-                "prompt_version": PROMPT_VERSION,
+                "prompt_version": prompt_version,
                 "adapter_version": ADAPTER_VERSION,
                 "generation_settings": {
                     "temperature": cfg["options"]["temperature"],

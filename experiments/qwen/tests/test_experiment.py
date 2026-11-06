@@ -254,7 +254,8 @@ class AdapterTests(unittest.TestCase):
         self.assertEqual(result["error"]["rule"], "wall_deadline")
 
     def test_crashed_child_is_a_record(self):
-        result = bounded_job(empty_child, (cfg(), fixture()[0]), 5)
+        # This checks child failure classification, not a fast startup deadline.
+        result = bounded_job(empty_child, (cfg(), fixture()[0]), 30)
         self.assertEqual(result["error"]["rule"], "child_failed")
 
     def test_incomplete_http_and_error_bodies_are_preserved(self):

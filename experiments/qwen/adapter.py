@@ -17,9 +17,9 @@ from ai.group_findings.validation import (
     validate_request,
 )
 
-from .prompt import SYSTEM_PROMPT
+from .profiles import prompt_profile
 
-ADAPTER_VERSION = "qwen-local-experiment-1"
+ADAPTER_VERSION = "qwen-local-experiment-2"
 HOST, PORT = "127.0.0.1", 11435
 MODELS = {"qwen3:4b-q4_K_M", "qwen3.5:9b-q4_K_M"}
 
@@ -39,7 +39,7 @@ def config_check(cfg):
     """Closed research configuration, unrelated to approved application contracts."""
     try:
         require(
-            set(cfg)
+            set(cfg) - {"prompt_profile"}
             == {
                 "model",
                 "ollama_version",
@@ -54,6 +54,7 @@ def config_check(cfg):
             }
         )
         require(cfg["model"] in MODELS)
+        prompt_profile(cfg)
         require(cfg["ollama_version"] == "0.40.14")
         require(cfg["quantization"] == "Q4_K_M" and cfg["think"] is False)
         for key, low, high in (
@@ -153,6 +154,7 @@ class ExperimentalOllama:
 
     def __init__(self, cfg, *, enabled=False, transport=None):
         self.cfg = deepcopy(config_check(cfg))
+        self.prompt_name, self.prompt_version, self.system_prompt = prompt_profile(cfg)
         self.model = cfg["model"]
         self.enabled = enabled is True
         self.transport = transport if transport is not None else LocalHTTP()
@@ -218,6 +220,9 @@ class ExperimentalOllama:
             "template_sha256": sha(show["template"]),
             "show_sha256": sha(show),
             "config_sha256": sha(self.cfg),
+            "prompt_profile": self.prompt_name,
+            "prompt_version": self.prompt_version,
+            "prompt_sha256": sha(self.system_prompt),
         }
 
     def group(self, request):
@@ -229,7 +234,7 @@ class ExperimentalOllama:
             raise GroupingError("invalid_request", "input_bytes")
         # Conservative UTF-8 byte bound for BPE message tokens; explicit template
         # reserve. Grammar is sent in format, not duplicated into message content.
-        upper = len(SYSTEM_PROMPT.encode()) + len(text.encode())
+        upper = len(self.system_prompt.encode()) + len(text.encode())
         upper += self.cfg["template_token_reserve"] + self.cfg["options"]["num_predict"]
         if upper > self.cfg["options"]["num_ctx"]:
             raise GroupingError("invalid_request", "context_budget")
@@ -241,7 +246,7 @@ class ExperimentalOllama:
             "format": response_format(),
             "options": self.cfg["options"],
             "messages": [
-                {"role": "system", "content": SYSTEM_PROMPT},
+                {"role": "system", "content": self.system_prompt},
                 {"role": "user", "content": text},
             ],
         }

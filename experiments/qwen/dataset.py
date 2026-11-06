@@ -8,6 +8,7 @@ from ai.group_findings.validation import validate_request
 from evals.ai.grouping.build_cases import make_request
 
 from .adapter import sha
+from .live_cases import cases as live_cases
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "evals/ai"))
@@ -136,6 +137,7 @@ def load_cases():
     ):
         finding["text"] = text
     cases.append(variant)
+    cases.extend(live_cases())
     for case in cases:
         validate_request(case["request"])
         case["request_sha256"] = sha(case["request"])
