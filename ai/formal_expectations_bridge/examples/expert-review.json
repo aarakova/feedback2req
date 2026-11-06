@@ -1,0 +1,154 @@
+[
+  {
+    "case_id": "01-direct-conflict",
+    "status": "PRELIMINARY",
+    "reviewer": null,
+    "semantic_verdict": "pending",
+    "review_prompt": "Общие условия и непересекающиеся bool значения.",
+    "not_semantic_gold": true
+  },
+  {
+    "case_id": "02-different-conditions",
+    "status": "PRELIMINARY",
+    "reviewer": null,
+    "semantic_verdict": "pending",
+    "review_prompt": "Явное разбиение desktop/mobile делает C непересекающимися.",
+    "not_semantic_gold": true
+  },
+  {
+    "case_id": "03-compatible",
+    "status": "PRELIMINARY",
+    "reviewer": null,
+    "semantic_verdict": "pending",
+    "review_prompt": "Одинаковые условия и допустимое значение true.",
+    "not_semantic_gold": true
+  },
+  {
+    "case_id": "04-incomplete-information",
+    "status": "PRELIMINARY",
+    "reviewer": null,
+    "semantic_verdict": "pending",
+    "review_prompt": "Полное Ω выбранной модели содержит D и K.",
+    "not_semantic_gold": true
+  },
+  {
+    "case_id": "05-parameter-aliases",
+    "status": "PRELIMINARY",
+    "reviewer": null,
+    "semantic_verdict": "pending",
+    "review_prompt": "Синонимия подготовлена явно и требует доверенного подтверждения.",
+    "not_semantic_gold": true
+  },
+  {
+    "case_id": "06-different-parameters",
+    "status": "PRELIMINARY",
+    "reviewer": null,
+    "semantic_verdict": "pending",
+    "review_prompt": "Разные параметры нельзя сравнивать в модели одного параметра.",
+    "not_semantic_gold": true
+  },
+  {
+    "case_id": "07-multiple-wishes",
+    "status": "PRELIMINARY",
+    "reviewer": null,
+    "semantic_verdict": "pending",
+    "review_prompt": "Одна находка даёт два атома с сохранённым exact основанием; проверяется только выбранная пара.",
+    "not_semantic_gold": true
+  },
+  {
+    "case_id": "08-inferred-not-direct",
+    "status": "PRELIMINARY",
+    "reviewer": null,
+    "semantic_verdict": "pending",
+    "review_prompt": "AI-интерпретация потребности пока не подтверждена доверенным reviewer.",
+    "not_semantic_gold": true
+  },
+  {
+    "case_id": "09-context-contradiction",
+    "status": "PRELIMINARY",
+    "reviewer": null,
+    "semantic_verdict": "pending",
+    "review_prompt": "Заявленные пересекающиеся контексты нельзя отобразить в непересекающиеся C.",
+    "not_semantic_gold": true
+  },
+  {
+    "case_id": "10-false-K",
+    "status": "PRELIMINARY",
+    "reviewer": null,
+    "semantic_verdict": "pending",
+    "review_prompt": "Неверное false вместо true породило бы K; trusted review блокирует формализацию.",
+    "not_semantic_gold": true
+  },
+  {
+    "case_id": "11-false-D",
+    "status": "PRELIMINARY",
+    "reviewer": null,
+    "semantic_verdict": "pending",
+    "review_prompt": "PC и desktop ошибочно объявлены разными непересекающимися условиями; разбиение не подтверждено.",
+    "not_semantic_gold": true
+  },
+  {
+    "case_id": "12-no-complete-omega",
+    "status": "PRELIMINARY",
+    "reviewer": null,
+    "semantic_verdict": "pending",
+    "review_prompt": "Неизвестное C без полного явно заданного Ω не даёт U или другого класса.",
+    "not_semantic_gold": true
+  },
+  {
+    "case_id": "12b-AI-false-completeness",
+    "status": "PRELIMINARY",
+    "reviewer": null,
+    "semantic_verdict": "pending",
+    "review_prompt": "AI объявил единственный K-вариант полным; доверенный контур не подтверждает полноту.",
+    "not_semantic_gold": true
+  },
+  {
+    "case_id": "13-pair-12",
+    "status": "PRELIMINARY",
+    "reviewer": null,
+    "semantic_verdict": "pending",
+    "review_prompt": "Попарный S не даёт совместимости тройки {a,b}, {b,c}, {a,c}.",
+    "not_semantic_gold": true
+  },
+  {
+    "case_id": "13-pair-13",
+    "status": "PRELIMINARY",
+    "reviewer": null,
+    "semantic_verdict": "pending",
+    "review_prompt": "Попарный S не даёт совместимости тройки {a,b}, {b,c}, {a,c}.",
+    "not_semantic_gold": true
+  },
+  {
+    "case_id": "13-pair-23",
+    "status": "PRELIMINARY",
+    "reviewer": null,
+    "semantic_verdict": "pending",
+    "review_prompt": "Попарный S не даёт совместимости тройки {a,b}, {b,c}, {a,c}.",
+    "not_semantic_gold": true
+  },
+  {
+    "case_id": "14-no-formalization",
+    "status": "PRELIMINARY",
+    "reviewer": null,
+    "semantic_verdict": "pending",
+    "review_prompt": "Свободный текст не извлекается автоматически в переменные Z3.",
+    "not_semantic_gold": true
+  },
+  {
+    "case_id": "15-multiple-position-findings",
+    "status": "PRELIMINARY",
+    "reviewer": null,
+    "semantic_verdict": "pending",
+    "review_prompt": "Ожидание левой позиции связано с обеими явно выбранными подтверждающими находками.",
+    "not_semantic_gold": true
+  },
+  {
+    "case_id": "16-dependent-constraint",
+    "status": "PRELIMINARY",
+    "reviewer": null,
+    "semantic_verdict": "pending",
+    "review_prompt": "Противоречие условий приватного режима и сохранения требует разбиения A(C) на атомарные случаи; условная SMT-формула этой версией не принимается.",
+    "not_semantic_gold": true
+  }
+]
