@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import type { ReactNode } from 'react';
 import { projectHref } from '../routes';
 import { MissingData, PageHeading, Panel, ViewNotice } from './ui';
 import { inProject, unavailable, viewData } from './viewModels';
@@ -16,11 +17,12 @@ const statusNames: Record<ProcessingStatus, string> = {
 export function ProcessingBadge({ status }: { status: ProcessingStatus }) {
   return <span className={`badge ${status === 'error' ? 'bad' : status === 'partial' ? 'warn' : status === 'completed' ? 'good' : ''}`}>{statusNames[status]}</span>;
 }
-export function ProcessingCallout() {
+export function ProcessingCallout({ projectId }: { projectId?: string }) {
   return <div className="processing-callout"><div><strong>Материалы и запуск обработки — отдельные действия</strong>
-    <p>Сохранённые тексты уже доступны. Запуск анализа пока не подключён.</p></div>
-    <button className="primary process-cta" disabled aria-describedby="processing-not-connected">Обработать материалы</button>
-    <span id="processing-not-connected" className="sr-only">Операция запуска обработки недоступна на сервере.</span>
+    <p>{projectId ? 'Сохранение не запускает анализ. Выберите материалы и операцию на вкладке «Обработка».' : 'Сохранённые тексты уже доступны. Запуск анализа пока не подключён.'}</p></div>
+    {projectId ? <a className="primary action-link process-cta" href={projectHref(projectId, 'processing')}>Обработать материалы</a>
+      : <button className="primary process-cta" disabled aria-describedby="processing-not-connected">Обработать материалы</button>}
+    {!projectId && <span id="processing-not-connected" className="sr-only">Операция запуска обработки недоступна на сервере.</span>}
   </div>;
 }
 export function MaterialProcessingStatus({ value }: { value?: MaterialProcessingView }) {
@@ -30,15 +32,15 @@ export function MaterialProcessingStatus({ value }: { value?: MaterialProcessing
       <ul>{value.unreliableIntervals.map(interval => <li key={interval}>{interval}</li>)}</ul></div>}
   </div>;
 }
-export function ProcessingScreen({ projectId, state }: { projectId: string; state?: ViewState<ProcessingView> }) {
+export function ProcessingScreen({ projectId, state, runtime }: { projectId: string; state?: ViewState<ProcessingView>; runtime?: ReactNode }) {
   const current = inProject(state ?? unavailable<ProcessingView>(projectId, 'Запуск обработки и состояния семантических этапов пока недоступны.'), projectId);
   const data = viewData(current); const [selected, setSelected] = useState<StageKey>('preparation');
   const active = data?.stages.find(stage => stage.key === selected);
   return <div className="processing-screen"><PageHeading title="Обработка" description="Результаты и действия в каждом этапе."
-    ><button className="primary process-cta" disabled title="Серверная операция запуска пока не подключена">Обработать материалы</button></PageHeading>
-    <ViewNotice state={current} />
-    <div className="run-header"><div><p className="eyebrow">Обработка проекта</p><h3>{data ? 'Состояния переданных этапов' : 'Состояние запуска недоступно'}</h3></div>
-      <p className="small muted">{data?.coverage ?? 'Прогресс не вычисляется без данных о реальном запуске.'}</p></div>
+    >{!runtime && <button className="primary process-cta" disabled title="Серверная операция запуска пока не подключена">Обработать материалы</button>}</PageHeading>
+    {runtime ?? <ViewNotice state={current} />}
+    <div className={`run-header${runtime ? ' observer-space' : ''}`}><div><p className="eyebrow">{runtime ? 'Дальнейшие этапы' : 'Обработка проекта'}</p><h3>{runtime ? 'Полный конвейер Observer' : data ? 'Состояния переданных этапов' : 'Состояние запуска недоступно'}</h3></div>
+      <p className="small muted">{runtime ? 'Извлечение находок подключено выше. Группировка, генерация и проверка требований пока не подключены; общий прогресс не вычисляется.' : data?.coverage ?? 'Прогресс не вычисляется без данных о реальном запуске.'}</p></div>
     <div className="stage-track" role="group" aria-label="Этапы обработки">{stages.map((stage, index) => {
       const value = data?.stages.find(item => item.key === stage.key);
       return <section className={`stage ${value?.status === 'error' ? 'stage-error' : ''}`} key={stage.key} aria-label={stage.title}>

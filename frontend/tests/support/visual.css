@@ -1,0 +1,3 @@
+/* Only volatile test IDs/timestamps/account identity; business content stays visible. */
+.mono,time{visibility:hidden!important}
+.side-foot{visibility:hidden!important;height:28px!important;max-height:28px!important;overflow:hidden!important}

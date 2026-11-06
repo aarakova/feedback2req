@@ -4,8 +4,9 @@ import { ApiClient, ApiError, errorMessage, projectUnavailable } from './api';
 import type { Material, MaterialKind, Page } from './api';
 import { ErrorNotice, Loading } from './ui';
 import { ProcessingCallout } from './observer/Processing';
+import { processingInputHref } from './routes';
 
-export interface MaterialSelection { kind: MaterialKind; id: string }
+export interface MaterialSelection { kind: MaterialKind; id: string; stateId?: string }
 interface ProjectProps {
   api: ApiClient;
   projectId: string;
@@ -23,8 +24,8 @@ export function Materials({ api, projectId, onUnavailable, selected }: ProjectPr
 }) {
   return <div className="materials">
     <div><h2>Материалы</h2><p className="muted">Обратная связь и контекст продукта хранятся отдельно.</p></div>
-    <ProcessingCallout />
-    {selected && <MaterialDetail key={`${selected.kind}/${selected.id}`} api={api}
+    <ProcessingCallout projectId={projectId} />
+    {selected && <MaterialDetail key={`${selected.kind}/${selected.id}/${selected.stateId ?? ''}`} api={api}
       projectId={projectId} onUnavailable={onUnavailable} selected={selected} />}
     <div className="material-columns">
       <MaterialCollection api={api} projectId={projectId} onUnavailable={onUnavailable} kind="sources" />
@@ -94,6 +95,7 @@ function MaterialCollection({ api, projectId, onUnavailable, kind }: ProjectProp
         <span className="mono muted">ID: {item.id}</span>
         <span className="accent small">Открыть <span aria-hidden="true">→</span></span>
       </a>
+      {!isDocument && <a className="source-link process-material" href={processingInputHref(projectId, { kind: 'source', id: item.id, state_id: item.state_id })}>Обработать этот отзыв →</a>}
     </li>)}</ul>}
     {loading && <Loading>{isDocument ? 'Загружаем документы…' : 'Загружаем отзывы…'}</Loading>}
     {!loading && !error && items.length === 0 && <p className="empty-materials muted">
@@ -194,7 +196,13 @@ function MaterialDetail({ api, projectId, selected, onUnavailable }: ProjectProp
     {material && <>
       {'title' in material && <h4>{material.title}</h4>}
       <p className="mono muted">ID: {material.id}</p>
-      <pre className="material-text" aria-label="Сохранённый текст">{material.text}</pre>
+      <p className="mono muted">Состояние: {material.state_id}</p>
+      {selected.stateId && selected.stateId !== material.state_id ? <div className="notice warn">
+        <p>Исходное состояние {selected.stateId} отличается от текущего. Новый текст не подменяет сохранённую цитату.</p>
+        <a href={materialHref(projectId, kind, id)}>Открыть текущее состояние материала</a>
+      </div> : <pre className="material-text" aria-label="Сохранённый текст">{material.text}</pre>}
+      <a className="primary action-link" href={processingInputHref(projectId, { kind: kind === 'sources' ? 'source' : 'document', id: material.id, state_id: material.state_id })}>
+        {kind === 'sources' ? 'Обработать этот отзыв' : 'Техническая проверка документа'}</a>
     </>}
   </section>;
 }

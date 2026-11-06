@@ -21,6 +21,7 @@ export interface EvidenceView {
   id: string; sourceLabel: string; state: 'available' | 'deleted' | 'unavailable';
   quote?: string; interpretation?: string; position?: string;
   source?: { kind: 'sources' | 'documents'; id: string };
+  fragment?: { id: string; stateId: string; sourceStateId: string };
 }
 export interface IssueView {
   id: string; title: string; text: string; kind: 'remark' | 'question' | 'conflict';
@@ -43,10 +44,18 @@ export interface RevisionView {
 }
 export interface RequirementView extends RequirementSummary, RevisionView { proposal?: RevisionView }
 export interface RequirementsView { items: readonly RequirementView[] }
+export interface ExtractionOutcomeView {
+  synthetic: boolean; aiLabel: string; provider: string | null; model: string | null; coverage: string[];
+  questions: { id: string; text: string; reason: string; blocking: boolean; links: { kind: string; id: string }[] }[];
+  uncertainties: { id: string; reason: string; links: { kind: string; id: string }[] }[];
+}
 export interface FindingView {
   id: string; text: string; types: readonly string[]; originLabel: string;
   evidence: readonly EvidenceView[]; conflictsWith: readonly string[];
   requirementIds: readonly string[]; humanEdited?: boolean;
+  extraction?: ExtractionOutcomeView & {
+    stateId: string; attemptId: string; createdAt: string; freshness: string; stale: boolean;
+  };
 }
 export interface GroupView {
   id: string; title: string; findingIds: readonly string[]; requirementIds: readonly string[];
@@ -56,6 +65,7 @@ export interface FindingsView {
   groups: readonly GroupView[]; findings: readonly FindingView[];
   requirements: readonly RequirementSummary[];
   requirementIssues?: readonly { requirementId: string; requirementTitle: string; issue: IssueView }[];
+  groupsAvailable?: boolean; relationsAvailable?: boolean;
 }
 export interface OverviewView {
   // True only for explicit authoritative project aggregates, never page-derived totals.
