@@ -1,3 +1,5 @@
+import { clearPendingCommands } from './processing/pending';
+
 export interface User { id: string; login: string }
 export interface Session { user: User; csrf_token: string }
 export interface Project {
@@ -25,14 +27,15 @@ export class ApiClient {
   private csrf: string | null = null;
   constructor(private onUnauthorized: () => void) {}
 
-  clearSession() { this.csrf = null; }
+  clearSession() { this.csrf = null; clearPendingCommands(); }
 
   async request<T>(path: string, options: {
-    method?: string; body?: unknown; signal?: AbortSignal; anonymous?: boolean;
+    method?: string; body?: unknown; signal?: AbortSignal; anonymous?: boolean; idempotencyKey?: string; expectedStatus?: number;
   } = {}): Promise<T> {
     const method = options.method ?? 'GET';
     const headers: Record<string, string> = { Accept: 'application/json' };
     if (options.body !== undefined) headers['Content-Type'] = 'application/json';
+    if (options.idempotencyKey) headers['Idempotency-Key'] = options.idempotencyKey;
     if (method !== 'GET' && !options.anonymous && this.csrf) {
       headers['X-CSRF-Token'] = this.csrf;
     }
@@ -51,6 +54,7 @@ export class ApiClient {
       throw new ApiError(response.status, data?.error?.code ?? 'http_error',
         data?.error?.request_id);
     }
+    if (options.expectedStatus !== undefined && response.status !== options.expectedStatus) throw new Error('Unconfirmed response status');
     if (response.status === 204) return undefined as T;
     return response.json() as Promise<T>;
   }
