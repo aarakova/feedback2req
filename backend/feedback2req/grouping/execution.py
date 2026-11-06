@@ -87,37 +87,13 @@ def execute_grouping(
         with sessions() as tx:
             unit = tx.get(Unit, handle["unit_id"])
             current(tx, unit)
-            result = result_view(tx, unit, tx.get(Attempt, handle["attempt_id"]))
-    else:
-        heartbeat = GroupingHeartbeat(sessions, handle["unit_id"], handle["owner_token"])
-        heartbeat.thread.start()
-        candidate, failure = None, None
-        try:
-            candidate = group_findings(
-                handle["request"],
-                provider,
-                verify_context=lambda request: verify_context(
-                    sessions,
-                    handle["unit_id"],
-                    handle["owner_token"],
-                    request,
-                ),
+            result = (
+                result_view(tx, unit, tx.get(Attempt, handle["attempt_id"]))
+                if handle["attempt_id"]
+                else None
             )
-        except GroupingError as error:
-            failure = failure_reason(error)
-        except Exception:
-            # Persist stable codes only; adapter exceptions may contain source text.
-            failure = "execution_error"
-        finally:
-            heartbeat.stop.set()
-            heartbeat.thread.join(timeout=10)
-        if heartbeat.lost.is_set() or heartbeat.thread.is_alive():
-            raise AppError(409, "attempt_not_owned", "Grouping execution lost ownership")
-        # Deliberately outside the compute error handler: unknown COMMIT must escape.
-        if failure:
-            result = fail_grouping(sessions, handle["unit_id"], handle["owner_token"], failure)
-        else:
-            result = accept_grouping(sessions, handle["unit_id"], handle["owner_token"], candidate)
+    else:
+        result = execute_prepared_grouping(sessions, handle, provider)
     return {
         "run_id": handle["run_id"],
         "unit_id": handle["unit_id"],
@@ -125,3 +101,37 @@ def execute_grouping(
         "replayed": handle["replayed"],
         "result": result,
     }
+
+
+def execute_prepared_grouping(sessions, handle, provider):
+    """Execute one freshly committed capability; callers must never replay it."""
+    if handle["replayed"] or not handle["owner_token"] or handle["request"] is None:
+        raise ValueError("Fresh confirmed grouping capability required")
+    heartbeat = GroupingHeartbeat(sessions, handle["unit_id"], handle["owner_token"])
+    heartbeat.thread.start()
+    candidate, failure = None, None
+    try:
+        candidate = group_findings(
+            handle["request"],
+            provider,
+            verify_context=lambda request: verify_context(
+                sessions,
+                handle["unit_id"],
+                handle["owner_token"],
+                request,
+            ),
+        )
+    except GroupingError as error:
+        failure = failure_reason(error)
+    except Exception:
+        # Persist stable codes only; adapter exceptions may contain source text.
+        failure = "execution_error"
+    finally:
+        heartbeat.stop.set()
+        heartbeat.thread.join(timeout=10)
+    if heartbeat.lost.is_set() or heartbeat.thread.is_alive():
+        raise AppError(409, "attempt_not_owned", "Grouping execution lost ownership")
+    # Deliberately outside the compute error handler: unknown COMMIT must escape.
+    if failure:
+        return fail_grouping(sessions, handle["unit_id"], handle["owner_token"], failure)
+    return accept_grouping(sessions, handle["unit_id"], handle["owner_token"], candidate)

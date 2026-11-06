@@ -1,7 +1,8 @@
 # Backend F2: группы находок
 
 Область: DEC-016, AI-контракты 1.0 неизменны. Сервис принимает результаты
-group_findings; алгоритм группировки и публичная команда его запуска отсутствуют.
+group_findings. Последующий DEC-017 добавляет [внутреннюю очередь F3](GROUPING_ORCHESTRATION.md);
+публичная команда запуска по-прежнему отсутствует.
 Миграция M03 следует после M02b, сохраняет данные F1 и добавляет 11 таблиц:
 finding_groups, group_states, group_members, group_scope, group_context,
 group_conflicts, conflict_positions, position_members, grouping_inputs,
@@ -193,8 +194,10 @@ Synthetic тесты обязаны использовать synthetic=true; ai_
 При получении реального ответа ai_performed=true, даже если ответ отклонён.
 
 renew продлевает lease не дальше deadline. Lease/deadline — 30/120 секунд,
-recovery существующего worker завершает истёкшие попытки. Обычный worker
-не выполняет grouping units. Приём сверяет token, lease/deadline, membership,
+recovery существующего worker завершает истёкшие попытки. F1 claim исключает
+grouping units; F3 worker отдельно забирает только queued finding_set.
+Синхронный prepare сразу создаёт running Attempt, не очередь.
+Приём сверяет token, lease/deadline, membership,
 точные finding/source/document/previous-group states и проверяет схему/ссылки.
 После этого вся публикация и completed фиксируются одной транзакцией.
 

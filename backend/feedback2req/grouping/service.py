@@ -246,7 +246,7 @@ def build_request(tx, unit, attempt):
         "contract_version": "1.0",
         "operation": "group_findings",
         "project_id": str(unit.project_id),
-        "request_id": str(attempt.request_id),
+        "request_id": str(attempt.request_id if attempt else unit.id),
         "input": {
             "findings": findings,
             "fragments": list(fragments.values()),
@@ -271,12 +271,69 @@ def prepare_grouping(
     previous_group_refs=(),
     provenance,
 ):
+    return _create_grouping(
+        sessions,
+        identity,
+        session_token,
+        project_id,
+        command_key,
+        finding_refs,
+        document_refs=document_refs,
+        previous_group_refs=previous_group_refs,
+        provenance=provenance,
+    )
+
+
+def enqueue_grouping(
+    sessions,
+    identity,
+    session_token,
+    project_id,
+    command_key,
+    finding_refs,
+    *,
+    document_refs=(),
+    previous_group_refs=(),
+):
+    """Authenticated internal enqueue; no Attempt, capability or token in the queue."""
+    if (
+        not 1 <= len(finding_refs) <= 100
+        or len(document_refs) > 16
+        or len(previous_group_refs) > 16
+    ):
+        raise AppError(422, "invalid_input", "Grouping selection exceeds internal limits")
+    return _create_grouping(
+        sessions,
+        identity,
+        session_token,
+        project_id,
+        command_key,
+        finding_refs,
+        document_refs=document_refs,
+        previous_group_refs=previous_group_refs,
+        queued=True,
+    )
+
+
+def _create_grouping(
+    sessions,
+    identity,
+    session_token,
+    project_id,
+    command_key,
+    finding_refs,
+    *,
+    document_refs=(),
+    previous_group_refs=(),
+    provenance=None,
+    queued=False,
+):
     """Authenticate a real current session. A replay never returns execution capability."""
     project_id, command_key = UUID(str(project_id)), UUID(str(command_key))
     findings = normalized(finding_refs, "finding")
     docs = normalized(document_refs, "product_document", documents=True)
     previous = normalized(previous_group_refs, "finding_group")
-    if not findings or not isinstance(provenance, Provenance):
+    if not findings or (not queued and not isinstance(provenance, Provenance)):
         raise AppError(422, "invalid_input", "Findings and explicit provenance required")
     digest = fingerprint(
         {
@@ -307,7 +364,7 @@ def prepare_grouping(
             return {
                 "run_id": run.id,
                 "unit_id": unit.id,
-                "attempt_id": attempt.id,
+                "attempt_id": attempt.id if attempt else None,
                 "owner_token": None,
                 "request": None,
                 "replayed": True,
@@ -328,28 +385,33 @@ def prepare_grouping(
             project_id=project_id,
             run_id=run.id,
             input_kind="finding_set",
-            state="running",
+            state="queued" if queued else "running",
         )
         tx.add(unit)
         tx.flush()
         instant, token = now(tx), uuid4()
-        attempt = Attempt(
-            id=uuid4(),
-            project_id=project_id,
-            unit_id=unit.id,
-            request_id=uuid4(),
-            state="running",
-            owner_token=token,
-            grouping_owner_hash=hashlib.sha256(token.bytes).hexdigest(),
-            started_at=instant,
-            deadline_at=instant + timedelta(seconds=DEADLINE),
-            lease_expires_at=instant + timedelta(seconds=LEASE),
-            provider=provenance.provider,
-            model=provenance.model,
-            synthetic=provenance.synthetic,
-            ai_performed=False if provenance.synthetic else None,
+        attempt = (
+            None
+            if queued
+            else Attempt(
+                id=uuid4(),
+                project_id=project_id,
+                unit_id=unit.id,
+                request_id=uuid4(),
+                state="running",
+                owner_token=token,
+                grouping_owner_hash=hashlib.sha256(token.bytes).hexdigest(),
+                started_at=instant,
+                deadline_at=instant + timedelta(seconds=DEADLINE),
+                lease_expires_at=instant + timedelta(seconds=LEASE),
+                provider=provenance.provider,
+                model=provenance.model,
+                synthetic=provenance.synthetic,
+                ai_performed=False if provenance.synthetic else None,
+            )
         )
-        tx.add(attempt)
+        if attempt is not None:
+            tx.add(attempt)
         for index, ref in enumerate(findings):
             # Reject unknown/foreign/mismatched refs before SQL constraints execute.
             exact_finding(tx, project_id, UUID(ref["id"]), UUID(ref["state_id"]))
@@ -362,11 +424,16 @@ def prepare_grouping(
                     finding_state_id=UUID(ref["state_id"]),
                 )
             )
+        document_ranges = set()
         for index, ref in enumerate(docs):
             doc = exact_document(tx, project_id, UUID(ref["id"]), UUID(ref["state_id"]))
             loc = ref.get("locator", {"start": 0, "end": len(doc.text)})
             if not 0 <= loc["start"] < loc["end"] <= len(doc.text):
                 raise AppError(422, "invalid_input", "Invalid document range")
+            selected_range = (doc.id, loc["start"], loc["end"])
+            if selected_range in document_ranges:
+                raise AppError(422, "invalid_input", "Duplicate document range")
+            document_ranges.add(selected_range)
             tx.add(
                 GroupingDocument(
                     project_id=project_id,
@@ -392,6 +459,23 @@ def prepare_grouping(
             )
         tx.flush()
         request = build_request(tx, unit, attempt)
+        if queued:
+            from ai.group_findings.validation import GroupingError, validate_request
+
+            try:
+                validate_request(request)
+            except GroupingError:
+                raise AppError(
+                    422, "invalid_input", "Grouping context exceeds component limits"
+                ) from None
+            return {
+                "run_id": run.id,
+                "unit_id": unit.id,
+                "attempt_id": None,
+                "owner_token": None,
+                "request": None,
+                "replayed": False,
+            }
         if not owned(tx, attempt, token):
             raise AppError(409, "attempt_not_owned", "Preparation exceeded attempt lifetime")
         return {

@@ -1,3 +1,4 @@
+from typing import Literal
 from urllib.parse import urlsplit
 
 from pydantic import Field, model_validator
@@ -25,6 +26,9 @@ class Settings(BaseSettings):
     ai_model: str = Field(default="", max_length=128)
     ai_transfer_enabled: bool = False
     processing_test_mode: bool = False
+    grouping_synthetic_scenario: Literal["one", "many", "ungrouped", "invalid", "error"] | None = (
+        None
+    )
     ai_timeout_seconds: int = Field(default=60, ge=1, le=60)
 
     @model_validator(mode="after")

@@ -165,3 +165,10 @@ Fragments/findings в этом срезе неизменяемы, UUID одно�
 Удаление/восстановление источников или проекта не добавлены. Точный
 [HTTP-контракт](TEXT_PROCESSING_API.md), runtime и отличия от предложенной И2б
 описаны в [отчёте](plans/text-extraction-implementation.md).
+
+F2 (DEC-016) добавил M03 с группами и project-scoped typed finding/document/
+previous-group refs; [фактическая спецификация](FINDING_GROUPS_API.md).
+F3 (DEC-017) использует те же queued finding_set Unit до появления Attempt,
+сохраняя Run.initiated_by и exact refs. Единственная Attempt создаётся при
+claim под блокировками; UNIQUE(unit_id) и FK M03 сохраняются. Новая таблица,
+дублирующий lifecycle и миграция в F3 не нужны. Session token не сохраняется.

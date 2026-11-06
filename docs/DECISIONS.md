@@ -1,5 +1,23 @@
 # Журнал решений и утверждений
 
+### DEC-017 — F3: внутренняя orchestration группировки
+
+- Дата: 2026-11-06. **APPROVED** явным поручением пользователя «Backend F3:
+  подготовка фонового запуска группировки на основе готового F2»; URL не дан.
+  База F2 4c62684e7769d2c3a71de3264aa15e954a1262d0, новая ветка
+  feat/backend-grouping-orchestration. Merge запрещён.
+- Разрешены authenticated enqueue и worker claim/compute на synthetic provider,
+  без сохранения session token, с инициатором, точными refs, current access/context
+  checks, lease/deadline/recovery и атомарным F2 приёмом. Один Run/Unit/Attempt
+  lifecycle, защита от повторного model call при неизвестном COMMIT.
+- Разрешены PostgreSQL/worker tests, регрессии F1/F2 и документация. Миграция
+  потребовала бы обоснования совместимости; реализация использует существующую M03.
+- Реальная модель не выбрана, experiments/qwen не импортируется. Frontend,
+  AI 1.0 и публичный POST DTO не меняются. [Контракт запуска](plans/grouping-run-api-proposed.md)
+  остаётся **PROPOSED**, требует отдельного утверждения.
+- Внутренний интерфейс — [orchestration](GROUPING_ORCHESTRATION.md);
+  фактические результаты и ограничения — [отчёт F3](plans/backend-grouping-orchestration.md).
+
 ### DEC-016 — Backend F2: группы находок
 
 - Дата: 2026-11-03. Основание: сообщение пользователя «Продолжение F2:

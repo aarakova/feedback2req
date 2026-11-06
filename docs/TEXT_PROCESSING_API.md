@@ -9,6 +9,10 @@ rev3 или всего FIRST_TEXT_SLICE. Код: [маршруты](../backend/f
 group_findings Run описаны в [FINDING_GROUPS_API](FINDING_GROUPS_API.md).
 Публичные inspect/extract команды и их DTO сохраняются.
 
+DEC-017 добавляет отдельную внутреннюю [очередь grouping](GROUPING_ORCHESTRATION.md)
+в тот же worker. F1 claim/current_input не обрабатывают finding_set. Будущий
+grouping POST описан [PROPOSED](plans/grouping-run-api-proposed.md), не реализован.
+
 ## Общие правила
 
 `p=/api/v1/projects/{project_id}`. Все операции требуют текущую сессию и Member
