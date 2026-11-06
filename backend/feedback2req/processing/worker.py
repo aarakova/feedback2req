@@ -20,6 +20,16 @@ LOCK = Path("/tmp/f2r-worker-state.lock")
 PASS_SECONDS = 135
 
 
+def execute_pass(sessions, settings):
+    # Keep F1 claim/current_input isolated from finding_set. One compute per pass.
+    if execute_one(sessions, settings):
+        return True
+    from feedback2req.grouping.provider import grouping_provider
+    from feedback2req.grouping.queue import execute_queued_grouping
+
+    return execute_queued_grouping(sessions, grouping_provider(settings))
+
+
 @contextmanager
 def state_lock(wait=False):
     with LOCK.open("a") as lock:
@@ -153,7 +163,7 @@ def main():
         check_schema(settings)
         engine, sessions = worker_database(settings.database_url)
         try:
-            execute_one(sessions, settings)
+            execute_pass(sessions, settings)
         finally:
             engine.dispose()
         return 0

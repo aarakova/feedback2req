@@ -402,3 +402,15 @@ lock на том же соединении и в той же транзакци�
 running истекает для ручного retry. Условия watchdog/restart и ограничения
 проверок — в [отчёте реализации](plans/text-extraction-implementation.md).
 Это реализация отдельного поручения, а не утверждение И2б rev3.
+
+### Внутренняя orchestration группировки — DEC-017
+
+F3 переиспользует тот же supervisor/child worker и PostgreSQL Run/Unit/Attempt.
+Authenticated enqueue сохраняет queued finding_set и точные typed refs F2;
+Attempt создаётся при атомарном claim. F1 claim/current_input исключают этот
+тип, grouping использует свои current/build_request и существующий F2 приём.
+В одной pass выполняется максимум одна операция, F1 имеет приоритет. Без
+явного synthetic test сценария grouping-провайдер не настроен; реальные модели
+и frontend не подключены. Публичный POST неизменён, его расширение только
+[PROPOSED](plans/grouping-run-api-proposed.md). Фактическая граница и ограничения —
+[orchestration](GROUPING_ORCHESTRATION.md). Новых AI-ролей и миграции нет.

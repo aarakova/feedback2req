@@ -211,10 +211,20 @@ def run_view(tx, run):
                 if attempt.character_count is not None
                 else None
             )
+            if run.operation == "group_findings":
+                from feedback2req.grouping.views import attempt_result
+
+                view["grouping_result"] = attempt_result(tx, unit, attempt)
+        if run.operation == "group_findings":
+            from feedback2req.grouping.views import unit_input
+
+            selected_input = unit_input(tx, unit)
+        else:
+            selected_input = input_ref(unit)
         units.append(
             {
                 "id": unit.id,
-                "input": input_ref(unit),
+                "input": selected_input,
                 "state": unit.state,
                 "retry_of_attempt_id": unit.retry_of_attempt_id,
                 "attempt": view,
@@ -341,7 +351,7 @@ def claim(sessions):
     with sessions.begin() as tx:
         unit_id = tx.scalar(
             select(Unit.id)
-            .where(Unit.state == "queued")
+            .where(Unit.state == "queued", Unit.input_kind != "finding_set")
             .order_by(Unit.created_at, Unit.id)
             .limit(1)
         )

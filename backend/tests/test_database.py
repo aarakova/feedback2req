@@ -18,6 +18,20 @@ from feedback2req.persistence.models import Base, Project, ProjectAccess, Sessio
 
 from .conftest import project, signin, signup
 
+F2_TABLES = {
+    "finding_groups",
+    "group_states",
+    "group_members",
+    "group_scope",
+    "group_context",
+    "group_conflicts",
+    "conflict_positions",
+    "position_members",
+    "grouping_inputs",
+    "grouping_documents",
+    "grouping_previous_groups",
+}
+
 
 def test_empty_database_upgrade(database_url):
     """M01: migrate a genuinely empty disposable database with the public schema."""
@@ -33,7 +47,7 @@ def test_empty_database_upgrade(database_url):
         config = Config(str(Path(__file__).parents[1] / "alembic.ini"))
         config.attributes["database_url"] = empty_url.render_as_string(hide_password=False)
         command.upgrade(config, "head")
-        assert set(inspect(engine).get_table_names()) == {
+        assert set(inspect(engine).get_table_names()) == F2_TABLES | {
             "alembic_version",
             "users",
             "sessions",
@@ -60,7 +74,7 @@ def test_empty_database_upgrade(database_url):
 def test_migration_and_constraints(client, app, database_url):
     """M01 / FR-001,032: real PostgreSQL DDL, referential integrity and uniqueness."""
     inspector = inspect(app.state.engine)
-    assert set(inspector.get_table_names()) == {
+    assert set(inspector.get_table_names()) == F2_TABLES | {
         "alembic_version",
         "users",
         "sessions",
@@ -82,7 +96,7 @@ def test_migration_and_constraints(client, app, database_url):
     p = project(client)
     member = signup(client, "member")
     with app.state.engine.connect() as connection:
-        assert connection.scalar(text("SELECT version_num FROM alembic_version")) == "m02b"
+        assert connection.scalar(text("SELECT version_num FROM alembic_version")) == "m03"
         assert connection.scalar(text("SHOW server_version")).split(".")[0].isdigit()
         assert compare_metadata(MigrationContext.configure(connection), Base.metadata) == []
     now = datetime.now(UTC)

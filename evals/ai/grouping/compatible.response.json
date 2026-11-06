@@ -1,0 +1,36 @@
+{
+  "coverage": [
+    {
+      "input_key": "f1",
+      "reviewed": true,
+      "disposition": "completed"
+    },
+    {
+      "input_key": "f2",
+      "reviewed": true,
+      "disposition": "completed"
+    }
+  ],
+  "uncertainties": [],
+  "questions": [],
+  "result": {
+    "groups": [
+      {
+        "local_id": "g1",
+        "title": "Уведомления",
+        "summary": "Обе позиции о видимости статуса заявки; способ реализации не выбран.",
+        "finding_keys": [
+          "f1",
+          "f2"
+        ],
+        "considered_keys": [
+          "f1",
+          "f2"
+        ],
+        "context_keys": [],
+        "conflicts": []
+      }
+    ],
+    "ungrouped_finding_keys": []
+  }
+}

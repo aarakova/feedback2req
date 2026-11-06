@@ -1,0 +1,32 @@
+services:
+  f2r-f2-db:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: feedback2req_f2_test
+      POSTGRES_USER: f2r_test
+      POSTGRES_HOST_AUTH_METHOD: trust
+    volumes:
+      - f2_test_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U f2r_test -d feedback2req_f2_test"]
+      interval: 2s
+      timeout: 3s
+      retries: 20
+  checks:
+    image: feedback2req-checks
+    depends_on:
+      f2r-f2-db:
+        condition: service_healthy
+    environment:
+      F2R_TEST_DATABASE_URL: postgresql+psycopg://f2r_test@f2r-f2-db/feedback2req_f2_test
+      PYTHONPATH: /workspace/backend
+      PYTHONDONTWRITEBYTECODE: "1"
+    working_dir: /workspace
+    entrypoint: ["python"]
+    command: ["-m", "pytest", "backend/tests", "-q", "-W", "error", "-p", "no:cacheprovider"]
+    volumes:
+      - .:/workspace:ro
+      - f2_test_snapshot:/state
+volumes:
+  f2_test_data:
+  f2_test_snapshot:

@@ -585,3 +585,100 @@ production/Nginx на окончательном UI — **91 passed, 59 skipped*
 provider_not_configured и заключительные проверки — **5 passed, 1 skipped**;
 backend processing/provider — **24 passed**. Итоговые прогоны без падений и
 без обновления эталонов. Положительные результаты остаются синтетическими.
+
+Следующие разделы сохраняют результаты исходной backend-ветки. Они не
+заменяют проверки интеграционного checkout; текущие результаты фиксируются
+в [отчёте интеграции](plans/full-workflow-ui.md).
+
+## Backend F2 — DEC-016
+
+[PG/API/unit тесты](../backend/tests/test_grouping.py) проверяют M:N, exact
+evidence до источника, конфликты/позиции, ungrouped/пустой результат, coverage,
+схему/локальные ID, current/access/lease/deadline, идемпотентный и конкурентный
+приём, rollback и потерю подтверждения COMMIT. Прямые SQL-вставки/удаления
+проверяют составные FK и отложенные cardinality constraints. Отдельный
+[тест миграции](../backend/tests/test_grouping_migration.py) создаёт настоящую
+M02b с сохранёнными F1-данными и сравнивает все прежние столбцы после M03.
+
+Из собственного checkout, с установленным Docker и собранными образами
+feedback2req-backend / feedback2req-checks:
+
+```text
+docker compose -f compose.grouping-test.yaml -p <own-new-f2-test-project> up -d --wait f2r-f2-db
+docker compose -f compose.grouping-test.yaml -p <own-new-f2-test-project> run --rm checks
+docker compose -f compose.grouping-test.yaml -p <own-new-f2-test-project> run --rm checks scripts/check_finding_groups_restart.py seed /state/groups.json
+docker compose -f compose.grouping-test.yaml -p <own-new-f2-test-project> restart f2r-f2-db
+docker compose -f compose.grouping-test.yaml -p <own-new-f2-test-project> up -d --wait f2r-f2-db
+docker compose -f compose.grouping-test.yaml -p <own-new-f2-test-project> run --rm checks scripts/check_finding_groups_restart.py verify /state/groups.json
+```
+
+Новая сеть, PostgreSQL 17 и volumes принадлежат указанному test project;
+порты БД не публикуются. Source checkout монтируется read-only, snapshot
+хранится в отдельном volume. Повтор seed с существующим snapshot отклоняется.
+CI job grouping-persistence выполняет seed/restart/verify; backend suite
+по-прежнему запускается в основном job. Все AI-ответы этих проверок synthetic;
+смысловое качество и работа внешней модели этим не подтверждаются.
+Фактические результаты и ограничения записаны в [пакете F2](plans/backend-finding-groups.md#8-фактическая-валидация-реализации).
+
+2026-11-04: итоговый backend suite — **149 passed**, PostgreSQL 17, `-W error`;
+synthetic seed/restart/verify и runtime image HTTP readiness — PASS. Старые
+assert о полном составе таблиц/head обновлены под M03, а проверки FK/constraints/
+compare_metadata сохранены. Независимое ревью и реальные AI-вызовы NOT RUN.
+
+Последующая внутренняя интеграция: [тесты исполнителя](../backend/tests/test_grouping_execution.py)
+используют настоящий standalone group_findings с synthetic transport и
+реальной PostgreSQL. Проверяются DB verifier до вызова, отсутствие долгой
+Project lock, heartbeat/lease, безопасные ошибки, ungrouped без лишней reason,
+COMMIT replay без повторного provider call и текущая политика previous_groups.
+Исходные 37 автономных тестов запускаются отдельно:
+
+```text
+python -B -W error -m unittest discover -s ai/tests -v
+```
+
+Происхождение неизменённых файлов — [ai/UPSTREAM](../ai/UPSTREAM.md).
+Фактические результаты и утверждённое расширение контракта —
+[отчёт интеграции](plans/grouping-component-integration.md).
+
+Фактический прогон интеграции 2026-11-04: **167 backend tests passed**
+(PostgreSQL 17, `-W error`, включая 18 новых тестов исполнителя и регрессии F1);
+**37 standalone tests passed** без сети. Сборка нового runtime-образа и
+синтетический replay в нём PASS. Прежние seed/restart/HTTP-readiness результаты
+относятся к основной F2 итерации и отдельно в интеграции не повторялись.
+
+Расширение DEC-016 от 2026-11-06 разрешает questions/uncertainties ссылаться
+на явно переданные previous_groups. Новые [PG/API tests](../backend/tests/test_grouping_previous_annotations.py)
+проверяют точную привязку kind/id/state_id, совпадающие ключи при разных origin,
+отсутствующие/невыбранные/чужие группы, неверные и устаревшие states, отзыв прав,
+составные FK, replay и историческое чтение после изменения current state.
+Исходные группы, вопросы и конфликты при публикации не меняются.
+
+Результаты 2026-11-06: **187 backend tests passed** за 412.53 s, PostgreSQL 17.11,
+`-W error`, без пропусков; **37 standalone tests passed** без сети. Целевые
+38 PG/API/исполнитель tests входят в полный backend-прогон. Ruff и AI-контракты
+1.0 PASS. Первый CLI-тест не имел writable /tmp в read-only контейнере;
+повтор с отдельным tmpfs успешен. Детали и команды — в отчёте интеграции.
+
+## Backend F3 — DEC-017
+
+[Тесты очереди](../backend/tests/test_grouping_queue.py) выполняются на отдельной
+PostgreSQL с реальными `processing.worker --once` процессами, включая два
+конкурирующих worker и прерывание процесса с последующим recovery. Проверяются
+one/many/ungrouped/conflicts, idempotency и отсутствие повторного model call,
+доступ/stale source/previous groups, lease/deadline, unknown COMMIT (запись и
+rollback), provider/invalid errors, контекст/annotations, GET и неизменность POST.
+
+Стенд: собственный новый Compose project с существующим compose.grouping-test.yaml:
+
+```text
+docker compose -f compose.grouping-test.yaml -p <unique-f3-test-project> up -d --wait f2r-f2-db
+docker compose -f compose.grouping-test.yaml -p <unique-f3-test-project> run --rm checks -m pytest backend/tests -q -W error -p no:cacheprovider --junitxml=/state/f3-backend-final.xml
+```
+
+Имя сервиса f2r-f2-db историческое; сеть/volumes создаются для собственного
+уникального F3 project. Исходники read-only, JUnit сохраняется в его snapshot
+volume. Фактический результат 2026-11-06: **213 tests, errors=0, failures=0,
+skipped=0**, 416.263 s; включает 26 F3 tests и все прежние F1/F2 проверки.
+Результат восстановлен из полного JUnit после утраты terminal session;
+это не вывод из количества точек прогресса. Остальные проверки и ограничения —
+[отчёт F3](plans/backend-grouping-orchestration.md).
