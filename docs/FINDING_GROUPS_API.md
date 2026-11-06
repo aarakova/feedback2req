@@ -82,6 +82,15 @@ grouping_result=null до принятия и при техническом от
 результат имеет group_ids=[] и отдельный ungrouped набор. Отсутствие групп
 не подменяет успешный приём ошибкой. Questions сохраняются и без групп.
 Related annotations сохраняет origin/key и добавляет kind/id/state_id.
+Для questions и uncertainties допустимы input-ссылки только на явно
+переданные findings либо previous_groups этой Unit; output-ссылки — на группы
+принятого результата. Например, `{origin:"input",key:"g1",kind:"finding_group",
+id:<selected-group-id>,state_id:<selected-state-id>}` ссылается на прежнюю
+группу, а output/g1 — на новую, даже если локальные ключи совпадают.
+Идентичность и state берутся из сохранённых typed inputs, не из ответа AI.
+Run и GroupDetail возвращают эту точную ссылку и после появления нового state
+прежней группы. Автоматической загрузки/подмены состояния нет; прежние вопросы
+и конфликты такая ссылка не изменяет.
 
 Одна finding может быть в нескольких группах; grouped и ungrouped не
 пересекаются. Coverage различает completed, insufficient_information и
@@ -153,10 +162,15 @@ access_revoked имеет приоритет. Технический отказ 
 
 Совместимость: явное ungrouped — содержательная классификация, поэтому
 completed+ungrouped не требует дополнительной reason. Текущая согласованная
-политика F2 для input related сохраняется: только основная finding. Вопрос
-на previous_group, хотя разрешён автономным компонентом, пока отклоняется
-финальным приёмом F2. Расширение вынесено отдельно в
-[предложение интеграции](plans/grouping-component-integration.md).
+политика F2 расширена утверждением от 2026-11-06: questions и uncertainties
+могут ссылаться на явно переданную previous_group. Перед публикацией заново
+проверяются точная пара group/state, project membership и свежесть контекста.
+Неизвестная/чужая группа или чужой state отклоняются при prepare с 404;
+устаревший выбранный state — 409 input_changed. Изменение ожидаемого контекста
+после prepare отменяет публикацию с cancelled/input_changed; отзыв доступа —
+cancelled/access_revoked. Related input key вне findings/previous_groups
+отклоняется как invalid_response без частичного сохранения. Подробности —
+[отчёт интеграции](plans/grouping-component-integration.md).
 
 prepare аутентифицирует session_token через существующий Identity и заново
 проверяет membership под Project lock; raw session token не сохраняется.

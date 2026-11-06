@@ -23,6 +23,7 @@ def accept(request, response):
         strings(response)
         data = request["input"]
         findings = {item["key"] for item in data["findings"]}
+        previous_groups = {item["key"] for item in data.get("previous_groups", [])}
         documents = {item["key"] for item in data["documents"]}
         input_keys = [v["key"] for items in data.values() for v in items]
         if len(input_keys) != len(set(input_keys)):
@@ -64,7 +65,7 @@ def accept(request, response):
         outputs = {group["local_id"] for group in groups}
         for item in response["questions"] + response["uncertainties"]:
             for link in item["related"]:
-                allowed = findings if link["origin"] == "input" else outputs
+                allowed = findings | previous_groups if link["origin"] == "input" else outputs
                 if link["key"] not in allowed:
                     raise InvalidResponse()
     except InvalidResponse:

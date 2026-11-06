@@ -467,6 +467,16 @@ def renew_grouping(sessions, unit_id, owner_token):
 def publish(tx, unit, attempt, response):
     inputs = {r.key: r for r in rows(tx, GroupingInput, unit)}
     docs = {r.key: r for r in rows(tx, GroupingDocument, unit)}
+    annotation_inputs = {
+        key: state_ref("finding", item.finding_id, item.finding_state_id)
+        for key, item in inputs.items()
+    }
+    annotation_inputs.update(
+        {
+            item.key: state_ref("finding_group", item.group_id, item.group_state_id)
+            for item in rows(tx, GroupingPreviousGroup, unit)
+        }
+    )
     mapping = {}
     for candidate in response["result"]["groups"]:
         group_id, state_id = uuid4(), uuid4()
@@ -558,7 +568,7 @@ def publish(tx, unit, attempt, response):
         for note in notes:
             for link in note["related"]:
                 ref = (
-                    state_ref("finding", inputs[link["key"]].finding_id)
+                    annotation_inputs[link["key"]]
                     if (link["origin"] == "input")
                     else mapping[link["key"]]
                 )

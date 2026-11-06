@@ -300,9 +300,9 @@ def test_no_substantive_output_preserves_actual_coverage(client, app, group_case
     assert attempt["grouping_result"]["group_ids"] == []
 
 
-@pytest.mark.parametrize("previous_question", [False, True])
-def test_previous_group_context_retains_current_f2_target_policy(
-    client, app, group_case, previous_question
+@pytest.mark.parametrize("previous_annotation", [None, "questions", "uncertainties"])
+def test_previous_group_context_and_annotations_are_accepted(
+    client, app, group_case, previous_annotation
 ):
     first = execute(app, client, group_case, ScriptedReplay())
     group_id = first["result"]["group_ids"][0]
@@ -310,8 +310,8 @@ def test_previous_group_context_retains_current_f2_target_policy(
 
     def response(req):
         candidate = synthetic_response({"request": req})
-        if previous_question:
-            candidate["questions"][0]["related"] = [
+        if previous_annotation:
+            candidate[previous_annotation][0]["related"] = [
                 {
                     "origin": "input",
                     "key": req["input"]["previous_groups"][0]["key"],
@@ -328,9 +328,18 @@ def test_previous_group_context_retains_current_f2_target_policy(
             {"id": str(group_id), "state_id": saved["state_id"]},
         ],
     )
-    if previous_question:
-        # Deliberately preserve the approved F2 target restriction pending consent.
-        assert second["result"]["reason_code"] == "invalid_response"
-    else:
-        assert second["result"]["state"] == "completed"
+    assert second["result"]["state"] == "completed"
+    if previous_annotation:
+        attempt = client.get(group_case["path"] + "/runs/" + str(second["run_id"])).json()["units"][
+            0
+        ]["attempt"]
+        assert attempt["annotations"][previous_annotation][0]["related"] == [
+            {
+                "origin": "input",
+                "key": "g1",
+                "kind": "finding_group",
+                "id": str(group_id),
+                "state_id": saved["state_id"],
+            }
+        ]
     assert client.get(group_case["path"] + "/groups/" + str(group_id)).json() == saved

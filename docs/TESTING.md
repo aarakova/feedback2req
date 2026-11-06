@@ -361,7 +361,7 @@ python -B -W error -m unittest discover -s ai/tests -v
 ```
 
 Происхождение неизменённых файлов — [ai/UPSTREAM](../ai/UPSTREAM.md).
-Фактические результаты и оставшийся вопрос контракта —
+Фактические результаты и утверждённое расширение контракта —
 [отчёт интеграции](plans/grouping-component-integration.md).
 
 Фактический прогон интеграции 2026-11-04: **167 backend tests passed**
@@ -369,3 +369,16 @@ python -B -W error -m unittest discover -s ai/tests -v
 **37 standalone tests passed** без сети. Сборка нового runtime-образа и
 синтетический replay в нём PASS. Прежние seed/restart/HTTP-readiness результаты
 относятся к основной F2 итерации и отдельно в интеграции не повторялись.
+
+Расширение DEC-016 от 2026-11-06 разрешает questions/uncertainties ссылаться
+на явно переданные previous_groups. Новые [PG/API tests](../backend/tests/test_grouping_previous_annotations.py)
+проверяют точную привязку kind/id/state_id, совпадающие ключи при разных origin,
+отсутствующие/невыбранные/чужие группы, неверные и устаревшие states, отзыв прав,
+составные FK, replay и историческое чтение после изменения current state.
+Исходные группы, вопросы и конфликты при публикации не меняются.
+
+Результаты 2026-11-06: **187 backend tests passed** за 412.53 s, PostgreSQL 17.11,
+`-W error`, без пропусков; **37 standalone tests passed** без сети. Целевые
+38 PG/API/исполнитель tests входят в полный backend-прогон. Ruff и AI-контракты
+1.0 PASS. Первый CLI-тест не имел writable /tmp в read-only контейнере;
+повтор с отдельным tmpfs успешен. Детали и команды — в отчёте интеграции.
