@@ -20,7 +20,7 @@ jobs:
       - if: always()
         run: docker compose logs --no-color
       - if: always()
-        run: docker compose down --volumes
+        run: docker compose stop
   extraction:
     runs-on: ubuntu-latest
     env:
@@ -57,7 +57,7 @@ jobs:
       - if: always()
         run: docker compose logs --no-color
       - if: always()
-        run: docker compose down --volumes
+        run: docker compose stop
   i1:
     runs-on: ubuntu-latest
     services:

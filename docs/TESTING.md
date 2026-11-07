@@ -682,3 +682,25 @@ skipped=0**, 416.263 s; включает 26 F3 tests и все прежние F1
 Результат восстановлен из полного JUnit после утраты terminal session;
 это не вывод из количества точек прогресса. Остальные проверки и ограничения —
 [отчёт F3](plans/backend-grouping-orchestration.md).
+
+## Интеграционный Observer workflow
+
+Изолированный [Compose](../compose.workflow-test.yaml) готовит отдельную PG,
+синтетический HTTP provider и fixtures **до** запуска worker. Workflow checks
+не наследуют browser page_size/Origin: это важно для прежних PG/API tests.
+Исторические human состояния в seed_groups — ORM fixture, не human-write API.
+Queued F3 выполняет настоящий worker. [Browser group tests](../frontend/tests/grouping.spec.ts)
+проверяют exact/current состояния, M:N/позиции/цитаты, пагинацию, ungrouped,
+503/retry чтения, чужой проект, поздний ответ и четыре ширины.
+
+Все legacy browser scenarios сохранены; прежний запрет отсутствующего API групп
+заменён проверкой подключённого read-only F2. Запрет неподдержанного requirement
+API и автоматических POST сохранён. Наблюдавшийся CI clock failure исправлен
+детерминированной паузой до навигации; число polling checks не ослаблено.
+
+CI [workflow-ui](../.github/workflows/workflow-ui.yml) запускает полный Nginx,
+полный Vite и отдельно worker без inference-разрешения.
+[offline-components](../.github/workflows/ai-components.yml) проверяет автономные
+компоненты и synthetic replay. Локально offline image работает без сети.
+Результаты/ошибки/непроверенное — [отчёт](plans/full-workflow-ui.md),
+снимки синтетических данных — [галерея](qa/full-workflow/index.html).

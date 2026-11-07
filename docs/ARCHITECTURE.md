@@ -414,3 +414,22 @@ Attempt создаётся при атомарном claim. F1 claim/current_inp
 и frontend не подключены. Публичный POST неизменён, его расширение только
 [PROPOSED](plans/grouping-run-api-proposed.md). Фактическая граница и ограничения —
 [orchestration](GROUPING_ORCHESTRATION.md). Новых AI-ролей и миграции нет.
+
+### Интеграционная версия Observer — INT-2026-11-06
+
+Ограничение «frontend не подключён» в описании исходного F3 этапа выше
+сохраняет его историческую область. В integration/full-workflow-ui React
+читает существующие F2 GET groups/detail/exact-state, отображает отдельные
+конфликтующие позиции и evidence, coverage/freshness/annotations и provenance.
+Общая история F1/F3 различает source/document и finding_set; retry доступен
+только для прежних разрешённых F1 attempts. Новый публичный grouping POST
+не добавлен; отсутствующее хранилище требований и formal exchange не имитируется.
+Обзор сохраняет not_implemented semantic metrics.
+
+Автономные generation/verification/formal/bridge/experiments перенесены с тестами;
+production worker импортирует только группировку, Z3 имеет отдельную зависимость
+в offline image. Test Compose с отдельной PG и internal networks, synthetic HTTP
+provider и настоящим worker воспроизводит UI → API → PG → worker → API → UI.
+Это тестовая топология, не замена утверждённой production архитектуры.
+Реальные модели/перенос данных не включены. [Запуск](WORKFLOW_INTEGRATION.md),
+[проект следующих контрактов](proposals/workflow-contracts.md).

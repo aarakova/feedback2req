@@ -15,19 +15,27 @@ jobs:
       - name: Start owned PostgreSQL, API and Nginx before worker
         run: docker compose -f compose.workflow-test.yaml up -d --wait db backend frontend provider
       - name: Prepare exact historical states before worker starts
-        run: docker compose -f compose.workflow-test.yaml run --rm checks python frontend/tests/support/seed_cases.py
+        run: |
+          docker compose -f compose.workflow-test.yaml run --rm checks python frontend/tests/support/seed_cases.py
+          docker compose -f compose.workflow-test.yaml run --rm checks python frontend/tests/support/seed_groups.py
       - name: Start synthetic test worker
         run: docker compose -f compose.workflow-test.yaml up -d --wait worker
       - name: Full browser suite through production Nginx
         run: docker compose -f compose.workflow-test.yaml run --rm browser npm run test:e2e -- --reporter=line
       - name: Stop worker before seeding Vite environment
-        run: docker compose -f compose.workflow-test.yaml stop worker
+        run: |
+          docker compose -f compose.workflow-test.yaml run --rm checks python scripts/check_workflow_restart.py snapshot
+          docker compose -f compose.workflow-test.yaml stop worker backend
+          docker compose -f compose.workflow-test.yaml restart db
+          docker compose -f compose.workflow-test.yaml up -d --wait backend frontend
+          docker compose -f compose.workflow-test.yaml run --rm checks python scripts/check_workflow_restart.py verify
       - name: Switch API Origin to Vite and prepare its fixtures
         env:
           F2R_WORKFLOW_ORIGIN: http://localhost:5173
         run: |
           docker compose -f compose.workflow-test.yaml up -d --wait backend
           docker compose -f compose.workflow-test.yaml run --rm checks python frontend/tests/support/seed_cases.py
+          docker compose -f compose.workflow-test.yaml run --rm checks python frontend/tests/support/seed_groups.py
           docker compose -f compose.workflow-test.yaml up -d --wait worker
       - name: Full browser suite through Vite with the same API and worker
         run: docker compose -f compose.workflow-test.yaml run --rm -e F2R_E2E_MODE=vite browser npm run test:e2e -- --reporter=line

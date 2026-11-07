@@ -9,10 +9,11 @@ import { exactFragmentText, findingView, findingsView, fragmentEvidence, outcome
 import { ResultDetails } from './ResultDetails';
 import type { FindingDTO, FragmentDTO } from './dto';
 import { usePages, useRead } from './reads';
+import { ProjectGroups } from '../grouping/ProjectGroups';
 
-export function ProjectFindings({ api, project, findingId, fragment, attemptId, groupId, onRecheck, onSelectGroup }: {
+export function ProjectFindings({ api, project, findingId, fragment, attemptId, groupId, groupStateId, onRecheck }: {
   api: ApiClient; project: Project; findingId?: string; fragment?: { id: string; stateId: string }; attemptId?: string;
-  groupId?: string; onRecheck: () => void; onSelectGroup: (id: string | undefined) => void;
+  groupId?: string; groupStateId?: string; onRecheck: () => void; onSelectGroup: (id: string | undefined) => void;
 }) {
   const root = `/projects/${project.id}`;
   const list = usePages<FindingDTO>(api, `${root}/findings${attemptId ? `?attempt_id=${encodeURIComponent(attemptId)}` : ''}`, onRecheck);
@@ -33,7 +34,7 @@ export function ProjectFindings({ api, project, findingId, fragment, attemptId, 
     message: list.error || 'Загружена часть списка находок. Число загруженных записей не является общим итогом проекта.' };
   const runtime = <div className="stack observer-space">
     {(findingId || fragment) && <a className="source-link" href={attemptId ? findingsAttemptHref(project.id, attemptId) : projectHref(project.id, 'findings')}>← Вернуться к списку находок</a>}
-    <p className="notice">Находки относятся к сохранённым попыткам. Они не доказывают полноту анализа проекта. Группировка, конфликты между находками и связи с требованиями ожидают F2.</p>
+    <p className="notice">Находки относятся к сохранённым попыткам. Они не доказывают полноту анализа проекта. Сохранённые группы и конфликтующие позиции доступны ниже; связи с требованиями пока не подключены.</p>
     {attemptId && <div className="notice"><p className="mono">Выбрана попытка: {attemptId}</p><a className="source-link" href={projectHref(project.id, 'findings')}>Все доступные находки →</a></div>}
     {findingId && <Panel title="Выбранная находка">
       {detail.loading && <Loading>Загружаем находку…</Loading>}
@@ -66,6 +67,7 @@ export function ProjectFindings({ api, project, findingId, fragment, attemptId, 
     <span className="small muted">Загружено: {list.items.length}. Это число находок, не независимых участников.</span>
     {list.loading && <Loading>Загружаем находки…</Loading>}
   </div>;
-  return <FindingsScreen project={project} state={state} selectedGroupId={groupId} onSelectGroup={onSelectGroup} runtime={runtime}
-    controls={findingId || fragment ? undefined : controls} detailMode={!!findingId || !!fragment} />;
+  return <FindingsScreen project={project} state={state} runtime={runtime}
+    groupRuntime={<ProjectGroups api={api} projectId={project.id} groupId={groupId} stateId={groupStateId} onRecheck={onRecheck} />}
+    controls={findingId || fragment || groupId ? undefined : controls} detailMode={!!findingId || !!fragment || !!groupId} />;
 }

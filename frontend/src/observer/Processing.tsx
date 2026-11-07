@@ -40,7 +40,7 @@ export function ProcessingScreen({ projectId, state, runtime }: { projectId: str
     >{!runtime && <button className="primary process-cta" disabled title="Серверная операция запуска пока не подключена">Обработать материалы</button>}</PageHeading>
     {runtime ?? <ViewNotice state={current} />}
     <div className={`run-header${runtime ? ' observer-space' : ''}`}><div><p className="eyebrow">{runtime ? 'Дальнейшие этапы' : 'Обработка проекта'}</p><h3>{runtime ? 'Полный конвейер Observer' : data ? 'Состояния переданных этапов' : 'Состояние запуска недоступно'}</h3></div>
-      <p className="small muted">{runtime ? 'Извлечение находок подключено выше. Группировка, генерация и проверка требований пока не подключены; общий прогресс не вычисляется.' : data?.coverage ?? 'Прогресс не вычисляется без данных о реальном запуске.'}</p></div>
+      <p className="small muted">{runtime ? 'F1 запускается выше. История показывает доступные операции; сохранённые группы — в «Находках». Публичный запуск группировки, генерация и проверка требований ожидают подключения. Общий прогресс не вычисляется.' : data?.coverage ?? 'Прогресс не вычисляется без данных о реальном запуске.'}</p></div>
     <div className="stage-track" role="group" aria-label="Этапы обработки">{stages.map((stage, index) => {
       const value = data?.stages.find(item => item.key === stage.key);
       return <section className={`stage ${value?.status === 'error' ? 'stage-error' : ''}`} key={stage.key} aria-label={stage.title}>

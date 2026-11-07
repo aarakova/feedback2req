@@ -59,6 +59,7 @@ services:
       F2R_AI_TRANSFER_ENABLED: ${F2R_WORKFLOW_SYNTHETIC:-true}
       F2R_AI_PROVIDER_URL: http://provider:11434/api/chat
       F2R_AI_MODEL: synthetic-test-only
+      F2R_GROUPING_SYNTHETIC_SCENARIO: many
     networks: [data]
     depends_on:
       backend: {condition: service_healthy}
@@ -77,9 +78,11 @@ services:
       args: {RUNTIME_IMAGE: feedback2req-workflow-runtime}
     profiles: [checks]
     environment:
-      <<: *runtime
+      F2R_DATABASE_URL: postgresql+psycopg://f2r_test@db/feedback2req_processing_f1_test
+      F2R_LOCAL_HTTP: "true"
       F2R_TEST_DATABASE_URL: postgresql+psycopg://f2r_test@db/feedback2req_processing_f1_test
       F1_TEST_API: http://backend:8000
+      F1_TEST_ORIGIN: ${F2R_WORKFLOW_ORIGIN:-http://localhost:18080}
       PYTHONPATH: /workspace/backend:/workspace
     working_dir: /workspace
     volumes: [.:/workspace]
@@ -99,6 +102,14 @@ services:
       - .:/tests
       - browser_modules:/tests/frontend/node_modules
     networks: [proxy]
+  ai-checks:
+    image: feedback2req-workflow-ai-checks
+    build: {context: ., dockerfile: backend/Dockerfile.ai-checks}
+    profiles: [checks]
+    network_mode: none
+    environment:
+      PYTHONPATH: /workspace/backend:/workspace
+    volumes: [.:/workspace]
 networks:
   data: {internal: true}
   proxy:

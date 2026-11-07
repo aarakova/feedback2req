@@ -245,13 +245,14 @@ test.describe('real synthetic F1', () => {
     expect((await (await page.request.get(`${apiRoot(project.id)}/runs`)).json()).items).toEqual([]);
   });
 
-  test('findings paginate without fabricating F2 groups or requirement relationships', async ({ page }) => {
+  test('findings paginate independently of saved groups without fabricating requirement relationships', async ({ page }) => {
     const { project, material } = await setup(page); const inputs = [ref(material)];
     for (let index = 0; index < 2; index++) inputs.push(ref(await source(page, project.id, 'F1-INFERRED ' + unique())));
     const value = await startApi(page, project.id, inputs); await terminal(page, project.id, value.run.id);
     await page.goto(`/#/projects/${project.id}/findings`);
     const groups = page.getByRole('region', { name: 'Группы находок', exact: true });
-    await expect(groups).toContainText('Группировка F2 пока не подключена'); await expect(groups).not.toContainText('Загружено 0');
+    await expect(groups).toContainText('Сохранённых групп в этой выборке нет');
+    await expect(groups).toContainText('Это не означает отсутствия находок или конфликтов');
     const all = page.getByRole('region', { name: 'Все находки', exact: true }); await expect(all.locator('.finding-card')).toHaveCount(2);
     await page.getByRole('button', { name: 'Показать ещё находки', exact: true }).click(); await expect(all.locator('.finding-card')).toHaveCount(3);
     await expect(all).toContainText('Интерпретация'); await expect(all).toContainText('Связи с требованиями пока не подключены');

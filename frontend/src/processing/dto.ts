@@ -10,7 +10,7 @@ export interface CoverageDTO {
   input_key: string; reviewed: boolean;
   disposition: 'completed' | 'insufficient_information' | 'not_processed'; reason?: string;
 }
-export interface ResultLinkDTO { origin: 'input' | 'output'; key: string; id: string }
+export interface ResultLinkDTO { origin: 'input' | 'output'; key: string; id: string; kind?: string; state_id?: string }
 export interface UncertaintyDTO { local_id: string; related: ResultLinkDTO[]; reason: string }
 export interface QuestionDTO extends UncertaintyDTO { text: string; blocking: boolean }
 export interface AnnotationsDTO { questions: QuestionDTO[]; uncertainties: UncertaintyDTO[] }
@@ -21,9 +21,12 @@ export interface AttemptDTO {
   coverage: CoverageDTO[] | null; annotations: AnnotationsDTO | null;
   finding_ids: string[]; fragment_ids: string[];
   technical_result: { character_count: number; utf8_byte_count: number } | null;
+  grouping_result?: { group_ids: string[]; ungrouped_findings: StateRefDTO[]; input_findings: { key: string; ref: StateRefDTO }[] } | null;
 }
-export interface UnitDTO { id: string; input: InputRef; state: UnitState; retry_of_attempt_id: string | null; attempt: AttemptDTO | null }
-export interface RunDTO { id: string; operation: Operation; created_at: string; execution_kind: 'technical' | 'semantic'; state: RunState; units: UnitDTO[] }
+export interface StateRefDTO { kind: string; id: string; state_id: string }
+export interface FindingSetDTO { kind: 'finding_set'; findings: StateRefDTO[]; documents: StateRefDTO[]; previous_groups: StateRefDTO[] }
+export interface UnitDTO { id: string; input: InputRef | FindingSetDTO; state: UnitState; retry_of_attempt_id: string | null; attempt: AttemptDTO | null }
+export interface RunDTO { id: string; operation: Operation | 'group_findings'; created_at: string; execution_kind: 'technical' | 'semantic'; state: RunState; units: UnitDTO[] }
 export interface SourceRefDTO { kind: 'feedback_source'; id: string; state_id: string }
 export interface FragmentDTO {
   id: string; state_id: string; attempt_id: string; source_ref: SourceRefDTO; text_ref: SourceRefDTO;

@@ -31,7 +31,7 @@ test('F1 Observer keeps real result, provenance, overview and responsive composi
         await expect(page.getByRole('region', { name: 'Материалы и обработка', exact: true }).locator('dd').first()).toHaveText('1');
         await expect(page.locator('.metric-value')).toHaveText(['—', '—', '—', '—']);
       } else {
-        if (section !== 'processing') await expect(page.getByRole('region', { name: 'Группы находок', exact: true }).getByText('Функция не подключена', { exact: true })).toBeVisible();
+        if (section !== 'processing') await expect(page.getByRole('region', { name: 'Группы находок', exact: true })).toContainText('Сохранённых групп в этой выборке нет');
         if (section === 'processing') {
           await expect(page.getByRole('region', { name: 'Выбранное задание', exact: true })).toContainText('Синтетический результат');
           await expect(page.locator('.run-list li')).toHaveCount(1);

@@ -36,7 +36,7 @@ class Failed(Synthetic):
 
 
 with httpx.Client(base_url=os.environ['F1_TEST_API'], headers={
-    'Origin': os.environ.get('F2R_ALLOWED_ORIGIN', 'http://localhost:5173')
+    'Origin': os.environ.get('F1_TEST_ORIGIN', os.environ.get('F2R_ALLOWED_ORIGIN', 'http://localhost:5173'))
 }, trust_env=False) as client:
     login = 'f1-fixture-' + uuid4().hex
     credentials = {'login': login, 'password': 'frontend-test-only-2026'}

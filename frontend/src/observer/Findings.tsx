@@ -41,9 +41,9 @@ export function FindingCard({ finding, data, projectId, detail = false }: { find
   </article>;
 }
 
-export function FindingsScreen({ project, state, selectedGroupId, onSelectGroup, runtime, controls, detailMode = false }: {
+export function FindingsScreen({ project, state, selectedGroupId, onSelectGroup, runtime, controls, groupRuntime, detailMode = false }: {
   project: Project; state?: ViewState<FindingsView>; selectedGroupId?: string; onSelectGroup?: (id: string | undefined) => void;
-  runtime?: ReactNode; controls?: ReactNode; detailMode?: boolean;
+  runtime?: ReactNode; controls?: ReactNode; groupRuntime?: ReactNode; detailMode?: boolean;
 }) {
   const current = inProject(state ?? unavailable<FindingsView>(project.id, 'Находки, группы и связи с исходными свидетельствами пока недоступны.'), project.id);
   const data = viewData(current);
@@ -82,7 +82,7 @@ export function FindingsScreen({ project, state, selectedGroupId, onSelectGroup,
           </div> : <MissingData>Замечания проверок требований в этой выборке не переданы.</MissingData>}
       </Tabs></Panel>
     </> : <>
-      <Panel title="Группы находок" extra={<span className="small muted">{data?.groupsAvailable === false ? 'Данные недоступны' : data ? `Загружено ${data.groups.length}` : 'Нет данных'}</span>}>
+      {groupRuntime ?? <Panel title="Группы находок" extra={<span className="small muted">{data?.groupsAvailable === false ? 'Данные недоступны' : data ? `Загружено ${data.groups.length}` : 'Нет данных'}</span>}>
         {data?.groupsAvailable === false ? <div className="panel-body stack"><span className="badge">Функция не подключена</span><p className="muted small">Группировка F2 пока не подключена. Находки ниже получены сервером; группы на frontend не создаются.</p></div>
           : data?.groups.length ? <div className="group-grid panel-body">{data.groups.map(group => <a key={group.id} className="group-card"
           href={groupHref(project.id, group.id)} onClick={event => { if (onSelectGroup) { event.preventDefault(); select(group.id); } }}>
@@ -90,7 +90,7 @@ export function FindingsScreen({ project, state, selectedGroupId, onSelectGroup,
           <h3>{group.title}</h3><p className="small muted">Загруженный состав: {data.findings.filter(item => group.findingIds.includes(item.id)).length} находок</p>
           <span className="source-link">Открыть состав группы →</span></a>)}</div>
           : <MissingData loading={current.status === 'loading'} empty={!!data || current.status === 'empty'} />}
-      </Panel>
+      </Panel>}
       {!detailMode && <Panel title="Все находки" className="observer-space" extra={<span className="small muted">Содержательные выводы из отзывов</span>}>
         {data?.findings.length ? data.findings.map(finding => <FindingCard key={finding.id} finding={finding} data={data} projectId={project.id} />)
           : <MissingData loading={current.status === 'loading'} empty={!!data || current.status === 'empty'} />}

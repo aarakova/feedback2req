@@ -11,6 +11,7 @@ export const projectHref = (id: string, section: ProjectSection = 'overview') =>
   `#/projects/${id}${section === 'overview' ? '' : `/${section}`}`;
 export const requirementHref = (projectId: string, id: string) => `${projectHref(projectId, 'requirements')}/${encodeURIComponent(id)}`;
 export const groupHref = (projectId: string, id: string) => `${projectHref(projectId, 'findings')}/groups/${encodeURIComponent(id)}`;
+export const groupStateHref = (projectId: string, id: string, state: string) => `${groupHref(projectId, id)}/states/${encodeURIComponent(state)}`;
 export const runHref = (projectId: string, id: string) => `${projectHref(projectId, 'processing')}/runs/${encodeURIComponent(id)}`;
 export const findingHref = (projectId: string, id: string) => `${projectHref(projectId, 'findings')}/${encodeURIComponent(id)}`;
 export const findingsAttemptHref = (projectId: string, id: string) => `${projectHref(projectId, 'findings')}?attempt_id=${encodeURIComponent(id)}`;
@@ -24,7 +25,7 @@ export const requirementsFilterHref = (projectId: string, filter: RequirementFil
 
 type Route = { kind: 'projects' } | { kind: 'missing' } | {
   kind: 'project'; id: string; section: ProjectSection; selected?: MaterialSelection;
-  requirementId?: string; groupId?: string; requirementFilter?: RequirementFilter;
+  requirementId?: string; groupId?: string; groupStateId?: string; requirementFilter?: RequirementFilter;
   runId?: string; findingId?: string; fragment?: { id: string; stateId: string }; attemptId?: string; processingInput?: InputRef;
 };
 
@@ -53,6 +54,8 @@ export function parseRoute(hash: string): Route {
   }
   if (['', '#', '#/', '#/projects'].includes(hash)) return { kind: 'projects' };
   const id = '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}';
+  const groupState = new RegExp(`^#/projects/(${id})/findings/groups/(${id})/states/(${id})$`, 'i').exec(hash);
+  if (groupState) return { kind: 'project', id: groupState[1].toLowerCase(), section: 'findings', groupId: groupState[2].toLowerCase(), groupStateId: groupState[3].toLowerCase() };
   const fragment = new RegExp(`^#/projects/(${id})/findings/fragments/(${id})/states/(${id})$`, 'i').exec(hash);
   if (fragment) return { kind: 'project', id: fragment[1].toLowerCase(), section: 'findings', fragment: { id: fragment[2].toLowerCase(), stateId: fragment[3].toLowerCase() } };
   const result = new RegExp(`^#/projects/(${id})/(processing/runs|findings)/(${id})$`, 'i').exec(hash);

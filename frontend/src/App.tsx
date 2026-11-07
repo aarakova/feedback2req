@@ -111,7 +111,7 @@ export function App() {
     <div style={{ display: rechecking ? 'none' : undefined }}>
       {route.kind === 'project' ? <ProjectLayout key={`${session.user.id}/${route.id}`}
         api={api} user={session.user} onLogout={logout} id={route.id} accessRevision={accessRevision}
-        section={route.section} selected={route.selected} requirementId={route.requirementId} groupId={route.groupId} requirementFilter={route.requirementFilter}
+        section={route.section} selected={route.selected} requirementId={route.requirementId} groupId={route.groupId} groupStateId={route.groupStateId} requirementFilter={route.requirementFilter}
         runId={route.runId} findingId={route.findingId} fragment={route.fragment} attemptId={route.attemptId} processingInput={route.processingInput} />
         : <AppLayout user={session.user} onLogout={logout} listRoute={route.kind === 'projects'}>
           {route.kind === 'projects' ? <ProjectList key={`${session.user.id}/${accessRevision}`} api={api} />

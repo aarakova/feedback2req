@@ -13,6 +13,7 @@ import { useCommand } from './commands';
 import { usePages, useRead, checkProject } from './reads';
 import { useRun } from './polling';
 import { ResultDetails } from './ResultDetails';
+import { GroupingRunUnit } from '../grouping/ProjectGroups';
 
 const sameInput = (a: InputRef, b: InputRef) => a.kind === b.kind && a.id === b.id && a.state_id === b.state_id;
 const inputKey = (input: InputRef) => `${input.kind}/${input.id}/${input.state_id}`;
@@ -46,7 +47,7 @@ function RunDetails({ projectId, run, locked, retry, successor }: {
     <div className="observer-row between"><h3>{operationName(run.operation)}</h3><span className={`badge ${stateTone(run.state)}`}>{stateName(run.state)}</span></div>
     <p className="mono small">Run: {run.id}</p><p className="small muted">Создано: <time dateTime={run.created_at}>{dateLabel(run.created_at)}</time> · {run.operation}</p>
     <p className="notice">{technical ? 'inspect_text проверяет размер текста без AI и не создаёт находки.' : 'Завершение задания означает выполнение и приём результата, не полноту анализа всего проекта и не утверждение человеком.'}</p>
-    {run.units.map(unit => <section className="processing-unit" key={unit.id} aria-label={`Материал задания ${unit.id}`}>
+    {run.units.map(unit => unit.input.kind === 'finding_set' ? <GroupingRunUnit key={unit.id} projectId={projectId} unit={unit} /> : <section className="processing-unit" key={unit.id} aria-label={`Материал задания ${unit.id}`}>
       <div className="observer-row between"><strong>{unit.input.kind === 'source' ? 'Текстовый отзыв' : 'Документ продукта'}</strong>
         <span className={`badge ${stateTone(unit.state)}`}>{stateName(unit.state)}</span></div>
       <a className="source-link mono" href={materialStateHref(projectId, unit.input.kind === 'source' ? 'sources' : 'documents', unit.input.id, unit.input.state_id)}>{unit.input.id} · открыть материал ↗</a>
@@ -109,7 +110,7 @@ export function ProjectProcessing({ api, user, projectId, selectedRunId, prefill
     accepted(await command.start({ operation, inputs: selected.map(input => ({ ...input })) }));
   }
   async function retry(unit: UnitDTO) {
-    if (locked || preparingRequest.current || unit.state !== 'failed' || unit.attempt?.state !== 'failed') return;
+    if (unit.input.kind === 'finding_set' || locked || preparingRequest.current || unit.state !== 'failed' || unit.attempt?.state !== 'failed') return;
     const controller = new AbortController(); preparingRequest.current = controller; setPreparing(true); setPreflightError('');
     try {
       const current = await api.request<Material>(`${root}/${unit.input.kind === 'source' ? 'sources' : 'documents'}/${unit.input.id}`, { signal: controller.signal });

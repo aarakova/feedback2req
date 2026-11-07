@@ -15,10 +15,10 @@ import { RequirementsScreen } from './observer/Requirements';
 import { groupHref, projectHref, requirementHref, requirementsFilterHref } from './routes';
 import type { ProjectSection, RequirementFilter } from './routes';
 
-export function ProjectLayout({ api, user, onLogout, id, section, selected, accessRevision, requirementId, groupId, requirementFilter, runId, findingId, fragment, attemptId, processingInput }: {
+export function ProjectLayout({ api, user, onLogout, id, section, selected, accessRevision, requirementId, groupId, groupStateId, requirementFilter, runId, findingId, fragment, attemptId, processingInput }: {
   api: ApiClient; user: User; onLogout: () => void; id: string; section: ProjectSection;
   selected?: MaterialSelection; accessRevision: number;
-  requirementId?: string; groupId?: string; requirementFilter?: RequirementFilter;
+  requirementId?: string; groupId?: string; groupStateId?: string; requirementFilter?: RequirementFilter;
   runId?: string; findingId?: string; fragment?: { id: string; stateId: string }; attemptId?: string; processingInput?: InputRef;
 }) {
   const [project, setProject] = useState<Project | null>(null);
@@ -66,7 +66,7 @@ export function ProjectLayout({ api, user, onLogout, id, section, selected, acce
             <p>Просмотр и управление участниками доступны только владельцу проекта.</p>
             <a href={projectHref(id)}>Вернуться к обзору проекта</a></section>
         : section === 'materials' ? <Materials api={api} projectId={id} selected={selected} onUnavailable={unavailable} />
-        : section === 'findings' ? <ProjectFindings api={api} project={project} groupId={groupId} findingId={findingId} fragment={fragment} attemptId={attemptId} onRecheck={recheckProject}
+        : section === 'findings' ? <ProjectFindings api={api} project={project} groupId={groupId} groupStateId={groupStateId} findingId={findingId} fragment={fragment} attemptId={attemptId} onRecheck={recheckProject}
             onSelectGroup={group => { window.location.hash = group ? groupHref(id, group) : projectHref(id, 'findings'); }} />
         : section === 'requirements' ? <RequirementsScreen project={project} selectedId={requirementId} filter={requirementFilter ?? 'all'}
             onFilterChange={filter => { window.location.hash = requirementsFilterHref(id, filter); }}

@@ -53,6 +53,7 @@ test('overview and F1 sections use supported reads without fabricated semantic m
     await nav(page).getByRole('link', { name, exact: true }).click();
     await expect(page.getByRole('heading', { name, exact: true })).toBeVisible();
     if (name === 'Обработка') await expect(page.getByRole('form', { name: 'Запуск обработки текста', exact: true })).toBeVisible();
+    else if (name === 'Находки') await expect(page.getByRole('region', { name: 'Группы находок', exact: true })).toContainText('Сохранённых групп в этой выборке нет');
     else await expect(page.getByText('Функция не подключена', { exact: true })).toBeVisible();
     await expect(nav(page).getByRole('link', { name, exact: true })).toHaveAttribute('aria-current', 'page');
     await expect(page.getByRole('button', { name: /Запустить|Создать требование|Повторить обработку/ })).toHaveCount(0);
@@ -60,7 +61,8 @@ test('overview and F1 sections use supported reads without fabricated semantic m
     await expect(page.getByRole('heading', { name, exact: true })).toBeVisible();
     await expect(page.getByRole('heading', { name: first.name, exact: true })).toBeVisible();
   }
-  expect(requested.some(path => /\/(requirements|groups|processing)(\/|$)/.test(path))).toBe(false);
+  expect(requested.some(path => /\/(requirements|processing)(\/|$)/.test(path))).toBe(false);
+  expect(requested.some(path => /\/groups$/.test(path))).toBe(true);
   expect(requested.some(path => /\/overview$/.test(path))).toBe(true);
   expect(requested.some(path => /\/findings$/.test(path))).toBe(true);
   expect(requested.some(path => /\/runs$/.test(path))).toBe(true);

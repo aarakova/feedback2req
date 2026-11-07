@@ -54,10 +54,16 @@ test('new scoped routes and opaque legacy routes retain exact IDs and reject amb
       r.parseRoute(r.findingsAttemptHref(id, id)), r.parseRoute(r.requirementHref(id, 'Требование / 🧭')),
       r.parseRoute(`#/projects/${id}/processing?kind=source&id=${id}&state_id=${id}&kind=document`),
       r.parseRoute(`#/projects/${id}/findings?attempt_id=bad`), r.parseRoute(`#/projects/${id}/requirements?filter=all&filter=lost`),
-      r.parseRoute(r.processingInputHref(id, { kind: 'source', id: 'AAAAAAAA-AAAA-4AAA-8AAA-AAAAAAAAAAAA', state_id: 'BBBBBBBB-BBBB-4BBB-8BBB-BBBBBBBBBBBB' }))];
+      r.parseRoute(r.processingInputHref(id, { kind: 'source', id: 'AAAAAAAA-AAAA-4AAA-8AAA-AAAAAAAAAAAA', state_id: 'BBBBBBBB-BBBB-4BBB-8BBB-BBBBBBBBBBBB' })),
+      r.parseRoute(r.groupStateHref(id, id, id)),
+      r.parseRoute(`#/projects/${id}/findings/groups/${id}/states/bad`),
+      r.parseRoute(r.groupStateHref(id, id, id) + '?attempt_id=' + id)];
   });
   expect(values[0].processingInput?.state_id).toBe('11111111-1111-4111-8111-111111111111'); expect(values[1].runId).toBeTruthy();
   expect(values[2].fragment?.stateId).toBeTruthy(); expect(values[3].selected?.stateId).toBeTruthy(); expect(values[4].attemptId).toBeTruthy();
   expect(values[5].requirementId).toBe('Требование / 🧭'); expect(values.slice(6, 9).map(value => value.kind)).toEqual(['missing', 'missing', 'missing']);
   expect(values[9].processingInput).toEqual({ kind: 'source', id: 'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa', state_id: 'bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb' });
+  expect(values[10].groupId).toBe('11111111-1111-4111-8111-111111111111');
+  expect(values[10].groupStateId).toBe('11111111-1111-4111-8111-111111111111');
+  expect(values.slice(11).map(value => value.kind)).toEqual(['missing', 'missing']);
 });

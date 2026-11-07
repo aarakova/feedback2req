@@ -1,7 +1,7 @@
 import type { EvidenceView, FindingView, FindingsView, ExtractionOutcomeView } from '../observer/viewModels';
 import type { AnnotationsDTO, CoverageDTO, FindingDTO, FragmentDTO, RunState } from './dto';
 
-export const operationName = (operation: string) => operation === 'inspect_text' ? 'Техническая проверка текста' : 'Извлечение находок';
+export const operationName = (operation: string) => operation === 'group_findings' ? 'Группировка находок' : operation === 'inspect_text' ? 'Техническая проверка текста' : 'Извлечение находок';
 export const stateName = (state: RunState): string => ({ queued: 'В очереди', running: 'Выполняется', completed: 'Завершено',
   failed: 'Ошибка', cancelled: 'Отменено', partial: 'Частично завершено' })[state] ?? 'Состояние неизвестно';
 export const stateTone = (state: RunState) => state === 'failed' || state === 'cancelled' ? 'bad' : state === 'partial' ? 'warn' : state === 'completed' ? 'good' : '';

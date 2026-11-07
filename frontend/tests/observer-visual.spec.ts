@@ -37,7 +37,7 @@ test('Observer visual compositions match reference palette and keep responsive s
         await page.goto(`/#/projects/${project.id}${section === 'overview' ? '' : `/${section}`}`);
         await expect(page.getByRole('heading', { name: project.name, exact: true })).toBeVisible();
         if (section === 'overview') await expect(page.getByRole('region', { name: 'Материалы и обработка', exact: true }).locator('dd').first()).toHaveText('1');
-        if (section === 'findings') await expect(page.getByRole('region', { name: 'Группы находок', exact: true })).toContainText('Группировка F2 пока не подключена.');
+        if (section === 'findings') await expect(page.getByRole('region', { name: 'Группы находок', exact: true })).toContainText('Сохранённых групп в этой выборке нет');
         if (section === 'processing') {
           await expect(page.getByRole('region', { name: 'История запусков', exact: true })).toContainText('В истории пока нет запусков.');
           await expect(page.getByRole('form', { name: 'Запуск обработки текста', exact: true }).getByRole('group', { name: 'Текстовые отзывы', exact: true }).getByRole('checkbox')).toHaveCount(1);
@@ -73,17 +73,18 @@ test('Observer visual compositions match reference palette and keep responsive s
   } finally { await reference.close(); }
 });
 
-test('new detail addresses stay scoped and ordinary application never loads visual fixtures or unsupported F2 API', async ({ page }) => {
+test('detail addresses stay scoped and ordinary application never loads fixtures or unsupported requirement API', async ({ page }) => {
   await registerAndLogin(page);
   const project = await createProject(page, 'Проверка границ Observer');
   const semantic: string[] = [];
   page.on('request', request => {
-    if (request.url().includes('/api/') && /\/(requirements|groups)(\/|$)/.test(new URL(request.url()).pathname)) semantic.push(request.url());
+    if (request.url().includes('/api/') && /\/requirements(\/|$)/.test(new URL(request.url()).pathname)) semantic.push(request.url());
   });
   for (const path of ['requirements/REQ-01', 'findings/groups/G-01', 'processing']) {
     await page.goto(`/#/projects/${project.id}/${path}`); await page.reload();
     await expect(page.getByRole('heading', { name: project.name, exact: true })).toBeVisible();
     if (path === 'processing') await expect(page.getByRole('form', { name: 'Запуск обработки текста', exact: true })).toBeVisible();
+    else if (path.startsWith('findings')) await expect(page.getByRole('region', { name: 'Группы находок', exact: true })).toBeVisible();
     else await expect(page.getByText('Функция не подключена', { exact: true })).toBeVisible();
     await expect(page.getByRole('note')).toHaveCount(0);
     await expect(page.getByText('Сохранение изменений', { exact: true })).toHaveCount(0);
