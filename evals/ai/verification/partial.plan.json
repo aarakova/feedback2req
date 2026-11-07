@@ -1,0 +1,10 @@
+{
+  "checked_assessments": [
+    "support",
+    "contradictions",
+    "ambiguity"
+  ],
+  "comparison_keys": [
+    "other1"
+  ]
+}

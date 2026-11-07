@@ -1,0 +1,98 @@
+{
+  "format_version": "1",
+  "model": {
+    "object_id": "product:export",
+    "parameter_id": "latency",
+    "situations": [
+      "online",
+      "offline",
+      "maintenance"
+    ],
+    "domain": {
+      "kind": "interval",
+      "lower": "0",
+      "upper": "100",
+      "unit": "s",
+      "dimension": "time"
+    }
+  },
+  "left": {
+    "object_id": "product:export",
+    "parameter_id": "latency",
+    "basis": "synthetic:finding-left",
+    "conditions": null,
+    "values": {
+      "kind": "interval",
+      "lower": "1",
+      "upper": "3",
+      "unit": "s"
+    }
+  },
+  "right": {
+    "object_id": "product:export",
+    "parameter_id": "latency",
+    "basis": "synthetic:finding-right",
+    "conditions": [
+      "online"
+    ],
+    "values": {
+      "kind": "interval",
+      "lower": "5",
+      "upper": "10",
+      "unit": "s"
+    }
+  },
+  "omega": {
+    "complete": true,
+    "variants": [
+      {
+        "left": {
+          "conditions": [
+            "online"
+          ],
+          "values": {
+            "kind": "interval",
+            "lower": "1",
+            "upper": "3",
+            "unit": "s"
+          }
+        },
+        "right": {
+          "conditions": [
+            "online"
+          ],
+          "values": {
+            "kind": "interval",
+            "lower": "5",
+            "upper": "10",
+            "unit": "s"
+          }
+        }
+      },
+      {
+        "left": {
+          "conditions": [
+            "offline"
+          ],
+          "values": {
+            "kind": "interval",
+            "lower": "1",
+            "upper": "3",
+            "unit": "s"
+          }
+        },
+        "right": {
+          "conditions": [
+            "online"
+          ],
+          "values": {
+            "kind": "interval",
+            "lower": "5",
+            "upper": "10",
+            "unit": "s"
+          }
+        }
+      }
+    ]
+  }
+}

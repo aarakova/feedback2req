@@ -1,0 +1,23 @@
+name: Autonomous AI components and synthetic replays
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  offline-components:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -r backend/requirements-test.lock -r ai/formal_expectations/requirements.txt
+      - name: Autonomous unit tests with no model calls
+        env:
+          PYTHONPATH: backend:.
+        run: python -m pytest ai/tests ai/formal_expectations/tests ai/formal_expectations_bridge/tests experiments/qwen/tests experiments/qwen_z3/tests -q -W error
+      - run: python scripts/validate_ai_contracts.py
+      - name: Synthetic grouping, generation and verification replays
+        run: |
+          python -m evals.ai.grouping.replay --output .local/replay-grouping
+          python -m evals.ai.generation.replay --output .local/replay-generation
+          python -m evals.ai.verification.replay --output .local/replay-verification

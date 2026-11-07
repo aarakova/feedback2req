@@ -1,0 +1,60 @@
+{
+  "contract_version": "1.0",
+  "operation": "generate_requirements",
+  "project_id": "SYNTHETIC-GENERATION",
+  "request_id": "synthetic-generation-1",
+  "input": {
+    "findings": [
+      {
+        "key": "f1",
+        "ref": {
+          "kind": "finding",
+          "id": "F1",
+          "state_id": "v1"
+        },
+        "text": "Отмечаю галочками записи и нажимаю \"Выгрузить\", но выгружается весь журнал. Нужны только отмеченные.",
+        "types": [
+          "request"
+        ],
+        "mode": "direct",
+        "evidence": [
+          {
+            "kind": "available",
+            "fragment_key": "e1"
+          }
+        ],
+        "uncertainty_notes": [],
+        "open_questions": [],
+        "authorship": "ai"
+      }
+    ],
+    "fragments": [
+      {
+        "key": "e1",
+        "ref": {
+          "kind": "fragment",
+          "id": "E1",
+          "state_id": "v1"
+        },
+        "source_ref": {
+          "kind": "feedback_source",
+          "id": "s1",
+          "state_id": "v1"
+        },
+        "text_ref": {
+          "kind": "feedback_source",
+          "id": "s1",
+          "state_id": "v1"
+        },
+        "quote": "Отмечаю галочками записи и нажимаю \"Выгрузить\", но выгружается весь журнал. Нужны только отмеченные.",
+        "locator": {
+          "start": 0,
+          "end": 100
+        },
+        "reliability": "usable"
+      }
+    ],
+    "documents": [],
+    "groups": []
+  }
+}

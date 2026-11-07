@@ -1,0 +1,1185 @@
+[
+  {
+    "id": "01-D",
+    "input": {
+      "format_version": "1",
+      "model": {
+        "object_id": "product:export",
+        "parameter_id": "latency",
+        "situations": [
+          "online",
+          "offline",
+          "maintenance"
+        ],
+        "domain": {
+          "kind": "interval",
+          "lower": "0",
+          "upper": "100",
+          "unit": "s",
+          "dimension": "time"
+        }
+      },
+      "left": {
+        "object_id": "product:export",
+        "parameter_id": "latency",
+        "basis": "synthetic:finding-left",
+        "conditions": [
+          "online"
+        ],
+        "values": {
+          "kind": "interval",
+          "lower": "1",
+          "upper": "3",
+          "unit": "s"
+        }
+      },
+      "right": {
+        "object_id": "product:export",
+        "parameter_id": "latency",
+        "basis": "synthetic:finding-right",
+        "conditions": [
+          "offline"
+        ],
+        "values": {
+          "kind": "interval",
+          "lower": "5",
+          "upper": "10",
+          "unit": "s"
+        }
+      }
+    },
+    "expected_class": "D",
+    "expected_diagnostic": null,
+    "explanation": "Application situations are disjoint."
+  },
+  {
+    "id": "02-K",
+    "input": {
+      "format_version": "1",
+      "model": {
+        "object_id": "product:export",
+        "parameter_id": "latency",
+        "situations": [
+          "online",
+          "offline",
+          "maintenance"
+        ],
+        "domain": {
+          "kind": "interval",
+          "lower": "0",
+          "upper": "100",
+          "unit": "s",
+          "dimension": "time"
+        }
+      },
+      "left": {
+        "object_id": "product:export",
+        "parameter_id": "latency",
+        "basis": "synthetic:finding-left",
+        "conditions": [
+          "online"
+        ],
+        "values": {
+          "kind": "interval",
+          "lower": "1",
+          "upper": "3",
+          "unit": "s"
+        }
+      },
+      "right": {
+        "object_id": "product:export",
+        "parameter_id": "latency",
+        "basis": "synthetic:finding-right",
+        "conditions": [
+          "online"
+        ],
+        "values": {
+          "kind": "interval",
+          "lower": "5",
+          "upper": "10",
+          "unit": "s"
+        }
+      }
+    },
+    "expected_class": "K",
+    "expected_diagnostic": null,
+    "explanation": "In the common situation [1,3] and [5,10] are disjoint."
+  },
+  {
+    "id": "03-S",
+    "input": {
+      "format_version": "1",
+      "model": {
+        "object_id": "product:export",
+        "parameter_id": "latency",
+        "situations": [
+          "online",
+          "offline",
+          "maintenance"
+        ],
+        "domain": {
+          "kind": "interval",
+          "lower": "0",
+          "upper": "100",
+          "unit": "s",
+          "dimension": "time"
+        }
+      },
+      "left": {
+        "object_id": "product:export",
+        "parameter_id": "latency",
+        "basis": "synthetic:finding-left",
+        "conditions": [
+          "online"
+        ],
+        "values": {
+          "kind": "interval",
+          "lower": "1",
+          "upper": "5",
+          "unit": "s"
+        }
+      },
+      "right": {
+        "object_id": "product:export",
+        "parameter_id": "latency",
+        "basis": "synthetic:finding-right",
+        "conditions": [
+          "online"
+        ],
+        "values": {
+          "kind": "interval",
+          "lower": "1",
+          "upper": "3",
+          "unit": "s"
+        }
+      }
+    },
+    "expected_class": "S",
+    "expected_diagnostic": null,
+    "explanation": "Common values form [1,3]."
+  },
+  {
+    "id": "04-closed-boundary",
+    "input": {
+      "format_version": "1",
+      "model": {
+        "object_id": "product:export",
+        "parameter_id": "latency",
+        "situations": [
+          "online",
+          "offline",
+          "maintenance"
+        ],
+        "domain": {
+          "kind": "interval",
+          "lower": "0",
+          "upper": "100",
+          "unit": "s",
+          "dimension": "time"
+        }
+      },
+      "left": {
+        "object_id": "product:export",
+        "parameter_id": "latency",
+        "basis": "synthetic:finding-left",
+        "conditions": [
+          "online"
+        ],
+        "values": {
+          "kind": "interval",
+          "lower": "1",
+          "upper": "5",
+          "unit": "s"
+        }
+      },
+      "right": {
+        "object_id": "product:export",
+        "parameter_id": "latency",
+        "basis": "synthetic:finding-right",
+        "conditions": [
+          "online"
+        ],
+        "values": {
+          "kind": "interval",
+          "lower": "5",
+          "upper": "10",
+          "unit": "s"
+        }
+      }
+    },
+    "expected_class": "S",
+    "expected_diagnostic": null,
+    "explanation": "The shared endpoint 5 belongs to both closed sets."
+  },
+  {
+    "id": "05-U",
+    "input": {
+      "format_version": "1",
+      "model": {
+        "object_id": "product:export",
+        "parameter_id": "latency",
+        "situations": [
+          "online",
+          "offline",
+          "maintenance"
+        ],
+        "domain": {
+          "kind": "interval",
+          "lower": "0",
+          "upper": "100",
+          "unit": "s",
+          "dimension": "time"
+        }
+      },
+      "left": {
+        "object_id": "product:export",
+        "parameter_id": "latency",
+        "basis": "synthetic:finding-left",
+        "conditions": null,
+        "values": {
+          "kind": "interval",
+          "lower": "1",
+          "upper": "3",
+          "unit": "s"
+        }
+      },
+      "right": {
+        "object_id": "product:export",
+        "parameter_id": "latency",
+        "basis": "synthetic:finding-right",
+        "conditions": [
+          "online"
+        ],
+        "values": {
+          "kind": "interval",
+          "lower": "5",
+          "upper": "10",
+          "unit": "s"
+        }
+      },
+      "omega": {
+        "complete": true,
+        "variants": [
+          {
+            "left": {
+              "conditions": [
+                "online"
+              ],
+              "values": {
+                "kind": "interval",
+                "lower": "1",
+                "upper": "3",
+                "unit": "s"
+              }
+            },
+            "right": {
+              "conditions": [
+                "online"
+              ],
+              "values": {
+                "kind": "interval",
+                "lower": "5",
+                "upper": "10",
+                "unit": "s"
+              }
+            }
+          },
+          {
+            "left": {
+              "conditions": [
+                "offline"
+              ],
+              "values": {
+                "kind": "interval",
+                "lower": "1",
+                "upper": "3",
+                "unit": "s"
+              }
+            },
+            "right": {
+              "conditions": [
+                "online"
+              ],
+              "values": {
+                "kind": "interval",
+                "lower": "5",
+                "upper": "10",
+                "unit": "s"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "expected_class": "U",
+    "expected_diagnostic": null,
+    "explanation": "The unknown condition admits one K and one D refinement."
+  },
+  {
+    "id": "06-irrelevant-missing",
+    "input": {
+      "format_version": "1",
+      "model": {
+        "object_id": "product:export",
+        "parameter_id": "latency",
+        "situations": [
+          "online",
+          "offline",
+          "maintenance"
+        ],
+        "domain": {
+          "kind": "interval",
+          "lower": "0",
+          "upper": "100",
+          "unit": "s",
+          "dimension": "time"
+        }
+      },
+      "left": {
+        "object_id": "product:export",
+        "parameter_id": "latency",
+        "basis": "synthetic:finding-left",
+        "conditions": null,
+        "values": {
+          "kind": "interval",
+          "lower": "1",
+          "upper": "3",
+          "unit": "s"
+        }
+      },
+      "right": {
+        "object_id": "product:export",
+        "parameter_id": "latency",
+        "basis": "synthetic:finding-right",
+        "conditions": [
+          "online",
+          "offline"
+        ],
+        "values": {
+          "kind": "interval",
+          "lower": "5",
+          "upper": "10",
+          "unit": "s"
+        }
+      },
+      "omega": {
+        "complete": true,
+        "variants": [
+          {
+            "left": {
+              "conditions": [
+                "online"
+              ],
+              "values": {
+                "kind": "interval",
+                "lower": "1",
+                "upper": "3",
+                "unit": "s"
+              }
+            },
+            "right": {
+              "conditions": [
+                "online",
+                "offline"
+              ],
+              "values": {
+                "kind": "interval",
+                "lower": "5",
+                "upper": "10",
+                "unit": "s"
+              }
+            }
+          },
+          {
+            "left": {
+              "conditions": [
+                "offline"
+              ],
+              "values": {
+                "kind": "interval",
+                "lower": "1",
+                "upper": "3",
+                "unit": "s"
+              }
+            },
+            "right": {
+              "conditions": [
+                "online",
+                "offline"
+              ],
+              "values": {
+                "kind": "interval",
+                "lower": "5",
+                "upper": "10",
+                "unit": "s"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "expected_class": "K",
+    "expected_diagnostic": null,
+    "explanation": "Both possible conditions overlap; every variant is K."
+  },
+  {
+    "id": "07-empty-omega",
+    "input": {
+      "format_version": "1",
+      "model": {
+        "object_id": "product:export",
+        "parameter_id": "latency",
+        "situations": [
+          "online",
+          "offline",
+          "maintenance"
+        ],
+        "domain": {
+          "kind": "interval",
+          "lower": "0",
+          "upper": "100",
+          "unit": "s",
+          "dimension": "time"
+        }
+      },
+      "left": {
+        "object_id": "product:export",
+        "parameter_id": "latency",
+        "basis": "synthetic:finding-left",
+        "conditions": null,
+        "values": {
+          "kind": "interval",
+          "lower": "1",
+          "upper": "3",
+          "unit": "s"
+        }
+      },
+      "right": {
+        "object_id": "product:export",
+        "parameter_id": "latency",
+        "basis": "synthetic:finding-right",
+        "conditions": [
+          "online"
+        ],
+        "values": {
+          "kind": "interval",
+          "lower": "5",
+          "upper": "10",
+          "unit": "s"
+        }
+      },
+      "omega": {
+        "complete": true,
+        "variants": []
+      }
+    },
+    "expected_class": null,
+    "expected_diagnostic": "invalid_formalization",
+    "explanation": "An empty refinement space is a formalization error."
+  },
+  {
+    "id": "08-objects",
+    "input": {
+      "format_version": "1",
+      "model": {
+        "object_id": "product:export",
+        "parameter_id": "latency",
+        "situations": [
+          "online",
+          "offline",
+          "maintenance"
+        ],
+        "domain": {
+          "kind": "interval",
+          "lower": "0",
+          "upper": "100",
+          "unit": "s",
+          "dimension": "time"
+        }
+      },
+      "left": {
+        "object_id": "product:export",
+        "parameter_id": "latency",
+        "basis": "synthetic:finding-left",
+        "conditions": [
+          "online"
+        ],
+        "values": {
+          "kind": "interval",
+          "lower": "1",
+          "upper": "3",
+          "unit": "s"
+        }
+      },
+      "right": {
+        "object_id": "other-product",
+        "parameter_id": "latency",
+        "basis": "synthetic:finding-right",
+        "conditions": [
+          "online"
+        ],
+        "values": {
+          "kind": "interval",
+          "lower": "5",
+          "upper": "10",
+          "unit": "s"
+        }
+      }
+    },
+    "expected_class": null,
+    "expected_diagnostic": "not_comparable",
+    "explanation": "Different objects have no established comparability."
+  },
+  {
+    "id": "09-parameters",
+    "input": {
+      "format_version": "1",
+      "model": {
+        "object_id": "product:export",
+        "parameter_id": "latency",
+        "situations": [
+          "online",
+          "offline",
+          "maintenance"
+        ],
+        "domain": {
+          "kind": "interval",
+          "lower": "0",
+          "upper": "100",
+          "unit": "s",
+          "dimension": "time"
+        }
+      },
+      "left": {
+        "object_id": "product:export",
+        "parameter_id": "latency",
+        "basis": "synthetic:finding-left",
+        "conditions": [
+          "online"
+        ],
+        "values": {
+          "kind": "interval",
+          "lower": "1",
+          "upper": "3",
+          "unit": "s"
+        }
+      },
+      "right": {
+        "object_id": "product:export",
+        "parameter_id": "memory",
+        "basis": "synthetic:finding-right",
+        "conditions": [
+          "online"
+        ],
+        "values": {
+          "kind": "interval",
+          "lower": "5",
+          "upper": "10",
+          "unit": "s"
+        }
+      }
+    },
+    "expected_class": null,
+    "expected_diagnostic": "not_comparable",
+    "explanation": "Different parameters cannot be classified as a pair."
+  },
+  {
+    "id": "10-interval",
+    "input": {
+      "format_version": "1",
+      "model": {
+        "object_id": "product:export",
+        "parameter_id": "latency",
+        "situations": [
+          "online",
+          "offline",
+          "maintenance"
+        ],
+        "domain": {
+          "kind": "interval",
+          "lower": "0",
+          "upper": "100",
+          "unit": "s",
+          "dimension": "time"
+        }
+      },
+      "left": {
+        "object_id": "product:export",
+        "parameter_id": "latency",
+        "basis": "synthetic:finding-left",
+        "conditions": [
+          "online"
+        ],
+        "values": {
+          "kind": "interval",
+          "lower": "3",
+          "upper": "1",
+          "unit": "s"
+        }
+      },
+      "right": {
+        "object_id": "product:export",
+        "parameter_id": "latency",
+        "basis": "synthetic:finding-right",
+        "conditions": [
+          "online"
+        ],
+        "values": {
+          "kind": "interval",
+          "lower": "5",
+          "upper": "10",
+          "unit": "s"
+        }
+      }
+    },
+    "expected_class": null,
+    "expected_diagnostic": "invalid_formalization",
+    "explanation": "A reversed interval is not an atomic admissible value set."
+  },
+  {
+    "id": "11-units",
+    "input": {
+      "format_version": "1",
+      "model": {
+        "object_id": "product:export",
+        "parameter_id": "latency",
+        "situations": [
+          "online",
+          "offline",
+          "maintenance"
+        ],
+        "domain": {
+          "kind": "interval",
+          "lower": "0",
+          "upper": "100",
+          "unit": "s",
+          "dimension": "time"
+        }
+      },
+      "left": {
+        "object_id": "product:export",
+        "parameter_id": "latency",
+        "basis": "synthetic:finding-left",
+        "conditions": [
+          "online"
+        ],
+        "values": {
+          "kind": "interval",
+          "lower": "1",
+          "upper": "3",
+          "unit": "m"
+        }
+      },
+      "right": {
+        "object_id": "product:export",
+        "parameter_id": "latency",
+        "basis": "synthetic:finding-right",
+        "conditions": [
+          "online"
+        ],
+        "values": {
+          "kind": "interval",
+          "lower": "5",
+          "upper": "10",
+          "unit": "s"
+        }
+      }
+    },
+    "expected_class": null,
+    "expected_diagnostic": "invalid_formalization",
+    "explanation": "Length cannot be compared with the declared time dimension."
+  },
+  {
+    "id": "12-boolean",
+    "input": {
+      "format_version": "1",
+      "model": {
+        "object_id": "product:export",
+        "parameter_id": "latency",
+        "situations": [
+          "online",
+          "offline",
+          "maintenance"
+        ],
+        "domain": {
+          "kind": "boolean",
+          "allowed": [
+            false,
+            true
+          ]
+        }
+      },
+      "left": {
+        "object_id": "product:export",
+        "parameter_id": "latency",
+        "basis": "synthetic:finding-left",
+        "conditions": [
+          "online"
+        ],
+        "values": {
+          "kind": "boolean",
+          "allowed": [
+            true
+          ]
+        }
+      },
+      "right": {
+        "object_id": "product:export",
+        "parameter_id": "latency",
+        "basis": "synthetic:finding-right",
+        "conditions": [
+          "online"
+        ],
+        "values": {
+          "kind": "boolean",
+          "allowed": [
+            false
+          ]
+        }
+      }
+    },
+    "expected_class": "K",
+    "expected_diagnostic": null,
+    "explanation": "Opposite Boolean expectations conflict in the common situation."
+  },
+  {
+    "id": "13-enum",
+    "input": {
+      "format_version": "1",
+      "model": {
+        "object_id": "product:export",
+        "parameter_id": "latency",
+        "situations": [
+          "online",
+          "offline",
+          "maintenance"
+        ],
+        "domain": {
+          "kind": "enum",
+          "allowed": [
+            "a",
+            "b",
+            "c"
+          ]
+        }
+      },
+      "left": {
+        "object_id": "product:export",
+        "parameter_id": "latency",
+        "basis": "synthetic:finding-left",
+        "conditions": [
+          "online"
+        ],
+        "values": {
+          "kind": "enum",
+          "allowed": [
+            "a",
+            "b"
+          ]
+        }
+      },
+      "right": {
+        "object_id": "product:export",
+        "parameter_id": "latency",
+        "basis": "synthetic:finding-right",
+        "conditions": [
+          "online"
+        ],
+        "values": {
+          "kind": "enum",
+          "allowed": [
+            "b",
+            "c"
+          ]
+        }
+      }
+    },
+    "expected_class": "S",
+    "expected_diagnostic": null,
+    "explanation": "The common enum value is b."
+  },
+  {
+    "id": "14-malicious",
+    "input": {
+      "format_version": "1",
+      "model": {
+        "object_id": "product:export",
+        "parameter_id": "latency",
+        "situations": [
+          "online",
+          "offline",
+          "maintenance"
+        ],
+        "domain": {
+          "kind": "interval",
+          "lower": "0",
+          "upper": "100",
+          "unit": "s",
+          "dimension": "time"
+        }
+      },
+      "left": {
+        "object_id": "product:export",
+        "parameter_id": "latency",
+        "basis": "synthetic:finding-left",
+        "conditions": [
+          "online"
+        ],
+        "values": {
+          "kind": "python",
+          "code": "__import__('os').system('echo unsafe')"
+        }
+      },
+      "right": {
+        "object_id": "product:export",
+        "parameter_id": "latency",
+        "basis": "synthetic:finding-right",
+        "conditions": [
+          "online"
+        ],
+        "values": {
+          "kind": "interval",
+          "lower": "5",
+          "upper": "10",
+          "unit": "s"
+        }
+      }
+    },
+    "expected_class": null,
+    "expected_diagnostic": "unsupported_input",
+    "explanation": "Executable structures are outside the closed grammar."
+  },
+  {
+    "id": "15-budget",
+    "input": {
+      "format_version": "1",
+      "model": {
+        "object_id": "product:export",
+        "parameter_id": "latency",
+        "situations": [
+          "online",
+          "offline",
+          "maintenance"
+        ],
+        "domain": {
+          "kind": "interval",
+          "lower": "0",
+          "upper": "100",
+          "unit": "s",
+          "dimension": "time"
+        }
+      },
+      "left": {
+        "object_id": "product:export",
+        "parameter_id": "latency",
+        "basis": "synthetic:finding-left",
+        "conditions": [
+          "online"
+        ],
+        "values": {
+          "kind": "interval",
+          "lower": "1",
+          "upper": "3",
+          "unit": "s"
+        }
+      },
+      "right": {
+        "object_id": "product:export",
+        "parameter_id": "latency",
+        "basis": "synthetic:finding-right",
+        "conditions": [
+          "online"
+        ],
+        "values": {
+          "kind": "interval",
+          "lower": "5",
+          "upper": "10",
+          "unit": "s"
+        }
+      }
+    },
+    "expected_class": null,
+    "expected_diagnostic": "resource_limit",
+    "explanation": "One solver call cannot complete both required checks.",
+    "limits": {
+      "max_solver_calls": 1
+    }
+  },
+  {
+    "id": "16-solver-failure",
+    "input": {
+      "format_version": "1",
+      "model": {
+        "object_id": "product:export",
+        "parameter_id": "latency",
+        "situations": [
+          "online",
+          "offline",
+          "maintenance"
+        ],
+        "domain": {
+          "kind": "interval",
+          "lower": "0",
+          "upper": "100",
+          "unit": "s",
+          "dimension": "time"
+        }
+      },
+      "left": {
+        "object_id": "product:export",
+        "parameter_id": "latency",
+        "basis": "synthetic:finding-left",
+        "conditions": [
+          "online"
+        ],
+        "values": {
+          "kind": "interval",
+          "lower": "1",
+          "upper": "3",
+          "unit": "s"
+        }
+      },
+      "right": {
+        "object_id": "product:export",
+        "parameter_id": "latency",
+        "basis": "synthetic:finding-right",
+        "conditions": [
+          "online"
+        ],
+        "values": {
+          "kind": "interval",
+          "lower": "5",
+          "upper": "10",
+          "unit": "s"
+        }
+      }
+    },
+    "expected_class": null,
+    "expected_diagnostic": "solver_failure",
+    "explanation": "Injected native solver failure produces no semantic class.",
+    "fault": "solver_exception"
+  },
+  {
+    "id": "17-symmetry",
+    "input": {
+      "format_version": "1",
+      "model": {
+        "object_id": "product:export",
+        "parameter_id": "latency",
+        "situations": [
+          "online",
+          "offline",
+          "maintenance"
+        ],
+        "domain": {
+          "kind": "interval",
+          "lower": "0",
+          "upper": "100",
+          "unit": "s",
+          "dimension": "time"
+        }
+      },
+      "left": {
+        "object_id": "product:export",
+        "parameter_id": "latency",
+        "basis": "synthetic:finding-left",
+        "conditions": [
+          "online"
+        ],
+        "values": {
+          "kind": "interval",
+          "lower": "1",
+          "upper": "3",
+          "unit": "s"
+        }
+      },
+      "right": {
+        "object_id": "product:export",
+        "parameter_id": "latency",
+        "basis": "synthetic:finding-right",
+        "conditions": [
+          "online"
+        ],
+        "values": {
+          "kind": "interval",
+          "lower": "5",
+          "upper": "10",
+          "unit": "s"
+        }
+      }
+    },
+    "expected_class": "K",
+    "expected_diagnostic": null,
+    "explanation": "Swapping the two expectations preserves K."
+  },
+  {
+    "id": "18-refinement",
+    "input": {
+      "format_version": "1",
+      "model": {
+        "object_id": "product:export",
+        "parameter_id": "latency",
+        "situations": [
+          "online",
+          "offline",
+          "maintenance"
+        ],
+        "domain": {
+          "kind": "interval",
+          "lower": "0",
+          "upper": "100",
+          "unit": "s",
+          "dimension": "time"
+        }
+      },
+      "left": {
+        "object_id": "product:export",
+        "parameter_id": "latency",
+        "basis": "synthetic:finding-left",
+        "conditions": null,
+        "values": {
+          "kind": "interval",
+          "lower": "1",
+          "upper": "3",
+          "unit": "s"
+        }
+      },
+      "right": {
+        "object_id": "product:export",
+        "parameter_id": "latency",
+        "basis": "synthetic:finding-right",
+        "conditions": [
+          "online",
+          "offline"
+        ],
+        "values": {
+          "kind": "interval",
+          "lower": "5",
+          "upper": "10",
+          "unit": "s"
+        }
+      },
+      "omega": {
+        "complete": true,
+        "variants": [
+          {
+            "left": {
+              "conditions": [
+                "online"
+              ],
+              "values": {
+                "kind": "interval",
+                "lower": "1",
+                "upper": "3",
+                "unit": "s"
+              }
+            },
+            "right": {
+              "conditions": [
+                "online",
+                "offline"
+              ],
+              "values": {
+                "kind": "interval",
+                "lower": "5",
+                "upper": "10",
+                "unit": "s"
+              }
+            }
+          },
+          {
+            "left": {
+              "conditions": [
+                "offline"
+              ],
+              "values": {
+                "kind": "interval",
+                "lower": "1",
+                "upper": "3",
+                "unit": "s"
+              }
+            },
+            "right": {
+              "conditions": [
+                "online",
+                "offline"
+              ],
+              "values": {
+                "kind": "interval",
+                "lower": "5",
+                "upper": "10",
+                "unit": "s"
+              }
+            }
+          }
+        ]
+      }
+    },
+    "expected_class": "K",
+    "expected_diagnostic": null,
+    "explanation": "Any nonempty subset of this unchanged Ω still yields K."
+  },
+  {
+    "id": "19-pairwise-not-global",
+    "input": {
+      "format_version": "1",
+      "model": {
+        "object_id": "product:export",
+        "parameter_id": "latency",
+        "situations": [
+          "online",
+          "offline",
+          "maintenance"
+        ],
+        "domain": {
+          "kind": "enum",
+          "allowed": [
+            "a",
+            "b",
+            "c"
+          ]
+        }
+      },
+      "left": {
+        "object_id": "product:export",
+        "parameter_id": "latency",
+        "basis": "synthetic:finding-left",
+        "conditions": [
+          "online"
+        ],
+        "values": {
+          "kind": "enum",
+          "allowed": [
+            "a",
+            "b"
+          ]
+        }
+      },
+      "right": {
+        "object_id": "product:export",
+        "parameter_id": "latency",
+        "basis": "synthetic:finding-right",
+        "conditions": [
+          "online"
+        ],
+        "values": {
+          "kind": "enum",
+          "allowed": [
+            "b",
+            "c"
+          ]
+        }
+      }
+    },
+    "expected_class": "S",
+    "expected_diagnostic": null,
+    "explanation": "Sets {a,b}, {b,c}, {a,c} intersect pairwise but their triple intersection is empty.",
+    "third_values": {
+      "kind": "enum",
+      "allowed": [
+        "a",
+        "c"
+      ]
+    }
+  }
+]

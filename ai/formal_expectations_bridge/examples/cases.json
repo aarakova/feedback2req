@@ -1,0 +1,5723 @@
+[
+  {
+    "id": "01-direct-conflict",
+    "input": {
+      "bridge_version": "1",
+      "grouping_request": {
+        "contract_version": "1.0",
+        "operation": "group_findings",
+        "project_id": "synthetic-project",
+        "request_id": "synthetic-request-v1",
+        "input": {
+          "findings": [
+            {
+              "key": "f1",
+              "ref": {
+                "kind": "finding",
+                "id": "f1",
+                "state_id": "f1-v1"
+              },
+              "text": "Между сеансами сохраняйте фильтры.",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "evidence": [
+                {
+                  "kind": "available",
+                  "fragment_key": "e1"
+                }
+              ],
+              "uncertainty_notes": [],
+              "open_questions": [],
+              "authorship": "ai"
+            },
+            {
+              "key": "f2",
+              "ref": {
+                "kind": "finding",
+                "id": "f2",
+                "state_id": "f2-v1"
+              },
+              "text": "Между сеансами сбрасывайте фильтры.",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "evidence": [
+                {
+                  "kind": "available",
+                  "fragment_key": "e2"
+                }
+              ],
+              "uncertainty_notes": [],
+              "open_questions": [],
+              "authorship": "ai"
+            }
+          ],
+          "fragments": [
+            {
+              "key": "e1",
+              "ref": {
+                "kind": "fragment",
+                "id": "e1",
+                "state_id": "fragment-v1"
+              },
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "source1",
+                "state_id": "source-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "source1",
+                "state_id": "source-v1"
+              },
+              "quote": "Между сеансами сохраняйте фильтры.",
+              "locator": {
+                "start": 0,
+                "end": 34
+              },
+              "reliability": "usable"
+            },
+            {
+              "key": "e2",
+              "ref": {
+                "kind": "fragment",
+                "id": "e2",
+                "state_id": "fragment-v1"
+              },
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "source2",
+                "state_id": "source-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "source2",
+                "state_id": "source-v1"
+              },
+              "quote": "Между сеансами сбрасывайте фильтры.",
+              "locator": {
+                "start": 0,
+                "end": 35
+              },
+              "reliability": "usable"
+            }
+          ],
+          "documents": []
+        }
+      },
+      "grouping_response": {
+        "coverage": [
+          {
+            "input_key": "f1",
+            "reviewed": true,
+            "disposition": "completed"
+          },
+          {
+            "input_key": "f2",
+            "reviewed": true,
+            "disposition": "completed"
+          }
+        ],
+        "uncertainties": [],
+        "questions": [],
+        "result": {
+          "groups": [
+            {
+              "local_id": "g1",
+              "title": "Фильтры",
+              "summary": "Кандидат противоположных позиций",
+              "finding_keys": [
+                "f1",
+                "f2"
+              ],
+              "considered_keys": [
+                "f1",
+                "f2"
+              ],
+              "context_keys": [],
+              "conflicts": [
+                {
+                  "local_id": "c1",
+                  "description": "Кандидат конфликта, не доказанный K",
+                  "positions": [
+                    {
+                      "description": "Сохранять",
+                      "finding_keys": [
+                        "f1"
+                      ]
+                    },
+                    {
+                      "description": "Сбрасывать",
+                      "finding_keys": [
+                        "f2"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "ungrouped_finding_keys": []
+        }
+      },
+      "selection": {
+        "left_finding_keys": [
+          "f1"
+        ],
+        "right_finding_keys": [
+          "f2"
+        ],
+        "rationale": "Явно выбраны обе полные позиции кандидата конфликта.",
+        "conflict": {
+          "group_local_id": "g1",
+          "conflict_local_id": "c1",
+          "left_position": 0,
+          "right_position": 1
+        }
+      },
+      "proposal": {
+        "version": "formalization-v1",
+        "origin": {
+          "kind": "human",
+          "actor": "synthetic-curator",
+          "method": "explicit_manual_fixture"
+        },
+        "decomposition_rationale": "Два явно подготовленных атомарных ожидания о сохранении.",
+        "model": {
+          "id": "filter-retention",
+          "version": "model-v1",
+          "method": "explicit_atomic_partition",
+          "rationale": "Один исследуемый случай: переход между сеансами.",
+          "formal_model": {
+            "object_id": "filters",
+            "parameter_id": "retain",
+            "situations": [
+              "session"
+            ],
+            "domain": {
+              "kind": "boolean",
+              "allowed": [
+                false,
+                true
+              ]
+            }
+          },
+          "contexts": [
+            {
+              "id": "between_sessions",
+              "situations": [
+                "session"
+              ]
+            }
+          ],
+          "relations": []
+        },
+        "atoms": [
+          {
+            "id": "a1",
+            "object_id": "filters",
+            "parameter_id": "retain",
+            "context_id": "between_sessions",
+            "values": {
+              "kind": "boolean",
+              "allowed": [
+                true
+              ]
+            },
+            "missing_fields": [],
+            "sources": [
+              {
+                "finding_key": "f1",
+                "finding_ref": {
+                  "kind": "finding",
+                  "id": "f1",
+                  "state_id": "f1-v1"
+                },
+                "evidence_keys": [
+                  "e1"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "a2",
+            "object_id": "filters",
+            "parameter_id": "retain",
+            "context_id": "between_sessions",
+            "values": {
+              "kind": "boolean",
+              "allowed": [
+                false
+              ]
+            },
+            "missing_fields": [],
+            "sources": [
+              {
+                "finding_key": "f2",
+                "finding_ref": {
+                  "kind": "finding",
+                  "id": "f2",
+                  "state_id": "f2-v1"
+                },
+                "evidence_keys": [
+                  "e2"
+                ]
+              }
+            ]
+          }
+        ],
+        "pair": {
+          "left_atom_id": "a1",
+          "right_atom_id": "a2",
+          "rationale": "Сравнить эти два ожидания, не всю группу."
+        },
+        "omissions": [],
+        "omega": null
+      }
+    },
+    "expected_status": "checked",
+    "expected_formal_class": "K",
+    "expected_structural_class": "K",
+    "explanation": "Общие условия и непересекающиеся bool значения.",
+    "synthetic_confirmations": {},
+    "interpretation_limit": "Класс относится только к явно подготовленной структуре; смысловые метки предварительны."
+  },
+  {
+    "id": "02-different-conditions",
+    "input": {
+      "bridge_version": "1",
+      "grouping_request": {
+        "contract_version": "1.0",
+        "operation": "group_findings",
+        "project_id": "synthetic-project",
+        "request_id": "synthetic-request-v1",
+        "input": {
+          "findings": [
+            {
+              "key": "f1",
+              "ref": {
+                "kind": "finding",
+                "id": "f1",
+                "state_id": "f1-v1"
+              },
+              "text": "На ПК сохраняйте фильтры.",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "evidence": [
+                {
+                  "kind": "available",
+                  "fragment_key": "e1"
+                }
+              ],
+              "uncertainty_notes": [],
+              "open_questions": [],
+              "authorship": "ai"
+            },
+            {
+              "key": "f2",
+              "ref": {
+                "kind": "finding",
+                "id": "f2",
+                "state_id": "f2-v1"
+              },
+              "text": "На телефоне сбрасывайте фильтры.",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "evidence": [
+                {
+                  "kind": "available",
+                  "fragment_key": "e2"
+                }
+              ],
+              "uncertainty_notes": [],
+              "open_questions": [],
+              "authorship": "ai"
+            }
+          ],
+          "fragments": [
+            {
+              "key": "e1",
+              "ref": {
+                "kind": "fragment",
+                "id": "e1",
+                "state_id": "fragment-v1"
+              },
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "source1",
+                "state_id": "source-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "source1",
+                "state_id": "source-v1"
+              },
+              "quote": "На ПК сохраняйте фильтры.",
+              "locator": {
+                "start": 0,
+                "end": 25
+              },
+              "reliability": "usable"
+            },
+            {
+              "key": "e2",
+              "ref": {
+                "kind": "fragment",
+                "id": "e2",
+                "state_id": "fragment-v1"
+              },
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "source2",
+                "state_id": "source-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "source2",
+                "state_id": "source-v1"
+              },
+              "quote": "На телефоне сбрасывайте фильтры.",
+              "locator": {
+                "start": 0,
+                "end": 32
+              },
+              "reliability": "usable"
+            }
+          ],
+          "documents": []
+        }
+      },
+      "grouping_response": {
+        "coverage": [
+          {
+            "input_key": "f1",
+            "reviewed": true,
+            "disposition": "completed"
+          },
+          {
+            "input_key": "f2",
+            "reviewed": true,
+            "disposition": "completed"
+          }
+        ],
+        "uncertainties": [],
+        "questions": [],
+        "result": {
+          "groups": [
+            {
+              "local_id": "g1",
+              "title": "Фильтры",
+              "summary": "Кандидат противоположных позиций",
+              "finding_keys": [
+                "f1",
+                "f2"
+              ],
+              "considered_keys": [
+                "f1",
+                "f2"
+              ],
+              "context_keys": [],
+              "conflicts": [
+                {
+                  "local_id": "c1",
+                  "description": "Кандидат конфликта, не доказанный K",
+                  "positions": [
+                    {
+                      "description": "Сохранять",
+                      "finding_keys": [
+                        "f1"
+                      ]
+                    },
+                    {
+                      "description": "Сбрасывать",
+                      "finding_keys": [
+                        "f2"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "ungrouped_finding_keys": []
+        }
+      },
+      "selection": {
+        "left_finding_keys": [
+          "f1"
+        ],
+        "right_finding_keys": [
+          "f2"
+        ],
+        "rationale": "Явно выбраны обе полные позиции кандидата конфликта.",
+        "conflict": {
+          "group_local_id": "g1",
+          "conflict_local_id": "c1",
+          "left_position": 0,
+          "right_position": 1
+        }
+      },
+      "proposal": {
+        "version": "formalization-v1",
+        "origin": {
+          "kind": "human",
+          "actor": "synthetic-curator",
+          "method": "explicit_manual_fixture"
+        },
+        "decomposition_rationale": "Два явно подготовленных атомарных ожидания о сохранении.",
+        "model": {
+          "id": "filter-retention",
+          "version": "model-v1",
+          "method": "explicit_atomic_partition",
+          "rationale": "Один исследуемый случай: переход между сеансами.",
+          "formal_model": {
+            "object_id": "filters",
+            "parameter_id": "retain",
+            "situations": [
+              "desktop",
+              "mobile"
+            ],
+            "domain": {
+              "kind": "boolean",
+              "allowed": [
+                false,
+                true
+              ]
+            }
+          },
+          "contexts": [
+            {
+              "id": "desktop",
+              "situations": [
+                "desktop"
+              ]
+            },
+            {
+              "id": "mobile",
+              "situations": [
+                "mobile"
+              ]
+            }
+          ],
+          "relations": [
+            {
+              "left": "desktop",
+              "right": "mobile",
+              "relation": "disjoint"
+            }
+          ]
+        },
+        "atoms": [
+          {
+            "id": "a1",
+            "object_id": "filters",
+            "parameter_id": "retain",
+            "context_id": "desktop",
+            "values": {
+              "kind": "boolean",
+              "allowed": [
+                true
+              ]
+            },
+            "missing_fields": [],
+            "sources": [
+              {
+                "finding_key": "f1",
+                "finding_ref": {
+                  "kind": "finding",
+                  "id": "f1",
+                  "state_id": "f1-v1"
+                },
+                "evidence_keys": [
+                  "e1"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "a2",
+            "object_id": "filters",
+            "parameter_id": "retain",
+            "context_id": "mobile",
+            "values": {
+              "kind": "boolean",
+              "allowed": [
+                false
+              ]
+            },
+            "missing_fields": [],
+            "sources": [
+              {
+                "finding_key": "f2",
+                "finding_ref": {
+                  "kind": "finding",
+                  "id": "f2",
+                  "state_id": "f2-v1"
+                },
+                "evidence_keys": [
+                  "e2"
+                ]
+              }
+            ]
+          }
+        ],
+        "pair": {
+          "left_atom_id": "a1",
+          "right_atom_id": "a2",
+          "rationale": "Сравнить эти два ожидания, не всю группу."
+        },
+        "omissions": [],
+        "omega": null
+      }
+    },
+    "expected_status": "checked",
+    "expected_formal_class": "D",
+    "expected_structural_class": "D",
+    "explanation": "Явное разбиение desktop/mobile делает C непересекающимися.",
+    "synthetic_confirmations": {},
+    "interpretation_limit": "Класс относится только к явно подготовленной структуре; смысловые метки предварительны."
+  },
+  {
+    "id": "03-compatible",
+    "input": {
+      "bridge_version": "1",
+      "grouping_request": {
+        "contract_version": "1.0",
+        "operation": "group_findings",
+        "project_id": "synthetic-project",
+        "request_id": "synthetic-request-v1",
+        "input": {
+          "findings": [
+            {
+              "key": "f1",
+              "ref": {
+                "kind": "finding",
+                "id": "f1",
+                "state_id": "f1-v1"
+              },
+              "text": "Между сеансами сохраняйте фильтры.",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "evidence": [
+                {
+                  "kind": "available",
+                  "fragment_key": "e1"
+                }
+              ],
+              "uncertainty_notes": [],
+              "open_questions": [],
+              "authorship": "ai"
+            },
+            {
+              "key": "f2",
+              "ref": {
+                "kind": "finding",
+                "id": "f2",
+                "state_id": "f2-v1"
+              },
+              "text": "Мне также нужно сохранение фильтров.",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "evidence": [
+                {
+                  "kind": "available",
+                  "fragment_key": "e2"
+                }
+              ],
+              "uncertainty_notes": [],
+              "open_questions": [],
+              "authorship": "ai"
+            }
+          ],
+          "fragments": [
+            {
+              "key": "e1",
+              "ref": {
+                "kind": "fragment",
+                "id": "e1",
+                "state_id": "fragment-v1"
+              },
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "source1",
+                "state_id": "source-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "source1",
+                "state_id": "source-v1"
+              },
+              "quote": "Между сеансами сохраняйте фильтры.",
+              "locator": {
+                "start": 0,
+                "end": 34
+              },
+              "reliability": "usable"
+            },
+            {
+              "key": "e2",
+              "ref": {
+                "kind": "fragment",
+                "id": "e2",
+                "state_id": "fragment-v1"
+              },
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "source2",
+                "state_id": "source-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "source2",
+                "state_id": "source-v1"
+              },
+              "quote": "Мне также нужно сохранение фильтров.",
+              "locator": {
+                "start": 0,
+                "end": 36
+              },
+              "reliability": "usable"
+            }
+          ],
+          "documents": []
+        }
+      },
+      "grouping_response": {
+        "coverage": [
+          {
+            "input_key": "f1",
+            "reviewed": true,
+            "disposition": "completed"
+          },
+          {
+            "input_key": "f2",
+            "reviewed": true,
+            "disposition": "completed"
+          }
+        ],
+        "uncertainties": [],
+        "questions": [],
+        "result": {
+          "groups": [
+            {
+              "local_id": "g1",
+              "title": "Фильтры",
+              "summary": "Кандидат противоположных позиций",
+              "finding_keys": [
+                "f1",
+                "f2"
+              ],
+              "considered_keys": [
+                "f1",
+                "f2"
+              ],
+              "context_keys": [],
+              "conflicts": [
+                {
+                  "local_id": "c1",
+                  "description": "Кандидат конфликта, не доказанный K",
+                  "positions": [
+                    {
+                      "description": "Сохранять",
+                      "finding_keys": [
+                        "f1"
+                      ]
+                    },
+                    {
+                      "description": "Сбрасывать",
+                      "finding_keys": [
+                        "f2"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "ungrouped_finding_keys": []
+        }
+      },
+      "selection": {
+        "left_finding_keys": [
+          "f1"
+        ],
+        "right_finding_keys": [
+          "f2"
+        ],
+        "rationale": "Явно выбраны обе полные позиции кандидата конфликта.",
+        "conflict": {
+          "group_local_id": "g1",
+          "conflict_local_id": "c1",
+          "left_position": 0,
+          "right_position": 1
+        }
+      },
+      "proposal": {
+        "version": "formalization-v1",
+        "origin": {
+          "kind": "human",
+          "actor": "synthetic-curator",
+          "method": "explicit_manual_fixture"
+        },
+        "decomposition_rationale": "Два явно подготовленных атомарных ожидания о сохранении.",
+        "model": {
+          "id": "filter-retention",
+          "version": "model-v1",
+          "method": "explicit_atomic_partition",
+          "rationale": "Один исследуемый случай: переход между сеансами.",
+          "formal_model": {
+            "object_id": "filters",
+            "parameter_id": "retain",
+            "situations": [
+              "session"
+            ],
+            "domain": {
+              "kind": "boolean",
+              "allowed": [
+                false,
+                true
+              ]
+            }
+          },
+          "contexts": [
+            {
+              "id": "between_sessions",
+              "situations": [
+                "session"
+              ]
+            }
+          ],
+          "relations": []
+        },
+        "atoms": [
+          {
+            "id": "a1",
+            "object_id": "filters",
+            "parameter_id": "retain",
+            "context_id": "between_sessions",
+            "values": {
+              "kind": "boolean",
+              "allowed": [
+                true
+              ]
+            },
+            "missing_fields": [],
+            "sources": [
+              {
+                "finding_key": "f1",
+                "finding_ref": {
+                  "kind": "finding",
+                  "id": "f1",
+                  "state_id": "f1-v1"
+                },
+                "evidence_keys": [
+                  "e1"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "a2",
+            "object_id": "filters",
+            "parameter_id": "retain",
+            "context_id": "between_sessions",
+            "values": {
+              "kind": "boolean",
+              "allowed": [
+                true
+              ]
+            },
+            "missing_fields": [],
+            "sources": [
+              {
+                "finding_key": "f2",
+                "finding_ref": {
+                  "kind": "finding",
+                  "id": "f2",
+                  "state_id": "f2-v1"
+                },
+                "evidence_keys": [
+                  "e2"
+                ]
+              }
+            ]
+          }
+        ],
+        "pair": {
+          "left_atom_id": "a1",
+          "right_atom_id": "a2",
+          "rationale": "Сравнить эти два ожидания, не всю группу."
+        },
+        "omissions": [],
+        "omega": null
+      }
+    },
+    "expected_status": "checked",
+    "expected_formal_class": "S",
+    "expected_structural_class": "S",
+    "explanation": "Одинаковые условия и допустимое значение true.",
+    "synthetic_confirmations": {},
+    "interpretation_limit": "Класс относится только к явно подготовленной структуре; смысловые метки предварительны."
+  },
+  {
+    "id": "04-incomplete-information",
+    "input": {
+      "bridge_version": "1",
+      "grouping_request": {
+        "contract_version": "1.0",
+        "operation": "group_findings",
+        "project_id": "synthetic-project",
+        "request_id": "synthetic-request-v1",
+        "input": {
+          "findings": [
+            {
+              "key": "f1",
+              "ref": {
+                "kind": "finding",
+                "id": "f1",
+                "state_id": "f1-v1"
+              },
+              "text": "Сохраняйте фильтры (устройство не указано).",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "evidence": [
+                {
+                  "kind": "available",
+                  "fragment_key": "e1"
+                }
+              ],
+              "uncertainty_notes": [],
+              "open_questions": [],
+              "authorship": "ai"
+            },
+            {
+              "key": "f2",
+              "ref": {
+                "kind": "finding",
+                "id": "f2",
+                "state_id": "f2-v1"
+              },
+              "text": "На ПК сбрасывайте фильтры.",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "evidence": [
+                {
+                  "kind": "available",
+                  "fragment_key": "e2"
+                }
+              ],
+              "uncertainty_notes": [],
+              "open_questions": [],
+              "authorship": "ai"
+            }
+          ],
+          "fragments": [
+            {
+              "key": "e1",
+              "ref": {
+                "kind": "fragment",
+                "id": "e1",
+                "state_id": "fragment-v1"
+              },
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "source1",
+                "state_id": "source-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "source1",
+                "state_id": "source-v1"
+              },
+              "quote": "Сохраняйте фильтры (устройство не указано).",
+              "locator": {
+                "start": 0,
+                "end": 43
+              },
+              "reliability": "usable"
+            },
+            {
+              "key": "e2",
+              "ref": {
+                "kind": "fragment",
+                "id": "e2",
+                "state_id": "fragment-v1"
+              },
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "source2",
+                "state_id": "source-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "source2",
+                "state_id": "source-v1"
+              },
+              "quote": "На ПК сбрасывайте фильтры.",
+              "locator": {
+                "start": 0,
+                "end": 26
+              },
+              "reliability": "usable"
+            }
+          ],
+          "documents": []
+        }
+      },
+      "grouping_response": {
+        "coverage": [
+          {
+            "input_key": "f1",
+            "reviewed": true,
+            "disposition": "completed"
+          },
+          {
+            "input_key": "f2",
+            "reviewed": true,
+            "disposition": "completed"
+          }
+        ],
+        "uncertainties": [],
+        "questions": [],
+        "result": {
+          "groups": [
+            {
+              "local_id": "g1",
+              "title": "Фильтры",
+              "summary": "Кандидат противоположных позиций",
+              "finding_keys": [
+                "f1",
+                "f2"
+              ],
+              "considered_keys": [
+                "f1",
+                "f2"
+              ],
+              "context_keys": [],
+              "conflicts": [
+                {
+                  "local_id": "c1",
+                  "description": "Кандидат конфликта, не доказанный K",
+                  "positions": [
+                    {
+                      "description": "Сохранять",
+                      "finding_keys": [
+                        "f1"
+                      ]
+                    },
+                    {
+                      "description": "Сбрасывать",
+                      "finding_keys": [
+                        "f2"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "ungrouped_finding_keys": []
+        }
+      },
+      "selection": {
+        "left_finding_keys": [
+          "f1"
+        ],
+        "right_finding_keys": [
+          "f2"
+        ],
+        "rationale": "Явно выбраны обе полные позиции кандидата конфликта.",
+        "conflict": {
+          "group_local_id": "g1",
+          "conflict_local_id": "c1",
+          "left_position": 0,
+          "right_position": 1
+        }
+      },
+      "proposal": {
+        "version": "formalization-v1",
+        "origin": {
+          "kind": "human",
+          "actor": "synthetic-curator",
+          "method": "explicit_manual_fixture"
+        },
+        "decomposition_rationale": "Два явно подготовленных атомарных ожидания о сохранении.",
+        "model": {
+          "id": "filter-retention",
+          "version": "model-v1",
+          "method": "explicit_atomic_partition",
+          "rationale": "Один исследуемый случай: переход между сеансами.",
+          "formal_model": {
+            "object_id": "filters",
+            "parameter_id": "retain",
+            "situations": [
+              "desktop",
+              "mobile"
+            ],
+            "domain": {
+              "kind": "boolean",
+              "allowed": [
+                false,
+                true
+              ]
+            }
+          },
+          "contexts": [
+            {
+              "id": "desktop",
+              "situations": [
+                "desktop"
+              ]
+            },
+            {
+              "id": "mobile",
+              "situations": [
+                "mobile"
+              ]
+            }
+          ],
+          "relations": [
+            {
+              "left": "desktop",
+              "right": "mobile",
+              "relation": "disjoint"
+            }
+          ]
+        },
+        "atoms": [
+          {
+            "id": "a1",
+            "object_id": "filters",
+            "parameter_id": "retain",
+            "context_id": null,
+            "values": {
+              "kind": "boolean",
+              "allowed": [
+                true
+              ]
+            },
+            "missing_fields": [
+              "conditions"
+            ],
+            "sources": [
+              {
+                "finding_key": "f1",
+                "finding_ref": {
+                  "kind": "finding",
+                  "id": "f1",
+                  "state_id": "f1-v1"
+                },
+                "evidence_keys": [
+                  "e1"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "a2",
+            "object_id": "filters",
+            "parameter_id": "retain",
+            "context_id": "desktop",
+            "values": {
+              "kind": "boolean",
+              "allowed": [
+                false
+              ]
+            },
+            "missing_fields": [],
+            "sources": [
+              {
+                "finding_key": "f2",
+                "finding_ref": {
+                  "kind": "finding",
+                  "id": "f2",
+                  "state_id": "f2-v1"
+                },
+                "evidence_keys": [
+                  "e2"
+                ]
+              }
+            ]
+          }
+        ],
+        "pair": {
+          "left_atom_id": "a1",
+          "right_atom_id": "a2",
+          "rationale": "Сравнить эти два ожидания, не всю группу."
+        },
+        "omissions": [],
+        "omega": {
+          "origin": {
+            "kind": "human",
+            "actor": "synthetic-curator",
+            "method": "finite_fixture_enumeration"
+          },
+          "method": "all_cases_of_declared_two_case_fixture_model",
+          "justification": "В этой синтетической модели контекст выбирает ровно desktop или mobile; не утверждение о реальном мире.",
+          "declared_complete": true,
+          "variants": [
+            {
+              "left": {
+                "conditions": [
+                  "desktop"
+                ],
+                "values": {
+                  "kind": "boolean",
+                  "allowed": [
+                    true
+                  ]
+                }
+              },
+              "right": {
+                "conditions": [
+                  "desktop"
+                ],
+                "values": {
+                  "kind": "boolean",
+                  "allowed": [
+                    false
+                  ]
+                }
+              }
+            },
+            {
+              "left": {
+                "conditions": [
+                  "mobile"
+                ],
+                "values": {
+                  "kind": "boolean",
+                  "allowed": [
+                    true
+                  ]
+                }
+              },
+              "right": {
+                "conditions": [
+                  "desktop"
+                ],
+                "values": {
+                  "kind": "boolean",
+                  "allowed": [
+                    false
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "expected_status": "checked",
+    "expected_formal_class": "U",
+    "expected_structural_class": "U",
+    "explanation": "Полное Ω выбранной модели содержит D и K.",
+    "synthetic_confirmations": {},
+    "interpretation_limit": "Класс относится только к явно подготовленной структуре; смысловые метки предварительны."
+  },
+  {
+    "id": "05-parameter-aliases",
+    "input": {
+      "bridge_version": "1",
+      "grouping_request": {
+        "contract_version": "1.0",
+        "operation": "group_findings",
+        "project_id": "synthetic-project",
+        "request_id": "synthetic-request-v1",
+        "input": {
+          "findings": [
+            {
+              "key": "f1",
+              "ref": {
+                "kind": "finding",
+                "id": "f1",
+                "state_id": "f1-v1"
+              },
+              "text": "Отклик должен занимать от 1 до 3 секунд.",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "evidence": [
+                {
+                  "kind": "available",
+                  "fragment_key": "e1"
+                }
+              ],
+              "uncertainty_notes": [],
+              "open_questions": [],
+              "authorship": "ai"
+            },
+            {
+              "key": "f2",
+              "ref": {
+                "kind": "finding",
+                "id": "f2",
+                "state_id": "f2-v1"
+              },
+              "text": "Время ответа должно быть от 5 до 10 секунд.",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "evidence": [
+                {
+                  "kind": "available",
+                  "fragment_key": "e2"
+                }
+              ],
+              "uncertainty_notes": [],
+              "open_questions": [],
+              "authorship": "ai"
+            }
+          ],
+          "fragments": [
+            {
+              "key": "e1",
+              "ref": {
+                "kind": "fragment",
+                "id": "e1",
+                "state_id": "fragment-v1"
+              },
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "source1",
+                "state_id": "source-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "source1",
+                "state_id": "source-v1"
+              },
+              "quote": "Отклик должен занимать от 1 до 3 секунд.",
+              "locator": {
+                "start": 0,
+                "end": 40
+              },
+              "reliability": "usable"
+            },
+            {
+              "key": "e2",
+              "ref": {
+                "kind": "fragment",
+                "id": "e2",
+                "state_id": "fragment-v1"
+              },
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "source2",
+                "state_id": "source-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "source2",
+                "state_id": "source-v1"
+              },
+              "quote": "Время ответа должно быть от 5 до 10 секунд.",
+              "locator": {
+                "start": 0,
+                "end": 43
+              },
+              "reliability": "usable"
+            }
+          ],
+          "documents": []
+        }
+      },
+      "grouping_response": {
+        "coverage": [
+          {
+            "input_key": "f1",
+            "reviewed": true,
+            "disposition": "completed"
+          },
+          {
+            "input_key": "f2",
+            "reviewed": true,
+            "disposition": "completed"
+          }
+        ],
+        "uncertainties": [],
+        "questions": [],
+        "result": {
+          "groups": [
+            {
+              "local_id": "g1",
+              "title": "Фильтры",
+              "summary": "Кандидат противоположных позиций",
+              "finding_keys": [
+                "f1",
+                "f2"
+              ],
+              "considered_keys": [
+                "f1",
+                "f2"
+              ],
+              "context_keys": [],
+              "conflicts": [
+                {
+                  "local_id": "c1",
+                  "description": "Кандидат конфликта, не доказанный K",
+                  "positions": [
+                    {
+                      "description": "Сохранять",
+                      "finding_keys": [
+                        "f1"
+                      ]
+                    },
+                    {
+                      "description": "Сбрасывать",
+                      "finding_keys": [
+                        "f2"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "ungrouped_finding_keys": []
+        }
+      },
+      "selection": {
+        "left_finding_keys": [
+          "f1"
+        ],
+        "right_finding_keys": [
+          "f2"
+        ],
+        "rationale": "Явно выбраны обе полные позиции кандидата конфликта.",
+        "conflict": {
+          "group_local_id": "g1",
+          "conflict_local_id": "c1",
+          "left_position": 0,
+          "right_position": 1
+        }
+      },
+      "proposal": {
+        "version": "formalization-v1",
+        "origin": {
+          "kind": "human",
+          "actor": "synthetic-curator",
+          "method": "explicit_manual_fixture"
+        },
+        "decomposition_rationale": "Куратор явно сопоставил «отклик» и «время ответа» одному параметру latency этой модели.",
+        "model": {
+          "id": "filter-retention",
+          "version": "model-v1",
+          "method": "explicit_atomic_partition",
+          "rationale": "Один исследуемый случай: переход между сеансами.",
+          "formal_model": {
+            "object_id": "filters",
+            "parameter_id": "latency",
+            "situations": [
+              "session"
+            ],
+            "domain": {
+              "kind": "interval",
+              "lower": "0",
+              "upper": "20",
+              "unit": "s",
+              "dimension": "time"
+            }
+          },
+          "contexts": [
+            {
+              "id": "between_sessions",
+              "situations": [
+                "session"
+              ]
+            }
+          ],
+          "relations": []
+        },
+        "atoms": [
+          {
+            "id": "a1",
+            "object_id": "filters",
+            "parameter_id": "latency",
+            "context_id": "between_sessions",
+            "values": {
+              "kind": "interval",
+              "lower": "1",
+              "upper": "3",
+              "unit": "s"
+            },
+            "missing_fields": [],
+            "sources": [
+              {
+                "finding_key": "f1",
+                "finding_ref": {
+                  "kind": "finding",
+                  "id": "f1",
+                  "state_id": "f1-v1"
+                },
+                "evidence_keys": [
+                  "e1"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "a2",
+            "object_id": "filters",
+            "parameter_id": "latency",
+            "context_id": "between_sessions",
+            "values": {
+              "kind": "interval",
+              "lower": "5",
+              "upper": "10",
+              "unit": "s"
+            },
+            "missing_fields": [],
+            "sources": [
+              {
+                "finding_key": "f2",
+                "finding_ref": {
+                  "kind": "finding",
+                  "id": "f2",
+                  "state_id": "f2-v1"
+                },
+                "evidence_keys": [
+                  "e2"
+                ]
+              }
+            ]
+          }
+        ],
+        "pair": {
+          "left_atom_id": "a1",
+          "right_atom_id": "a2",
+          "rationale": "Сравнить эти два ожидания, не всю группу."
+        },
+        "omissions": [],
+        "omega": null
+      }
+    },
+    "expected_status": "checked",
+    "expected_formal_class": "K",
+    "expected_structural_class": "K",
+    "explanation": "Синонимия подготовлена явно и требует доверенного подтверждения.",
+    "synthetic_confirmations": {},
+    "interpretation_limit": "Класс относится только к явно подготовленной структуре; смысловые метки предварительны."
+  },
+  {
+    "id": "06-different-parameters",
+    "input": {
+      "bridge_version": "1",
+      "grouping_request": {
+        "contract_version": "1.0",
+        "operation": "group_findings",
+        "project_id": "synthetic-project",
+        "request_id": "synthetic-request-v1",
+        "input": {
+          "findings": [
+            {
+              "key": "f1",
+              "ref": {
+                "kind": "finding",
+                "id": "f1",
+                "state_id": "f1-v1"
+              },
+              "text": "Между сеансами сохраняйте фильтры.",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "evidence": [
+                {
+                  "kind": "available",
+                  "fragment_key": "e1"
+                }
+              ],
+              "uncertainty_notes": [],
+              "open_questions": [],
+              "authorship": "ai"
+            },
+            {
+              "key": "f2",
+              "ref": {
+                "kind": "finding",
+                "id": "f2",
+                "state_id": "f2-v1"
+              },
+              "text": "Между сеансами сбрасывайте фильтры.",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "evidence": [
+                {
+                  "kind": "available",
+                  "fragment_key": "e2"
+                }
+              ],
+              "uncertainty_notes": [],
+              "open_questions": [],
+              "authorship": "ai"
+            }
+          ],
+          "fragments": [
+            {
+              "key": "e1",
+              "ref": {
+                "kind": "fragment",
+                "id": "e1",
+                "state_id": "fragment-v1"
+              },
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "source1",
+                "state_id": "source-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "source1",
+                "state_id": "source-v1"
+              },
+              "quote": "Между сеансами сохраняйте фильтры.",
+              "locator": {
+                "start": 0,
+                "end": 34
+              },
+              "reliability": "usable"
+            },
+            {
+              "key": "e2",
+              "ref": {
+                "kind": "fragment",
+                "id": "e2",
+                "state_id": "fragment-v1"
+              },
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "source2",
+                "state_id": "source-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "source2",
+                "state_id": "source-v1"
+              },
+              "quote": "Между сеансами сбрасывайте фильтры.",
+              "locator": {
+                "start": 0,
+                "end": 35
+              },
+              "reliability": "usable"
+            }
+          ],
+          "documents": []
+        }
+      },
+      "grouping_response": {
+        "coverage": [
+          {
+            "input_key": "f1",
+            "reviewed": true,
+            "disposition": "completed"
+          },
+          {
+            "input_key": "f2",
+            "reviewed": true,
+            "disposition": "completed"
+          }
+        ],
+        "uncertainties": [],
+        "questions": [],
+        "result": {
+          "groups": [
+            {
+              "local_id": "g1",
+              "title": "Фильтры",
+              "summary": "Кандидат противоположных позиций",
+              "finding_keys": [
+                "f1",
+                "f2"
+              ],
+              "considered_keys": [
+                "f1",
+                "f2"
+              ],
+              "context_keys": [],
+              "conflicts": [
+                {
+                  "local_id": "c1",
+                  "description": "Кандидат конфликта, не доказанный K",
+                  "positions": [
+                    {
+                      "description": "Сохранять",
+                      "finding_keys": [
+                        "f1"
+                      ]
+                    },
+                    {
+                      "description": "Сбрасывать",
+                      "finding_keys": [
+                        "f2"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "ungrouped_finding_keys": []
+        }
+      },
+      "selection": {
+        "left_finding_keys": [
+          "f1"
+        ],
+        "right_finding_keys": [
+          "f2"
+        ],
+        "rationale": "Явно выбраны обе полные позиции кандидата конфликта.",
+        "conflict": {
+          "group_local_id": "g1",
+          "conflict_local_id": "c1",
+          "left_position": 0,
+          "right_position": 1
+        }
+      },
+      "proposal": {
+        "version": "formalization-v1",
+        "origin": {
+          "kind": "human",
+          "actor": "synthetic-curator",
+          "method": "explicit_manual_fixture"
+        },
+        "decomposition_rationale": "Два явно подготовленных атомарных ожидания о сохранении.",
+        "model": {
+          "id": "filter-retention",
+          "version": "model-v1",
+          "method": "explicit_atomic_partition",
+          "rationale": "Один исследуемый случай: переход между сеансами.",
+          "formal_model": {
+            "object_id": "filters",
+            "parameter_id": "retain",
+            "situations": [
+              "session"
+            ],
+            "domain": {
+              "kind": "boolean",
+              "allowed": [
+                false,
+                true
+              ]
+            }
+          },
+          "contexts": [
+            {
+              "id": "between_sessions",
+              "situations": [
+                "session"
+              ]
+            }
+          ],
+          "relations": []
+        },
+        "atoms": [
+          {
+            "id": "a1",
+            "object_id": "filters",
+            "parameter_id": "retain",
+            "context_id": "between_sessions",
+            "values": {
+              "kind": "boolean",
+              "allowed": [
+                true
+              ]
+            },
+            "missing_fields": [],
+            "sources": [
+              {
+                "finding_key": "f1",
+                "finding_ref": {
+                  "kind": "finding",
+                  "id": "f1",
+                  "state_id": "f1-v1"
+                },
+                "evidence_keys": [
+                  "e1"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "a2",
+            "object_id": "filters",
+            "parameter_id": "autosubmit",
+            "context_id": "between_sessions",
+            "values": {
+              "kind": "boolean",
+              "allowed": [
+                false
+              ]
+            },
+            "missing_fields": [],
+            "sources": [
+              {
+                "finding_key": "f2",
+                "finding_ref": {
+                  "kind": "finding",
+                  "id": "f2",
+                  "state_id": "f2-v1"
+                },
+                "evidence_keys": [
+                  "e2"
+                ]
+              }
+            ]
+          }
+        ],
+        "pair": {
+          "left_atom_id": "a1",
+          "right_atom_id": "a2",
+          "rationale": "Сравнить эти два ожидания, не всю группу."
+        },
+        "omissions": [],
+        "omega": null
+      }
+    },
+    "expected_status": "rejected",
+    "expected_formal_class": null,
+    "expected_structural_class": null,
+    "explanation": "Разные параметры нельзя сравнивать в модели одного параметра.",
+    "synthetic_confirmations": {},
+    "interpretation_limit": "Класс относится только к явно подготовленной структуре; смысловые метки предварительны."
+  },
+  {
+    "id": "07-multiple-wishes",
+    "input": {
+      "bridge_version": "1",
+      "grouping_request": {
+        "contract_version": "1.0",
+        "operation": "group_findings",
+        "project_id": "synthetic-project",
+        "request_id": "synthetic-request-v1",
+        "input": {
+          "findings": [
+            {
+              "key": "f1",
+              "ref": {
+                "kind": "finding",
+                "id": "f1",
+                "state_id": "f1-v1"
+              },
+              "text": "На ПК сохраняйте фильтры, на телефоне сбрасывайте их.",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "evidence": [
+                {
+                  "kind": "available",
+                  "fragment_key": "e1"
+                }
+              ],
+              "uncertainty_notes": [],
+              "open_questions": [],
+              "authorship": "ai"
+            },
+            {
+              "key": "f2",
+              "ref": {
+                "kind": "finding",
+                "id": "f2",
+                "state_id": "f2-v1"
+              },
+              "text": "На ПК всегда сбрасывайте фильтры.",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "evidence": [
+                {
+                  "kind": "available",
+                  "fragment_key": "e2"
+                }
+              ],
+              "uncertainty_notes": [],
+              "open_questions": [],
+              "authorship": "ai"
+            }
+          ],
+          "fragments": [
+            {
+              "key": "e1",
+              "ref": {
+                "kind": "fragment",
+                "id": "e1",
+                "state_id": "fragment-v1"
+              },
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "source1",
+                "state_id": "source-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "source1",
+                "state_id": "source-v1"
+              },
+              "quote": "На ПК сохраняйте фильтры, на телефоне сбрасывайте их.",
+              "locator": {
+                "start": 0,
+                "end": 53
+              },
+              "reliability": "usable"
+            },
+            {
+              "key": "e2",
+              "ref": {
+                "kind": "fragment",
+                "id": "e2",
+                "state_id": "fragment-v1"
+              },
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "source2",
+                "state_id": "source-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "source2",
+                "state_id": "source-v1"
+              },
+              "quote": "На ПК всегда сбрасывайте фильтры.",
+              "locator": {
+                "start": 0,
+                "end": 33
+              },
+              "reliability": "usable"
+            }
+          ],
+          "documents": []
+        }
+      },
+      "grouping_response": {
+        "coverage": [
+          {
+            "input_key": "f1",
+            "reviewed": true,
+            "disposition": "completed"
+          },
+          {
+            "input_key": "f2",
+            "reviewed": true,
+            "disposition": "completed"
+          }
+        ],
+        "uncertainties": [],
+        "questions": [],
+        "result": {
+          "groups": [
+            {
+              "local_id": "g1",
+              "title": "Фильтры",
+              "summary": "Кандидат противоположных позиций",
+              "finding_keys": [
+                "f1",
+                "f2"
+              ],
+              "considered_keys": [
+                "f1",
+                "f2"
+              ],
+              "context_keys": [],
+              "conflicts": [
+                {
+                  "local_id": "c1",
+                  "description": "Кандидат конфликта, не доказанный K",
+                  "positions": [
+                    {
+                      "description": "Сохранять",
+                      "finding_keys": [
+                        "f1"
+                      ]
+                    },
+                    {
+                      "description": "Сбрасывать",
+                      "finding_keys": [
+                        "f2"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "ungrouped_finding_keys": []
+        }
+      },
+      "selection": {
+        "left_finding_keys": [
+          "f1"
+        ],
+        "right_finding_keys": [
+          "f2"
+        ],
+        "rationale": "Явно выбраны обе полные позиции кандидата конфликта.",
+        "conflict": {
+          "group_local_id": "g1",
+          "conflict_local_id": "c1",
+          "left_position": 0,
+          "right_position": 1
+        }
+      },
+      "proposal": {
+        "version": "formalization-v1",
+        "origin": {
+          "kind": "human",
+          "actor": "synthetic-curator",
+          "method": "explicit_manual_fixture"
+        },
+        "decomposition_rationale": "f1 явно разложена на два атома a1/a3; выбранная пара a1/a2 не проверяет a3.",
+        "model": {
+          "id": "filter-retention",
+          "version": "model-v1",
+          "method": "explicit_atomic_partition",
+          "rationale": "Один исследуемый случай: переход между сеансами.",
+          "formal_model": {
+            "object_id": "filters",
+            "parameter_id": "retain",
+            "situations": [
+              "desktop",
+              "mobile"
+            ],
+            "domain": {
+              "kind": "boolean",
+              "allowed": [
+                false,
+                true
+              ]
+            }
+          },
+          "contexts": [
+            {
+              "id": "desktop",
+              "situations": [
+                "desktop"
+              ]
+            },
+            {
+              "id": "mobile",
+              "situations": [
+                "mobile"
+              ]
+            }
+          ],
+          "relations": [
+            {
+              "left": "desktop",
+              "right": "mobile",
+              "relation": "disjoint"
+            }
+          ]
+        },
+        "atoms": [
+          {
+            "id": "a1",
+            "object_id": "filters",
+            "parameter_id": "retain",
+            "context_id": "desktop",
+            "values": {
+              "kind": "boolean",
+              "allowed": [
+                true
+              ]
+            },
+            "missing_fields": [],
+            "sources": [
+              {
+                "finding_key": "f1",
+                "finding_ref": {
+                  "kind": "finding",
+                  "id": "f1",
+                  "state_id": "f1-v1"
+                },
+                "evidence_keys": [
+                  "e1"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "a2",
+            "object_id": "filters",
+            "parameter_id": "retain",
+            "context_id": "desktop",
+            "values": {
+              "kind": "boolean",
+              "allowed": [
+                false
+              ]
+            },
+            "missing_fields": [],
+            "sources": [
+              {
+                "finding_key": "f2",
+                "finding_ref": {
+                  "kind": "finding",
+                  "id": "f2",
+                  "state_id": "f2-v1"
+                },
+                "evidence_keys": [
+                  "e2"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "a3",
+            "object_id": "filters",
+            "parameter_id": "retain",
+            "context_id": "mobile",
+            "values": {
+              "kind": "boolean",
+              "allowed": [
+                false
+              ]
+            },
+            "missing_fields": [],
+            "sources": [
+              {
+                "finding_key": "f1",
+                "finding_ref": {
+                  "kind": "finding",
+                  "id": "f1",
+                  "state_id": "f1-v1"
+                },
+                "evidence_keys": [
+                  "e1"
+                ]
+              }
+            ]
+          }
+        ],
+        "pair": {
+          "left_atom_id": "a1",
+          "right_atom_id": "a2",
+          "rationale": "Сравнить эти два ожидания, не всю группу."
+        },
+        "omissions": [],
+        "omega": null
+      }
+    },
+    "expected_status": "checked",
+    "expected_formal_class": "K",
+    "expected_structural_class": "K",
+    "explanation": "Одна находка даёт два атома с сохранённым exact основанием; проверяется только выбранная пара.",
+    "synthetic_confirmations": {},
+    "interpretation_limit": "Класс относится только к явно подготовленной структуре; смысловые метки предварительны."
+  },
+  {
+    "id": "08-inferred-not-direct",
+    "input": {
+      "bridge_version": "1",
+      "grouping_request": {
+        "contract_version": "1.0",
+        "operation": "group_findings",
+        "project_id": "synthetic-project",
+        "request_id": "synthetic-request-v1",
+        "input": {
+          "findings": [
+            {
+              "key": "f1",
+              "ref": {
+                "kind": "finding",
+                "id": "f1",
+                "state_id": "f1-v1"
+              },
+              "text": "Фильтры каждый раз пропадают.",
+              "types": [
+                "request"
+              ],
+              "mode": "inferred",
+              "evidence": [
+                {
+                  "kind": "available",
+                  "fragment_key": "e1"
+                }
+              ],
+              "uncertainty_notes": [],
+              "open_questions": [],
+              "authorship": "ai"
+            },
+            {
+              "key": "f2",
+              "ref": {
+                "kind": "finding",
+                "id": "f2",
+                "state_id": "f2-v1"
+              },
+              "text": "Между сеансами сбрасывайте фильтры.",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "evidence": [
+                {
+                  "kind": "available",
+                  "fragment_key": "e2"
+                }
+              ],
+              "uncertainty_notes": [],
+              "open_questions": [],
+              "authorship": "ai"
+            }
+          ],
+          "fragments": [
+            {
+              "key": "e1",
+              "ref": {
+                "kind": "fragment",
+                "id": "e1",
+                "state_id": "fragment-v1"
+              },
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "source1",
+                "state_id": "source-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "source1",
+                "state_id": "source-v1"
+              },
+              "quote": "Фильтры каждый раз пропадают.",
+              "locator": {
+                "start": 0,
+                "end": 29
+              },
+              "reliability": "usable"
+            },
+            {
+              "key": "e2",
+              "ref": {
+                "kind": "fragment",
+                "id": "e2",
+                "state_id": "fragment-v1"
+              },
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "source2",
+                "state_id": "source-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "source2",
+                "state_id": "source-v1"
+              },
+              "quote": "Между сеансами сбрасывайте фильтры.",
+              "locator": {
+                "start": 0,
+                "end": 35
+              },
+              "reliability": "usable"
+            }
+          ],
+          "documents": []
+        }
+      },
+      "grouping_response": {
+        "coverage": [
+          {
+            "input_key": "f1",
+            "reviewed": true,
+            "disposition": "completed"
+          },
+          {
+            "input_key": "f2",
+            "reviewed": true,
+            "disposition": "completed"
+          }
+        ],
+        "uncertainties": [],
+        "questions": [],
+        "result": {
+          "groups": [
+            {
+              "local_id": "g1",
+              "title": "Фильтры",
+              "summary": "Кандидат противоположных позиций",
+              "finding_keys": [
+                "f1",
+                "f2"
+              ],
+              "considered_keys": [
+                "f1",
+                "f2"
+              ],
+              "context_keys": [],
+              "conflicts": [
+                {
+                  "local_id": "c1",
+                  "description": "Кандидат конфликта, не доказанный K",
+                  "positions": [
+                    {
+                      "description": "Сохранять",
+                      "finding_keys": [
+                        "f1"
+                      ]
+                    },
+                    {
+                      "description": "Сбрасывать",
+                      "finding_keys": [
+                        "f2"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "ungrouped_finding_keys": []
+        }
+      },
+      "selection": {
+        "left_finding_keys": [
+          "f1"
+        ],
+        "right_finding_keys": [
+          "f2"
+        ],
+        "rationale": "Явно выбраны обе полные позиции кандидата конфликта.",
+        "conflict": {
+          "group_local_id": "g1",
+          "conflict_local_id": "c1",
+          "left_position": 0,
+          "right_position": 1
+        }
+      },
+      "proposal": {
+        "version": "formalization-v1",
+        "origin": {
+          "kind": "ai",
+          "actor": "synthetic-proposer",
+          "method": "saved_proposal_no_live_model"
+        },
+        "decomposition_rationale": "Два явно подготовленных атомарных ожидания о сохранении.",
+        "model": {
+          "id": "filter-retention",
+          "version": "model-v1",
+          "method": "explicit_atomic_partition",
+          "rationale": "Один исследуемый случай: переход между сеансами.",
+          "formal_model": {
+            "object_id": "filters",
+            "parameter_id": "retain",
+            "situations": [
+              "session"
+            ],
+            "domain": {
+              "kind": "boolean",
+              "allowed": [
+                false,
+                true
+              ]
+            }
+          },
+          "contexts": [
+            {
+              "id": "between_sessions",
+              "situations": [
+                "session"
+              ]
+            }
+          ],
+          "relations": []
+        },
+        "atoms": [
+          {
+            "id": "a1",
+            "object_id": "filters",
+            "parameter_id": "retain",
+            "context_id": "between_sessions",
+            "values": {
+              "kind": "boolean",
+              "allowed": [
+                true
+              ]
+            },
+            "missing_fields": [],
+            "sources": [
+              {
+                "finding_key": "f1",
+                "finding_ref": {
+                  "kind": "finding",
+                  "id": "f1",
+                  "state_id": "f1-v1"
+                },
+                "evidence_keys": [
+                  "e1"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "a2",
+            "object_id": "filters",
+            "parameter_id": "retain",
+            "context_id": "between_sessions",
+            "values": {
+              "kind": "boolean",
+              "allowed": [
+                false
+              ]
+            },
+            "missing_fields": [],
+            "sources": [
+              {
+                "finding_key": "f2",
+                "finding_ref": {
+                  "kind": "finding",
+                  "id": "f2",
+                  "state_id": "f2-v1"
+                },
+                "evidence_keys": [
+                  "e2"
+                ]
+              }
+            ]
+          }
+        ],
+        "pair": {
+          "left_atom_id": "a1",
+          "right_atom_id": "a2",
+          "rationale": "Сравнить эти два ожидания, не всю группу."
+        },
+        "omissions": [],
+        "omega": null
+      }
+    },
+    "expected_status": "blocked",
+    "expected_formal_class": null,
+    "expected_structural_class": "K",
+    "explanation": "AI-интерпретация потребности пока не подтверждена доверенным reviewer.",
+    "synthetic_confirmations": {
+      "formalization_confirmed": false
+    },
+    "interpretation_limit": "Класс относится только к явно подготовленной структуре; смысловые метки предварительны."
+  },
+  {
+    "id": "09-context-contradiction",
+    "input": {
+      "bridge_version": "1",
+      "grouping_request": {
+        "contract_version": "1.0",
+        "operation": "group_findings",
+        "project_id": "synthetic-project",
+        "request_id": "synthetic-request-v1",
+        "input": {
+          "findings": [
+            {
+              "key": "f1",
+              "ref": {
+                "kind": "finding",
+                "id": "f1",
+                "state_id": "f1-v1"
+              },
+              "text": "Между сеансами сохраняйте фильтры.",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "evidence": [
+                {
+                  "kind": "available",
+                  "fragment_key": "e1"
+                }
+              ],
+              "uncertainty_notes": [],
+              "open_questions": [],
+              "authorship": "ai"
+            },
+            {
+              "key": "f2",
+              "ref": {
+                "kind": "finding",
+                "id": "f2",
+                "state_id": "f2-v1"
+              },
+              "text": "Между сеансами сбрасывайте фильтры.",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "evidence": [
+                {
+                  "kind": "available",
+                  "fragment_key": "e2"
+                }
+              ],
+              "uncertainty_notes": [],
+              "open_questions": [],
+              "authorship": "ai"
+            }
+          ],
+          "fragments": [
+            {
+              "key": "e1",
+              "ref": {
+                "kind": "fragment",
+                "id": "e1",
+                "state_id": "fragment-v1"
+              },
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "source1",
+                "state_id": "source-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "source1",
+                "state_id": "source-v1"
+              },
+              "quote": "Между сеансами сохраняйте фильтры.",
+              "locator": {
+                "start": 0,
+                "end": 34
+              },
+              "reliability": "usable"
+            },
+            {
+              "key": "e2",
+              "ref": {
+                "kind": "fragment",
+                "id": "e2",
+                "state_id": "fragment-v1"
+              },
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "source2",
+                "state_id": "source-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "source2",
+                "state_id": "source-v1"
+              },
+              "quote": "Между сеансами сбрасывайте фильтры.",
+              "locator": {
+                "start": 0,
+                "end": 35
+              },
+              "reliability": "usable"
+            }
+          ],
+          "documents": []
+        }
+      },
+      "grouping_response": {
+        "coverage": [
+          {
+            "input_key": "f1",
+            "reviewed": true,
+            "disposition": "completed"
+          },
+          {
+            "input_key": "f2",
+            "reviewed": true,
+            "disposition": "completed"
+          }
+        ],
+        "uncertainties": [],
+        "questions": [],
+        "result": {
+          "groups": [
+            {
+              "local_id": "g1",
+              "title": "Фильтры",
+              "summary": "Кандидат противоположных позиций",
+              "finding_keys": [
+                "f1",
+                "f2"
+              ],
+              "considered_keys": [
+                "f1",
+                "f2"
+              ],
+              "context_keys": [],
+              "conflicts": [
+                {
+                  "local_id": "c1",
+                  "description": "Кандидат конфликта, не доказанный K",
+                  "positions": [
+                    {
+                      "description": "Сохранять",
+                      "finding_keys": [
+                        "f1"
+                      ]
+                    },
+                    {
+                      "description": "Сбрасывать",
+                      "finding_keys": [
+                        "f2"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "ungrouped_finding_keys": []
+        }
+      },
+      "selection": {
+        "left_finding_keys": [
+          "f1"
+        ],
+        "right_finding_keys": [
+          "f2"
+        ],
+        "rationale": "Явно выбраны обе полные позиции кандидата конфликта.",
+        "conflict": {
+          "group_local_id": "g1",
+          "conflict_local_id": "c1",
+          "left_position": 0,
+          "right_position": 1
+        }
+      },
+      "proposal": {
+        "version": "formalization-v1",
+        "origin": {
+          "kind": "human",
+          "actor": "synthetic-curator",
+          "method": "explicit_manual_fixture"
+        },
+        "decomposition_rationale": "Два явно подготовленных атомарных ожидания о сохранении.",
+        "model": {
+          "id": "filter-retention",
+          "version": "model-v1",
+          "method": "explicit_atomic_partition",
+          "rationale": "Один исследуемый случай: переход между сеансами.",
+          "formal_model": {
+            "object_id": "filters",
+            "parameter_id": "retain",
+            "situations": [
+              "desktop",
+              "mobile"
+            ],
+            "domain": {
+              "kind": "boolean",
+              "allowed": [
+                false,
+                true
+              ]
+            }
+          },
+          "contexts": [
+            {
+              "id": "desktop",
+              "situations": [
+                "desktop"
+              ]
+            },
+            {
+              "id": "mobile",
+              "situations": [
+                "mobile"
+              ]
+            }
+          ],
+          "relations": [
+            {
+              "left": "desktop",
+              "right": "mobile",
+              "relation": "overlap"
+            }
+          ]
+        },
+        "atoms": [
+          {
+            "id": "a1",
+            "object_id": "filters",
+            "parameter_id": "retain",
+            "context_id": "desktop",
+            "values": {
+              "kind": "boolean",
+              "allowed": [
+                true
+              ]
+            },
+            "missing_fields": [],
+            "sources": [
+              {
+                "finding_key": "f1",
+                "finding_ref": {
+                  "kind": "finding",
+                  "id": "f1",
+                  "state_id": "f1-v1"
+                },
+                "evidence_keys": [
+                  "e1"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "a2",
+            "object_id": "filters",
+            "parameter_id": "retain",
+            "context_id": "mobile",
+            "values": {
+              "kind": "boolean",
+              "allowed": [
+                false
+              ]
+            },
+            "missing_fields": [],
+            "sources": [
+              {
+                "finding_key": "f2",
+                "finding_ref": {
+                  "kind": "finding",
+                  "id": "f2",
+                  "state_id": "f2-v1"
+                },
+                "evidence_keys": [
+                  "e2"
+                ]
+              }
+            ]
+          }
+        ],
+        "pair": {
+          "left_atom_id": "a1",
+          "right_atom_id": "a2",
+          "rationale": "Сравнить эти два ожидания, не всю группу."
+        },
+        "omissions": [],
+        "omega": null
+      }
+    },
+    "expected_status": "rejected",
+    "expected_formal_class": null,
+    "expected_structural_class": null,
+    "explanation": "Заявленные пересекающиеся контексты нельзя отобразить в непересекающиеся C.",
+    "synthetic_confirmations": {},
+    "interpretation_limit": "Класс относится только к явно подготовленной структуре; смысловые метки предварительны."
+  },
+  {
+    "id": "10-false-K",
+    "input": {
+      "bridge_version": "1",
+      "grouping_request": {
+        "contract_version": "1.0",
+        "operation": "group_findings",
+        "project_id": "synthetic-project",
+        "request_id": "synthetic-request-v1",
+        "input": {
+          "findings": [
+            {
+              "key": "f1",
+              "ref": {
+                "kind": "finding",
+                "id": "f1",
+                "state_id": "f1-v1"
+              },
+              "text": "Сохраняйте фильтры.",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "evidence": [
+                {
+                  "kind": "available",
+                  "fragment_key": "e1"
+                }
+              ],
+              "uncertainty_notes": [],
+              "open_questions": [],
+              "authorship": "ai"
+            },
+            {
+              "key": "f2",
+              "ref": {
+                "kind": "finding",
+                "id": "f2",
+                "state_id": "f2-v1"
+              },
+              "text": "Сохраняйте фильтры и у меня.",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "evidence": [
+                {
+                  "kind": "available",
+                  "fragment_key": "e2"
+                }
+              ],
+              "uncertainty_notes": [],
+              "open_questions": [],
+              "authorship": "ai"
+            }
+          ],
+          "fragments": [
+            {
+              "key": "e1",
+              "ref": {
+                "kind": "fragment",
+                "id": "e1",
+                "state_id": "fragment-v1"
+              },
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "source1",
+                "state_id": "source-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "source1",
+                "state_id": "source-v1"
+              },
+              "quote": "Сохраняйте фильтры.",
+              "locator": {
+                "start": 0,
+                "end": 19
+              },
+              "reliability": "usable"
+            },
+            {
+              "key": "e2",
+              "ref": {
+                "kind": "fragment",
+                "id": "e2",
+                "state_id": "fragment-v1"
+              },
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "source2",
+                "state_id": "source-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "source2",
+                "state_id": "source-v1"
+              },
+              "quote": "Сохраняйте фильтры и у меня.",
+              "locator": {
+                "start": 0,
+                "end": 28
+              },
+              "reliability": "usable"
+            }
+          ],
+          "documents": []
+        }
+      },
+      "grouping_response": {
+        "coverage": [
+          {
+            "input_key": "f1",
+            "reviewed": true,
+            "disposition": "completed"
+          },
+          {
+            "input_key": "f2",
+            "reviewed": true,
+            "disposition": "completed"
+          }
+        ],
+        "uncertainties": [],
+        "questions": [],
+        "result": {
+          "groups": [
+            {
+              "local_id": "g1",
+              "title": "Фильтры",
+              "summary": "Кандидат противоположных позиций",
+              "finding_keys": [
+                "f1",
+                "f2"
+              ],
+              "considered_keys": [
+                "f1",
+                "f2"
+              ],
+              "context_keys": [],
+              "conflicts": [
+                {
+                  "local_id": "c1",
+                  "description": "Кандидат конфликта, не доказанный K",
+                  "positions": [
+                    {
+                      "description": "Сохранять",
+                      "finding_keys": [
+                        "f1"
+                      ]
+                    },
+                    {
+                      "description": "Сбрасывать",
+                      "finding_keys": [
+                        "f2"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "ungrouped_finding_keys": []
+        }
+      },
+      "selection": {
+        "left_finding_keys": [
+          "f1"
+        ],
+        "right_finding_keys": [
+          "f2"
+        ],
+        "rationale": "Явно выбраны обе полные позиции кандидата конфликта.",
+        "conflict": {
+          "group_local_id": "g1",
+          "conflict_local_id": "c1",
+          "left_position": 0,
+          "right_position": 1
+        }
+      },
+      "proposal": {
+        "version": "formalization-v1",
+        "origin": {
+          "kind": "ai",
+          "actor": "synthetic-curator",
+          "method": "explicit_manual_fixture"
+        },
+        "decomposition_rationale": "Два явно подготовленных атомарных ожидания о сохранении.",
+        "model": {
+          "id": "filter-retention",
+          "version": "model-v1",
+          "method": "explicit_atomic_partition",
+          "rationale": "Один исследуемый случай: переход между сеансами.",
+          "formal_model": {
+            "object_id": "filters",
+            "parameter_id": "retain",
+            "situations": [
+              "session"
+            ],
+            "domain": {
+              "kind": "boolean",
+              "allowed": [
+                false,
+                true
+              ]
+            }
+          },
+          "contexts": [
+            {
+              "id": "between_sessions",
+              "situations": [
+                "session"
+              ]
+            }
+          ],
+          "relations": []
+        },
+        "atoms": [
+          {
+            "id": "a1",
+            "object_id": "filters",
+            "parameter_id": "retain",
+            "context_id": "between_sessions",
+            "values": {
+              "kind": "boolean",
+              "allowed": [
+                true
+              ]
+            },
+            "missing_fields": [],
+            "sources": [
+              {
+                "finding_key": "f1",
+                "finding_ref": {
+                  "kind": "finding",
+                  "id": "f1",
+                  "state_id": "f1-v1"
+                },
+                "evidence_keys": [
+                  "e1"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "a2",
+            "object_id": "filters",
+            "parameter_id": "retain",
+            "context_id": "between_sessions",
+            "values": {
+              "kind": "boolean",
+              "allowed": [
+                false
+              ]
+            },
+            "missing_fields": [],
+            "sources": [
+              {
+                "finding_key": "f2",
+                "finding_ref": {
+                  "kind": "finding",
+                  "id": "f2",
+                  "state_id": "f2-v1"
+                },
+                "evidence_keys": [
+                  "e2"
+                ]
+              }
+            ]
+          }
+        ],
+        "pair": {
+          "left_atom_id": "a1",
+          "right_atom_id": "a2",
+          "rationale": "Сравнить эти два ожидания, не всю группу."
+        },
+        "omissions": [],
+        "omega": null
+      }
+    },
+    "expected_status": "blocked",
+    "expected_formal_class": null,
+    "expected_structural_class": "K",
+    "explanation": "Неверное false вместо true породило бы K; trusted review блокирует формализацию.",
+    "synthetic_confirmations": {
+      "formalization_confirmed": false
+    },
+    "interpretation_limit": "Класс относится только к явно подготовленной структуре; смысловые метки предварительны."
+  },
+  {
+    "id": "11-false-D",
+    "input": {
+      "bridge_version": "1",
+      "grouping_request": {
+        "contract_version": "1.0",
+        "operation": "group_findings",
+        "project_id": "synthetic-project",
+        "request_id": "synthetic-request-v1",
+        "input": {
+          "findings": [
+            {
+              "key": "f1",
+              "ref": {
+                "kind": "finding",
+                "id": "f1",
+                "state_id": "f1-v1"
+              },
+              "text": "На ПК сохраняйте фильтры.",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "evidence": [
+                {
+                  "kind": "available",
+                  "fragment_key": "e1"
+                }
+              ],
+              "uncertainty_notes": [],
+              "open_questions": [],
+              "authorship": "ai"
+            },
+            {
+              "key": "f2",
+              "ref": {
+                "kind": "finding",
+                "id": "f2",
+                "state_id": "f2-v1"
+              },
+              "text": "На настольном компьютере сбрасывайте фильтры.",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "evidence": [
+                {
+                  "kind": "available",
+                  "fragment_key": "e2"
+                }
+              ],
+              "uncertainty_notes": [],
+              "open_questions": [],
+              "authorship": "ai"
+            }
+          ],
+          "fragments": [
+            {
+              "key": "e1",
+              "ref": {
+                "kind": "fragment",
+                "id": "e1",
+                "state_id": "fragment-v1"
+              },
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "source1",
+                "state_id": "source-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "source1",
+                "state_id": "source-v1"
+              },
+              "quote": "На ПК сохраняйте фильтры.",
+              "locator": {
+                "start": 0,
+                "end": 25
+              },
+              "reliability": "usable"
+            },
+            {
+              "key": "e2",
+              "ref": {
+                "kind": "fragment",
+                "id": "e2",
+                "state_id": "fragment-v1"
+              },
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "source2",
+                "state_id": "source-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "source2",
+                "state_id": "source-v1"
+              },
+              "quote": "На настольном компьютере сбрасывайте фильтры.",
+              "locator": {
+                "start": 0,
+                "end": 45
+              },
+              "reliability": "usable"
+            }
+          ],
+          "documents": []
+        }
+      },
+      "grouping_response": {
+        "coverage": [
+          {
+            "input_key": "f1",
+            "reviewed": true,
+            "disposition": "completed"
+          },
+          {
+            "input_key": "f2",
+            "reviewed": true,
+            "disposition": "completed"
+          }
+        ],
+        "uncertainties": [],
+        "questions": [],
+        "result": {
+          "groups": [
+            {
+              "local_id": "g1",
+              "title": "Фильтры",
+              "summary": "Кандидат противоположных позиций",
+              "finding_keys": [
+                "f1",
+                "f2"
+              ],
+              "considered_keys": [
+                "f1",
+                "f2"
+              ],
+              "context_keys": [],
+              "conflicts": [
+                {
+                  "local_id": "c1",
+                  "description": "Кандидат конфликта, не доказанный K",
+                  "positions": [
+                    {
+                      "description": "Сохранять",
+                      "finding_keys": [
+                        "f1"
+                      ]
+                    },
+                    {
+                      "description": "Сбрасывать",
+                      "finding_keys": [
+                        "f2"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "ungrouped_finding_keys": []
+        }
+      },
+      "selection": {
+        "left_finding_keys": [
+          "f1"
+        ],
+        "right_finding_keys": [
+          "f2"
+        ],
+        "rationale": "Явно выбраны обе полные позиции кандидата конфликта.",
+        "conflict": {
+          "group_local_id": "g1",
+          "conflict_local_id": "c1",
+          "left_position": 0,
+          "right_position": 1
+        }
+      },
+      "proposal": {
+        "version": "formalization-v1",
+        "origin": {
+          "kind": "ai",
+          "actor": "synthetic-curator",
+          "method": "explicit_manual_fixture"
+        },
+        "decomposition_rationale": "Два явно подготовленных атомарных ожидания о сохранении.",
+        "model": {
+          "id": "filter-retention",
+          "version": "model-v1",
+          "method": "explicit_atomic_partition",
+          "rationale": "Один исследуемый случай: переход между сеансами.",
+          "formal_model": {
+            "object_id": "filters",
+            "parameter_id": "retain",
+            "situations": [
+              "desktop",
+              "mobile"
+            ],
+            "domain": {
+              "kind": "boolean",
+              "allowed": [
+                false,
+                true
+              ]
+            }
+          },
+          "contexts": [
+            {
+              "id": "desktop",
+              "situations": [
+                "desktop"
+              ]
+            },
+            {
+              "id": "mobile",
+              "situations": [
+                "mobile"
+              ]
+            }
+          ],
+          "relations": [
+            {
+              "left": "desktop",
+              "right": "mobile",
+              "relation": "disjoint"
+            }
+          ]
+        },
+        "atoms": [
+          {
+            "id": "a1",
+            "object_id": "filters",
+            "parameter_id": "retain",
+            "context_id": "desktop",
+            "values": {
+              "kind": "boolean",
+              "allowed": [
+                true
+              ]
+            },
+            "missing_fields": [],
+            "sources": [
+              {
+                "finding_key": "f1",
+                "finding_ref": {
+                  "kind": "finding",
+                  "id": "f1",
+                  "state_id": "f1-v1"
+                },
+                "evidence_keys": [
+                  "e1"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "a2",
+            "object_id": "filters",
+            "parameter_id": "retain",
+            "context_id": "mobile",
+            "values": {
+              "kind": "boolean",
+              "allowed": [
+                false
+              ]
+            },
+            "missing_fields": [],
+            "sources": [
+              {
+                "finding_key": "f2",
+                "finding_ref": {
+                  "kind": "finding",
+                  "id": "f2",
+                  "state_id": "f2-v1"
+                },
+                "evidence_keys": [
+                  "e2"
+                ]
+              }
+            ]
+          }
+        ],
+        "pair": {
+          "left_atom_id": "a1",
+          "right_atom_id": "a2",
+          "rationale": "Сравнить эти два ожидания, не всю группу."
+        },
+        "omissions": [],
+        "omega": null
+      }
+    },
+    "expected_status": "blocked",
+    "expected_formal_class": null,
+    "expected_structural_class": "D",
+    "explanation": "PC и desktop ошибочно объявлены разными непересекающимися условиями; разбиение не подтверждено.",
+    "synthetic_confirmations": {
+      "contexts_confirmed": false
+    },
+    "interpretation_limit": "Класс относится только к явно подготовленной структуре; смысловые метки предварительны."
+  },
+  {
+    "id": "12-no-complete-omega",
+    "input": {
+      "bridge_version": "1",
+      "grouping_request": {
+        "contract_version": "1.0",
+        "operation": "group_findings",
+        "project_id": "synthetic-project",
+        "request_id": "synthetic-request-v1",
+        "input": {
+          "findings": [
+            {
+              "key": "f1",
+              "ref": {
+                "kind": "finding",
+                "id": "f1",
+                "state_id": "f1-v1"
+              },
+              "text": "Сохраняйте фильтры (устройство не указано).",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "evidence": [
+                {
+                  "kind": "available",
+                  "fragment_key": "e1"
+                }
+              ],
+              "uncertainty_notes": [],
+              "open_questions": [],
+              "authorship": "ai"
+            },
+            {
+              "key": "f2",
+              "ref": {
+                "kind": "finding",
+                "id": "f2",
+                "state_id": "f2-v1"
+              },
+              "text": "На ПК сбрасывайте фильтры.",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "evidence": [
+                {
+                  "kind": "available",
+                  "fragment_key": "e2"
+                }
+              ],
+              "uncertainty_notes": [],
+              "open_questions": [],
+              "authorship": "ai"
+            }
+          ],
+          "fragments": [
+            {
+              "key": "e1",
+              "ref": {
+                "kind": "fragment",
+                "id": "e1",
+                "state_id": "fragment-v1"
+              },
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "source1",
+                "state_id": "source-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "source1",
+                "state_id": "source-v1"
+              },
+              "quote": "Сохраняйте фильтры (устройство не указано).",
+              "locator": {
+                "start": 0,
+                "end": 43
+              },
+              "reliability": "usable"
+            },
+            {
+              "key": "e2",
+              "ref": {
+                "kind": "fragment",
+                "id": "e2",
+                "state_id": "fragment-v1"
+              },
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "source2",
+                "state_id": "source-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "source2",
+                "state_id": "source-v1"
+              },
+              "quote": "На ПК сбрасывайте фильтры.",
+              "locator": {
+                "start": 0,
+                "end": 26
+              },
+              "reliability": "usable"
+            }
+          ],
+          "documents": []
+        }
+      },
+      "grouping_response": {
+        "coverage": [
+          {
+            "input_key": "f1",
+            "reviewed": true,
+            "disposition": "completed"
+          },
+          {
+            "input_key": "f2",
+            "reviewed": true,
+            "disposition": "completed"
+          }
+        ],
+        "uncertainties": [],
+        "questions": [],
+        "result": {
+          "groups": [
+            {
+              "local_id": "g1",
+              "title": "Фильтры",
+              "summary": "Кандидат противоположных позиций",
+              "finding_keys": [
+                "f1",
+                "f2"
+              ],
+              "considered_keys": [
+                "f1",
+                "f2"
+              ],
+              "context_keys": [],
+              "conflicts": [
+                {
+                  "local_id": "c1",
+                  "description": "Кандидат конфликта, не доказанный K",
+                  "positions": [
+                    {
+                      "description": "Сохранять",
+                      "finding_keys": [
+                        "f1"
+                      ]
+                    },
+                    {
+                      "description": "Сбрасывать",
+                      "finding_keys": [
+                        "f2"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "ungrouped_finding_keys": []
+        }
+      },
+      "selection": {
+        "left_finding_keys": [
+          "f1"
+        ],
+        "right_finding_keys": [
+          "f2"
+        ],
+        "rationale": "Явно выбраны обе полные позиции кандидата конфликта.",
+        "conflict": {
+          "group_local_id": "g1",
+          "conflict_local_id": "c1",
+          "left_position": 0,
+          "right_position": 1
+        }
+      },
+      "proposal": {
+        "version": "formalization-v1",
+        "origin": {
+          "kind": "human",
+          "actor": "synthetic-curator",
+          "method": "explicit_manual_fixture"
+        },
+        "decomposition_rationale": "Два явно подготовленных атомарных ожидания о сохранении.",
+        "model": {
+          "id": "filter-retention",
+          "version": "model-v1",
+          "method": "explicit_atomic_partition",
+          "rationale": "Один исследуемый случай: переход между сеансами.",
+          "formal_model": {
+            "object_id": "filters",
+            "parameter_id": "retain",
+            "situations": [
+              "desktop",
+              "mobile"
+            ],
+            "domain": {
+              "kind": "boolean",
+              "allowed": [
+                false,
+                true
+              ]
+            }
+          },
+          "contexts": [
+            {
+              "id": "desktop",
+              "situations": [
+                "desktop"
+              ]
+            },
+            {
+              "id": "mobile",
+              "situations": [
+                "mobile"
+              ]
+            }
+          ],
+          "relations": [
+            {
+              "left": "desktop",
+              "right": "mobile",
+              "relation": "disjoint"
+            }
+          ]
+        },
+        "atoms": [
+          {
+            "id": "a1",
+            "object_id": "filters",
+            "parameter_id": "retain",
+            "context_id": null,
+            "values": {
+              "kind": "boolean",
+              "allowed": [
+                true
+              ]
+            },
+            "missing_fields": [
+              "conditions"
+            ],
+            "sources": [
+              {
+                "finding_key": "f1",
+                "finding_ref": {
+                  "kind": "finding",
+                  "id": "f1",
+                  "state_id": "f1-v1"
+                },
+                "evidence_keys": [
+                  "e1"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "a2",
+            "object_id": "filters",
+            "parameter_id": "retain",
+            "context_id": "desktop",
+            "values": {
+              "kind": "boolean",
+              "allowed": [
+                false
+              ]
+            },
+            "missing_fields": [],
+            "sources": [
+              {
+                "finding_key": "f2",
+                "finding_ref": {
+                  "kind": "finding",
+                  "id": "f2",
+                  "state_id": "f2-v1"
+                },
+                "evidence_keys": [
+                  "e2"
+                ]
+              }
+            ]
+          }
+        ],
+        "pair": {
+          "left_atom_id": "a1",
+          "right_atom_id": "a2",
+          "rationale": "Сравнить эти два ожидания, не всю группу."
+        },
+        "omissions": [],
+        "omega": null
+      }
+    },
+    "expected_status": "needs_refinements",
+    "expected_formal_class": null,
+    "expected_structural_class": null,
+    "explanation": "Неизвестное C без полного явно заданного Ω не даёт U или другого класса.",
+    "synthetic_confirmations": {},
+    "interpretation_limit": "Класс относится только к явно подготовленной структуре; смысловые метки предварительны."
+  },
+  {
+    "id": "12b-AI-false-completeness",
+    "input": {
+      "bridge_version": "1",
+      "grouping_request": {
+        "contract_version": "1.0",
+        "operation": "group_findings",
+        "project_id": "synthetic-project",
+        "request_id": "synthetic-request-v1",
+        "input": {
+          "findings": [
+            {
+              "key": "f1",
+              "ref": {
+                "kind": "finding",
+                "id": "f1",
+                "state_id": "f1-v1"
+              },
+              "text": "Сохраняйте фильтры (устройство не указано).",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "evidence": [
+                {
+                  "kind": "available",
+                  "fragment_key": "e1"
+                }
+              ],
+              "uncertainty_notes": [],
+              "open_questions": [],
+              "authorship": "ai"
+            },
+            {
+              "key": "f2",
+              "ref": {
+                "kind": "finding",
+                "id": "f2",
+                "state_id": "f2-v1"
+              },
+              "text": "На ПК сбрасывайте фильтры.",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "evidence": [
+                {
+                  "kind": "available",
+                  "fragment_key": "e2"
+                }
+              ],
+              "uncertainty_notes": [],
+              "open_questions": [],
+              "authorship": "ai"
+            }
+          ],
+          "fragments": [
+            {
+              "key": "e1",
+              "ref": {
+                "kind": "fragment",
+                "id": "e1",
+                "state_id": "fragment-v1"
+              },
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "source1",
+                "state_id": "source-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "source1",
+                "state_id": "source-v1"
+              },
+              "quote": "Сохраняйте фильтры (устройство не указано).",
+              "locator": {
+                "start": 0,
+                "end": 43
+              },
+              "reliability": "usable"
+            },
+            {
+              "key": "e2",
+              "ref": {
+                "kind": "fragment",
+                "id": "e2",
+                "state_id": "fragment-v1"
+              },
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "source2",
+                "state_id": "source-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "source2",
+                "state_id": "source-v1"
+              },
+              "quote": "На ПК сбрасывайте фильтры.",
+              "locator": {
+                "start": 0,
+                "end": 26
+              },
+              "reliability": "usable"
+            }
+          ],
+          "documents": []
+        }
+      },
+      "grouping_response": {
+        "coverage": [
+          {
+            "input_key": "f1",
+            "reviewed": true,
+            "disposition": "completed"
+          },
+          {
+            "input_key": "f2",
+            "reviewed": true,
+            "disposition": "completed"
+          }
+        ],
+        "uncertainties": [],
+        "questions": [],
+        "result": {
+          "groups": [
+            {
+              "local_id": "g1",
+              "title": "Фильтры",
+              "summary": "Кандидат противоположных позиций",
+              "finding_keys": [
+                "f1",
+                "f2"
+              ],
+              "considered_keys": [
+                "f1",
+                "f2"
+              ],
+              "context_keys": [],
+              "conflicts": [
+                {
+                  "local_id": "c1",
+                  "description": "Кандидат конфликта, не доказанный K",
+                  "positions": [
+                    {
+                      "description": "Сохранять",
+                      "finding_keys": [
+                        "f1"
+                      ]
+                    },
+                    {
+                      "description": "Сбрасывать",
+                      "finding_keys": [
+                        "f2"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "ungrouped_finding_keys": []
+        }
+      },
+      "selection": {
+        "left_finding_keys": [
+          "f1"
+        ],
+        "right_finding_keys": [
+          "f2"
+        ],
+        "rationale": "Явно выбраны обе полные позиции кандидата конфликта.",
+        "conflict": {
+          "group_local_id": "g1",
+          "conflict_local_id": "c1",
+          "left_position": 0,
+          "right_position": 1
+        }
+      },
+      "proposal": {
+        "version": "formalization-v1",
+        "origin": {
+          "kind": "human",
+          "actor": "synthetic-curator",
+          "method": "explicit_manual_fixture"
+        },
+        "decomposition_rationale": "Два явно подготовленных атомарных ожидания о сохранении.",
+        "model": {
+          "id": "filter-retention",
+          "version": "model-v1",
+          "method": "explicit_atomic_partition",
+          "rationale": "Один исследуемый случай: переход между сеансами.",
+          "formal_model": {
+            "object_id": "filters",
+            "parameter_id": "retain",
+            "situations": [
+              "desktop",
+              "mobile"
+            ],
+            "domain": {
+              "kind": "boolean",
+              "allowed": [
+                false,
+                true
+              ]
+            }
+          },
+          "contexts": [
+            {
+              "id": "desktop",
+              "situations": [
+                "desktop"
+              ]
+            },
+            {
+              "id": "mobile",
+              "situations": [
+                "mobile"
+              ]
+            }
+          ],
+          "relations": [
+            {
+              "left": "desktop",
+              "right": "mobile",
+              "relation": "disjoint"
+            }
+          ]
+        },
+        "atoms": [
+          {
+            "id": "a1",
+            "object_id": "filters",
+            "parameter_id": "retain",
+            "context_id": null,
+            "values": {
+              "kind": "boolean",
+              "allowed": [
+                true
+              ]
+            },
+            "missing_fields": [
+              "conditions"
+            ],
+            "sources": [
+              {
+                "finding_key": "f1",
+                "finding_ref": {
+                  "kind": "finding",
+                  "id": "f1",
+                  "state_id": "f1-v1"
+                },
+                "evidence_keys": [
+                  "e1"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "a2",
+            "object_id": "filters",
+            "parameter_id": "retain",
+            "context_id": "desktop",
+            "values": {
+              "kind": "boolean",
+              "allowed": [
+                false
+              ]
+            },
+            "missing_fields": [],
+            "sources": [
+              {
+                "finding_key": "f2",
+                "finding_ref": {
+                  "kind": "finding",
+                  "id": "f2",
+                  "state_id": "f2-v1"
+                },
+                "evidence_keys": [
+                  "e2"
+                ]
+              }
+            ]
+          }
+        ],
+        "pair": {
+          "left_atom_id": "a1",
+          "right_atom_id": "a2",
+          "rationale": "Сравнить эти два ожидания, не всю группу."
+        },
+        "omissions": [],
+        "omega": {
+          "origin": {
+            "kind": "ai",
+            "actor": "synthetic-curator",
+            "method": "finite_fixture_enumeration"
+          },
+          "method": "all_cases_of_declared_two_case_fixture_model",
+          "justification": "В этой синтетической модели контекст выбирает ровно desktop или mobile; не утверждение о реальном мире.",
+          "declared_complete": true,
+          "variants": [
+            {
+              "left": {
+                "conditions": [
+                  "desktop"
+                ],
+                "values": {
+                  "kind": "boolean",
+                  "allowed": [
+                    true
+                  ]
+                }
+              },
+              "right": {
+                "conditions": [
+                  "desktop"
+                ],
+                "values": {
+                  "kind": "boolean",
+                  "allowed": [
+                    false
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "expected_status": "blocked",
+    "expected_formal_class": null,
+    "expected_structural_class": "K",
+    "explanation": "AI объявил единственный K-вариант полным; доверенный контур не подтверждает полноту.",
+    "synthetic_confirmations": {
+      "omega_complete_confirmed": false
+    },
+    "interpretation_limit": "Класс относится только к явно подготовленной структуре; смысловые метки предварительны."
+  },
+  {
+    "id": "13-pair-12",
+    "input": {
+      "bridge_version": "1",
+      "grouping_request": {
+        "contract_version": "1.0",
+        "operation": "group_findings",
+        "project_id": "synthetic-project",
+        "request_id": "synthetic-request-v1",
+        "input": {
+          "findings": [
+            {
+              "key": "f1",
+              "ref": {
+                "kind": "finding",
+                "id": "f1",
+                "state_id": "f1-v1"
+              },
+              "text": "Нужен режим a или b.",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "evidence": [
+                {
+                  "kind": "available",
+                  "fragment_key": "e1"
+                }
+              ],
+              "uncertainty_notes": [],
+              "open_questions": [],
+              "authorship": "ai"
+            },
+            {
+              "key": "f2",
+              "ref": {
+                "kind": "finding",
+                "id": "f2",
+                "state_id": "f2-v1"
+              },
+              "text": "Нужен режим b или c.",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "evidence": [
+                {
+                  "kind": "available",
+                  "fragment_key": "e2"
+                }
+              ],
+              "uncertainty_notes": [],
+              "open_questions": [],
+              "authorship": "ai"
+            },
+            {
+              "key": "f3",
+              "ref": {
+                "kind": "finding",
+                "id": "f3",
+                "state_id": "f3-v1"
+              },
+              "text": "Нужен режим a или c.",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "evidence": [
+                {
+                  "kind": "available",
+                  "fragment_key": "e3"
+                }
+              ],
+              "uncertainty_notes": [],
+              "open_questions": [],
+              "authorship": "ai"
+            }
+          ],
+          "fragments": [
+            {
+              "key": "e1",
+              "ref": {
+                "kind": "fragment",
+                "id": "e1",
+                "state_id": "fragment-v1"
+              },
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "source1",
+                "state_id": "source-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "source1",
+                "state_id": "source-v1"
+              },
+              "quote": "Нужен режим a или b.",
+              "locator": {
+                "start": 0,
+                "end": 20
+              },
+              "reliability": "usable"
+            },
+            {
+              "key": "e2",
+              "ref": {
+                "kind": "fragment",
+                "id": "e2",
+                "state_id": "fragment-v1"
+              },
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "source2",
+                "state_id": "source-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "source2",
+                "state_id": "source-v1"
+              },
+              "quote": "Нужен режим b или c.",
+              "locator": {
+                "start": 0,
+                "end": 20
+              },
+              "reliability": "usable"
+            },
+            {
+              "key": "e3",
+              "ref": {
+                "kind": "fragment",
+                "id": "e3",
+                "state_id": "fragment-v1"
+              },
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "source3",
+                "state_id": "source-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "source3",
+                "state_id": "source-v1"
+              },
+              "quote": "Нужен режим a или c.",
+              "locator": {
+                "start": 0,
+                "end": 20
+              },
+              "reliability": "usable"
+            }
+          ],
+          "documents": []
+        }
+      },
+      "grouping_response": {
+        "coverage": [
+          {
+            "input_key": "f1",
+            "reviewed": true,
+            "disposition": "completed"
+          },
+          {
+            "input_key": "f2",
+            "reviewed": true,
+            "disposition": "completed"
+          },
+          {
+            "input_key": "f3",
+            "reviewed": true,
+            "disposition": "completed"
+          }
+        ],
+        "uncertainties": [],
+        "questions": [],
+        "result": {
+          "groups": [
+            {
+              "local_id": "g1",
+              "title": "Фильтры",
+              "summary": "Кандидат противоположных позиций",
+              "finding_keys": [
+                "f1",
+                "f2",
+                "f3"
+              ],
+              "considered_keys": [
+                "f1",
+                "f2",
+                "f3"
+              ],
+              "context_keys": [],
+              "conflicts": []
+            }
+          ],
+          "ungrouped_finding_keys": []
+        }
+      },
+      "selection": {
+        "left_finding_keys": [
+          "f1"
+        ],
+        "right_finding_keys": [
+          "f2"
+        ],
+        "rationale": "Явно выбраны обе полные позиции кандидата конфликта.",
+        "conflict": null
+      },
+      "proposal": {
+        "version": "formalization-v1",
+        "origin": {
+          "kind": "human",
+          "actor": "synthetic-curator",
+          "method": "explicit_manual_fixture"
+        },
+        "decomposition_rationale": "Два явно подготовленных атомарных ожидания о сохранении.",
+        "model": {
+          "id": "filter-retention",
+          "version": "model-v1",
+          "method": "explicit_atomic_partition",
+          "rationale": "Один исследуемый случай: переход между сеансами.",
+          "formal_model": {
+            "object_id": "filters",
+            "parameter_id": "retain",
+            "situations": [
+              "session"
+            ],
+            "domain": {
+              "kind": "enum",
+              "allowed": [
+                "a",
+                "b",
+                "c"
+              ]
+            }
+          },
+          "contexts": [
+            {
+              "id": "between_sessions",
+              "situations": [
+                "session"
+              ]
+            }
+          ],
+          "relations": []
+        },
+        "atoms": [
+          {
+            "id": "a1",
+            "object_id": "filters",
+            "parameter_id": "retain",
+            "context_id": "between_sessions",
+            "values": {
+              "kind": "enum",
+              "allowed": [
+                "a",
+                "b"
+              ]
+            },
+            "missing_fields": [],
+            "sources": [
+              {
+                "finding_key": "f1",
+                "finding_ref": {
+                  "kind": "finding",
+                  "id": "f1",
+                  "state_id": "f1-v1"
+                },
+                "evidence_keys": [
+                  "e1"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "a2",
+            "object_id": "filters",
+            "parameter_id": "retain",
+            "context_id": "between_sessions",
+            "values": {
+              "kind": "enum",
+              "allowed": [
+                "b",
+                "c"
+              ]
+            },
+            "missing_fields": [],
+            "sources": [
+              {
+                "finding_key": "f2",
+                "finding_ref": {
+                  "kind": "finding",
+                  "id": "f2",
+                  "state_id": "f2-v1"
+                },
+                "evidence_keys": [
+                  "e2"
+                ]
+              }
+            ]
+          }
+        ],
+        "pair": {
+          "left_atom_id": "a1",
+          "right_atom_id": "a2",
+          "rationale": "Сравнить эти два ожидания, не всю группу."
+        },
+        "omissions": [],
+        "omega": null
+      }
+    },
+    "expected_status": "checked",
+    "expected_formal_class": "S",
+    "expected_structural_class": "S",
+    "explanation": "Попарный S не даёт совместимости тройки {a,b}, {b,c}, {a,c}.",
+    "synthetic_confirmations": {},
+    "interpretation_limit": "Класс относится только к явно подготовленной структуре; смысловые метки предварительны."
+  },
+  {
+    "id": "13-pair-13",
+    "input": {
+      "bridge_version": "1",
+      "grouping_request": {
+        "contract_version": "1.0",
+        "operation": "group_findings",
+        "project_id": "synthetic-project",
+        "request_id": "synthetic-request-v1",
+        "input": {
+          "findings": [
+            {
+              "key": "f1",
+              "ref": {
+                "kind": "finding",
+                "id": "f1",
+                "state_id": "f1-v1"
+              },
+              "text": "Нужен режим a или b.",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "evidence": [
+                {
+                  "kind": "available",
+                  "fragment_key": "e1"
+                }
+              ],
+              "uncertainty_notes": [],
+              "open_questions": [],
+              "authorship": "ai"
+            },
+            {
+              "key": "f2",
+              "ref": {
+                "kind": "finding",
+                "id": "f2",
+                "state_id": "f2-v1"
+              },
+              "text": "Нужен режим b или c.",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "evidence": [
+                {
+                  "kind": "available",
+                  "fragment_key": "e2"
+                }
+              ],
+              "uncertainty_notes": [],
+              "open_questions": [],
+              "authorship": "ai"
+            },
+            {
+              "key": "f3",
+              "ref": {
+                "kind": "finding",
+                "id": "f3",
+                "state_id": "f3-v1"
+              },
+              "text": "Нужен режим a или c.",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "evidence": [
+                {
+                  "kind": "available",
+                  "fragment_key": "e3"
+                }
+              ],
+              "uncertainty_notes": [],
+              "open_questions": [],
+              "authorship": "ai"
+            }
+          ],
+          "fragments": [
+            {
+              "key": "e1",
+              "ref": {
+                "kind": "fragment",
+                "id": "e1",
+                "state_id": "fragment-v1"
+              },
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "source1",
+                "state_id": "source-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "source1",
+                "state_id": "source-v1"
+              },
+              "quote": "Нужен режим a или b.",
+              "locator": {
+                "start": 0,
+                "end": 20
+              },
+              "reliability": "usable"
+            },
+            {
+              "key": "e2",
+              "ref": {
+                "kind": "fragment",
+                "id": "e2",
+                "state_id": "fragment-v1"
+              },
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "source2",
+                "state_id": "source-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "source2",
+                "state_id": "source-v1"
+              },
+              "quote": "Нужен режим b или c.",
+              "locator": {
+                "start": 0,
+                "end": 20
+              },
+              "reliability": "usable"
+            },
+            {
+              "key": "e3",
+              "ref": {
+                "kind": "fragment",
+                "id": "e3",
+                "state_id": "fragment-v1"
+              },
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "source3",
+                "state_id": "source-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "source3",
+                "state_id": "source-v1"
+              },
+              "quote": "Нужен режим a или c.",
+              "locator": {
+                "start": 0,
+                "end": 20
+              },
+              "reliability": "usable"
+            }
+          ],
+          "documents": []
+        }
+      },
+      "grouping_response": {
+        "coverage": [
+          {
+            "input_key": "f1",
+            "reviewed": true,
+            "disposition": "completed"
+          },
+          {
+            "input_key": "f2",
+            "reviewed": true,
+            "disposition": "completed"
+          },
+          {
+            "input_key": "f3",
+            "reviewed": true,
+            "disposition": "completed"
+          }
+        ],
+        "uncertainties": [],
+        "questions": [],
+        "result": {
+          "groups": [
+            {
+              "local_id": "g1",
+              "title": "Фильтры",
+              "summary": "Кандидат противоположных позиций",
+              "finding_keys": [
+                "f1",
+                "f2",
+                "f3"
+              ],
+              "considered_keys": [
+                "f1",
+                "f2",
+                "f3"
+              ],
+              "context_keys": [],
+              "conflicts": []
+            }
+          ],
+          "ungrouped_finding_keys": []
+        }
+      },
+      "selection": {
+        "left_finding_keys": [
+          "f1"
+        ],
+        "right_finding_keys": [
+          "f3"
+        ],
+        "rationale": "Явно выбраны обе полные позиции кандидата конфликта.",
+        "conflict": null
+      },
+      "proposal": {
+        "version": "formalization-v1",
+        "origin": {
+          "kind": "human",
+          "actor": "synthetic-curator",
+          "method": "explicit_manual_fixture"
+        },
+        "decomposition_rationale": "Два явно подготовленных атомарных ожидания о сохранении.",
+        "model": {
+          "id": "filter-retention",
+          "version": "model-v1",
+          "method": "explicit_atomic_partition",
+          "rationale": "Один исследуемый случай: переход между сеансами.",
+          "formal_model": {
+            "object_id": "filters",
+            "parameter_id": "retain",
+            "situations": [
+              "session"
+            ],
+            "domain": {
+              "kind": "enum",
+              "allowed": [
+                "a",
+                "b",
+                "c"
+              ]
+            }
+          },
+          "contexts": [
+            {
+              "id": "between_sessions",
+              "situations": [
+                "session"
+              ]
+            }
+          ],
+          "relations": []
+        },
+        "atoms": [
+          {
+            "id": "a1",
+            "object_id": "filters",
+            "parameter_id": "retain",
+            "context_id": "between_sessions",
+            "values": {
+              "kind": "enum",
+              "allowed": [
+                "a",
+                "b"
+              ]
+            },
+            "missing_fields": [],
+            "sources": [
+              {
+                "finding_key": "f1",
+                "finding_ref": {
+                  "kind": "finding",
+                  "id": "f1",
+                  "state_id": "f1-v1"
+                },
+                "evidence_keys": [
+                  "e1"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "a2",
+            "object_id": "filters",
+            "parameter_id": "retain",
+            "context_id": "between_sessions",
+            "values": {
+              "kind": "enum",
+              "allowed": [
+                "a",
+                "c"
+              ]
+            },
+            "missing_fields": [],
+            "sources": [
+              {
+                "finding_key": "f3",
+                "finding_ref": {
+                  "kind": "finding",
+                  "id": "f3",
+                  "state_id": "f3-v1"
+                },
+                "evidence_keys": [
+                  "e3"
+                ]
+              }
+            ]
+          }
+        ],
+        "pair": {
+          "left_atom_id": "a1",
+          "right_atom_id": "a2",
+          "rationale": "Сравнить эти два ожидания, не всю группу."
+        },
+        "omissions": [],
+        "omega": null
+      }
+    },
+    "expected_status": "checked",
+    "expected_formal_class": "S",
+    "expected_structural_class": "S",
+    "explanation": "Попарный S не даёт совместимости тройки {a,b}, {b,c}, {a,c}.",
+    "synthetic_confirmations": {},
+    "interpretation_limit": "Класс относится только к явно подготовленной структуре; смысловые метки предварительны."
+  },
+  {
+    "id": "13-pair-23",
+    "input": {
+      "bridge_version": "1",
+      "grouping_request": {
+        "contract_version": "1.0",
+        "operation": "group_findings",
+        "project_id": "synthetic-project",
+        "request_id": "synthetic-request-v1",
+        "input": {
+          "findings": [
+            {
+              "key": "f1",
+              "ref": {
+                "kind": "finding",
+                "id": "f1",
+                "state_id": "f1-v1"
+              },
+              "text": "Нужен режим a или b.",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "evidence": [
+                {
+                  "kind": "available",
+                  "fragment_key": "e1"
+                }
+              ],
+              "uncertainty_notes": [],
+              "open_questions": [],
+              "authorship": "ai"
+            },
+            {
+              "key": "f2",
+              "ref": {
+                "kind": "finding",
+                "id": "f2",
+                "state_id": "f2-v1"
+              },
+              "text": "Нужен режим b или c.",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "evidence": [
+                {
+                  "kind": "available",
+                  "fragment_key": "e2"
+                }
+              ],
+              "uncertainty_notes": [],
+              "open_questions": [],
+              "authorship": "ai"
+            },
+            {
+              "key": "f3",
+              "ref": {
+                "kind": "finding",
+                "id": "f3",
+                "state_id": "f3-v1"
+              },
+              "text": "Нужен режим a или c.",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "evidence": [
+                {
+                  "kind": "available",
+                  "fragment_key": "e3"
+                }
+              ],
+              "uncertainty_notes": [],
+              "open_questions": [],
+              "authorship": "ai"
+            }
+          ],
+          "fragments": [
+            {
+              "key": "e1",
+              "ref": {
+                "kind": "fragment",
+                "id": "e1",
+                "state_id": "fragment-v1"
+              },
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "source1",
+                "state_id": "source-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "source1",
+                "state_id": "source-v1"
+              },
+              "quote": "Нужен режим a или b.",
+              "locator": {
+                "start": 0,
+                "end": 20
+              },
+              "reliability": "usable"
+            },
+            {
+              "key": "e2",
+              "ref": {
+                "kind": "fragment",
+                "id": "e2",
+                "state_id": "fragment-v1"
+              },
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "source2",
+                "state_id": "source-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "source2",
+                "state_id": "source-v1"
+              },
+              "quote": "Нужен режим b или c.",
+              "locator": {
+                "start": 0,
+                "end": 20
+              },
+              "reliability": "usable"
+            },
+            {
+              "key": "e3",
+              "ref": {
+                "kind": "fragment",
+                "id": "e3",
+                "state_id": "fragment-v1"
+              },
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "source3",
+                "state_id": "source-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "source3",
+                "state_id": "source-v1"
+              },
+              "quote": "Нужен режим a или c.",
+              "locator": {
+                "start": 0,
+                "end": 20
+              },
+              "reliability": "usable"
+            }
+          ],
+          "documents": []
+        }
+      },
+      "grouping_response": {
+        "coverage": [
+          {
+            "input_key": "f1",
+            "reviewed": true,
+            "disposition": "completed"
+          },
+          {
+            "input_key": "f2",
+            "reviewed": true,
+            "disposition": "completed"
+          },
+          {
+            "input_key": "f3",
+            "reviewed": true,
+            "disposition": "completed"
+          }
+        ],
+        "uncertainties": [],
+        "questions": [],
+        "result": {
+          "groups": [
+            {
+              "local_id": "g1",
+              "title": "Фильтры",
+              "summary": "Кандидат противоположных позиций",
+              "finding_keys": [
+                "f1",
+                "f2",
+                "f3"
+              ],
+              "considered_keys": [
+                "f1",
+                "f2",
+                "f3"
+              ],
+              "context_keys": [],
+              "conflicts": []
+            }
+          ],
+          "ungrouped_finding_keys": []
+        }
+      },
+      "selection": {
+        "left_finding_keys": [
+          "f2"
+        ],
+        "right_finding_keys": [
+          "f3"
+        ],
+        "rationale": "Явно выбраны обе полные позиции кандидата конфликта.",
+        "conflict": null
+      },
+      "proposal": {
+        "version": "formalization-v1",
+        "origin": {
+          "kind": "human",
+          "actor": "synthetic-curator",
+          "method": "explicit_manual_fixture"
+        },
+        "decomposition_rationale": "Два явно подготовленных атомарных ожидания о сохранении.",
+        "model": {
+          "id": "filter-retention",
+          "version": "model-v1",
+          "method": "explicit_atomic_partition",
+          "rationale": "Один исследуемый случай: переход между сеансами.",
+          "formal_model": {
+            "object_id": "filters",
+            "parameter_id": "retain",
+            "situations": [
+              "session"
+            ],
+            "domain": {
+              "kind": "enum",
+              "allowed": [
+                "a",
+                "b",
+                "c"
+              ]
+            }
+          },
+          "contexts": [
+            {
+              "id": "between_sessions",
+              "situations": [
+                "session"
+              ]
+            }
+          ],
+          "relations": []
+        },
+        "atoms": [
+          {
+            "id": "a1",
+            "object_id": "filters",
+            "parameter_id": "retain",
+            "context_id": "between_sessions",
+            "values": {
+              "kind": "enum",
+              "allowed": [
+                "b",
+                "c"
+              ]
+            },
+            "missing_fields": [],
+            "sources": [
+              {
+                "finding_key": "f2",
+                "finding_ref": {
+                  "kind": "finding",
+                  "id": "f2",
+                  "state_id": "f2-v1"
+                },
+                "evidence_keys": [
+                  "e2"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "a2",
+            "object_id": "filters",
+            "parameter_id": "retain",
+            "context_id": "between_sessions",
+            "values": {
+              "kind": "enum",
+              "allowed": [
+                "a",
+                "c"
+              ]
+            },
+            "missing_fields": [],
+            "sources": [
+              {
+                "finding_key": "f3",
+                "finding_ref": {
+                  "kind": "finding",
+                  "id": "f3",
+                  "state_id": "f3-v1"
+                },
+                "evidence_keys": [
+                  "e3"
+                ]
+              }
+            ]
+          }
+        ],
+        "pair": {
+          "left_atom_id": "a1",
+          "right_atom_id": "a2",
+          "rationale": "Сравнить эти два ожидания, не всю группу."
+        },
+        "omissions": [],
+        "omega": null
+      }
+    },
+    "expected_status": "checked",
+    "expected_formal_class": "S",
+    "expected_structural_class": "S",
+    "explanation": "Попарный S не даёт совместимости тройки {a,b}, {b,c}, {a,c}.",
+    "synthetic_confirmations": {},
+    "interpretation_limit": "Класс относится только к явно подготовленной структуре; смысловые метки предварительны."
+  },
+  {
+    "id": "14-no-formalization",
+    "input": {
+      "bridge_version": "1",
+      "grouping_request": {
+        "contract_version": "1.0",
+        "operation": "group_findings",
+        "project_id": "synthetic-project",
+        "request_id": "synthetic-request-v1",
+        "input": {
+          "findings": [
+            {
+              "key": "f1",
+              "ref": {
+                "kind": "finding",
+                "id": "f1",
+                "state_id": "f1-v1"
+              },
+              "text": "Между сеансами сохраняйте фильтры.",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "evidence": [
+                {
+                  "kind": "available",
+                  "fragment_key": "e1"
+                }
+              ],
+              "uncertainty_notes": [],
+              "open_questions": [],
+              "authorship": "ai"
+            },
+            {
+              "key": "f2",
+              "ref": {
+                "kind": "finding",
+                "id": "f2",
+                "state_id": "f2-v1"
+              },
+              "text": "Между сеансами сбрасывайте фильтры.",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "evidence": [
+                {
+                  "kind": "available",
+                  "fragment_key": "e2"
+                }
+              ],
+              "uncertainty_notes": [],
+              "open_questions": [],
+              "authorship": "ai"
+            }
+          ],
+          "fragments": [
+            {
+              "key": "e1",
+              "ref": {
+                "kind": "fragment",
+                "id": "e1",
+                "state_id": "fragment-v1"
+              },
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "source1",
+                "state_id": "source-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "source1",
+                "state_id": "source-v1"
+              },
+              "quote": "Между сеансами сохраняйте фильтры.",
+              "locator": {
+                "start": 0,
+                "end": 34
+              },
+              "reliability": "usable"
+            },
+            {
+              "key": "e2",
+              "ref": {
+                "kind": "fragment",
+                "id": "e2",
+                "state_id": "fragment-v1"
+              },
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "source2",
+                "state_id": "source-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "source2",
+                "state_id": "source-v1"
+              },
+              "quote": "Между сеансами сбрасывайте фильтры.",
+              "locator": {
+                "start": 0,
+                "end": 35
+              },
+              "reliability": "usable"
+            }
+          ],
+          "documents": []
+        }
+      },
+      "grouping_response": {
+        "coverage": [
+          {
+            "input_key": "f1",
+            "reviewed": true,
+            "disposition": "completed"
+          },
+          {
+            "input_key": "f2",
+            "reviewed": true,
+            "disposition": "completed"
+          }
+        ],
+        "uncertainties": [],
+        "questions": [],
+        "result": {
+          "groups": [
+            {
+              "local_id": "g1",
+              "title": "Фильтры",
+              "summary": "Кандидат противоположных позиций",
+              "finding_keys": [
+                "f1",
+                "f2"
+              ],
+              "considered_keys": [
+                "f1",
+                "f2"
+              ],
+              "context_keys": [],
+              "conflicts": [
+                {
+                  "local_id": "c1",
+                  "description": "Кандидат конфликта, не доказанный K",
+                  "positions": [
+                    {
+                      "description": "Сохранять",
+                      "finding_keys": [
+                        "f1"
+                      ]
+                    },
+                    {
+                      "description": "Сбрасывать",
+                      "finding_keys": [
+                        "f2"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "ungrouped_finding_keys": []
+        }
+      },
+      "selection": {
+        "left_finding_keys": [
+          "f1"
+        ],
+        "right_finding_keys": [
+          "f2"
+        ],
+        "rationale": "Явно выбраны обе полные позиции кандидата конфликта.",
+        "conflict": {
+          "group_local_id": "g1",
+          "conflict_local_id": "c1",
+          "left_position": 0,
+          "right_position": 1
+        }
+      },
+      "proposal": null
+    },
+    "expected_status": "needs_formalization",
+    "expected_formal_class": null,
+    "expected_structural_class": null,
+    "explanation": "Свободный текст не извлекается автоматически в переменные Z3.",
+    "synthetic_confirmations": {},
+    "interpretation_limit": "Класс относится только к явно подготовленной структуре; смысловые метки предварительны."
+  },
+  {
+    "id": "15-multiple-position-findings",
+    "input": {
+      "bridge_version": "1",
+      "grouping_request": {
+        "contract_version": "1.0",
+        "operation": "group_findings",
+        "project_id": "synthetic-project",
+        "request_id": "synthetic-request-v1",
+        "input": {
+          "findings": [
+            {
+              "key": "f1",
+              "ref": {
+                "kind": "finding",
+                "id": "f1",
+                "state_id": "f1-v1"
+              },
+              "text": "Сохраняйте фильтры.",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "evidence": [
+                {
+                  "kind": "available",
+                  "fragment_key": "e1"
+                }
+              ],
+              "uncertainty_notes": [],
+              "open_questions": [],
+              "authorship": "ai"
+            },
+            {
+              "key": "f2",
+              "ref": {
+                "kind": "finding",
+                "id": "f2",
+                "state_id": "f2-v1"
+              },
+              "text": "Сбрасывайте фильтры.",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "evidence": [
+                {
+                  "kind": "available",
+                  "fragment_key": "e2"
+                }
+              ],
+              "uncertainty_notes": [],
+              "open_questions": [],
+              "authorship": "ai"
+            },
+            {
+              "key": "f3",
+              "ref": {
+                "kind": "finding",
+                "id": "f3",
+                "state_id": "f3-v1"
+              },
+              "text": "Мне тоже нужно сохранение.",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "evidence": [
+                {
+                  "kind": "available",
+                  "fragment_key": "e3"
+                }
+              ],
+              "uncertainty_notes": [],
+              "open_questions": [],
+              "authorship": "ai"
+            }
+          ],
+          "fragments": [
+            {
+              "key": "e1",
+              "ref": {
+                "kind": "fragment",
+                "id": "e1",
+                "state_id": "fragment-v1"
+              },
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "source1",
+                "state_id": "source-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "source1",
+                "state_id": "source-v1"
+              },
+              "quote": "Сохраняйте фильтры.",
+              "locator": {
+                "start": 0,
+                "end": 19
+              },
+              "reliability": "usable"
+            },
+            {
+              "key": "e2",
+              "ref": {
+                "kind": "fragment",
+                "id": "e2",
+                "state_id": "fragment-v1"
+              },
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "source2",
+                "state_id": "source-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "source2",
+                "state_id": "source-v1"
+              },
+              "quote": "Сбрасывайте фильтры.",
+              "locator": {
+                "start": 0,
+                "end": 20
+              },
+              "reliability": "usable"
+            },
+            {
+              "key": "e3",
+              "ref": {
+                "kind": "fragment",
+                "id": "e3",
+                "state_id": "fragment-v1"
+              },
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "source3",
+                "state_id": "source-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "source3",
+                "state_id": "source-v1"
+              },
+              "quote": "Мне тоже нужно сохранение.",
+              "locator": {
+                "start": 0,
+                "end": 26
+              },
+              "reliability": "usable"
+            }
+          ],
+          "documents": []
+        }
+      },
+      "grouping_response": {
+        "coverage": [
+          {
+            "input_key": "f1",
+            "reviewed": true,
+            "disposition": "completed"
+          },
+          {
+            "input_key": "f2",
+            "reviewed": true,
+            "disposition": "completed"
+          },
+          {
+            "input_key": "f3",
+            "reviewed": true,
+            "disposition": "completed"
+          }
+        ],
+        "uncertainties": [],
+        "questions": [],
+        "result": {
+          "groups": [
+            {
+              "local_id": "g1",
+              "title": "Фильтры",
+              "summary": "Кандидат противоположных позиций",
+              "finding_keys": [
+                "f1",
+                "f2",
+                "f3"
+              ],
+              "considered_keys": [
+                "f1",
+                "f2",
+                "f3"
+              ],
+              "context_keys": [],
+              "conflicts": [
+                {
+                  "local_id": "c1",
+                  "description": "Кандидат конфликта, не доказанный K",
+                  "positions": [
+                    {
+                      "description": "Сохранять",
+                      "finding_keys": [
+                        "f1",
+                        "f3"
+                      ]
+                    },
+                    {
+                      "description": "Сбрасывать",
+                      "finding_keys": [
+                        "f2"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "ungrouped_finding_keys": []
+        }
+      },
+      "selection": {
+        "left_finding_keys": [
+          "f1",
+          "f3"
+        ],
+        "right_finding_keys": [
+          "f2"
+        ],
+        "rationale": "Явно выбраны обе полные позиции кандидата конфликта.",
+        "conflict": {
+          "group_local_id": "g1",
+          "conflict_local_id": "c1",
+          "left_position": 0,
+          "right_position": 1
+        }
+      },
+      "proposal": {
+        "version": "formalization-v1",
+        "origin": {
+          "kind": "human",
+          "actor": "synthetic-curator",
+          "method": "explicit_manual_fixture"
+        },
+        "decomposition_rationale": "Два явно подготовленных атомарных ожидания о сохранении.",
+        "model": {
+          "id": "filter-retention",
+          "version": "model-v1",
+          "method": "explicit_atomic_partition",
+          "rationale": "Один исследуемый случай: переход между сеансами.",
+          "formal_model": {
+            "object_id": "filters",
+            "parameter_id": "retain",
+            "situations": [
+              "session"
+            ],
+            "domain": {
+              "kind": "boolean",
+              "allowed": [
+                false,
+                true
+              ]
+            }
+          },
+          "contexts": [
+            {
+              "id": "between_sessions",
+              "situations": [
+                "session"
+              ]
+            }
+          ],
+          "relations": []
+        },
+        "atoms": [
+          {
+            "id": "a1",
+            "object_id": "filters",
+            "parameter_id": "retain",
+            "context_id": "between_sessions",
+            "values": {
+              "kind": "boolean",
+              "allowed": [
+                true
+              ]
+            },
+            "missing_fields": [],
+            "sources": [
+              {
+                "finding_key": "f1",
+                "finding_ref": {
+                  "kind": "finding",
+                  "id": "f1",
+                  "state_id": "f1-v1"
+                },
+                "evidence_keys": [
+                  "e1"
+                ]
+              },
+              {
+                "finding_key": "f3",
+                "finding_ref": {
+                  "kind": "finding",
+                  "id": "f3",
+                  "state_id": "f3-v1"
+                },
+                "evidence_keys": [
+                  "e3"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "a2",
+            "object_id": "filters",
+            "parameter_id": "retain",
+            "context_id": "between_sessions",
+            "values": {
+              "kind": "boolean",
+              "allowed": [
+                false
+              ]
+            },
+            "missing_fields": [],
+            "sources": [
+              {
+                "finding_key": "f2",
+                "finding_ref": {
+                  "kind": "finding",
+                  "id": "f2",
+                  "state_id": "f2-v1"
+                },
+                "evidence_keys": [
+                  "e2"
+                ]
+              }
+            ]
+          }
+        ],
+        "pair": {
+          "left_atom_id": "a1",
+          "right_atom_id": "a2",
+          "rationale": "Сравнить эти два ожидания, не всю группу."
+        },
+        "omissions": [],
+        "omega": null
+      }
+    },
+    "expected_status": "checked",
+    "expected_formal_class": "K",
+    "expected_structural_class": "K",
+    "explanation": "Ожидание левой позиции связано с обеими явно выбранными подтверждающими находками.",
+    "synthetic_confirmations": {},
+    "interpretation_limit": "Класс относится только к явно подготовленной структуре; смысловые метки предварительны."
+  },
+  {
+    "id": "16-dependent-constraint",
+    "input": {
+      "bridge_version": "1",
+      "grouping_request": {
+        "contract_version": "1.0",
+        "operation": "group_findings",
+        "project_id": "synthetic-project",
+        "request_id": "synthetic-request-v1",
+        "input": {
+          "findings": [
+            {
+              "key": "f1",
+              "ref": {
+                "kind": "finding",
+                "id": "f1",
+                "state_id": "f1-v1"
+              },
+              "text": "В приватном режиме фильтры нельзя сохранять; в обычном режиме сохраняйте их.",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "evidence": [
+                {
+                  "kind": "available",
+                  "fragment_key": "e1"
+                }
+              ],
+              "uncertainty_notes": [],
+              "open_questions": [],
+              "authorship": "ai"
+            },
+            {
+              "key": "f2",
+              "ref": {
+                "kind": "finding",
+                "id": "f2",
+                "state_id": "f2-v1"
+              },
+              "text": "В приватном режиме сохраняйте фильтры.",
+              "types": [
+                "request"
+              ],
+              "mode": "direct",
+              "evidence": [
+                {
+                  "kind": "available",
+                  "fragment_key": "e2"
+                }
+              ],
+              "uncertainty_notes": [],
+              "open_questions": [],
+              "authorship": "ai"
+            }
+          ],
+          "fragments": [
+            {
+              "key": "e1",
+              "ref": {
+                "kind": "fragment",
+                "id": "e1",
+                "state_id": "fragment-v1"
+              },
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "source1",
+                "state_id": "source-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "source1",
+                "state_id": "source-v1"
+              },
+              "quote": "В приватном режиме фильтры нельзя сохранять; в обычном режиме сохраняйте их.",
+              "locator": {
+                "start": 0,
+                "end": 76
+              },
+              "reliability": "usable"
+            },
+            {
+              "key": "e2",
+              "ref": {
+                "kind": "fragment",
+                "id": "e2",
+                "state_id": "fragment-v1"
+              },
+              "source_ref": {
+                "kind": "feedback_source",
+                "id": "source2",
+                "state_id": "source-v1"
+              },
+              "text_ref": {
+                "kind": "feedback_source",
+                "id": "source2",
+                "state_id": "source-v1"
+              },
+              "quote": "В приватном режиме сохраняйте фильтры.",
+              "locator": {
+                "start": 0,
+                "end": 38
+              },
+              "reliability": "usable"
+            }
+          ],
+          "documents": []
+        }
+      },
+      "grouping_response": {
+        "coverage": [
+          {
+            "input_key": "f1",
+            "reviewed": true,
+            "disposition": "completed"
+          },
+          {
+            "input_key": "f2",
+            "reviewed": true,
+            "disposition": "completed"
+          }
+        ],
+        "uncertainties": [],
+        "questions": [],
+        "result": {
+          "groups": [
+            {
+              "local_id": "g1",
+              "title": "Фильтры",
+              "summary": "Кандидат противоположных позиций",
+              "finding_keys": [
+                "f1",
+                "f2"
+              ],
+              "considered_keys": [
+                "f1",
+                "f2"
+              ],
+              "context_keys": [],
+              "conflicts": [
+                {
+                  "local_id": "c1",
+                  "description": "Кандидат конфликта, не доказанный K",
+                  "positions": [
+                    {
+                      "description": "Сохранять",
+                      "finding_keys": [
+                        "f1"
+                      ]
+                    },
+                    {
+                      "description": "Сбрасывать",
+                      "finding_keys": [
+                        "f2"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "ungrouped_finding_keys": []
+        }
+      },
+      "selection": {
+        "left_finding_keys": [
+          "f1"
+        ],
+        "right_finding_keys": [
+          "f2"
+        ],
+        "rationale": "Явно выбраны обе полные позиции кандидата конфликта.",
+        "conflict": {
+          "group_local_id": "g1",
+          "conflict_local_id": "c1",
+          "left_position": 0,
+          "right_position": 1
+        }
+      },
+      "proposal": {
+        "version": "formalization-v1",
+        "origin": {
+          "kind": "human",
+          "actor": "synthetic-curator",
+          "method": "explicit_manual_fixture"
+        },
+        "decomposition_rationale": "Два явно подготовленных атомарных ожидания о сохранении.",
+        "model": {
+          "id": "filter-retention",
+          "version": "model-v1",
+          "method": "explicit_atomic_partition",
+          "rationale": "Один исследуемый случай: переход между сеансами.",
+          "formal_model": {
+            "object_id": "filters",
+            "parameter_id": "retain",
+            "situations": [
+              "session"
+            ],
+            "domain": {
+              "kind": "boolean",
+              "allowed": [
+                false,
+                true
+              ]
+            }
+          },
+          "contexts": [
+            {
+              "id": "between_sessions",
+              "situations": [
+                "session"
+              ]
+            }
+          ],
+          "relations": []
+        },
+        "atoms": [
+          {
+            "id": "a1",
+            "object_id": "filters",
+            "parameter_id": "retain",
+            "context_id": "between_sessions",
+            "values": {
+              "kind": "conditional",
+              "depends_on": "context"
+            },
+            "missing_fields": [],
+            "sources": [
+              {
+                "finding_key": "f1",
+                "finding_ref": {
+                  "kind": "finding",
+                  "id": "f1",
+                  "state_id": "f1-v1"
+                },
+                "evidence_keys": [
+                  "e1"
+                ]
+              }
+            ]
+          },
+          {
+            "id": "a2",
+            "object_id": "filters",
+            "parameter_id": "retain",
+            "context_id": "between_sessions",
+            "values": {
+              "kind": "boolean",
+              "allowed": [
+                false
+              ]
+            },
+            "missing_fields": [],
+            "sources": [
+              {
+                "finding_key": "f2",
+                "finding_ref": {
+                  "kind": "finding",
+                  "id": "f2",
+                  "state_id": "f2-v1"
+                },
+                "evidence_keys": [
+                  "e2"
+                ]
+              }
+            ]
+          }
+        ],
+        "pair": {
+          "left_atom_id": "a1",
+          "right_atom_id": "a2",
+          "rationale": "Сравнить эти два ожидания, не всю группу."
+        },
+        "omissions": [],
+        "omega": null
+      }
+    },
+    "expected_status": "rejected",
+    "expected_formal_class": null,
+    "expected_structural_class": null,
+    "explanation": "Противоречие условий приватного режима и сохранения требует разбиения A(C) на атомарные случаи; условная SMT-формула этой версией не принимается.",
+    "synthetic_confirmations": {},
+    "interpretation_limit": "Класс относится только к явно подготовленной структуре; смысловые метки предварительны."
+  }
+]

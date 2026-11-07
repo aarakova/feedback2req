@@ -1,0 +1,76 @@
+{
+  "coverage": [
+    {
+      "input_key": "target",
+      "reviewed": true,
+      "disposition": "partially_processed",
+      "reason": "other2 не рассмотрен; найденное замечание сохраняется."
+    }
+  ],
+  "uncertainties": [],
+  "questions": [],
+  "result": {
+    "checks": [
+      {
+        "kind": "support",
+        "conclusion": "no_issue_found",
+        "rationale": "В явно переданном синтетическом контексте замечание не обнаружено.",
+        "considered_keys": [
+          "target",
+          "f1",
+          "e1"
+        ]
+      },
+      {
+        "kind": "contradictions",
+        "conclusion": "no_issue_found",
+        "rationale": "В явно переданном синтетическом контексте замечание не обнаружено.",
+        "considered_keys": [
+          "target",
+          "f1",
+          "e1"
+        ]
+      },
+      {
+        "kind": "ambiguity",
+        "conclusion": "no_issue_found",
+        "rationale": "В явно переданном синтетическом контексте замечание не обнаружено.",
+        "considered_keys": [
+          "target",
+          "f1",
+          "e1"
+        ]
+      },
+      {
+        "kind": "duplicates",
+        "conclusion": "issues_found",
+        "rationale": "other1 может дублировать цель.",
+        "considered_keys": [
+          "other1"
+        ]
+      }
+    ],
+    "issues": [
+      {
+        "local_id": "issue-1",
+        "category": "possible_duplicate",
+        "text": "other1 может дублировать цель.",
+        "reason": "other1 может дублировать цель.",
+        "severity": "medium",
+        "blocking": true,
+        "blocking_reason": "Существенная причина требует уточнения до нового утверждения.",
+        "related": [
+          {
+            "origin": "input",
+            "key": "target"
+          },
+          {
+            "origin": "input",
+            "key": "other1"
+          }
+        ],
+        "question_ids": []
+      }
+    ]
+  }
+}

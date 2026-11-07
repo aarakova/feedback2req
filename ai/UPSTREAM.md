@@ -17,3 +17,20 @@ Backend-подключение описано в
 Все интеграционные проверки используют явный synthetic provider. Готовность
 хранилища и структурная корректность не доказывают смысловое качество модели.
 Внешний provider не выбирается автоматически и не включается этой интеграцией.
+
+## Интеграция полного workflow, 2026-11-07
+
+Автономные generate_requirements/verify_requirement, их tests/evals и handoff
+перенесены выборочно из ab34793a06db660e158f3320f36533467d35bf66.
+Общий grouping не импортируется повторно: единственная дельта provider из этой
+ветки — переопределяемые system_prompt/response_schema для наследующих адаптеров;
+алгоритм, grouping prompt и validation сохранены. README/MODEL_SELECTION и
+synthetic replay взяты из той же версии.
+
+formal_expectations/bridge и experiments/qwen_z3 с тестами/примером/предложениями
+перенесены из a963d8ebb778d80eac2e2cbcadb33d57924a12b7; experiments/qwen —
+из e2158ad0611b9693bc5c2490fe08c6a865b158d8. Это автономные инструменты.
+Docker production копирует только ai/group_findings и не устанавливает Z3;
+дополнительный ai-checks image изолирован и запускается с network_mode=none.
+Реальный inference, provider/model и доверенный F2 exchange не утверждаются.
+AI JSON Schema 1.0, DOMAIN и REQUIREMENTS этим переносом не меняются.

@@ -1,0 +1,13 @@
+{
+    "commit":  "4c62684e7769d2c3a71de3264aa15e954a1262d0",
+    "sha256":  {
+                   "backend/feedback2req/grouping/execution.py":  "3dd58bd66538247884733ec8f4a110e18e249fa5af2f06ab0d0d7dac12135655",
+                   "backend/feedback2req/grouping/validation.py":  "a4f658acb113e87a59dddfcf28df34fd3034809650227310fda90db65ad16d85",
+                   "backend/feedback2req/grouping/service.py":  "b5e44e4d893f43eece3b6a3b3b6f9d3c235f3c93eae79974d2176c190ee8e320",
+                   "backend/feedback2req/grouping/views.py":  "326e017f1c6c952d007e5d5708c9e39993d031f5641fd5e9bfb033ebc0addf42",
+                   "backend/feedback2req/processing/validation.py":  "69eed175f00040dba426311b3941363f2b52e99e10aa4fce5e1c8e9a6f8f4485",
+                   "docs/contracts/ai/v1/common.schema.json":  "fb3a4ba9ee8a05f0c8c30f9fe12fa65c0e2951f7c92aefef33a507f670bbeeee",
+                   "docs/contracts/ai/v1/group_findings.request.schema.json":  "2c4cc972a4b1068ac077ee6db308c8bbc32b17cb68bbd5f7a93ca61daaff943d",
+                   "docs/contracts/ai/v1/group_findings.response.schema.json":  "23db4159c182c0cd213b27f9b048b1593fba82935040c0d86198f377725e7f96"
+               }
+}

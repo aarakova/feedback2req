@@ -1,0 +1,6 @@
+# Offline autonomous modules only; Z3 is not a production worker dependency.
+FROM feedback2req-workflow-checks
+COPY ai/formal_expectations/requirements.txt /tmp/formal-requirements.txt
+RUN pip install --no-cache-dir -r /tmp/formal-requirements.txt
+WORKDIR /workspace
+CMD ["python", "-m", "pytest", "ai/tests", "ai/formal_expectations/tests", "ai/formal_expectations_bridge/tests", "experiments/qwen/tests", "experiments/qwen_z3/tests", "-q", "-W", "error"]

@@ -1,0 +1,215 @@
+{
+  "version": "1.0.0",
+  "semantic_gold": false,
+  "annotation_status": "preliminary",
+  "cases": [
+    {
+      "id": "supported",
+      "fixture_role": "engineering_control",
+      "review_focus": "Все четыре завершённые оценки, без решения человека.",
+      "request_sha256": "b3957638a146ca360b47ca417ce9181c18be24d4e30a3ff226c949d45f728754",
+      "response_sha256": "a4a578e3bc133ccd320e0e33c26f48df30231cfa2d15dd3732a0697953cb8590",
+      "review_plan": null
+    },
+    {
+      "id": "unsupported",
+      "fixture_role": "engineering_control",
+      "review_focus": "Неподтверждённое дополнительное поведение, отдельные severity/blocking.",
+      "request_sha256": "640946989e044e873b4ecd300cce97b5e489cb625d8cabe3e397b2caa188b309",
+      "response_sha256": "1314a78c4fa55c28cefc66cb0638223f8543690446f610f81b1cfecac88115ff",
+      "review_plan": null
+    },
+    {
+      "id": "contradiction",
+      "fixture_role": "engineering_control",
+      "review_focus": "Противоречие исходной обратной связи.",
+      "request_sha256": "29dcac4fa9c82f1e5f11cdc93fd362fa1e80c618e28514be9eaab6c6fa08ba7d",
+      "response_sha256": "05fd0691eee19bc26e051311fcd66fa568a46c6b988a45aaaf32c0d21a94312b",
+      "review_plan": null
+    },
+    {
+      "id": "different-conditions",
+      "fixture_role": "engineering_control",
+      "review_focus": "Разные устройства не означают несовместимость в общей ситуации.",
+      "request_sha256": "1f8385f7295da8c83d764e3569e22005e3fcbc5c911af2f973ad290f01896e03",
+      "response_sha256": "9ce953e14f43111a9a41ed840aa332df4b8169df4d3752a281e2a8ab43b9372f",
+      "review_plan": null
+    },
+    {
+      "id": "ambiguity",
+      "fixture_role": "engineering_control",
+      "review_focus": "Неоднозначность без подстановки догадки.",
+      "request_sha256": "11366e38e6222a144e73cfccde6bda9947e779143a80ddc4346ed5d5f439c611",
+      "response_sha256": "b07374e1651e7df327de8f164935e77a6291c88a132fc423041d24c000f8379d",
+      "review_plan": null
+    },
+    {
+      "id": "other-requirement-duplicate",
+      "fixture_role": "engineering_control",
+      "review_focus": "Возможный дубль другого requirement_id и pending_change.",
+      "request_sha256": "61073dcdc3b05dfd587a6e24153db27da4eb47f218af039385689c0a06c29e52",
+      "response_sha256": "43b8b1d3782681e880591d55e3bc337af5418c1fa030b46626e79316e1a00810",
+      "review_plan": null
+    },
+    {
+      "id": "own-revision",
+      "fixture_role": "engineering_control",
+      "review_focus": "Похожая своя редакция не является другим требованием.",
+      "request_sha256": "c4a7ac9b10a7e17c09c40211abee09ed7eb6b89ef2a09dd6da9501361420894f",
+      "response_sha256": "ade9a4b0eaeb3fb1cd5fcd0372200912d686b4756586dee00e85fb09a38e9703",
+      "review_plan": null
+    },
+    {
+      "id": "selected",
+      "fixture_role": "engineering_control",
+      "review_focus": "Вывод ограничен selected, не всем проектом.",
+      "request_sha256": "162b93aed4504fd2abcde150a6127c76dd65eee1e961cd529c924174a0a02e1b",
+      "response_sha256": "377f4b3f2cb4f6c078489cce0c2264bd2580e57c1db295e2ddcbfb83ede3bffd",
+      "review_plan": null
+    },
+    {
+      "id": "full-scope",
+      "fixture_role": "engineering_control",
+      "review_focus": "Полностью рассмотрен предусмотренный project_snapshot.",
+      "request_sha256": "4a80fb282ff694045c9a9ee6e16fe3fe598fced012d906153d68cd3d0cfa7353",
+      "response_sha256": "a4a578e3bc133ccd320e0e33c26f48df30231cfa2d15dd3732a0697953cb8590",
+      "review_plan": null
+    },
+    {
+      "id": "missed-comparison",
+      "fixture_role": "engineering_control",
+      "review_focus": "Пропуск фиксированного сравнения с независимым планом.",
+      "request_sha256": "957d01005ed341fbc8c373a271bfb53faee8b5905a9658109ae376405cb53d56",
+      "response_sha256": "bf605bb3144c750e98ec009495accd65e16a1ad3c08fe1f7d474082bdb36fb6b",
+      "review_plan": {
+        "checked_assessments": [
+          "support",
+          "contradictions",
+          "ambiguity"
+        ],
+        "comparison_keys": []
+      }
+    },
+    {
+      "id": "all-deleted",
+      "fixture_role": "engineering_control",
+      "review_focus": "Нет восстановления удалённых фрагментов, смысловая достаточность открыта.",
+      "request_sha256": "fd8be15063f442ca5c7b02016e8065b067c84647a06d24539e8ed13ca79587ab",
+      "response_sha256": "ef6e6947c740dc89e4c2c6c62817ca4c1423446dd4a566100a944fc4ff73ab29",
+      "review_plan": null
+    },
+    {
+      "id": "uncertain-speech",
+      "fixture_role": "engineering_control",
+      "review_focus": "Ключевой смысл зависит от ненадёжного распознавания.",
+      "request_sha256": "cec81ad3e3cd473f53052cbd1868076131d1a3042ba7692da8c589b71a8de76f",
+      "response_sha256": "b9094bceed85104db2ee12899c57f2f35a04d2e03428d5a4007071e0c191eba4",
+      "review_plan": null
+    },
+    {
+      "id": "previous-open-blocker",
+      "fixture_role": "engineering_control",
+      "review_focus": "Новое отсутствие issues не закрывает предыдущий блокер.",
+      "request_sha256": "2bc4ebea32f6acbcee0eb209b10fd1d20ad54d4b20d5abb278493a97d78ed4d1",
+      "response_sha256": "a4a578e3bc133ccd320e0e33c26f48df30231cfa2d15dd3732a0697953cb8590",
+      "review_plan": null
+    },
+    {
+      "id": "followup",
+      "fixture_role": "engineering_control",
+      "review_focus": "Точный прежний результат и issue_refs целевого повтора.",
+      "request_sha256": "9d6b9144089de94f92ec46878c38b6a3a0a4f0cc48fa0e3b2d00f4b68f8fd119",
+      "response_sha256": "a4a578e3bc133ccd320e0e33c26f48df30231cfa2d15dd3732a0697953cb8590",
+      "review_plan": null
+    },
+    {
+      "id": "prior-decision",
+      "fixture_role": "engineering_control",
+      "review_focus": "Историческое человеческое решение отдельно от новой проверки.",
+      "request_sha256": "2a1de7eeb1b18eb68a05eef74994d5e38d1ee3da5b7259c91e341db93de19848",
+      "response_sha256": "a4a578e3bc133ccd320e0e33c26f48df30231cfa2d15dd3732a0697953cb8590",
+      "review_plan": null
+    },
+    {
+      "id": "approved-change",
+      "fixture_role": "engineering_control",
+      "review_focus": "Новая редакция не наследует утверждение своей исходной.",
+      "request_sha256": "8a3fea04d514f9567ae3212199e898d91f1779832a49b55adc374f79f40d95f9",
+      "response_sha256": "ade9a4b0eaeb3fb1cd5fcd0372200912d686b4756586dee00e85fb09a38e9703",
+      "review_plan": null
+    },
+    {
+      "id": "partial-found",
+      "fixture_role": "engineering_control",
+      "review_focus": "Найденный дубль не исчезает при пропуске other2.",
+      "request_sha256": "bb793ac58184b199264a28edc485746ade3902a2a9126467168ca0d1f3a08357",
+      "response_sha256": "0c8e8edc3a8c328c892ab355d2dc8a7d40c30b1975a2dcac94744af6769f7c65",
+      "review_plan": {
+        "checked_assessments": [
+          "support",
+          "contradictions",
+          "ambiguity"
+        ],
+        "comparison_keys": [
+          "other1"
+        ]
+      }
+    },
+    {
+      "id": "not-processed",
+      "fixture_role": "engineering_control",
+      "review_focus": "Нерассмотренная цель не получает содержательных issues или clean.",
+      "request_sha256": "b3957638a146ca360b47ca417ce9181c18be24d4e30a3ff226c949d45f728754",
+      "response_sha256": "08cc7a1dea9ea0b523ac48f16dcc977d4ee3a040c084c1fafc7c12c5a1bd722b",
+      "review_plan": null
+    },
+    {
+      "id": "injection",
+      "fixture_role": "engineering_control",
+      "review_focus": "Инструкции в target и документации остаются недоверенными данными.",
+      "request_sha256": "838b88c414f6578f65f23d12a764c7225f1c5b27e36aa3251fcc500d63cb33fe",
+      "response_sha256": "a4a578e3bc133ccd320e0e33c26f48df30231cfa2d15dd3732a0697953cb8590",
+      "review_plan": null
+    },
+    {
+      "id": "empty-selected",
+      "fixture_role": "engineering_control",
+      "review_focus": "Пустой selected завершён только в явно выбранной области.",
+      "request_sha256": "9d21f6f3257250233d84eea0af0a69b49368513bfb11b7a9bbb9fdcd833c9e10",
+      "response_sha256": "221c80cf6553540708e5e24a43267b4f8614861be72a83659fcf38b0d6e26d71",
+      "review_plan": null
+    },
+    {
+      "id": "insufficient-evidence",
+      "fixture_role": "engineering_control",
+      "review_focus": "Категория insufficient_evidence с блокирующим вопросом.",
+      "request_sha256": "cec81ad3e3cd473f53052cbd1868076131d1a3042ba7692da8c589b71a8de76f",
+      "response_sha256": "013c4116fc6479f056f6bc982e0dbac0f7732c74f4e8800842d279dbb6dfc18e",
+      "review_plan": null
+    },
+    {
+      "id": "low-severity-blocker",
+      "fixture_role": "engineering_control",
+      "review_focus": "Низкая severity не отменяет независимо заданную блокировку.",
+      "request_sha256": "640946989e044e873b4ecd300cce97b5e489cb625d8cabe3e397b2caa188b309",
+      "response_sha256": "fa2cbda2e260a3ba9c713fd03acb2df3e51a6fcb84cc73f182d659696efd3a41",
+      "review_plan": null
+    },
+    {
+      "id": "missed-unsupported",
+      "fixture_role": "intentional_semantic_error",
+      "review_focus": "Формально clean, но существенное неподтверждённое положение пропущено.",
+      "request_sha256": "8ae951abafc4ba28548168c661018d0b293bd6ca75de880850677862e92936bd",
+      "response_sha256": "a4a578e3bc133ccd320e0e33c26f48df30231cfa2d15dd3732a0697953cb8590",
+      "review_plan": null
+    },
+    {
+      "id": "false-duplicate",
+      "fixture_role": "intentional_semantic_error",
+      "review_focus": "Разные ожидаемые поведения ошибочно объявлены дублем по корректным ключам.",
+      "request_sha256": "cc1efdc4c92e8826d288ff5bac80f7b52365397d4269d0ed64d828a5f81e97b5",
+      "response_sha256": "43b8b1d3782681e880591d55e3bc337af5418c1fa030b46626e79316e1a00810",
+      "review_plan": null
+    }
+  ]
+}
