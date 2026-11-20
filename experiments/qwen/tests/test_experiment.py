@@ -104,6 +104,8 @@ class AdapterTests(unittest.TestCase):
         self.assertEqual(json.loads(body["messages"][1]["content"]), request)
         self.assertEqual(body["format"], response_format())
         self.assertFalse(body["think"])
+        self.assertFalse(body["truncate"])
+        self.assertFalse(body["shift"])
         self.assertFalse(body["stream"])
         self.assertEqual(body["keep_alive"], 0)
         self.assertEqual(body["options"], cfg()["options"])
@@ -135,13 +137,15 @@ class AdapterTests(unittest.TestCase):
                         "thinking": "hidden",
                     }
                 },
-                "provider_envelope",
+                "unexpected_thinking",
             ),
             (
                 {"message": {"role": "assistant", "content": "{}", "tool_calls": [{}]}},
                 "provider_envelope",
             ),
             ({"prompt_eval_count": None}, "prompt_measurement_missing"),
+            ({"eval_count": None}, "generation_measurement_missing"),
+            ({"eval_count": 1025}, "generation_budget"),
             ({"prompt_eval_count": 8000}, "context_exhausted"),
         ]
         for changes, rule in variants:
@@ -222,6 +226,7 @@ class AdapterTests(unittest.TestCase):
             "/api/show": {
                 "details": {"quantization_level": "Q4_K_M"},
                 "capabilities": ["completion"],
+                "thinking": {"values": [True, False], "default": True},
                 "template": "template",
                 "model_info": {},
             },
@@ -234,6 +239,8 @@ class AdapterTests(unittest.TestCase):
         for path, key, replacement in [
             ("/api/version", "version", "0.1.0"),
             ("/api/show", "remote_host", "external"),
+            ("/api/show", "thinking", {"values": ["low", "high"]}),
+            ("/api/show", "thinking", {"values": [0, True]}),
         ]:
             broken = deepcopy(values)
             broken[path][key] = replacement

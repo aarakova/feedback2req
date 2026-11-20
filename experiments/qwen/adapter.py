@@ -19,7 +19,7 @@ from ai.group_findings.validation import (
 
 from .profiles import prompt_profile
 
-ADAPTER_VERSION = "qwen-local-experiment-2"
+ADAPTER_VERSION = "qwen-local-experiment-3"
 HOST, PORT = "127.0.0.1", 11435
 MODELS = {"qwen3:4b-q4_K_M", "qwen3.5:9b-q4_K_M"}
 
@@ -76,18 +76,16 @@ def config_check(cfg):
             "top_k",
             "min_p",
             "seed",
+            "presence_penalty",
+            "repeat_penalty",
         }
-        require(
-            required
-            <= options.keys()
-            <= required | {"presence_penalty", "repeat_penalty"}
-        )
+        require(options.keys() == required)
         for key, low, high in (
             ("num_ctx", 2048, 32768),
             ("num_predict", 1, 4096),
             ("num_thread", 1, 8),
             ("num_gpu", 0, 99),
-            ("top_k", 1, 100),
+            ("top_k", 2, 100),
             ("seed", 0, 2147483647),
         ):
             require(type(options[key]) is int and low <= options[key] <= high)
@@ -101,6 +99,10 @@ def config_check(cfg):
             if key in options:
                 require(type(options[key]) in (int, float))
                 require(math.isfinite(options[key]) and low <= options[key] <= high)
+        # Qwen warns against greedy decoding. These checks reject known ways of
+        # making the sampler deterministic; they do not prove freedom from loops.
+        require(options["temperature"] > 0 and options["top_p"] > 0)
+        require(options["min_p"] < 1 and options["repeat_penalty"] > 0)
         require(
             options["num_predict"] + cfg["template_token_reserve"] < options["num_ctx"]
         )
@@ -207,6 +209,9 @@ class ExperimentalOllama:
             require(type(model["size"]) is int and model["size"] > 0)
             require(show["details"]["quantization_level"] == self.cfg["quantization"])
             require("completion" in show["capabilities"])
+            # think=False can fall back to a thinking level on some models.
+            # Our pinned runtime must advertise an actual boolean off switch.
+            require(any(value is False for value in show["thinking"]["values"]))
             require(isinstance(show["template"], str) and show["template"])
             require(isinstance(show["model_info"], dict))
         except (ValueError, KeyError, TypeError):
@@ -217,6 +222,8 @@ class ExperimentalOllama:
             "size_bytes": model["size"],
             "quantization": self.cfg["quantization"],
             "ollama_version": version["version"],
+            "thinking": show["thinking"],
+            "adapter_version": ADAPTER_VERSION,
             "template_sha256": sha(show["template"]),
             "show_sha256": sha(show),
             "config_sha256": sha(self.cfg),
@@ -242,6 +249,8 @@ class ExperimentalOllama:
             "model": self.model,
             "stream": False,
             "think": False,
+            "truncate": False,
+            "shift": False,
             "keep_alive": 0,
             "format": response_format(),
             "options": self.cfg["options"],
@@ -266,6 +275,8 @@ class ExperimentalOllama:
         ):
             number = envelope.get(key)
             self.metrics[key] = number if type(number) is int and number >= 0 else None
+        reason = envelope.get("done_reason")
+        self.metrics["done_reason"] = reason if reason in ("stop", "length") else None
         message = envelope.get("message")
         if isinstance(message, dict) and isinstance(message.get("content"), str):
             self.content = message["content"]
@@ -276,11 +287,16 @@ class ExperimentalOllama:
             or message.get("role") != "assistant"
             or not isinstance(message.get("content"), str)
             or message.get("tool_calls")
-            or message.get("thinking")
         ):
             raise GroupingError("invalid_response", "provider_envelope")
+        if message.get("thinking"):
+            raise GroupingError("invalid_response", "unexpected_thinking")
         if envelope.get("done_reason") != "stop":
             raise GroupingError("invalid_response", "generation_incomplete")
+        if self.metrics["eval_count"] is None:
+            raise GroupingError("invalid_response", "generation_measurement_missing")
+        if self.metrics["eval_count"] > self.cfg["options"]["num_predict"]:
+            raise GroupingError("invalid_response", "generation_budget")
         if self.metrics["prompt_eval_count"] is None:
             raise GroupingError("invalid_response", "prompt_measurement_missing")
         if (

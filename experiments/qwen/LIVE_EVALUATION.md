@@ -129,8 +129,10 @@ Bootstrap устанавливает зависимости только в `.lo
 чужой daemon не используется. Если /proc не даёт проверить владельца — отказ.
 Сервер слушает только 127.0.0.1:11435, cloud mode выключен, параллелизм/model
 count=1. Только после разрешения загружается `qwen3.5:9b-q4_K_M` (~6,6 GB package).
-Затем выполняются D/K/S/U для product и experimental с matched sampler. После
-тайм-аута следующая серия не начинается. Сервер останавливается в finally.
+Затем выполняются D/K/S/U для product и experimental с recommended 9B sampler
+(presence=1.5). После timeout/исчерпания output budget или нарушения протокола
+следующая серия не начинается. В finally завершается собственная process group,
+результат наблюдения сохраняется и экспортируется с отчётами notebook.
 Notebook экспортирует только `.local/qwen-runs`, без весов/runtime; free VM
 эфемерна, поэтому скачать результаты до отключения. Детальные процессы/GPU peaks
 пока не инструментированы на Linux: соответствующие поля остаются null;
@@ -143,7 +145,8 @@ preflight — отдельный снимок ресурсов, не peak model 
 поскольку загрузки/запуски не было. Будущие lock получают фактические `/api/tags`
 и `/api/show`, quantization, size, version/template hashes, config hash и теперь
 также prompt profile/version/hash. Старые lock предыдущего adapter version
-нельзя подменять новыми; использовать новые имена. Adapter version теперь 2.
+нельзя подменять новыми; использовать новые имена. Adapter version теперь 3.
+Изменения 2026-11-21 и первичные источники: [DEVELOPER_GUIDANCE.md](DEVELOPER_GUIDANCE.md).
 
 Prompt hash использует тот же canonical-JSON SHA-256 helper, что и request hash,
 не SHA raw исходного файла. Зафиксированные значения:
@@ -166,7 +169,7 @@ Payload-тест проверяет product текст побайтово чер
 presence_penalty=0, repeat_penalty=1, think=false, num_predict=1024,
 num_thread=4, num_gpu=99, timeout=90 s для всех четырёх конфигураций.
 `recommended`: та же база, но 9B presence_penalty=1.5/repeat_penalty=1,
-у 4B эти override отсутствуют, как в исходных конфигурациях. Для этой матрицы
+у 4B теперь явно заданы presence_penalty=0/repeat_penalty=1. Для этой матрицы
 нельзя приписывать отличие только размеру модели: sampler и model defaults
 тоже различаются. Дополнительные веса 4B не скачиваются автоматически.
 
@@ -272,7 +275,54 @@ python -m ruff check --no-cache --ignore EXE002 experiments/qwen
 python -m ruff format --no-cache --check experiments/qwen
 ```
 
-## Фактические итоги
+## Проверки adapter v3, 2026-11-21
+
+Официальные рекомендации, различия API и принятые ограничения описаны в
+[DEVELOPER_GUIDANCE.md](DEVELOPER_GUIDANCE.md). Все изменения этой итерации
+ограничены экспериментальным каталогом; production backend, canonical AI,
+контракты, prompts и synthetic inventory не изменялись. Новые lock обязательны.
+
+| Проверка | Фактический результат |
+|---|---|
+| Экспериментальный набор | **44 PASS**, 43.408 s; без сети, модели и установки |
+| Автономная AI-группировка | **37 PASS**, 7.750 s |
+| Собственная совместимость F2/PG | **8 PASS / 1 SKIP**, 25.29 s; live model test выключен |
+| Утверждённые схемы | **PASS**, 9 schemas / 88 refs / 38 positive / 34 negative / 399 mutations / 20 APP-пар |
+| Ruff check и format --check | **PASS**, 23 файла; EXE002 исключён только для Windows mount permissions |
+| Настоящие Qwen / cloud bootstrap / live F2 | **NOT RUN** |
+
+Суммарно **89 PASS**, отдельный live test пропущен. Новые проверки включают
+опасный sampler, бесконечные output budgets, неполную генерацию с валидным JSON,
+неожиданный thinking, остановку серии без retry, неподконтрольную инструкцию
+`/think` внутри synthetic data и реальное завершение маленького Python child,
+игнорирующего SIGTERM, после выхода родителя. Это тест механизма process group,
+не запуск и не доказательство остановки настоящей модели/GPU.
+
+При первом F2 прогоне 8 тестов упали: синтетическая транспортная оболочка не
+имела eval_count, теперь обязательного для контроля генерации. Добавлен только
+недостающий синтетический счётчик, прежние ожидания сохранены; повтор прошёл.
+Первое замечание Ruff к вложенному with исправлено. Полный backend и прежние
+38 upstream F2-тестов в этой итерации повторно не запускались; независимого
+review новых v3 изменений не было. Notebook code cells компилируются, outputs
+остаются пустыми; модельных результатов и содержательной оценки пока нет.
+
+Использован прежний checks image
+`sha256:0c154beef3fd4f49181dafba8fabc4f4c3211aa2110e4c966bf686cdc23b9379`,
+Python 3.12.15 и PostgreSQL 17 в своей временной БД `qwen_safety_test`, закрытая
+Docker network `f2r-qwen-safety-20261121`, tmpfs data, без host port. Источник
+F2 — тот же pin 4c62684, проверенный по manifest. Образ/зависимости не скачивались.
+Docker Desktop был выключен; запущена существующая установка для тестов.
+
+Повторный CIM-снимок: 7274124 KiB общей / 726892 KiB свободной RAM
+(около 6.94 / 0.69 GiB). Docker VM — 3543834624 bytes (3.30 GiB).
+Отдельный preflight выполнен в ограниченном тестовом контейнере: cgroup limit
+512 MiB, доступно 521633792 bytes, GPU не обнаружена; это лимит **тестов**, не
+измеренная память модели или размер всей VM. Оба 9B planning gate — false.
+Наличие подходящего авторизованного GPU runtime по-прежнему не подтверждено.
+Разрешения на runtime/веса/внешнюю передачу не получены, поэтому inference,
+проверка sampler на реальных весах и peak RAM/VRAM не выполнялись.
+
+## Фактические итоги итерации e2158ad (до adapter v3)
 
 | Проверка | Результат |
 |---|---|

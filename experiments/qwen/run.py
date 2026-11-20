@@ -191,6 +191,27 @@ def output_path(value):
     return path
 
 
+def stop_reason(result):
+    """Do not queue work after uncertain cancellation or a runtime budget breach.
+
+    A length stop is evidence of exhausting the cap, not proof of repetition.
+    Canonical schema/application failures remain independent completed attempts.
+    """
+    error = result.get("error") or {}
+    rule = error.get("rule")
+    if error.get("code") == "timeout":
+        return "timeout"
+    if (
+        error
+        and result.get("request_attempted") is not False
+        and result.get("provider_completed") is not True
+    ):
+        # Covers malformed envelopes and future transport failures too. Only a
+        # confirmed complete envelope or a proven pre-call failure can continue.
+        return rule or "provider_not_completed"
+    return None
+
+
 def run(cfg, lock, output, selected, *, allowed=False, synthetic_only=False):
     if not allowed or not synthetic_only:
         raise GroupingError(
@@ -212,6 +233,7 @@ def run(cfg, lock, output, selected, *, allowed=False, synthetic_only=False):
     output.mkdir(parents=True, exist_ok=False)
     (output / "responses").mkdir()
     records, reviews, legacy = [], [], []
+    halted = None
     metadata = {
         "mode": "real_local_inference",
         "synthetic_data": True,
@@ -219,6 +241,14 @@ def run(cfg, lock, output, selected, *, allowed=False, synthetic_only=False):
         "runtime": lock,
         "configuration": cfg,
         "wall_deadline_includes_child_startup": True,
+        "generation_controls": {
+            "thinking": False,
+            "truncate": False,
+            "shift": False,
+            "automatic_retries": 0,
+            "num_predict": cfg["options"]["num_predict"],
+            "loop_freedom_proven": False,
+        },
         "adapter_version": ADAPTER_VERSION,
         "prompt_profile": profile_name,
         "prompt_version": prompt_version,
@@ -360,8 +390,9 @@ def run(cfg, lock, output, selected, *, allowed=False, synthetic_only=False):
             ),
             flush=True,
         )
-        if result["error"] and result["error"]["code"] == "timeout":
-            # Do not queue another load while server cancellation is uncertain.
+        halted = stop_reason(result)
+        if halted:
+            # A client watchdog alone cannot establish server cancellation.
             break
     write(
         output / "diagnostics.json",
@@ -383,6 +414,7 @@ def run(cfg, lock, output, selected, *, allowed=False, synthetic_only=False):
             ),
             "elapsed_ms": round((time.monotonic() - started) * 1000, 3),
             "not_attempted": [c["id"] for c in cases[len(records) :]],
+            "halt_reason": halted,
             "semantic_quality": "not_evaluated",
         },
     )

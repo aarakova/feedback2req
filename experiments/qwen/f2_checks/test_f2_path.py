@@ -38,6 +38,7 @@ class SyntheticTransport:
                 "done": True,
                 "done_reason": "stop",
                 "prompt_eval_count": 1000,
+                "eval_count": 100,
                 "message": {"role": "assistant", "content": json.dumps(response)},
             }
         ).encode()

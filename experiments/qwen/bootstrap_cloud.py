@@ -18,6 +18,7 @@ from pathlib import Path
 from urllib.request import urlopen
 
 from .portable import ROOT, exclusive_json, resources
+from .runtime import start_owned_server, stop_owned_group
 
 RUNTIME_URL = "https://github.com/ollama/ollama/releases/download/v0.40.14/ollama-linux-amd64.tar.zst"
 RUNTIME_SHA256 = "993e83d08c3d13d17c55009a3e2664c8a25445e644aec3a68bef5abb6abce67d"
@@ -161,9 +162,7 @@ def main():
     # Interactive bounded session. Server is stopped in finally; no public API.
     ensure_port_free()
     with (root / "server.log").open("xb") as log:
-        server = subprocess.Popen(
-            [str(binary), "serve"], env=environment, stdout=log, stderr=log, cwd=ROOT
-        )
+        server = start_owned_server(binary, environment, log, ROOT)
         try:
             ready = False
             for _ in range(60):
@@ -197,7 +196,7 @@ def main():
                     "--output",
                     ".local/qwen-runs/cloud-matrix",
                     "--sampler",
-                    "matched",
+                    "recommended",
                 ],
             ]
             for module, *arguments in commands:
@@ -209,9 +208,7 @@ def main():
                 )
             for profile in ("product", "experimental"):
                 require_owned_server(server)
-                config = (
-                    f".local/qwen-runs/cloud-matrix/qwen35-9b-{profile}-matched.json"
-                )
+                config = f".local/qwen-runs/cloud-matrix/qwen35-9b-{profile}-recommended.json"
                 lock = f".local/qwen-runs/cloud-9b-{profile}.lock.json"
                 shared = [
                     "--config",
@@ -268,24 +265,24 @@ def main():
                     raise ValueError(
                         "Harness failed; preserve diagnostics before continuing"
                     )
-                # Do not send another series after a model timeout/uncertain cancellation.
+                # Persisted stop policy covers length/budget breaches as well as
+                # timeouts. Never silently retry with another prompt or sampler.
                 summary = json.loads(
                     (
                         ROOT / f".local/qwen-runs/cloud-9b-{profile}/diagnostics.json"
                     ).read_text("utf-8")
                 )
-                if any(
-                    (r["error"] or {}).get("code") == "timeout"
-                    for r in summary["records"]
-                ):
+                if summary["halt_reason"]:
                     break
         finally:
-            server.terminate()
-            try:
-                server.wait(timeout=10)
-            except subprocess.TimeoutExpired:
-                server.kill()
-                server.wait(timeout=5)
+            cleanup = stop_owned_group(server)
+            exclusive_json(root / "shutdown.json", cleanup)
+            # Notebook exports only qwen-runs, never runtime/weights/server logs.
+            evidence_dir = ROOT / ".local/qwen-runs"
+            evidence_dir.mkdir(parents=True, exist_ok=True)
+            exclusive_json(evidence_dir / "cloud-runtime-shutdown.json", cleanup)
+            if cleanup["status"] != "no_live_process_group_members":
+                raise RuntimeError("Owned runtime cleanup failed; disconnect free VM")
     return 0
 
 
