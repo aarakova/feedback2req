@@ -1,14 +1,16 @@
 # Пакет решений для полного пользовательского цикла
 
-**PROPOSED, ревизия 1, 2026-11-06. Не является разрешением реализации.**
+**PROPOSED. Пакет A: редакция 2 от 2026-11-21; B/C: редакция 1 от 2026-11-06.**
+**Не является разрешением реализации.**
 Основание — текущее интеграционное поручение; DOMAIN/REQUIREMENTS/AI 1.0
 сохраняются. Три независимых решения ниже можно принять раздельно.
 
 ## A. Публичный запуск группировки
 
-Предлагается утвердить целиком ревизию 1
-[grouping-run-api-proposed](../plans/grouping-run-api-proposed.md), перенесённую
-без изменения из be328080cbeb484b3e2b77866709775627884d98.
+Предлагается отдельно утвердить целиком **редакцию 2 от 2026-11-21**
+[grouping-run-api-proposed](../plans/grouping-run-api-proposed.md).
+Она актуализирует редакцию 1 из be328080cbeb484b3e2b77866709775627884d98
+на интеграционной базе 600065626be5e671223c8a8afd696a14bb4c20e5.
 POST `/api/v1/projects/{id}/runs` получает отдельную закрытую ветку
 `operation=group_findings`, `finding_refs`, `document_refs`, `previous_group_refs`.
 F1 inputs сохраняются. Member + Origin/CSRF + UUID Idempotency-Key;
@@ -24,6 +26,12 @@ canonical request/response ≤1 MiB. Весь selected finding рассматр�
 frontend exact selection/context/start/same-key recovery/polling; контрактные
 PG/API/CSRF/isolation/unknown COMMIT тесты. Новая миграция не нужна.
 Выбор реальной модели/разрешение передачи — отдельное решение.
+
+Редакция 2 точно определяет snapshot 202/COMMIT, transaction-aware подключение
+существующего enqueue через Actor/Tx без вложенной auth-транзакции, строгие типы
+refs/locator и безопасный replay под тем же initiator. Это подготовленный
+контракт, не HTTP-реализация. [Frontend handoff и сценарии](grouping-launch-frontend.md),
+[проверяемые примеры](grouping-launch-examples.json). B/C ниже оставлены без изменения.
 
 ## B. Требования, редакции и проверки: минимальный серверный срез
 
