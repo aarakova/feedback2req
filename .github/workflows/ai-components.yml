@@ -15,6 +15,8 @@ jobs:
         env:
           PYTHONPATH: backend:.
         run: python -m pytest ai/tests ai/formal_expectations/tests ai/formal_expectations_bridge/tests experiments/qwen/tests experiments/qwen_z3/tests -q -W error
+      - name: Evaluation checks including mandatory defect regressions
+        run: python -B -W error -m unittest discover -s evals/ai/tests -v
       - run: python scripts/validate_ai_contracts.py
       - name: Synthetic grouping, generation and verification replays
         run: |

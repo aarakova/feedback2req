@@ -42,6 +42,21 @@ AC-02 целиком не реализованы. Для AI остаётся [AI
 
 ## Execution commands once known
 
+Автономные AI-компоненты и оценщик проверяются отдельно от серверных БД:
+
+```text
+python -B -W error -m unittest discover -s ai/tests -v
+python -B -W error -m unittest discover -s evals/ai/tests -v
+python -B scripts/validate_ai_contracts.py
+```
+
+Оценочный discovery включает обязательные
+[регрессии прежних фрагментов и необработанной цели](../evals/ai/tests/test_known_defects.py).
+Их запускает [offline-components CI](../.github/workflows/ai-components.yml),
+без opt-in/skip/xfail. [Граница серверного подключения](../ai/SERVER_HANDOFF.md)
+описывает входы/выходы, обязательные доверенные проверки, ошибки и зависимости.
+Синтетические проверки не являются оценкой качества модели.
+
 Точные команды, конфигурация и изоляция: [README](../README.md#тесты-с-изолированной-postgresql).
 Из корня, после установки backend и requirements-test.lock:
 

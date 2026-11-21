@@ -174,7 +174,11 @@ def check_request(contracts, request, trusted):
     }
     if any(t["source_ref"]["id"] in deleted for t in texts.values()):
         fail("DELETED-TEXT-IN-FIXTURE")
-    for item in data.get("segments", []) + data.get("fragments", []):
+    for item in (
+        data.get("segments", [])
+        + data.get("fragments", [])
+        + data.get("previous_fragments", [])
+    ):
         source = texts.get(identity(item["text_ref"]))
         if source is None:
             fail("TEXT-STATE-UNAVAILABLE")
@@ -444,6 +448,8 @@ def check_response(contracts, request, response, trusted):
                 fail("EMPTY-RESULT-REASON", "coverage")
     else:
         checks = {c["kind"]: c for c in result["checks"]}
+        if data["target"]["key"] not in reviewed and result["issues"]:
+            fail("RESULT-FROM-UNREVIEWED", "coverage")
         comparisons = {c["key"]: c for c in data["comparisons"]}
         duplicates = checks["duplicates"]
         considered = set(duplicates["considered_keys"])
@@ -470,7 +476,9 @@ def check_response(contracts, request, response, trusted):
                 and not set(check["considered_keys"]) <= noncomparison
             ):
                 fail("CHECK-CONSIDERED-ROLE")
-            if not reviewed and check["considered_keys"]:
+            if not reviewed and (
+                check["considered_keys"] or check["conclusion"] != "inconclusive"
+            ):
                 fail("RESULT-FROM-UNREVIEWED", "coverage")
         question_ids = {q["local_id"] for q in response["questions"]}
         categories = {
