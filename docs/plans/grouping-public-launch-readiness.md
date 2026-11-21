@@ -67,12 +67,48 @@ PASS, 2026-11-21, встроенные read-only команды PowerShell/Git, 
 будущего POST. Политики запуска скриптов не отключались; отдельный ps1 checker
 не включён в результат. Данные примеров не относятся к существующей базе.
 
-NOT RUN: PostgreSQL/API/worker/browser приёмка нового POST (A01–A27) и регрессии
-F1/F2/F3 в этой итерации. Контракт ещё не утверждён, runtime не менялся; прежние
-прогоны F3/интеграции не объявляются новыми результатами. В текущем окружении
-Docker CLI не найден, root .venv ссылается на отсутствующий Python312 другого
-пользователя. Зависимости, execution policy и чужие тестовые стенды не изменялись.
-Независимое ревью и реальные AI-вызовы NOT RUN.
+При фиксации 639f1e4 PostgreSQL/API/worker/browser проверки не выполнялись:
+Docker CLI не был найден в обычном PATH, root .venv ссылается на отсутствующий
+Python312 другого пользователя. Это состояние исходного отчёта, не утверждение
+о невозможности Docker-проверок после дополнительного поиска ниже. Зависимости,
+execution policy и чужие тестовые стенды не изменялись.
+
+## Дополнительная проверка готовых F2/F3 — 2026-11-21
+
+После пользовательского «продолжи» повторно проверены refs и записи решений,
+в том числе DECISIONS из integration/readiness-20261121. Публичный POST всё ещё
+явно не утверждён. Запрошено одно подтверждение принятия A.2; отсутствие ответа
+не трактуется как согласие. Контракт и runtime при этих проверках не менялись.
+
+Docker CLI найден в установленном пользовательском Docker Desktop вне обычного
+sandbox PATH. Собственный project `f2r-a2-639f1e4-20261121`, новая сеть/PG volume,
+PostgreSQL без опубликованных портов. Чужие контейнеры не останавливались и
+не пересоздавались. Исходники подключены read-only; результаты — в собственном
+игнорируемом `.local/validation/a2-20261121/f2-f3-regression.xml`.
+
+Тестовый образ закреплён по content ID:
+`sha256:0c154beef3fd4f49181dafba8fabc4f4c3211aa2110e4c966bf686cdc23b9379`.
+Python 3.12.15, jsonschema 4.26.0, Pydantic 2.14.1, SQLAlchemy 2.0.55,
+pytest 9.1.1. Host venv не ремонтировался и не использовался.
+
+- **PASS: 64 tests**, 440.52 s, `-W error`, PostgreSQL, без пропусков:
+  `test_grouping_queue.py`, `test_grouping_execution.py`,
+  `test_grouping_previous_annotations.py`.
+- Проверены существующая очередь с настоящими worker-процессами, конкуренция,
+  idempotency/replay, запись и rollback при неизвестном COMMIT, revoke/stale
+  context, restart/recovery, lease/deadline, exact historical annotations и GET.
+  Сохранён существующий запрет публичного grouping POST. Tests не изменялись.
+- **PASS:** canonical AI projection примера completed без групп из JSON fixtures
+  проверена по неизменённой group_findings.response Schema 1.0. Из backend DTO
+  related исключены добавляемые сервером kind/id/state_id; это проверка формы
+  AI-response, не валидация нового HTTP request и не semantic evaluation.
+- Внешние AI-вызовы не выполнялись: offline fixture-check без сети, PG tests
+  используют явные synthetic/injected adapters. Вся работа без push и merge.
+
+**NOT RUN:** A01–A27 через новый публичный POST, browser acceptance,
+полный backend/F1 suite, независимое ревью и реальная модель. 64 существующих
+F2/F3 теста не объявляются приёмкой неутверждённого HTTP-контракта. Данные и
+серверные файлы других агентов не менялись; собственный тестовый стенд сохранён.
 
 ## Зависимости и следующий шаг
 
