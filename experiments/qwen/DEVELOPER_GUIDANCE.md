@@ -121,6 +121,9 @@ python -B -m experiments.qwen.portable matrix --sampler matched --output .local/
 ```
 
 Порядок запуска и разрешения — в [LIVE_EVALUATION.md](LIVE_EVALUATION.md).
+Единый воспроизводимый порядок smoke/all, границы русских сценариев и сбор
+выборочной диагностики — в [RUN_PLAN.md](RUN_PLAN.md). Точные per-model GPU peaks
+по-прежнему не измеряются автоматически; sampler не подменяет shutdown control.
 Первым проверить реальный digest, off switch, завершение короткого ответа,
 лимиты, latency и фактическое освобождение ресурсов. Только затем расширять
 число случаев/моделей. Смысловую экспертную оценку выполнять отдельно от JSON

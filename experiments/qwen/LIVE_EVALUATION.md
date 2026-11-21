@@ -4,6 +4,8 @@
 ответов, установленного weight digest или содержательных результатов сравнения.
 Технические прогоны ниже используют явно synthetic transport, не Qwen.
 Qwen3.5-9B остаётся основной исследовательской моделью; 4B — отдельный baseline.
+Текущее продолжение 2026-11-21: [единый план smoke/all](RUN_PLAN.md).
+Push/merge и настоящие AI-вызовы этим продолжением не разрешены.
 
 ## Проверенная база
 
@@ -134,9 +136,12 @@ count=1. Только после разрешения загружается `qw
 следующая серия не начинается. В finally завершается собственная process group,
 результат наблюдения сохраняется и экспортируется с отчётами notebook.
 Notebook экспортирует только `.local/qwen-runs`, без весов/runtime; free VM
-эфемерна, поэтому скачать результаты до отключения. Детальные процессы/GPU peaks
-пока не инструментированы на Linux: соответствующие поля остаются null;
-preflight — отдельный снимок ресурсов, не peak model RSS/VRAM.
+эфемерна, поэтому скачать результаты до отключения. Добавлен Linux sampler
+process-group RSS/CPU и device-wide GPU с baseline/after shutdown attempt:
+отчёты `cloud-runtime-resources.jsonl`/`.json` сохраняются рядом с preflight.
+Это выборочные наблюдения серии, не точные per-attempt или per-model GPU peaks;
+соответствующие поля harness остаются null. Реальный запуск sampler с Qwen
+ещё не выполнялся; preflight отдельно не доказывает peak model RSS/VRAM.
 
 ## Модели, промпты и матрица
 
@@ -274,6 +279,55 @@ python -B -m experiments.qwen.run inventory
 python -m ruff check --no-cache --ignore EXE002 experiments/qwen
 python -m ruff format --no-cache --check experiments/qwen
 ```
+
+## Проверка комплекта запуска после 5ca2798, 2026-11-21
+
+Существующий контур продолжен в том же отдельном worktree; более полная
+интеграция 6000656 изучена read-only, согласованная база 410b936 сохранена.
+Новых архитектурных/контрактных решений нет. Актуальный пошаговый план,
+точный профиль, ресурсы, бюджеты и зависимости — [RUN_PLAN.md](RUN_PLAN.md).
+
+Добавлены явный выбор smoke/all в том же bootstrap и Linux resource sampling:
+RSS/CPU собственной process group, device-wide GPU, baseline/after shutdown
+attempt, недоступность измерений и ошибки sampler. Отчёты preflight/plan/resource/
+shutdown входят в экспорт notebook. Модельная VRAM не выводится из device-wide
+usage. Измеритель не останавливает compute: независимый process-group контроль
+остаётся прежним. Последний GPU sample не выдаётся за after-shutdown snapshot,
+если завершение sampler не подтверждено. Expert template дополнен possible
+duplicates как ручным критерием группировки, без нового поля AI-ответа.
+GPU selection сохраняет границы числового CUDA_VISIBLE_DEVICES; неизвестные,
+отключённые и UUID/MIG masks отклоняются до установки, без выбора другого GPU.
+
+| Проверка в этом продолжении | Фактический результат |
+|---|---|
+| Весь экспериментальный набор, включая прежние защиты и новые resource/suite/GPU mask checks | **55 PASS**, 66.940 s |
+| Автономная AI-группировка | **37 PASS**, 10.859 s |
+| Утверждённые схемы / APP fixture-пары | **PASS**, 9 schemas / 88 refs / 38 positive / 34 negative / 399 mutations / 20 pairs |
+| Ruff check / format --check | **PASS**, 26 файлов; EXE002 исключён для Windows mount permissions |
+| Inventory | **34 существующих входа**, dataset hash `f7d097fc289ecc2c0dc22819f8c9fafa068bf93f9217430e89e71a690bb36c5d`; S01–S14 source hash неизменён |
+| Оба recommended 9B prompt profiles / все 34 входа | Входы проходят предварительный context/size budget до transport; ответы синтетические, смысл не оценивается |
+| Настоящие runtime/веса/Qwen, cloud execution, real F2 | **NOT RUN** |
+
+Всего **92** успешных теста в итоговой проверке этого продолжения. Промежуточно
+прошли наборы 52 и 53 tests; после GPU mask guard повторён весь набор 55. Вывод
+одного прерванного запуска был недоступен после возобновления, его результат
+не засчитывался. Тесты не ослаблялись; новых неустранённых ошибок проверки нет.
+Измеритель проверен на подменённых GPU/process rows и собственном коротком Python
+процессе; это не измерение модели. Notebook остаётся unexecuted, outputs пусты.
+
+Использован существующий checks image
+`sha256:0c154beef3fd4f49181dafba8fabc4f4c3211aa2110e4c966bf686cdc23b9379`,
+Python 3.12.15, network none, source read-only (кроме formatter в своём worktree),
+memory 512 MiB / 1–2 CPUs / tmpfs. Новые runtime/образы/зависимости не загружались.
+PostgreSQL/F2 suites, весь backend, экспертная смысловая оценка и independent
+review новых изменений здесь не запускались. Прежние F2/PG результаты ниже —
+исторические, не новая проверка всей интеграции. Чужие контейнеры/БД не менялись;
+новая БД этому диагностическому изменению не требовалась.
+
+Изменения сохраняются локальным коммитом, без push/merge. Production, AI 1.0,
+исходные prompts и dataset не меняются. Внешние материалы не передавались,
+модельные ответы/weight digest не создавались. Готовность компьютера к настоящему
+9B и разрешения на конкретную среду/установку/веса/перенос ещё требуются.
 
 ## Проверки adapter v3, 2026-11-21
 

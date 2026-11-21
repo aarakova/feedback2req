@@ -18,11 +18,55 @@ from pathlib import Path
 from urllib.request import urlopen
 
 from .portable import ROOT, exclusive_json, resources
+from .resource_monitor import ResourceMonitor
 from .runtime import start_owned_server, stop_owned_group
 
 RUNTIME_URL = "https://github.com/ollama/ollama/releases/download/v0.40.14/ollama-linux-amd64.tar.zst"
 RUNTIME_SHA256 = "993e83d08c3d13d17c55009a3e2664c8a25445e644aec3a68bef5abb6abce67d"
 RUNTIME_BYTES = 1525335029
+SMOKE_CASES = ("D-conflict", "K-conditions", "S-compatible", "U-insufficient")
+
+
+def select_gpu_index(status, visibility):
+    """Respect an existing allocation mask; never broaden it to a host GPU.
+
+    UUID/MIG masks need explicit environment-specific setup, not guessing an
+    index from nvidia-smi's potentially broader device inventory.
+    """
+    allowed = None
+    if visibility is not None:
+        fields = [value.strip() for value in visibility.split(",")]
+        if not fields or not all(value.isdecimal() for value in fields):
+            raise ValueError("Unsupported/disabled GPU visibility; no download started")
+        allowed = {int(value) for value in fields}
+    for gpu in status["gpus"]:
+        if (allowed is None or gpu["index"] in allowed) and gpu[
+            "free_bytes"
+        ] >= 10 * 1024**3:
+            return gpu["index"]
+    raise ValueError("No sufficiently free GPU inside the allocated visibility mask")
+
+
+def evaluation_command(shared, lock, output, suite):
+    if suite not in {"smoke", "all"}:
+        raise ValueError("unknown_evaluation_suite")
+    command = [
+        sys.executable,
+        "-B",
+        "-m",
+        "experiments.qwen.run",
+        "run",
+        *shared,
+        "--lock",
+        lock,
+        "--output",
+        output,
+    ]
+    if suite == "smoke":
+        for case in SMOKE_CASES:
+            command.extend(("--case", case))
+    # all uses the unchanged runner's complete inventory and 900s series budget.
+    return command, 600 if suite == "smoke" else 1020
 
 
 def approvals(args):
@@ -75,6 +119,7 @@ def require_owned_server(server):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--suite", choices=("smoke", "all"), default="smoke")
     for flag in (
         "approved-runtime",
         "approved-weights",
@@ -94,10 +139,26 @@ def main():
         raise ValueError(
             "Insufficient or unmeasured free GPU/RAM/disk; no download started"
         )
+    gpu_index = select_gpu_index(status, os.environ.get("CUDA_VISIBLE_DEVICES"))
     ensure_port_free()
     root = ROOT / ".local/cloud-runtime"
     root.mkdir(parents=True, exist_ok=False)
     exclusive_json(root / "preflight.json", status)
+    evidence_dir = ROOT / ".local/qwen-runs"
+    evidence_dir.mkdir(parents=True, exist_ok=True)
+    exclusive_json(evidence_dir / "cloud-resource-preflight.json", status)
+    exclusive_json(
+        evidence_dir / "cloud-plan.json",
+        {
+            "suite": args.suite,
+            "sampler": "recommended",
+            "model": "qwen3.5:9b-q4_K_M",
+            "selected_gpu_index": gpu_index,
+            "cases": list(SMOKE_CASES)
+            if args.suite == "smoke"
+            else "all_existing_group_findings_cases",
+        },
+    )
     deps = root / "python-deps"
     subprocess.run(
         [
@@ -150,19 +211,14 @@ def main():
         OLLAMA_KEEP_ALIVE="0",
         OLLAMA_DEBUG="0",
         OLLAMA_CONTEXT_LENGTH="16384",
-        CUDA_VISIBLE_DEVICES=str(
-            next(
-                gpu["index"]
-                for gpu in status["gpus"]
-                if gpu["free_bytes"] >= 10 * 1024**3
-            )
-        ),
+        CUDA_VISIBLE_DEVICES=str(gpu_index),
         PYTHONPATH=str(deps) + os.pathsep + str(ROOT),
     )
     # Interactive bounded session. Server is stopped in finally; no public API.
     ensure_port_free()
     with (root / "server.log").open("xb") as log:
         server = start_owned_server(binary, environment, log, ROOT)
+        monitor = None
         try:
             ready = False
             for _ in range(60):
@@ -189,6 +245,11 @@ def main():
                 [str(binary), "pull", model], env=environment, check=True, timeout=900
             )
             require_owned_server(server)
+            monitor = ResourceMonitor(
+                server.pid,
+                evidence_dir / "cloud-runtime-resources.jsonl",
+                gpu_index=int(environment["CUDA_VISIBLE_DEVICES"]),
+            ).start()
             commands = [
                 [
                     "experiments.qwen.portable",
@@ -205,11 +266,14 @@ def main():
                     env=environment,
                     cwd=ROOT,
                     check=True,
+                    timeout=30,
                 )
             for profile in ("product", "experimental"):
                 require_owned_server(server)
                 config = f".local/qwen-runs/cloud-matrix/qwen35-9b-{profile}-recommended.json"
-                lock = f".local/qwen-runs/cloud-9b-{profile}.lock.json"
+                suffix = "" if args.suite == "smoke" else "-all"
+                label = f"cloud-9b-{profile}{suffix}"
+                lock = f".local/qwen-runs/{label}.lock.json"
                 shared = [
                     "--config",
                     config,
@@ -232,34 +296,18 @@ def main():
                     check=True,
                     timeout=120,
                 )
-                # Same four inputs for both prompts, technical results remain
-                # available even when validation returns exit 1.
+                # Same selected inputs for both prompts, technical results remain
+                # available even when validation returns exit 1. No replay input.
                 require_owned_server(server)
+                command, command_timeout = evaluation_command(
+                    shared, lock, f".local/qwen-runs/{label}", args.suite
+                )
                 result = subprocess.run(
-                    [
-                        sys.executable,
-                        "-B",
-                        "-m",
-                        "experiments.qwen.run",
-                        "run",
-                        *shared,
-                        "--lock",
-                        lock,
-                        "--output",
-                        f".local/qwen-runs/cloud-9b-{profile}",
-                        "--case",
-                        "D-conflict",
-                        "--case",
-                        "K-conditions",
-                        "--case",
-                        "S-compatible",
-                        "--case",
-                        "U-insufficient",
-                    ],
+                    command,
                     env=environment,
                     cwd=ROOT,
                     check=False,
-                    timeout=600,
+                    timeout=command_timeout,
                 )
                 if result.returncode not in {0, 1}:
                     raise ValueError(
@@ -268,18 +316,28 @@ def main():
                 # Persisted stop policy covers length/budget breaches as well as
                 # timeouts. Never silently retry with another prompt or sampler.
                 summary = json.loads(
-                    (
-                        ROOT / f".local/qwen-runs/cloud-9b-{profile}/diagnostics.json"
-                    ).read_text("utf-8")
+                    (ROOT / f".local/qwen-runs/{label}/diagnostics.json").read_text(
+                        "utf-8"
+                    )
                 )
                 if summary["halt_reason"]:
                     break
         finally:
-            cleanup = stop_owned_group(server)
+            try:
+                cleanup = stop_owned_group(server)
+            except (OSError, ValueError):
+                cleanup = {
+                    "status": "cleanup_failed",
+                    "process_group_id": server.pid,
+                    "error": "process_group_shutdown_unconfirmed",
+                }
+            finally:
+                if monitor is not None:
+                    exclusive_json(
+                        evidence_dir / "cloud-runtime-resources.json", monitor.close()
+                    )
             exclusive_json(root / "shutdown.json", cleanup)
             # Notebook exports only qwen-runs, never runtime/weights/server logs.
-            evidence_dir = ROOT / ".local/qwen-runs"
-            evidence_dir.mkdir(parents=True, exist_ok=True)
             exclusive_json(evidence_dir / "cloud-runtime-shutdown.json", cleanup)
             if cleanup["status"] != "no_live_process_group_members":
                 raise RuntimeError("Owned runtime cleanup failed; disconnect free VM")

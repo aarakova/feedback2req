@@ -1,6 +1,7 @@
 # Qwen: локальный эксперимент group_findings
 
-Актуальное продолжение: [live evaluation и F2](LIVE_EVALUATION.md),
+Актуальное продолжение: [пошаговый план настоящего испытания](RUN_PLAN.md),
+[live evaluation и F2](LIVE_EVALUATION.md),
 [переносимый GPU notebook](Qwen35-Free-GPU.ipynb). Эта инструкция также сохраняет
 описание первоначальной подготовки c03d343; ниже инвентарь обновлён до 34 случаев.
 
@@ -25,6 +26,7 @@
 | [start-ollama.ps1](start-ollama.ps1) | Отдельный локальный сервер Windows и каталог весов |
 | [compose.yaml](compose.yaml) | Альтернативное изолированное CPU-serving с лимитом памяти и отключённым внешним маршрутом |
 | [measure-resources.ps1](measure-resources.ps1) | Выборочные замеры дерева процессов отдельного Windows-сервера |
+| [resource_monitor.py](resource_monitor.py) | Linux process-group RSS/CPU и device-wide GPU samples; отдельный отчёт после shutdown |
 | [tests/test_experiment.py](tests/test_experiment.py) | Подменённый транспорт, ошибки, watchdog, схема и интеграция evaluator |
 
 ## Проверки без модели

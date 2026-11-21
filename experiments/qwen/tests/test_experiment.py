@@ -345,6 +345,18 @@ class DatasetAndRunnerTests(unittest.TestCase):
                 (destination / "responses/S05-group.envelope.bin").read_bytes(),
                 result["raw"],
             )
+            review = json.loads((destination / "expert-review.json").read_text())
+            self.assertEqual(review["annotation_status"], "preliminary")
+            self.assertTrue(
+                {
+                    "evidence",
+                    "unsupported_additions",
+                    "opposite_positions",
+                    "uncertainty",
+                    "possible_duplicates",
+                }
+                <= review["records"][0]["criteria"].keys()
+            )
             # All fake run artifacts are destroyed with this temporary directory.
 
     def test_lock_mismatch_blocks_inference(self):

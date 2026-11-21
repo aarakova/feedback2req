@@ -1,5 +1,13 @@
 # Qwen live evaluation / F2 compatibility
 
+Continuation 2026-11-21: reuse the existing isolated worktree and completed
+5ca2798 safeguards; no duplicate model runner. Current user scope explicitly
+forbids push, merge and real external AI calls. Only local commits/offline
+validation/package preparation proceed. The concrete synthetic-only smoke/all
+plan and remaining permissions are in
+[RUN_PLAN.md](../../experiments/qwen/RUN_PLAN.md). Earlier publication permission
+below is historical and does not authorize publication of this continuation.
+
 Authorized iteration 2026-11-06. Own branch/worktree from
 `c03d34310efd5c92a29450a2d6d06dc87d64fb9c`; pinned read-only F2 reference
 `4c62684e7769d2c3a71de3264aa15e954a1262d0`. Fetch and both remote HEAD checks passed.

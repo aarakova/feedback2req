@@ -281,7 +281,7 @@ def run(cfg, lock, output, selected, *, allowed=False, synthetic_only=False):
             "server_peak_rss_bytes": None,
             "server_peak_vram_bytes": None,
             "server_cpu_seconds": None,
-            "reason": "Not instrumented; Ollama durations/token counts are not RAM/VRAM measurements. Client watchdog does not guarantee server cancellation.",
+            "reason": "Per-attempt peaks not instrumented here. Linux bootstrap supplies separate sampled process-group/device reports; device usage is not model VRAM. Ollama counters are not RAM/VRAM measurements. Client watchdog alone does not prove server cancellation.",
         },
     }
     write(output / "metadata.json", metadata)
@@ -341,6 +341,7 @@ def run(cfg, lock, output, selected, *, allowed=False, synthetic_only=False):
                     for name in (
                         "meaning",
                         "similarity",
+                        "possible_duplicates",
                         "opposite_positions",
                         "conditions",
                         "uncertainty",
