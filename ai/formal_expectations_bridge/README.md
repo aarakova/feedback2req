@@ -41,6 +41,7 @@ from ai.formal_expectations_bridge import check_pair, prepare, Verification, fin
 prepared = prepare(bridge_request_dict)
 # Просмотреть подготовку, неизвестные сведения, источники и выбор атомов.
 
+
 def verify(packet):
     # Настоящая реализация обязана сверить доверенные данные и проверки ниже.
     # Здесь намеренно нет реализации, всегда утверждающей вход.
@@ -55,6 +56,7 @@ def verify(packet):
         contexts_confirmed=approvals.contexts_confirmed,
         omega_complete_confirmed=approvals.omega_complete_confirmed,
     )
+
 
 result = check_pair(bridge_request_dict, verify=verify)
 ```
@@ -286,7 +288,8 @@ Read-only изучен опубликованный F2 `4c62684`: GroupDetail.me
 Finding refs, conflicts.positions — exact ссылки находок; input_findings и
 annotations привязаны к выбранным состояниям. prepare/accept и execute_grouping
 делают доверенные проверки в коротких транзакциях и отдельный финальный приём.
-В этом worktree этих изменений нет. Адаптер работает с каноническим запросом и
+В исходной автономной ветке этих изменений не было; интеграционная база
+`6000656` уже содержит F1/F2/F3. Основной адаптер работает с каноническим запросом и
 ответом AI 1.0, а **не** с backend GroupDetail. local_id конфликта — адрес только
 внутри данного ответа, его нельзя объявлять постоянным F2 ID.
 
@@ -305,3 +308,50 @@ group_findings, дать человеку подготовить атомы, в�
 точностью извлечения или универсальной мерой качества.
 
 Фактические тесты, ревью и неисполненные проверки — в [VALIDATION.md](VALIDATION.md).
+
+## Механическая совместимость с сохранёнными F1/F2 DTO
+
+Дополнительный автономный [audit_saved_inputs](compatibility.py) сравнивает
+уже подготовленный вход bridge с **явно предоставленными** сохранёнными DTO.
+Он не получает данные по HTTP/из ORM, не создаёт exporter, не восстанавливает
+canonical request/response, не выдаёт Verification и не вызывает Z3.
+
+Локальный диагностический bundle, не продуктовый контракт:
+
+```text
+{findings:[F1 Finding],groups:[F2 GroupDetail],sources:[Source],
+ group_bindings:[{local_id,ref:{kind:"finding_group",id,state_id},
+                  conflicts:[{local_id,id}]}]}
+```
+
+Finding/GroupDetail/Source берутся из существующих read DTO; canonical вход
+передаётся отдельно и не конструируется из них. group_bindings — отдельное
+явное утверждение поставщика о соответствии local→persistent, не подбор по
+тексту/title/порядку. Его происхождение ещё требует доверенной проверки.
+Source содержит id/state_id/text выбранного текстового источника. Текущий GET
+не подставляется вместо недоступного исторического состояния. Текущий F1 не
+предоставляет общий GET исторического source text: при отсутствии точного
+текста возвращается missing, без восстановления по цитате.
+
+```sh
+python -B -m ai.formal_expectations_bridge audit <bridge-input.json> --saved <supplied-saved-dtos.json>
+```
+
+Сверяются exact Finding/Fragment/Source refs, text/types/mode/authorship,
+принадлежность и полный набор evidence, quote/locator/reliability, Unicode
+code-point срез источника, группы/рассмотренная область и полные позиции.
+Между API list страницами атомарность не предполагается. Documents и
+previous_groups не реконструируются; их наличие даёт явный пробел аудита.
+Проекции annotations/open_questions/uncertainty_notes и подлинность принятого
+canonical response этим audit не удостоверяются.
+
+Статусы: matched (только проверенные поля совпали), missing, mismatch,
+invalid_input, preparation_required, technical_error. Во всех случаях
+classification=null, verification_created=false; пять outstanding_gates
+сохраняются даже при matched. Диагностика не содержит исходный текст/цитаты.
+Hash связывает входы, но не удостоверяет права, происхождение или смысл.
+CLI exit 0 означает matched, не подтверждённую формализацию; иначе exit 2.
+
+Проверки настоящего сохранения/чтения F1/F2 на собственной PostgreSQL —
+[отдельный набор](../../experiments/formal_integration_checks/README.md).
+Конкретный следующий срез — [C1 PROPOSED](../../docs/proposals/formal-package-c1.md).
