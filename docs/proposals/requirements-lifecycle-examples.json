@@ -1,0 +1,96 @@
+{
+  "status": "PROPOSED",
+  "revision": "B.2",
+  "date": "2026-11-25",
+  "note": "Synthetic acceptance traces, not runtime responses. Identity aliases below resolve to UUIDs; event names describe test actions, not new API statuses.",
+  "preconditions": "Each trace isolates one invariant; other permission, context and verification gates are valid unless the trace explicitly changes them.",
+  "identities": {
+    "REQ": "10000000-0000-4000-8000-000000000001",
+    "OTHER_REQ": "10000000-0000-4000-8000-000000000002",
+    "R1": "20000000-0000-4000-8000-000000000001",
+    "R2": "20000000-0000-4000-8000-000000000002",
+    "R3": "20000000-0000-4000-8000-000000000003",
+    "V1": "30000000-0000-4000-8000-000000000001",
+    "V2": "30000000-0000-4000-8000-000000000002",
+    "I1": "40000000-0000-4000-8000-000000000001",
+    "I2": "40000000-0000-4000-8000-000000000002",
+    "Q1": "50000000-0000-4000-8000-000000000001",
+    "P1": "60000000-0000-4000-8000-000000000001",
+    "P2": "60000000-0000-4000-8000-000000000002",
+    "D1": "70000000-0000-4000-8000-000000000001",
+    "D2": "70000000-0000-4000-8000-000000000002",
+    "D3": "70000000-0000-4000-8000-000000000003",
+    "F1": "80000000-0000-4000-8000-000000000001"
+  },
+  "traces": [
+    {
+      "id": "zero_candidates_preserves_question",
+      "criterion_ids": ["B03", "B32"],
+      "before": {"selected_findings": ["F1"], "saved_requirements": []},
+      "action": {"event": "generation_accepted", "candidate_count": 0, "reviewed": true, "coverage_disposition": "insufficient_information", "questions": ["Q1"]},
+      "after": {"execution_state": "completed", "saved_requirements": [], "run_questions": ["Q1"], "synthetic": true, "ai_performed": false},
+      "later_candidate": {"requirement": "REQ", "considered_findings": ["F1"], "open_notes": ["Q1"], "decision": "Draft"}
+    },
+    {
+      "id": "empty_check_keeps_old_blocker",
+      "criterion_ids": ["B15", "B20"],
+      "before": {"requirement": "REQ", "current": "R1", "decision": "Draft", "open_notes": ["I1"]},
+      "action": {"event": "verification_saved", "result": "V2", "issues": []},
+      "after": {"requirement": "REQ", "current": "R1", "decision": "Draft", "open_notes": ["I1"]},
+      "approval_http": 409,
+      "approval_code": "approval_blocked"
+    },
+    {
+      "id": "new_revision_has_own_decision",
+      "criterion_ids": ["B09", "B20"],
+      "before": {"requirement": "REQ", "current": "R1", "decision": "Rejected", "open_notes": ["I1"]},
+      "action": {"event": "revision_saved", "new_revision": "R2"},
+      "after": {"requirement": "REQ", "current": "R2", "decision": "Draft", "open_notes": ["I1"]},
+      "inherited_decision": false,
+      "inherited_verification": false
+    },
+    {
+      "id": "proposal_rejection_keeps_approved_base",
+      "criterion_ids": ["B21", "B23"],
+      "before": {"requirement": "REQ", "current": "R1", "approved": "R1", "decision_id": "D1"},
+      "proposal_created": {"proposal": "P1", "base": "R1", "target": "R2", "target_decision": "Draft", "current": "R1", "approved": "R1"},
+      "action": {"event": "proposal_rejected", "decision_id": "D2", "target": "R2"},
+      "after": {"requirement": "REQ", "current": "R1", "approved": "R1", "decision_id": "D1", "proposal_status": "rejected", "history_decisions": ["D1", "D2"]}
+    },
+    {
+      "id": "proposal_approval_switches_exact_revision",
+      "criterion_ids": ["B21", "B24"],
+      "before": {"requirement": "REQ", "current": "R1", "approved": "R1", "decision_id": "D1"},
+      "proposal_created": {"proposal": "P2", "base": "R1", "target": "R3", "target_decision": "Draft", "current": "R1", "approved": "R1"},
+      "action": {"event": "proposal_approved", "decision_id": "D3", "target": "R3", "verification": "V2", "open_notes": [], "usable_evidence": true, "human_confirms_sufficient": true},
+      "after": {"requirement": "REQ", "current": "R3", "approved": "R3", "decision_id": "D3", "proposal_status": "accepted", "history_decisions": ["D1", "D3"]}
+    },
+    {
+      "id": "resolution_does_not_close_new_issue",
+      "criterion_ids": ["B25", "B27"],
+      "before": {"requirement": "REQ", "current": "R2", "open_notes": ["I1", "I2"]},
+      "action": {"event": "resolution_saved", "note": "I1", "kind": "not_applicable", "actor_is_approver": true, "reason": "Historical finding does not apply to this revised formulation."},
+      "after": {"requirement": "REQ", "current": "R2", "open_notes": ["I2"]},
+      "approval_http": 409,
+      "approval_code": "approval_blocked"
+    },
+    {
+      "id": "shared_question_resolution_is_requirement_scoped",
+      "criterion_ids": ["B16", "B27"],
+      "before": {"REQ": ["Q1"], "OTHER_REQ": ["Q1"]},
+      "action": {"event": "resolution_saved", "requirement": "REQ", "note": "Q1", "kind": "not_applicable", "actor_is_approver": true, "reason": "The question is answered for this requirement only."},
+      "after": {"REQ": [], "OTHER_REQ": ["Q1"]}
+    },
+    {
+      "id": "loss_does_not_revoke_historical_approval",
+      "criterion_ids": ["B28"],
+      "fixture_origin": "Trusted historical loss fixture; destructive source cleanup is outside package B.",
+      "before": {"requirement": "REQ", "current": "R1", "approved": "R1", "decision_id": "D1", "evidence_availability": "available", "open_proposal": "P1", "proposal_target": "R2"},
+      "action": {"event": "historical_loss_observed_then_verified", "result": "V2", "target": "R2", "material_freshness": "current"},
+      "after": {"requirement": "REQ", "current": "R1", "approved": "R1", "decision_id": "D1", "evidence_availability": "lost", "proposal_target_decision": "Draft"},
+      "new_approval_target": "R2",
+      "new_approval_http": 409,
+      "new_approval_code": "evidence_unavailable"
+    }
+  ]
+}
